@@ -1,0 +1,59 @@
+/*body{ background-color:#F2F2F2;}*/
+body{width: 100%;overflow: hidden}
+.logo{margin:10px 5px;}
+.con{ width:60%;margin:150px auto;text-align: center;}
+.kuang{ border:#CCC 1px solid; overflow:hidden; }
+.reg{ padding:40px 0px; background-color:#fff; height:500px;}
+.font4{font-size:1.5rem; font-weight:bold; color:#e36127;}
+.xian{ border-top:1px dotted #ccc; width:96%;margin:20px auto 30px; overflow:hidden;}
+.regform{ margin:0 auto;*margin: -21px auto 25px; width:80%;}
+.regform span,.regform input{ float:left; display:block;}
+.regform ul{ float:left;margin-bottom:25px;width:100%;overflow:hidden;}
+.regform .title{ font-size:16px; font-weight:bold; line-height:36px; width:86px; text-align:right; width:95px;}
+.regform input{ height:33px; line-height:33px; overflow:hidden;background:url(../img/xb16.jpg) repeat-x; border:1px #ccc solid; width:265px; padding:0 5px;}
+.regform .jianju{ margin-left:10px; color:#999999;line-height:36px;}
+.regform .yzmmess{ margin-left:95px !important; margin-left:48px; float:left; color:#999999; margin-bottom:15px;}
+.regform .yuedu{margin-left:95px !important; margin-left:48px; float:left;}
+.regform font{color:#ff0000;}
+.regform .zhuce{ background:url(../img/anniu.png); width:132px; height:42px; margin-left:170px !important; margin-left:85px; float:left; color:#FFF; font-size:16px; font-weight:bold; line-height:42px; text-align:center;}
+.regform .zhuce a{ display:block; color:#FFF;}
+.regform .right{ background:url(../img/xb13.jpg) no-repeat 0px 9px; padding-left:20px;}
+.regform .err{ background:url(../img/xb14.jpg) no-repeat 0px 9px; padding-left:20px;}
+
+
+.sucess{ padding:100px 0px; background-color:#fff;}
+.sucess ul{ margin-left:170px;}
+.sucess img { float:left; margin-right:30px;}
+.sucess p { font-size:25px;color:#e36127; line-height:50px;}
+.sucess span{ font-size:14px;}
+
+.login{ padding:0px 0px; background-color:#fff; height:353px;width: 450px;
+    margin:40px auto;box-shadow: 0 7px 13px 2px #ccc;border-radius: 5px;border:none;}
+.login .xian{ margin:15px 0px 10px 0px; height:0px;}
+.login .right{ overflow:hidden; width: 310px;margin: 0 auto}
+.login .font4{ margin:0 auto;}
+.login .loginform{  margin-top:50px;}
+.login .loginform li span{font-size:14px;}
+.login .zcanniu{ margin-left: 100px;}
+.login .denglu{cursor : auto;  margin-top:10px;background:url(../img/anniu.png); width:311px; height:42px; color:#FFF; font-size:16px; font-weight:bold; line-height:42px; text-align:center;}
+.login .denglu a{ display:block; color:#FFF;
+    cursor: auto ;}
+.login .loginform input{ border:solid 1px #ccc; height:33px;width:270px;background:url(../img/xb16.jpg) repeat-x; padding-left:8px;border: none;outline: none}
+.login .defautfont{ color:#999999;}
+.login .yanzheng{width:70px;}
+.login .jizhu{margin-left:-18px;text-align: left}
+.login .jizhu li{margin: 10px 0;}
+.login .jizhu input{width:15px; height:15px; margin-top:1px; float:left;margin-left: 20px;margin-right: 5px;}
+.login .errmess{ border:1px solid #ff0000; background-color:#FEEDE5;width:273px; padding-left:5px;margin-left: 56px;}
+.login .errmess1{ border:1px solid #ff0000; background-color:#FEEDE5;width:143px; padding-left:5px;margin-left: 56px;}
+
+.login .zhuce{padding-top: 20px; margin: 0px auto;text-align: center;}
+.login .zhuce li span{font-size:14px;}
+.login .zhuce .inputstyle{ border:solid 1px #ccc; height:33px;width:270px;background:url(../img/xb16.jpg) repeat-x; padding-left:8px;}
+.login .queding{cursor : auto;  margin-top:20px; width:100%; height:42px;  color:#FFF; font-size:16px; font-weight:bold; line-height:42px; text-align:center;}
+.login .queding a{ display:block; color:#FFF;background:url(../img/anniu.png);width:132px;margin: 0px auto;text-align: center;
+    cursor: auto ;}
+.jizhu .checkbox {
+    width: 35%;
+    display: inline-block;
+}

@@ -1,0 +1,242 @@
+html body{
+    line-height: 1.75em;
+}
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { font-family: Microsoft YaHei,'ËÎÌå' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;}
+.main-header {
+    text-align: center;
+    background-image: url("../images/logo_back.PNG");
+}
+.main-header h2{
+    margin: 0;
+    padding: 0;
+}
+.base-img {
+    margin: 0;
+    padding: 0;
+}
+.function-bar a,span{
+    font-size: 0.8em;
+    text-decoration: none;
+}
+.span-list{
+    text-align: left;
+}
+.tab-bar{
+    margin: 20px 0 0 0;
+}
+.main-navigation {
+    background-color: #1f506e;
+}
+.main-navigation li{
+    list-style: none;
+    display: inline;
+}
+.main-navigation li a{
+    display: block;
+    color: #ffffff;
+    font-size: 1.3em;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    padding: 10px 30px;
+}
+.main-navigation li a:hover{
+    color: #ffffff;
+    background-color: #002e49;
+}
+
+.second-navigation {
+    background-color: #efefef;
+}
+.second-navigation li{
+    list-style: none;
+    display: inline;
+}
+.second-navigation li a{
+    display: block;
+    color: #333333;
+    font-size: 1.3em;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    padding: 10px 30px;
+}
+.second-navigation li a:hover{
+    color: #333333;
+    background-color: #cccccc;
+}
+
+.content-wrap{
+    margin: 10px 0;
+}
+.content-wrap .panel-heading-title{
+    border-bottom: #269abc 1px solid;
+}
+.content-wrap .panel-heading-title a{
+    color: #b0b0b0;
+}
+.content-wrap ul{
+    margin: 0;
+    padding: 0;
+    line-height: 2em;
+}
+.content-wrap ul li{
+    list-style: none;
+}
+
+.content-wrap ul li b{
+    color: #ff4401;
+    margin: 0 5px 0 0;
+}
+
+.content-wrap ul li a{
+    text-decoration: none;
+    color: #101010;
+
+}
+.content-wrap ul li a:hover{
+    text-decoration: underline;
+    color: #ff4401;
+}
+.panel-body .input-group{
+    margin: 0 0 10px 0;
+}
+.panel-body button{
+    margin: 0 10%;
+}
+.color-green{
+    color: #00ff11;
+}
+.color-blue{
+    color: #002e49;
+}
+.panel-heading-title{
+    font-size: 1.3em;
+    border-bottom: #002e49 1px solid;
+}
+.panel-heading-title span a{
+    font-size: 0.8em;
+}
+.widget-h{
+    padding: 5px 0;
+    border-bottom: #c0c0c0 1px solid;
+}
+.main-footer span{
+    text-align: left;
+}
+.main-footer ul{
+    margin: 10px 0;
+    padding: 0;
+    font-size: 0.8em;
+    color: #a0a0a0;
+}
+.main-footer ul li{
+    list-style: none;
+
+}
+.contactus{
+   text-align: center;
+}
+.contactus h5{
+    font-family: Arial;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff4401;
+}
+.copyright{
+    background-color: #666666;
+    line-height: 4.7em;
+    color: #ffffff;
+    text-align: center;
+}
+.copyright a{
+    color: #ffffff;
+}
+.carousel-famous{
+    margin-bottom: 10px;
+}
+.widget-thumbnail{
+    text-align: center;
+}
+.widget-thumbnail h4{
+    font-size: 1.2em;
+}
+.widget-thumbnail p{
+    font-size: 0.2em;
+    margin: 0;
+}
+.news-list{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.banner-panel {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.carousel-inner-index {
+    height: 300px;
+}
+.carousel-inner-other {
+    height: 200px;
+}
+.panel-body-thumbnail {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+.person-pm{
+    border: #c0c0c0 1px solid;
+    padding: 0 10px 10px 10px;
+    background: url(../images/shu.png) 12px 55px no-repeat;
+}
+.person-pm dt{
+    font-size: 1.5em;
+    border-bottom: #c0c0c0 1px dashed;
+    line-height: 2.0em;
+}
+.person-pm dt a{
+    font-size: 0.5em;
+    font-family: "Î¢ÈíÑÅºÚ", "ÐÂËÎÌå";
+    color: #8d949b;
+}
+.person-pm dd{
+    line-height: 34px;
+    /*height: 34px;*/
+    padding-left: 22px;
+}
+.pmlist{
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+.navbar-index{
+    margin-bottom: 0;
+    background-color: #e0e0e0;
+}
+.famous-panel-thumbnail .panel-body{
+    padding-bottom: 0;
+}
+#divStaticBar{
+    background-color: #002e49;
+    color: #ffffff;
+}
+#divStaticBar a{
+    color: #fff;
+}
+#divStaticBar a:hover{
+    background-color: #269abc;
+    display: block;
+}
+.content-jibai-back{
+    width: 920px;
+    height: 600px;
+    background-image: url("../images/upload/jibai_back/jibai_maozedong.jpg");
+}
+.jibai-button input{
+    margin: 10px 13px;
+}
+.h1-jyg{
+    margin: 100px 0 0 0;
+}
+.h1-comment{
+    color: #ffffff;
+}

@@ -1,0 +1,55 @@
+.left-navbar{
+    border: #ececec 1px solid;
+    font-size: 16px;
+    font-family: Microsoft YaHei, '����' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+.left-navbar ul li{
+    border-bottom: #ececec 1px solid;
+    text-align: center;
+}
+.left-navbar ul li a:hover {
+     text-decoration-line: none;
+ }
+.bg-title{
+    background-color: #cccccc;
+}
+.user-function {
+    margin: 0 0 20px 0;
+}
+.user-safe ul li a {
+    color: #ffffff;
+    text-decoration-line: none;
+}
+.user-safe ul li a:hover{
+    color: #ffffff;
+    /*text-decoration-line: none;*/
+}
+
+.text-a-color-green a{
+    color: #50cc00;
+    font-weight: bold;
+}
+.tab-pane {
+    border-left: #e0dcdc 1px solid;
+    border-right: #e0dcdc 1px solid;
+    border-bottom: #e0dcdc 1px solid;
+}
+#shengping,#chengzhang,#shenghuo{
+    background-color: #ffffff;
+}
+
+/*祭拜页面祭品相关样式*/
+.jibai-jingwu01{
+    margin-bottom: 5px;
+    height: 100px;
+}
+.jibai-jingwu02{
+    margin-bottom: 5px;
+    height: 50px;
+}
+.jibai-jingwu03{
+    height: 100px;
+}
+.panel-info-background{
+    background:rgba(255, 255, 255, 0.6)!important;
+}

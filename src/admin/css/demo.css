@@ -1,0 +1,508 @@
+@CHARSET "utf-8";
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;padding: 0;border: 0;outline: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;vertical-align: baseline;}
+body {
+    color: #2f332a;
+    font: 15px/21px verdana,sans-serif;
+    background: #f0f6e4 \9;
+    min-width: 1100px;
+    overflow: scroll;
+}
+h1, h2, h3, h4, h5, h6 {color: #2f332a;font-weight: bold;font-family: Helvetica, Arial, sans-serif;padding-bottom: 5px;}
+h1 {font-size: 24px;line-height: 34px;text-align: center;}
+h2 {font-size: 14px;line-height: 24px;padding-top: 5px;}
+h6 {font-weight: normal;font-size: 12px;letter-spacing: 1px;line-height: 24px;text-align: center;}
+a {color:#3C6E31;text-decoration: underline;}
+a:hover {background-color:#3C6E31;color:white;}
+input.radio {margin: 0 2px 0 8px;}
+input.radio.first {margin-left:0;}
+input.empty {color: lightgray;}
+code {color: #2f332a;}
+.highlight_red {color:#A60000;}
+.highlight_green {color:#A7F43D;}
+li {list-style: circle;font-size: 12px;}
+li.title {list-style: none;}
+ul.list {margin-left: 17px;}
+
+div.content_wrap {width: 600px;height:380px;}
+div.content_wrap div.left{float: left;width: 250px;}
+div.content_wrap div.right{float: right;width: 340px;}
+div.zTreeDemoBackground {width:250px;height:362px;text-align:left;}
+
+ul.ztree {margin-top: 10px;border: 1px solid #617775;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}
+ul.log {border: 1px solid #617775;background: #f0f6e4;width:300px;height:170px;overflow: hidden;}
+ul.log.small {height:45px;}
+ul.log li {color: #666666;list-style: none;padding-left: 10px;}
+ul.log li.dark {background-color: #E3E3E3;}
+
+/* ruler */
+div.ruler {height:20px; width:220px; background-color:#f0f6e4;border: 1px solid #333; margin-bottom: 5px; cursor: pointer}
+div.ruler div.cursor {height:20px; width:30px; background-color:#3C6E31; color:white; text-align: right; padding-right: 5px; cursor: pointer}
+
+/* user*/
+.addNew{display: none;}
+.addNew1{display: none;}
+.searchDiv{display: none;}
+.exportDiv{display: none;}
+
+/*login*/
+#login_submit_btn{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/*瀵筬orm鍐呴儴缁撴瀯鏄剧ず璋冩暣*/
+/*.pratio-group{
+	width:31.6%;
+	margin:10px 2% 10px 0;
+	display:inline-block;
+	position: relative;
+}
+
+.pratio-group:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+
+.pratio-group:last-child{
+	margin-right:0%;
+}
+
+.pratio-group label{
+	width: 30%;
+	height:34px;
+	float:left;
+	line-height:34px;
+	display:inline-block;
+}
+
+.pratio-group em{
+	position: absolute;
+	right: 8px;
+	line-height: 34px;
+	z-index: 3;
+	cursor: pointer;
+}
+*/
+
+.form-group > label{
+    line-height: 34px;
+    float: left;
+}
+
+.form-horizontal .control-label{
+    line-height: 25px;
+    padding-left:0;
+}
+
+.pinput{
+    width:70%;
+    float:right;
+    line-height: 34px;
+    display:inline-block;
+    position: relative;
+}
+
+.pinput > input[readonly]{
+    cursor: pointer;
+}
+
+.fileinput{
+    text-decoration: none;
+    color: #999;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+    overflow : hidden;
+    position: relative;
+    width: 100%;
+}
+
+.fileinput:link{
+    background: #fff;
+    color: #999;
+    text-decoration: none;
+}
+.fileinput:visited{
+    background: #fff;
+    color: #999;
+    text-decoration: none;
+}
+.fileinput:hover{
+    background: #fff;
+    color: #999;
+    text-decoration:underline;
+}
+.fileinput:active{
+    background: #fff;
+    color: #999;
+    text-decoration: none;
+}
+
+.fileinput i{
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.pbtn-group{
+    text-align: right;
+    margin: 10px 6% 10px 0;
+}
+
+.pbtn-group button{
+    margin: 0 10px;
+}
+
+.pdate-time{
+    background: url(../img/calender.png) no-repeat right center;
+    cursor: pointer!important;
+}
+
+.heading-btns{
+    float: right;
+}
+
+.fileinput-button {
+    position: absolute;
+    right: 5px;
+    top:8px;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.fileinput-button input {
+    position: absolute;
+    right: 0;
+    top:0;
+    margin: 0;
+    padding:0;
+    -ms-filter: 'alpha(opacity=0)';
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0;
+    font-size: 14px;
+    direction: ltr;
+    cursor: pointer;
+    width: 21px;
+    height: 21px;
+}
+
+/* Fixes for IE < 8 */
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
+
+a.fileinput{
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    padding-right: 10px;
+}
+
+a.fileinput i:hover{
+    color: red;
+}
+
+.choseInput{
+    line-height: 34px;
+    margin-left: 35px;
+    height: 34px;
+}
+
+.choseInput span{
+    background: #f5f5f5;
+    padding: 0 5px;
+    border-color: #ddd;
+    border-radius:3px;
+    margin: 0 2px 2px 2px;
+    display: inline-block;
+}
+
+.choseInput span i{
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.textLabel{
+    float: left;
+}
+
+textarea.textAreaInput{
+    float:left;
+    height: 60px;
+}
+
+.GoodsPic{
+    position: relative;
+    width:90px;
+    height:90px;
+    margin: 15px auto;
+}
+
+.GoodsPicLabel{
+    background-color: rgba(0, 0, 0, 0.4);
+    bottom: 0;
+    color: white;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.scriptTextArea{
+    height:90px;
+    border: 0;
+    width: 100%;
+    background: transparent;
+}
+
+.GoodsPic img{
+    border-radius:3px;
+    box-shadow:0 0 2px rgba(255, 255, 255, 0.5);
+    width:90px;
+    height:90px;
+}
+
+.pinput img{
+    width:90px;
+    height:90px;
+}
+
+
+.pinput > i{
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.defaultPic:active, .defaultPic:visited{
+    text-decoration:none;
+}
+
+.defaultPic{
+    display:block;
+    text-decoration:none;
+    width:92px;
+    height:92px;
+    position:relative;
+    line-height: 90px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius:4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    -moz-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    -ms-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    -wibkit-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    -o-transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.defaultPic img{
+    border: 0;
+}
+
+.defaultPic:hover{
+    text-decoration:none;
+    color:#66afe9;
+    cursor: pointer;
+    border-color: #66afe9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none;
+    background-color: white;
+}
+
+.table > tbody > tr > td.imgTD{
+    width:90px;
+    text-align:center;
+}
+
+a{
+    font-size: 14px;
+    text-decoration: none;
+}
+
+a.blue {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+a.blue:hover{
+    color: #337ab7;
+    text-decoration: underline;
+    background-color: rgba(255,255,255,0);
+}
+
+a.blue:visited{
+    color: #337ab7;
+    text-decoration: none;
+}
+
+a.blue:active{
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.deletetxt{
+    color: #ccc;
+    text-decoration: line-through;
+}
+
+.wspacetext{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break:keep-all;
+}
+
+.homenote{
+    margin: 60px 0;
+    text-align: center;
+}
+
+.homenoterow{
+    box-shadow:0 0 8px #777;
+}
+
+.warnCls{
+    color: red;
+    line-height: 34px;
+}
+
+.tipCls{
+    color: orange;
+}
+
+
+.passCls{
+    color: green;
+}
+
+.oldCls{
+    color: gray;
+}
+
+/*寮瑰嚭妗嗘渶灏忛珮搴�/
+.modelMinHeight{
+	min-height: 430px;
+}
+
+/*visitLink*/
+.visitLink{
+    color: red;
+    border: 0;
+    line-height: 34px;
+}
+
+table tbody tr td{
+    word-break:break-all;
+}
+
+/*鍥炬爣瀹氫綅*/
+.iconpos-right{
+    position: absolute;
+    bottom:0;
+    right: 15px;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th
+{
+    line-height: 150%;
+}
+
+.hiddenTag{
+    display:none;
+}
+
+.button_content{
+    padding: 150px 0 0 0;
+    text-align: center;
+}
+.picImg{
+    max-width: 500px;
+    max-height: 500px;
+}
+.txt_red{
+    color: red;
+}
+.txt_green{
+    color: green;
+}
+
+ul.nav-tabs > li
+{
+    color: #337ab7;
+}
+
+.disabled_cls{
+    color: #a4a4a4;
+}
+
+#side-menu li a:hover
+{
+    color: red;
+}
+.hideClass{
+    display: none;
+}
+
+
+.goodsSearchLabel{
+    float: left;
+    padding-left: 25px;
+}
+
+.goodsSearchinput{
+    padding-left: 45px;
+    width: 70%;
+    float: left;
+    display: inline-block;
+    position: relative;
+}
+#paginator{
+    /*margin: 0;*/
+    float:left;
+}
+#paginator1{
+    /*margin: 0;*/
+    float:left;
+}
+.center-block {
+    overflow: hidden;
+    text-align: center !important;
+}
+
+.returncls::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.returncls > ul {
+    list-style: outside none none;
+}
+.returncls > ul > li {
+    float: left;
+    font-size: 15px;
+    list-style: outside none none;
+    width: 25%;
+}
+.returnnav {
+    border-bottom: 1px solid #ddd;
+}
+.returncls {
+    margin-left: 60px;
+    padding: 5px;
+}
+.returnempty {
+    margin-left: 60px;
+    padding: 5px;
+}
+.returnOperate {
+    padding: 1px 0;
+}
+
