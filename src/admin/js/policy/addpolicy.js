@@ -4,18 +4,14 @@
 var base_url_infomation='/rs/infomation';
 var currentPageNo = 1;
 var pageRows = 10;
-var pageRows1 = 10;
-var issearchmember=false;
 var operation = "add";
 function back(){
     history.go(-1);
 }
 
 $(function(){
-    $('#goods_buttonid').bind("click", onSaveClick);
+    UE.getEditor('userProtocolAddUE');
     $('#goods_buttonid1').bind("click", onSaveClick1);
-    $('#copyGoods0').bind("click", onCopySaveClick0);
-    $('#copyGoods1').bind("click", onCopySaveClick1);
     var id=getQueryByName("id");
     var read=getQueryByName("read");
     var copy=getQueryByName("copy");
@@ -82,7 +78,6 @@ function onUploadDetailPic(formObject, fileComp, list) {
 //根据id查询产品数据
 function getGoodsById(id){
     $.showActionLoading();
-    CKEDITOR.instances.myContent.setData('');
     zhget("/rs/infomation/"+id).then(function(result) {
         $.hideActionLoading();
         if(result.code == 200){
@@ -92,7 +87,7 @@ function getGoodsById(id){
             $("#remark").val(result.rows[0].remark);
             $("#unique_code").val(result.rows[0].unique_code);
             setTimeout(function(){
-                editor.setData(result.rows[0].details);
+                UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
             },300);
         }
     });
@@ -105,33 +100,10 @@ function status(selected){
 
 }
 
-function onSaveClick(){
-    if($("#goods_buttonid").attr("_getGoodsIsActivityIn")=="1"){
-        if(confirm("该产品正在活动中，请检查活动信息")){
-            saveData(0)
-        }
-    }else{
-        saveData(0)
-    }
-
-}
 function onSaveClick1(){
-    if($("#goods_buttonid1").attr("_getGoodsIsActivityIn")=="1"){
-        if(confirm("该产品正在活动中，请检查活动信息")){
-            saveData(1)
-        }
-    }else{
-        saveData(1)
-    }
-
+    saveData()
 }
-function onCopySaveClick0(){
-    saveData(0,'copy')
-}
-function onCopySaveClick1(){
-    saveData(1,'copy')
-}
-function  saveData(status,copyGoods){
+function  saveData(){
     var title=$.trim($("#title").val());
     if(title==""){
         return showError("请输入标题");
@@ -146,20 +118,17 @@ function  saveData(status,copyGoods){
         pic_abbr:pic_abbr,
         remark:remark,
         unique_code:unique_code,
-        status:status
     };
-    var details=editor.getData();
+    var details = UE.getEditor('userProtocolAddUE').getContent();
     if(details==""){
-        return showError("请输入课程详情");
+        return showError("请输入详情");
     }else{
         data.details=details;
     }
     $.showActionLoading();
     $(this).attr("disabled","disabled");
-    if(copyGoods=='copy'){
-        operation='add';
-    }
-    if (operation == "add") {
+    var id = $("#id").val();
+    if (!id) {
         zhpost(base_url_infomation,data).then(function(result) {
             $.hideActionLoading();
             if(checkData(result,'post')) {
@@ -167,7 +136,6 @@ function  saveData(status,copyGoods){
             }
         });
     } else {
-        var id = $("#id").val();
         zhput(base_url_infomation + "/" + id, data).then(function(result) {
             if(checkData(result,'put')) {
                 location.href="admin.html#pages/policy/policyList.html"

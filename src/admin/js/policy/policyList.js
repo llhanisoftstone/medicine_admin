@@ -12,6 +12,7 @@ $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
+        debugger
         onSearchClick();
         searchData();
     }else{
@@ -67,11 +68,11 @@ function queryList() {
             data.search=1;
         }
         var unique_code=$("#unique_code").val();
-        if(unique_code!=''){
+        if(unique_code!='全部'){
             data.unique_code=unique_code;
         }
         var is_hot=$("#is_hot").val();
-        if(is_hot!=''){
+        if(is_hot!='全部'){
             data.is_hot=is_hot;
         }
     }
@@ -86,7 +87,7 @@ function queryList() {
                 }else{
                     result.rows[i].unique_code = "政策类";
                 }
-                result.rows[0].pic_abbr = targetUrl + result.rows[0].pic_abbr;
+                result.rows[i].pic_abbr = targetUrl + result.rows[i].pic_abbr;
             }
             buildTable(result, 'menu-template', 'menu-placeholder');
         }
@@ -96,12 +97,33 @@ function queryList() {
 function onAddClick() {
     location.href="admin.html#pages/policy/addpolicy.html"
 }
-
+function onSetUpClick(id,ishot) {
+    if(ishot == 0){
+        if(confirm("确认要设置该政策为热点信息吗？")) {
+            zhput(base_url_course+"/"+id,{is_hot:1}).then(function (rs) {
+                if(checkData(rs,'put')) {
+                    queryList();
+                }
+            })
+        }
+    }else if (ishot == 1){
+        if(confirm("确认要取消该政策为热点信息吗？")) {
+            zhput(base_url_course+"/"+id,{is_hot:0}).then(function (rs) {
+                if(checkData(rs,'put')) {
+                    queryList();
+                }
+            })
+        }
+    }
+}
 function onUpdateClick(id,copy) {
     var thispage  = window.location.hash;
     thispage = thispage.replace('#','');
     setlocalStorageCookie("thispage",thispage);
     var searchForm = $("#TalentTryoutSearchForm").form2json();
+    if (searchForm.unique_code == '全部'){
+        delete searchForm.unique_code;
+    }
     console.log(searchForm);
     setlocalStorageCookie("searchForm",JSON.stringify(searchForm));
     var pageRecord = $("#paginator li.active a").text();
@@ -118,14 +140,4 @@ function onSearchClick() {
         height : 'toggle',
         opacity : 'toggle'
     }, "slow");
-}
-
-function onDeleteClick(id) {
-    if(confirm("确认要删除？")) {
-        zhdelete(base_url_course + "/" + id, null).then(function (result) {
-            if(checkData(result,'delete')) {
-                queryList();
-            }
-        });
-    }
 }
