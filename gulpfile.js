@@ -317,7 +317,7 @@ gulp.task('MiniCoreJs', function() {
 var app_publish = 'dist'
 var admin_publish = 'dist_ad/admin'
 var admin_pc = 'dist_ad/pc'
-var wx_push = 'E:\\06食盒\\code\\fbox\\public'
+var wx_push = 'E:\\06政策答题\\code\\fbox\\public'
 var app_android_push = 'D:\\JavaWorkspaces\\androidworkspace\\fbox_android\\assets\\apps\\fbox\\www';
 var formatURL = "http://fbox.o2oshangjia.cn";
 var formatWS = "ws://112.126.90.118:1777";
