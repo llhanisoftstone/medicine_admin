@@ -99,7 +99,7 @@ function onSavecategoryData(){
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
     if(modelid==""||modelid==null||modelid==undefined){
-        zhpost(base_url_goodsCategory,{name:name}).then(function(result){
+        zhpost(base_url_goodsCategory,{name:name,auto_id:1}).then(function(result){
             if(checkData(result,'post')){
                 resetinput();
                 $(".addModels").hide();

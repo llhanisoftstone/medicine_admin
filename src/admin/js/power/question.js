@@ -110,7 +110,7 @@ function queryList(){
                         integrals[i].organiz_name = organizArr[j].name
                     }
                 }
-                integrals[i].answers = rightKey(integrals[i].answer)
+                integrals[i].answers = rightKey(integrals[i].answer_json)
             }
             buildTable(result, 'goodsCategory1-template', 'goodsModel-placeholder');
         }

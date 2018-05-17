@@ -11,13 +11,7 @@
  * Created by kechen on 2016/10/13.
  */
 var base_url_goodsCategory='/rs/questions';
-var currentPageNo = 1;
-var pageRows = 10;
-var issearchModel=false;
-var issearchValue=false;
 var integrals;
-var categoryArr=[]
-var organizArr=[]
 $(function() {
     getorg();
 });
@@ -60,6 +54,9 @@ function getorg(){
 //     }
 // }
 function queryList(){
+    if(!getQueryString("id")){
+        return
+    }
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
     var comp_id=getCookie('compid');
@@ -77,24 +74,103 @@ function queryList(){
                 $("#rank").val(result.rows[0].rank)
                 var indexCode = integrals[i];
             }
-            buildTable(result, 'goodsCategory1-template', 'answer');
+            var answer={rows:result.rows[0].answer_json}
+            buildTableNoPage(answer, 'goodsCategory1-template', 'answer');
         }
     })
+}
+function addoption(){
+    $('#userHelpModal').modal('show');
+}
+function onSaveHelpClick(){
+    if(!$("#HelpId").val().trim()){
+        showError("请输入选项")
+        return
+    }
+    $('#userHelpModal').modal('hide');
+    var va = $("#HelpId").val()
+    $("#HelpId").val('')
+    var addawser=[{answer:va}]
+    if($("#answer").find("tr").length>0){
+        addawser[0].right=false
+    }else{
+        addawser[0].right=true
+    }
+    buildTableByPage(addawser, 'goodsCategory1-template', 'answer',true);
+}
+function escmodal(){
+    $('#userHelpModal').modal('hide');
+    $("#HelpId").val('')
+}
+function onDeleteClick(that){
+    $(that).parents('tr').remove()
+}
+function changeText(that){
+    if($(that).is(':checked')) {
+        $(that).parents('#answer').find(".ri").val('false')
+        $(that).val("true")
+    }
 }
 
 function backquestion(){
     window.location.href="/admin/admin.html#pages/question.html";
 }
-//重置
-function resetinput(){
-    $("#userAddForm", $(".reasonRefund"))[0].reset();
-}
-
-//搜索
-function searchbtn(){
-    issearchModel=true;
-    currentPageNo=1;
-    queryList();
+function savedata(){
+    var data={}
+    if(!$("#name").val().trim()){
+        showError("题目不能为空")
+        return
+    }
+    if($("#videonames").val()=='-1'){
+        showError("请选择分类")
+        return
+    }
+    if($("#shopnames").val()=='-1'){
+        showError("请选择出题者")
+        return
+    }
+    if($("#rank").val()=='-1'){
+        showError("请选择难度")
+        return
+    }
+    if($("#answer").find("tr").length<2){
+        showError("选项最少为2个")
+        return
+    }
+    if($("#answer").find("tr").length>4){
+        showError("选项最多为4个")
+        return
+    }
+    data.name=$("#name").val()
+    data.category_id=$("#videonames").val()
+    data.organiz_id=$("#shopnames").val()
+    data.rank=$("#rank").val()
+    data.answer_json=[]
+    $("#answer").find("tr").each(function(i,v){
+        var right
+        if($(v).find(".ri").val() == 'true'){
+            right=true
+        }else{
+            right=false
+        }
+        data.answer_json.push({answer:$(v).find(".co").html(),right:right})
+    })
+    if(getQueryString("id")){
+        zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
+            if(result.code == 200){
+                showSuccess("修改成功")
+                window.location.href="/admin/admin.html#pages/question.html";
+            }
+        })
+    }else{
+        data.auto_id=1
+        zhpost(base_url_goodsCategory,data).then(function(result){
+            if(result.code == 200){
+                showSuccess("保存成功")
+                window.location.href="/admin/admin.html#pages/question.html";
+            }
+        })
+    }
 }
 Handlebars.registerHelper('equal', function(v1,v2, options) {
     if(v1 ==v2) {
