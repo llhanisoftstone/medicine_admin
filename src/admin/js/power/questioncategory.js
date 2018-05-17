@@ -4,7 +4,7 @@
 /**
  * Created by kechen on 2016/10/13.
  */
-var base_url_goodsCategory='/rs/organiz';
+var base_url_goodsCategory='/rs/questions_category';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -77,11 +77,11 @@ function onUpdateClick(id,name) {;
     }, "slow");
 }
 function delClick(id) {
-    zhget("/rs/questions", {organiz_id:id}).then(function (result) {
+    zhget("/rs/questions", {category_id:id}).then(function (result) {
         if (result.code == 200) {
-            showError("该机关下挂有题目，不能删除");
+            showError("该分类下挂有题目，不能删除");
         } else {
-            if (confirm("确定要删除该机关吗？")) {
+            if (confirm("确定要删除该分类吗？")) {
                 zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
                     checkData(result, 'delete');
                     if($("#goodsModel-placeholder").find("tr").length == 1){
