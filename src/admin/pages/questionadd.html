@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="" class="reasonRefund">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                        <li id="pid">
+                            <a>题目管理</a>
+                        </li>
+                        <li>题目管理</li>
+                    </ul>
+                    <div style="float: right;">
+                        <button type="button" id="addNew" onclick="backquestion()" class=" fa btn btn-default fa-share-square">返回</button>
+                    </div>
+                    <!--<span class="fa fa-home">&nbsp;&nbsp;</span>产品规格列表-->
+                </div>
+
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+
+                    <div class="searchDataDiv">
+                        <div class="reasonSearch">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper"></div>
+                                    <!-- /.table-responsive -->
+
+                                    <form role="form" id="reasonSearchForm">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>题目名称：</label>
+                                                <div class="pinput">
+                                                    <input placeholder="题目名称" id="name" name="name"
+                                                           maxlength="50" class="form-control points">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>分类：</label>
+                                                <div class="pinput">
+                                                    <select id="videonames" class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label form="shopnames">出题者：</label>
+                                                <div class="pinput">
+                                                    <select id="shopnames" class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>难度：</label>
+                                                <div class="pinput">
+                                                    <select id="rank" class="form-control">
+                                                        <option value="-1">全部</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            选项
+                            <button class="fa fa-plus-circle btn btn-default" id="addoption" onclick="addoption()">新增选项</button>
+                        </div>
+
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                                <thead>
+                                <tr>
+                                    <th class="col-sm-5">选项</th>
+                                    <th class="col-sm-5">答案</th>
+                                </tr>
+                                </thead>
+                                <tbody id="answer">
+                                </tbody>
+                            </table>
+                            <div style="text-align: center">
+                                <buttton class="fa fa-save btn btn-default" id="save" onclick="savedata()">保存</buttton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+<div id="userHelpModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">选项</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" id="user_form">
+                    <input type="text" maxlength="10" id="HelpId" class="form-control points">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="escmodal()">取消</button>
+                <button onclick="onSaveHelpClick()" type="button" class=" btn btn-default" id="user_buttonid">确认</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script id="goodsCategory1-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr>
+        <td style="text-align:center;" class="co">{{answer}}</td>
+        <td style="text-align: center;">
+            {{#equal right true}}
+            <input type="radio" name="right" value="true" checked onclick="changeText(this)" class="ri">
+            {{/equal}}
+            {{#equal right false}}
+            <input type="radio" name="right" value="false" onclick="changeText(this)" class="ri">
+            {{/equal}}
+            <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this)"></span>
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/power/questionadd.js"></script>
+</body>
+
+</html>
