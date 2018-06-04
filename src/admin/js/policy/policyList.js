@@ -100,7 +100,8 @@ function onAddClick() {
 function onSetUpClick(id,ishot) {
     if(ishot == 0){
         if(confirm("确认要设置该政策为热点信息吗？")) {
-            zhput(base_url_course+"/"+id,{is_hot:1}).then(function (rs) {
+            var time = new Date(new Date().getTime()).Format('yyyy-MM-dd hh:mm:ss');
+            zhput(base_url_course+"/"+id,{is_hot:1,hot_time:time}).then(function (rs) {
                 if(checkData(rs,'put')) {
                     queryList();
                 }
@@ -134,7 +135,19 @@ function onUpdateClick(id,copy) {
         location.href="admin.html#pages/policy/addpolicy.html?id="+id;
     }
 }
-
+function onDeleteClick(id) {
+    if(confirm("确认要删除？")) {
+        zhdelete(base_url_course + "/" + id).then(function (result) {
+            console.log(result);
+            if (result.code == 200) {
+                queryList();
+                showSuccess('删除成功！');
+            } else {
+                showError('删除失败！');
+            }
+        });
+    }
+}
 function onSearchClick() {
     $(".tryoutSearch", $(".reasonRefund")).animate({
         height : 'toggle',
