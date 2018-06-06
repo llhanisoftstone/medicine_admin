@@ -23249,7 +23249,8 @@
                                     newSrc = catcherUrlPrefix + cj.url;
                                     domUtils.setAttributes(ci, {
                                         "src": newSrc,
-                                        "_src": newSrc
+                                        "_src": newSrc,
+                                        "style": "width: 100%;height: auto"
                                     });
                                     break;
                                 }
@@ -23354,6 +23355,7 @@
                                     me.execCommand('insertimage', {
                                         src: opt.snapscreenUrlPrefix + rs.url,
                                         _src: opt.snapscreenUrlPrefix + rs.url,
+                                        style: "width: 100%;height: auto",
                                         alt: rs.title || '',
                                         floatStyle: opt.snapscreenImgAlign
                                     });
@@ -23769,6 +23771,7 @@
                     if (loader) {
                         loader.setAttribute('src', link);
                         loader.setAttribute('_src', link);
+                        loader.setAttribute('style', "width: 100%;height: auto");
                         loader.setAttribute('title', data.title || '');
                         loader.setAttribute('alt', data.original || '');
                         loader.removeAttribute('id');
@@ -24526,6 +24529,7 @@
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
                                 loader.setAttribute('_src', link);
+                                loader.setAttribute('style', "width: 100%;height: auto");
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');

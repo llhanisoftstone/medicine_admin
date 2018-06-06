@@ -31,6 +31,7 @@ Handlebars.registerHelper('getindex', function(v1, options) {
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
+    queryList();
 }
 function searchData(){
     isSearch=true;
