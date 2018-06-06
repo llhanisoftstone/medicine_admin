@@ -54,18 +54,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4 form-group">
-                                            <label>用户状态：</label>
-                                            <div class="pinput">
-                                                <select id="status" class="form-control"  >
-                                                    <option value="">全部</option>
-                                                    <option value="1">启用</option>
-                                                    <option value="0">禁用</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-md-4 form-group">-->
+                                            <!--<label>用户状态：</label>-->
+                                            <!--<div class="pinput">-->
+                                                <!--<select id="status" class="form-control"  >-->
+                                                    <!--<option value="">全部</option>-->
+                                                    <!--<option value="1">启用</option>-->
+                                                    <!--<option value="0">禁用</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
 
                                 <div class="form-group  pbtn-group">
@@ -90,7 +90,7 @@
                             <td>用户昵称</td>
                             <td>注册时间</td>
                             <th>用户状态</th>
-                            <th>操作按钮</th>
+                            <!--<th>操作按钮</th>-->
                         </tr>
                         </thead>
                         <tbody id="event-placeholder">
@@ -120,16 +120,16 @@
             {{#is_judge status 0}}禁用
             {{else}}启用
             {{/is_judge}}</td>
-        <td>
-            <!--<span class="fa fa-list-alt editOrder" style="cursor: pointer;" onclick="showFansDetailInfo('{{id}}')" title="查看"></span>-->
-           <!--&nbsp-->
-            {{#getuserStatus status}}
-            <span class="fa fa-unlock  editOrder" style="cursor: pointer;" onclick="forbid('{{id}}','{{status}}')" title="启用"></span>
-            {{else}}
-            <span class="fa fa-lock editOrder" style="cursor: pointer;" onclick="forbid('{{id}}','{{status}}')" title="禁用"></span>
-            {{/getuserStatus}}
+        <!--<td>-->
+            <!--&lt;!&ndash;<span class="fa fa-list-alt editOrder" style="cursor: pointer;" onclick="showFansDetailInfo('{{id}}')" title="查看"></span>&ndash;&gt;-->
+           <!--&lt;!&ndash;&nbsp&ndash;&gt;-->
+            <!--{{#getuserStatus status}}-->
+            <!--<span class="fa fa-unlock  editOrder" style="cursor: pointer;" onclick="forbid('{{id}}','{{status}}')" title="启用"></span>-->
+            <!--{{else}}-->
+            <!--<span class="fa fa-lock editOrder" style="cursor: pointer;" onclick="forbid('{{id}}','{{status}}')" title="禁用"></span>-->
+            <!--{{/getuserStatus}}-->
 
-        </td>
+        <!--</td>-->
     </tr>
     {{/datas}}
 </script>
