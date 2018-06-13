@@ -23247,6 +23247,7 @@
                             for (j = 0; cj = list[j++];) {
                                 if (oldSrc == cj.source && cj.state == "SUCCESS") {  //抓取失败时不做替换处理
                                     newSrc = catcherUrlPrefix + cj.url;
+                                    console.log(newSrc);
                                     domUtils.setAttributes(ci, {
                                         "src": newSrc,
                                         "_src": newSrc,
@@ -23769,6 +23770,7 @@
                     var link = urlPrefix + data.url,
                         loader = me.document.getElementById(loadingId);
                     if (loader) {
+                        console.log(link+"---------");
                         loader.setAttribute('src', link);
                         loader.setAttribute('_src', link);
                         loader.setAttribute('style', "width: 100%;height: auto");
@@ -24526,6 +24528,7 @@
                             json = (new Function("return " + result))();
                             link = me.options.imageUrlPrefix + json.url;
                             if(json.state == 'SUCCESS' && json.url) {
+                                console.log(link+"++++++++++");
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
                                 loader.setAttribute('_src', link);
