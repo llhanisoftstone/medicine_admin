@@ -5,6 +5,7 @@ var base_url_infomation='/rs/infomation';
 var currentPageNo = 1;
 var pageRows = 10;
 var operation = "add";
+include("/configs.js");
 function back(){
     history.go(-1);
 }
@@ -86,6 +87,9 @@ function getGoodsById(id){
             $("#pic_abbr").val(result.rows[0].pic_abbr);
             $("#remark").val(result.rows[0].remark);
             $("#unique_code").val(result.rows[0].unique_code);
+            if (result.rows[0].details){
+                result.rows[0].details=result.rows[0].details.replace(/https:\/\/policy.lifeonway.com\/upload/g, '/upload');
+            }
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
             },300);
@@ -123,6 +127,10 @@ function  saveData(){
     if(details==""){
         return showError("请输入详情");
     }else{
+        if (details){
+            var aimurl = targetUrl+"/upload";
+            details=details.replace(/\/upload/g, aimurl);
+        }
         data.details=details;
     }
     $.showActionLoading();

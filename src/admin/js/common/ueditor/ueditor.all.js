@@ -24792,7 +24792,7 @@
                 'insertfile': {
                     execCommand: function (command, filelist){
                         filelist = utils.isArray(filelist) ? filelist : [filelist];
-
+                        console.log("...........................")
                         var i, item, icon, title,
                             html = '',
                             URL = me.getOpt('UEDITOR_HOME_URL'),
