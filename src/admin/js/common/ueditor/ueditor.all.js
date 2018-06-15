@@ -23781,6 +23781,7 @@
                     }
                 };
             } else {
+                console.log(link+"++++++++++++++");
                 loadingHtml = '<p>' +
                     '<img class="loadingclass" id="' + loadingId + '" src="' +
                     me.options.themePath + me.options.theme +
