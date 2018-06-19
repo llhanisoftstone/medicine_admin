@@ -23247,9 +23247,11 @@
                             for (j = 0; cj = list[j++];) {
                                 if (oldSrc == cj.source && cj.state == "SUCCESS") {  //抓取失败时不做替换处理
                                     newSrc = catcherUrlPrefix + cj.url;
+                                    console.log(newSrc);
                                     domUtils.setAttributes(ci, {
                                         "src": newSrc,
-                                        "_src": newSrc
+                                        "_src": newSrc,
+                                        "style": "width: 100%;height: auto"
                                     });
                                     break;
                                 }
@@ -23354,6 +23356,7 @@
                                     me.execCommand('insertimage', {
                                         src: opt.snapscreenUrlPrefix + rs.url,
                                         _src: opt.snapscreenUrlPrefix + rs.url,
+                                        style: "width: 100%;height: auto",
                                         alt: rs.title || '',
                                         floatStyle: opt.snapscreenImgAlign
                                     });
@@ -23767,8 +23770,10 @@
                     var link = urlPrefix + data.url,
                         loader = me.document.getElementById(loadingId);
                     if (loader) {
+                        console.log(link+"---------");
                         loader.setAttribute('src', link);
                         loader.setAttribute('_src', link);
+                        loader.setAttribute('style', "width: 100%;height: auto");
                         loader.setAttribute('title', data.title || '');
                         loader.setAttribute('alt', data.original || '');
                         loader.removeAttribute('id');
@@ -23776,6 +23781,7 @@
                     }
                 };
             } else {
+                console.log(link+"++++++++++++++");
                 loadingHtml = '<p>' +
                     '<img class="loadingclass" id="' + loadingId + '" src="' +
                     me.options.themePath + me.options.theme +
@@ -24523,9 +24529,11 @@
                             json = (new Function("return " + result))();
                             link = me.options.imageUrlPrefix + json.url;
                             if(json.state == 'SUCCESS' && json.url) {
+                                console.log(link+"++++++++++");
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
                                 loader.setAttribute('_src', link);
+                                loader.setAttribute('style', "width: 100%;height: auto");
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
@@ -24784,7 +24792,7 @@
                 'insertfile': {
                     execCommand: function (command, filelist){
                         filelist = utils.isArray(filelist) ? filelist : [filelist];
-
+                        console.log("...........................")
                         var i, item, icon, title,
                             html = '',
                             URL = me.getOpt('UEDITOR_HOME_URL'),
