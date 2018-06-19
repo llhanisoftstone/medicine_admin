@@ -76,7 +76,7 @@ function queryList(){
             }
         }
         if(username != ''){
-            data.username = username;
+            data.phone = username;
         }
         if(status != ""){
             data.gender = status;
