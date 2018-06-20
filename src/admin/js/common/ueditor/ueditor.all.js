@@ -23781,6 +23781,7 @@
                     }
                 };
             } else {
+                console.log(link+"++++++++++++++");
                 loadingHtml = '<p>' +
                     '<img class="loadingclass" id="' + loadingId + '" src="' +
                     me.options.themePath + me.options.theme +
@@ -24791,7 +24792,7 @@
                 'insertfile': {
                     execCommand: function (command, filelist){
                         filelist = utils.isArray(filelist) ? filelist : [filelist];
-
+                        console.log("...........................")
                         var i, item, icon, title,
                             html = '',
                             URL = me.getOpt('UEDITOR_HOME_URL'),
