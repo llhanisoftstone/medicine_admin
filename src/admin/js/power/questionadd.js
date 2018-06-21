@@ -155,6 +155,16 @@ function savedata(){
         }
         data.answer_json.push({answer:$(v).find(".co").html(),right:right})
     })
+    var isright=false
+    for(var i=0;i<data.answer_json.length;i++){
+        if(data.answer_json[i].right){
+            isright=true
+        }
+    }
+    if(!isright){
+        showError("请选择正确答案")
+        return
+    }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
             if(result.code == 200){
