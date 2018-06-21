@@ -373,7 +373,7 @@ function buildPaginatorByke(paginator,total,fu,callBack,records,sizePage,tableid
     $($('#' + paginator).siblings()).remove();
     var endPage = currPage*sizePage;
     var startPage = endPage-(sizePage-1);
-    var html = "<span id='pagSpan' style='display: block;float:left; margin: 20px 0; line-height: 30px; padding-right:15px;'>显示  "+startPage +"- "+endPage+" 条 共计 "+records+" 条</span><input placeholder='' max='"+total+"' type='number'id='goToPagePaginator' style='width: 60px;float:left; margin: 20px 0;' name='name' class='form-control ' maxlength='50'><div id='gotoPage' style='float: left;cursor:pointer;margin: 20px 10px;padding: 6px 12px;line-height: 1.42857143;color: #337ab7;text-decoration: none;background-color: #fff;border: 1px solid #ddd;'>GO</div>";
+    var html = "<span id='pagSpan' style='display: block;float:left; margin: 20px 0; line-height: 30px; padding-right:15px;'>显示  "+startPage +"- "+endPage+" 条 共计 "+records+" 条</span><input onkeyup=\"this.value=this.value.replace(/\\D/g,'')\" placeholder='' max='"+total+"' type='number'id='goToPagePaginator' style='width: 60px;float:left; margin: 20px 0;' name='name' class='form-control ' maxlength='50'><div id='gotoPage' style='float: left;cursor:pointer;margin: 20px 10px;padding: 6px 12px;line-height: 1.42857143;color: #337ab7;text-decoration: none;background-color: #fff;border: 1px solid #ddd;'>GO</div>";
     $(html).insertBefore($('#' + paginator));
     $("#gotoPage").click(function(){
         var thispage=$("#goToPagePaginator").val();
