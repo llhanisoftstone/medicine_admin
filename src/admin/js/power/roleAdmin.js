@@ -7,6 +7,7 @@ var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
 var searchData={};
+var isselect=false;
 
 $(function () {
     queryList();
@@ -36,15 +37,14 @@ function queryList() {
         page: currentPageNo,
         size: pageRows,
     }
-    data.rank = '>,1';
-    if(!isEmptyObject(searchData)){
+    data.rank = '>,30';
+    if(isselect){
         data = searchData;
         data.search =1;
-        data.page = currentPageNo;
-        data.size = pageRows;
+        data.rank = '>,30';
     }
     data.order="create_time desc";
-    data.status='<,99'
+    data.status='<,99';
     zhget(base_url_user, data).then( function (result) {
         if(checkData(result,'get','queryList','table-responsive')) {
             users = result.rows;
@@ -237,12 +237,12 @@ function memberSearch() {
     if(username!=""){
         searchData.username = username;
     }else {
-        searchData.username = undefined
+        searchData.username = ""
     }
     if(nickname!=""){
         searchData.nickname = nickname;
     }else {
-        searchData.realname = undefined;
+        searchData.nickname = "";
     }
     if(create_time_start!=""&&create_time_end!=""){
         searchData.create_time='>=,'+create_time_start+',<=,'+create_time_end1;
@@ -251,14 +251,15 @@ function memberSearch() {
     }else if(create_time_start==""&&create_time_end!=""){
         searchData.create_time='<=,'+create_time_end1;
     }else {
-        searchData.create_time = undefined;
+        searchData.create_time = "";
     }
     currentPageNo =1;
+    isselect=true;
     queryList();
 }
 function memberSearchCancel() {
     $("input[name='username']").val("");
-    $("input[name='realname']").val("");
+    $("input[name='nickname']").val("");
      $("#dtBindTimeStart").val("");
     $("#dtBindTimeEnd").val("");
     $('#organiz').val('');

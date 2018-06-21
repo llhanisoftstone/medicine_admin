@@ -48,7 +48,7 @@
                                         <label>登录账号：</label> <div class="pinput"><input placeholder="登录账号" name="username" class="form-control " value="" maxlength="20"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label>用户姓名：</label> <div class="pinput"><input placeholder="用户姓名" name="realname" class="form-control " value="" maxlength="20"></div>
+                                        <label>用户昵称：</label> <div class="pinput"><input placeholder="用户姓名" name="nickname" class="form-control " value="" maxlength="20"></div>
                                     </div>
                                     <div class="col-md-4  form-group">
                                         <label>创建时间：</label> <div class="pinput">
@@ -163,7 +163,7 @@
         </td>
         <td>
             {{#is_judge rank 91}}超级管理员{{/is_judge}}
-            {{#is_judge rank 90}}机关管理员{{/is_judge}}
+            {{#is_judge rank 90}}{{organiz_name}}{{/is_judge}}
         </td>
         <td>{{create_time}}</td>
         <td class="operate" style="width:10%">
