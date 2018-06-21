@@ -196,18 +196,11 @@ function onUserSaveClick() {
 
     } else {
         if(password!==""){
+            data.password = password;
             zhput(base_url_user + "/" + userid, data).then(
                 function(result){
                     if(result.info){
-                        if(password!==""){
-                            if(password.length>=6){
-                                zhput(reset_psd + "/" + userid,{password:password,app:"02"}).then(saveResult);
-                            }else{
-                                showError("请输入6-20位密码")
-                            }
-                        }else {
-                            saveResult(result)
-                        }
+                        saveResult(result)
                     }
                 }
             );
