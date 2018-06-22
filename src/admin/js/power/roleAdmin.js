@@ -163,7 +163,6 @@ function onUserSaveClick() {
         showError("用户昵称不能为空！");
         return;
     }
-
     var password = $("#userpwd").val();
     var organiz= $("#organiz").val();
     var data = {
@@ -171,8 +170,7 @@ function onUserSaveClick() {
         phone: username,
         nickname: nickname,
         rank: 90,
-        status:1,
-        auto_id:1
+        status:1
     };
     if(organiz&&organiz!='-1'){
         data.organiz_id=organiz;
@@ -181,7 +179,8 @@ function onUserSaveClick() {
         return;
     }
     if (operation == "add") {
-        zhget(base_url_user, {username:username}).then( function (result) {
+        data.auto_id=1;
+        zhget(base_url_user, {username:username,status:"<>,99"}).then( function (result) {
             if(result.code==200){
                 showError("用户已存在")
                 return;
