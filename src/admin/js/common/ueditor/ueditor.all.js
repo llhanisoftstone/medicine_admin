@@ -24536,6 +24536,7 @@
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
+                                domUtils.addClass(loader, 'imgSty');
                                 domUtils.removeClasses(loader, 'loadingclass');
                             } else {
                                 showErrorLoader && showErrorLoader(json.state);
