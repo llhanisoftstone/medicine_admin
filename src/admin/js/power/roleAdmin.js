@@ -170,8 +170,7 @@ function onUserSaveClick() {
         phone: username,
         nickname: nickname,
         rank: 90,
-        status:1,
-        auto_id:1
+        status:1
     };
     if(organiz&&organiz!='-1'){
         data.organiz_id=organiz;
@@ -180,6 +179,7 @@ function onUserSaveClick() {
         return;
     }
     if (operation == "add") {
+        data.auto_id=1;
         zhget(base_url_user, {username:username}).then( function (result) {
             if(result.code==200){
                 showError("用户已存在")
