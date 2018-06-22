@@ -87,9 +87,6 @@ function getGoodsById(id){
             $("#pic_abbr").val(result.rows[0].pic_abbr);
             $("#remark").val(result.rows[0].remark);
             $("#unique_code").val(result.rows[0].unique_code);
-            if (result.rows[0].details){
-                result.rows[0].details=result.rows[0].details.replace(/https:\/\/policy.lifeonway.com\/upload/g, '/upload');
-            }
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
             },300);
@@ -124,13 +121,13 @@ function  saveData(){
         unique_code:unique_code,
     };
     var details = UE.getEditor('userProtocolAddUE').getContent();
+    var len = UE.getEditor('userProtocolAddUE').getContentLength(true);
+    if(len > 3000){
+        return showError("你输入的字符个数已经超出最大允许值!");
+    }
     if(details==""){
         return showError("请输入详情");
     }else{
-        if (details){
-            var aimurl = targetUrl+"/upload";
-            details=details.replace(/\/upload/g, aimurl);
-        }
         data.details=details;
     }
     $.showActionLoading();
