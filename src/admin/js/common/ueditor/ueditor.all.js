@@ -24529,11 +24529,10 @@
                             json = (new Function("return " + result))();
                             link = me.options.imageUrlPrefix + json.url;
                             if(json.state == 'SUCCESS' && json.url) {
-                                console.log(link+"++++++++++");
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
                                 loader.setAttribute('_src', link);
-                                loader.setAttribute('style', "width: 100%;height: auto");
+                                loader.setAttribute('style', "width:650px;height: auto");
                                 loader.setAttribute('title', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
@@ -28769,7 +28768,7 @@
                 function setCount(editor,ui) {
                     editor.setOpt({
                         wordCount:true,
-                        maximumWords:10000,
+                        maximumWords:3000,
                         wordCountMsg:editor.options.wordCountMsg || editor.getLang("wordCountMsg"),
                         wordOverFlowMsg:editor.options.wordOverFlowMsg || editor.getLang("wordOverFlowMsg")
                     });
@@ -28783,8 +28782,11 @@
                     }
                     var count = editor.getContentLength(true);
                     if (count > max) {
-                        countDom.innerHTML = errMsg;
-                        editor.fireEvent("wordcountoverflow");
+                        // countDom.innerHTML = errMsg;
+                        // editor.fireEvent("wordcountoverflow");
+                        var content = editor.getContentTxt();
+                        editor.setContent(content.substring(0,max));
+                        editor.focus(true);
                     } else {
                         countDom.innerHTML = msg.replace("{#leave}", max - count).replace("{#count}", count);
                     }
