@@ -5,7 +5,7 @@
  */
 
 (function(){
-    console.log("123")
+
 // editor.js
     UEDITOR_CONFIG = window.UEDITOR_CONFIG || {};
 
@@ -24532,11 +24532,11 @@
                                 loader = me.document.getElementById(loadingId);
                                 loader.setAttribute('src', link);
                                 loader.setAttribute('_src', link);
-                                // loader.setAttribute('class', "width:650px;height: auto");
+                                loader.setAttribute('style', "width:650px;height: auto");
                                 loader.setAttribute('title', json.title || '');
-                                loader.setAttribute('test', json.title || '');
                                 loader.setAttribute('alt', json.original || '');
                                 loader.removeAttribute('id');
+                                domUtils.addClass(loader, 'imgSty');
                                 domUtils.removeClasses(loader, 'loadingclass');
                             } else {
                                 showErrorLoader && showErrorLoader(json.state);

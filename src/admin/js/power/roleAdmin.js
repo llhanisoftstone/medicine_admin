@@ -171,7 +171,8 @@ function onUserSaveClick() {
         phone: username,
         nickname: nickname,
         rank: 90,
-        status:1
+        status:1,
+        auto_id:1
     };
     if(organiz&&organiz!='-1'){
         data.organiz_id=organiz;
