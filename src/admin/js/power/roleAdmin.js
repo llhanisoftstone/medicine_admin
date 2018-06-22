@@ -163,7 +163,6 @@ function onUserSaveClick() {
         showError("用户昵称不能为空！");
         return;
     }
-
     var password = $("#userpwd").val();
     var organiz= $("#organiz").val();
     var data = {
