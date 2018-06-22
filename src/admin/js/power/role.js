@@ -57,7 +57,7 @@ function onSaveClick() {
     var id = $("#id").val();
     var name=$("#name").val().trim();
     if(!name||name==""){
-        showError("请输入角色名称");
+        showError("请输入角色权限");
         return;
     }
     var data = {

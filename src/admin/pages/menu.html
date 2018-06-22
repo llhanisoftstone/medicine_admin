@@ -75,7 +75,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
                 </button>
-                <h4 class="modal-title">用户</h4>
+                <h4 class="modal-title">菜单新建/编辑</h4>
             </div>
             <form role="form">
                 <div class="modal-body">
@@ -95,7 +95,7 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">顺序：</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="order_code" datatype="require" maxlength="50">
+                                <input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" class="form-control" id="order_code" datatype="require" maxlength="50">
                             </div>
                         </div>
                     </div>

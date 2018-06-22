@@ -33,7 +33,7 @@ $(function(){
         operation = "modify";
         getGoodsById(id);
     }
-    $.initSystemFileUpload($("#titleForm"), onUploadDetailPic);
+    $.initSystemFileUploadnotLRZ($("#titleForm"), onUploadDetailPic);
 
 });
 

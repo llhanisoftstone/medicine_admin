@@ -49,9 +49,8 @@ function queryList(){
     var data = {
         page: currentPageNo,
         size: pageRows,
-        // status:'<,9'
-        rank:1,
-        order:'status desc,create_time desc'
+        rank:"<,30",
+        order:'create_time desc'
     };
     if(isSearch){
         var username = $("#username").val();
@@ -61,7 +60,7 @@ function queryList(){
         var nickname = $("#nickname").val();
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
-                if(startTime<endTime){
+                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
                     data.create_time='>=,'+startTime+',<=,'+endTime
                 }else{
                     alert("结束时间不能小于开始时间")
@@ -77,10 +76,10 @@ function queryList(){
             }
         }
         if(username != ''){
-            data.username = username;
+            data.phone = username;
         }
         if(status != ""){
-            data.status = status;
+            data.gender = status;
         }
         if(nickname != ''){
             data.nickname = nickname;
@@ -152,5 +151,15 @@ Handlebars.registerHelper('is_judge', function(v1,v2, options) {
     }
     else {
         return options.inverse(this);
+    }
+});
+Handlebars.registerHelper('equal', function(v1, options) {
+    if(v1 =="1") {
+        return "男";
+    }
+    else if(v1=="2") {
+        return "女";
+    }else{
+        return "";
     }
 });

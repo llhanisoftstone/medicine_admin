@@ -140,8 +140,16 @@ function onDeleteClick(id) {
     if(confirm("确认要删除？")) {
         zhdelete(base_url_course + "/" + id).then(function (result) {
             console.log(result);
+            var page=jQuery("#paginator li.active a").html();
             if (result.code == 200) {
-                queryList();
+                var lists=jQuery("#menu-placeholder tr");
+                if(lists.length==1){
+                    currentPageNo=(page-1);
+                    $("#pageIndex").val(currentPageNo);
+                    queryList();
+                }else{
+                    queryList();
+                }
                 showSuccess('删除成功！');
             } else {
                 showError('删除失败！');
