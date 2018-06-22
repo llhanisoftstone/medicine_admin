@@ -180,7 +180,7 @@ function onUserSaveClick() {
     }
     if (operation == "add") {
         data.auto_id=1;
-        zhget(base_url_user, {username:username}).then( function (result) {
+        zhget(base_url_user, {username:username,status:"<>,99"}).then( function (result) {
             if(result.code==200){
                 showError("用户已存在")
                 return;
