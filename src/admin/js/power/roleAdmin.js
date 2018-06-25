@@ -130,11 +130,11 @@ function fillForm(id) {
         }
     })
 }
-function delClick(el,userid){
+function delClick(el,userid,username){
     if(!confirm("确认要删除此账号吗？")){
         return;
     }
-    zhput(base_url_user + "/" + userid, {status:99}).then(function (res) {
+    zhput(base_url_user + "/" + userid, {status:99,username:username+"_"+userid}).then(function (res) {
         if(res.code==200){
             showSuccess("删除成功!")
             if(jQuery(el).parents("tbody").find("tr").length==1){
@@ -180,7 +180,7 @@ function onUserSaveClick() {
     }
     if (operation == "add") {
         data.auto_id=1;
-        zhget(base_url_user, {username:username,status:"<>,99"}).then( function (result) {
+        zhget(base_url_user, {username:username}).then( function (result) {
             if(result.code==200){
                 showError("用户已存在")
                 return;
@@ -196,11 +196,18 @@ function onUserSaveClick() {
 
     } else {
         if(password!==""){
-            data.password = password;
             zhput(base_url_user + "/" + userid, data).then(
                 function(result){
                     if(result.info){
-                        saveResult(result)
+                        if(password!==""){
+                            if(password.length>=6){
+                                zhput(reset_psd + "/" + userid,{password:password}).then(saveResult);
+                            }else{
+                                showError("请输入6-20位密码")
+                            }
+                        }else {
+                            saveResult(result)
+                        }
                     }
                 }
             );
