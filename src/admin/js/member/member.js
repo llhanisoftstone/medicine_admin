@@ -1,7 +1,7 @@
 /**
  * Created by kechen on 2016/10/19.
  */
-var base_url_member='/rs/member';
+var base_url_member='/rs/v_member';
 
 var list = [];
 var server_list = [];
