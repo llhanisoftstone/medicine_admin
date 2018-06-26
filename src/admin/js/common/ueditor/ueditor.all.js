@@ -24530,14 +24530,18 @@
                             link = me.options.imageUrlPrefix + json.url;
                             if(json.state == 'SUCCESS' && json.url) {
                                 loader = me.document.getElementById(loadingId);
-                                loader.setAttribute('src', link);
-                                loader.setAttribute('_src', link);
-                                loader.setAttribute('style', "width:650px;height: auto");
-                                loader.setAttribute('title', json.title || '');
-                                loader.setAttribute('alt', json.original || '');
-                                loader.removeAttribute('id');
-                                domUtils.addClass(loader, 'imgSty');
-                                domUtils.removeClasses(loader, 'loadingclass');
+                                if (loader){
+                                    loader.setAttribute('src', link);
+                                    loader.setAttribute('_src', link);
+                                    loader.setAttribute('style', "width:650px;height: auto");
+                                    loader.setAttribute('title', json.title || '');
+                                    loader.setAttribute('alt', json.original || '');
+                                    loader.removeAttribute('id');
+                                    domUtils.addClass(loader, 'imgSty');
+                                    domUtils.removeClasses(loader, 'loadingclass');
+                                }else{
+                                    showErrorLoader && showErrorLoader('你输入的字符个数已经超出最大允许值!');
+                                }
                             } else {
                                 showErrorLoader && showErrorLoader(json.state);
                             }
