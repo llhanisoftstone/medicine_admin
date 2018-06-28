@@ -89,7 +89,7 @@ function getGoodsById(id){
             $("#unique_code").val(result.rows[0].unique_code);
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
-            },300);
+            },500);
         }
     });
 
