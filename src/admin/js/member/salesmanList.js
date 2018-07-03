@@ -36,7 +36,6 @@ function showSearchPage() {
         isSearch=false;
     }
 }
-
 // 用户信息页面渲染
 var isSearch=false;
 function searchData(){
