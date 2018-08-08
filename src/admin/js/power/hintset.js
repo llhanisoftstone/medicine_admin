@@ -106,7 +106,7 @@ function onSavecategoryData(){
     }
     var modelid=$("#addName").attr("_id");
     if(modelid==""||modelid==null||modelid==undefined){
-        zhpost(base_url_goodsCategory,{category:category,details:details,order_id:1}).then(function(result){
+        zhpost(base_url_goodsCategory,{category:category,details:details,auto_id:1}).then(function(result){
             if(checkData(result,'post')){
                 resetinput();
                 $(".addModels").hide();
