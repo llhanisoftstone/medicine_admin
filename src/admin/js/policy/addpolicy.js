@@ -26,13 +26,22 @@ $(function(){
         $(".text-center").hide();
         $(".copyGoods").show();
     }
-    if(id==''||id==null){
-        operation = "add";
-        status()
-    }else{
-        operation = "modify";
-        getGoodsById(id);
-    }
+    zhget("/rs/organiz", {order:"create_time desc"}).then( function(result) {
+        var html="<option value=''>全部</option>";
+        for(var i=0;i<result.rows.length;i++){
+            html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+        }
+        jQuery("#company").html(html);
+
+        if(id==''||id==null){
+            operation = "add";
+            status()
+        }else{
+            operation = "modify";
+            getGoodsById(id);
+        }
+    });
+
     $.initSystemFileUploadnotLRZ($("#titleForm"), onUploadDetailPic);
 
 });
@@ -87,6 +96,7 @@ function getGoodsById(id){
             $("#pic_abbr").val(result.rows[0].pic_abbr);
             $("#remark").val(result.rows[0].remark);
             $("#unique_code").val(result.rows[0].unique_code);
+            $("#company").val(result.rows[0].organiz_id);
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
             },500);
@@ -114,11 +124,16 @@ function  saveData(){
     var pic_abbr = $("#pic_abbr").val();
     var remark=$.trim($("#remark").val());
     var unique_code = $("#unique_code").val();
+    var copmpany=jQuery("#company").val();
+    if(!copmpany){
+        return showError("请选择部门");
+    }
     var data={
         title:title,
         pic_abbr:pic_abbr,
         remark:remark,
         unique_code:unique_code,
+        organiz_id:copmpany
     };
     var details = UE.getEditor('userProtocolAddUE').getContent();
     var len = UE.getEditor('userProtocolAddUE').getContentLength(true);
