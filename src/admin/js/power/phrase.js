@@ -1,4 +1,5 @@
-var base_url_goodsCategory='/rs/wish_category';
+
+var base_url_goodsCategory='/rs/phrase_set';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -21,13 +22,13 @@ function queryList(){
     var data={
         page: currentPageNo,
         size: pageRows,
-        order:'create_time desc'
+        order:'create_time desc',
     }
     if(issearchModel){
         data.search=1;
         var name=$.trim($("#name").val());
-        if($.trim(name)!= ''){
-            data.c_name=name;
+        if($.trim(name) != ''){
+            data.details=name;
         }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
@@ -61,9 +62,10 @@ function addGoodsModels(dom){
     $("#addName").attr("_id","");
 }
 
-function onUpdateClick(id,name) {
+function onUpdateClick(id,name,order) {;
     $("#addName").attr("_id",id);
     $("#addName").val(name);
+    $("#order_code").val(order);
     $(".reasonSearch", $(".reasonRefund")).css("display", "none");
     $(".addModels", $(".reasonRefund")).animate({
         height : 'show',
@@ -71,7 +73,7 @@ function onUpdateClick(id,name) {
     }, "slow");
 }
 function delClick(id) {
-    if (confirm("确定要删除该分类吗？")) {
+    if (confirm("确定要删除该快捷语吗？")) {
         zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
             checkData(result, 'delete');
             if($("#goodsModel-placeholder").find("tr").length == 1){
@@ -85,8 +87,20 @@ function delClick(id) {
 function onSavecategoryData(){
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
+    var order=$('#order_code').val().trim();
+    if(!name){
+        showError('请输入快捷语');
+        return;
+    }
     if(modelid==""||modelid==null||modelid==undefined){
-        zhpost(base_url_goodsCategory,{c_name:name,auto_id:1}).then(function(result){
+        var add_data={
+            details:name,
+            auto_id:1
+        };
+        if(order){
+            add_data.order_code=order;
+        }
+        zhpost(base_url_goodsCategory,add_data).then(function(result){
             if(checkData(result,'post')){
                 resetinput();
                 $(".addModels").hide();
@@ -94,7 +108,13 @@ function onSavecategoryData(){
             }
         })
     }else{
-        zhput(base_url_goodsCategory+"/"+modelid,{c_name:name}).then(function(result){
+        var editdata={
+            details:name
+        };
+        if(order){
+            editdata.order_code=order;
+        }
+        zhput(base_url_goodsCategory+"/"+modelid,editdata).then(function(result){
             if(checkData(result,'put')){
                 $(".addModels").hide();
                 $("#addName").removeAttr("_id");
