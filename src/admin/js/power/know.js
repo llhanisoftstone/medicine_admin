@@ -7,20 +7,30 @@ var menu = [];
 var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
-var categoryobj={};
+// var categoryobj={};
 var isSearch=false;
+var pagetype="lj"
 $(function() {
-    zhget("/rs/wish_category", {order:"create_time desc"}).then( function(result) {
-        if(result.code==200) {
-            var html="<option value=''>全部</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].c_name+"</option>";
-                categoryobj[result.rows[i].id]=result.rows[i].c_name
+    pagetype=getQueryByName("pagetype");
+    if(pagetype=="jy"){
+        jQuery(".titlename").html("我要建议");
+        jQuery(".lj").hide();
+        base_url_course="/rs/suggest";
+        queryList();
+    }else{
+        jQuery(".lj").show();
+        zhget("/rs/wish_category", {order:"create_time desc"}).then( function(result) {
+            if(result.code==200) {
+                var html="<option value=''>全部</option>";
+                for(var i=0;i<result.rows.length;i++){
+                    html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].c_name+"</option>";
+                    // categoryobj[result.rows[i].id]=result.rows[i].c_name
+                }
+                jQuery("#unique_code").html(html);
+                queryList();
             }
-            jQuery("#unique_code").html(html);
-            queryList();
-        }
-    });
+        });
+    }
 });
 
 Handlebars.registerHelper("superif", function (v1,v2, options) {
@@ -103,6 +113,9 @@ function queryList() {
                 // result.rows[i].pic_abbr = categoryobj[result.rows[i].pic_abbr];
             }
             buildTable(result, 'menu-template', 'menu-placeholder');
+            if(pagetype=="jy") {
+                jQuery(".lj").hide();
+            }
         }
     });
 }
