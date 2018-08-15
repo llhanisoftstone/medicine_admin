@@ -60,6 +60,7 @@ function onSaveClick() {
         showError("请输入角色权限");
         return;
     }
+
     var data = {
         name:name ,
         remark: $("#remark").val().trim(),
@@ -74,9 +75,6 @@ function onSaveClick() {
 
 function saveResult(result) {
     if (result.info) {
-        // if (result.err) {
-        //     showError('保存失败！');
-        // } else{
             $('#userModal').modal('hide');
             queryList();
             showSuccess('保存成功！');

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .modal-body img{
+            display: inline-block;
+            width:100px;
+            height:100px;
+        }
+        a:hover{
+            background:#fff;
+        }
+    </style>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="wrapper" class="row report">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                    <li>
+                        <a>用户管理</a>
+                    </li>
+                    <li>合作商管理</li>
+                </ul>
+                <div style="float:right; margin-top: -2px;">
+                    <button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                </div>
+            </div>
+            <div>
+                <div class="reasonSearch" style="display: none">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="reasonSearchForm">
+                                <div class="body">
+                                    <div class="row" >
+                                        <div class="col-md-4 form-group">
+                                            <label>商家名称：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="name" check-type="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>联系人：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="contacts" check-type="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>联系电话：</label>
+                                            <div class="pinput">
+                                                <input type="text" oninput="num_limit(this,{max:11,dec:false})" placeholder="请输入" maxlength="20" class="form-control" id="phone" check-type="required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group  pbtn-group">
+                                    <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
+                                    <button type="button" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" >重置</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive" id="table-member">
+                    <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="width:10%">序号</th>
+                            <th style="width:20%">商家名称</th>
+                            <td style="width:20%">联系人</td>
+                            <td style="width:20%">联系号码</td>
+                            <td style="width:10%">状态</td>
+                            <th style="width:20%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="event-placeholder">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                <div style="float: right;margin-right: 50px;">
+                    <ul id="paginator"></ul>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+<div id="rejectModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">拒绝原因</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" id="user_forms">
+                    <input type="hidden" id="rejectId">
+                    <textarea name="reject_reasons" id="reject_Reasons" cols="30" rows="10" style="resize:none;width:100%;height:100%" maxlength="100"></textarea>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" onclick="onSaveRejectClick()" class=" btn btn-default" id="user_buttonids">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="event-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr>
+        <td>{{rowNum}}</td>
+        <td>{{name}}</td>
+        <td>{{contacts}}</td>
+        <td>{{phone}}</td>
+        <td>{{#equal status 0}}待审核{{/equal}}{{#equal status 1}}通过{{/equal}}{{#equal status 2}}拒绝{{/equal}}{{#equal status 3}}禁用{{/equal}}</td>
+        <td>
+            {{#equal status 0}}
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}','{{u_id}}')"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 1}}
+            <span class="fa fa-lock editOrder" style="cursor: pointer;" onclick="forbid('{{id}}','{{u_id}}')" title="禁用合作商功能"></span>
+            {{/equal}}
+            {{#equal status 3}}
+            <span class="fa fa-unlock  editOrder" style="cursor: pointer;" onclick="openstart('{{id}}','{{u_id}}')" title="启用合作商功能"></span>
+            {{/equal}}
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+
+<!--<script src="js/refundReason/signEdit.js"></script>-->
+<script src="js/member/salesmanList.js"></script>
+
+</body>
+</html>
