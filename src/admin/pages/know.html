@@ -106,12 +106,13 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr style="text-align: center">
-                                <th style="text-align: center;width: 10%">序号</th>
+                                <th style="text-align: center;width: 5%">序号</th>
                                 <th style="text-align: center;width: 40%">详细描述</th>
                                 <th style="text-align: center;width: 10%" class="lj">咨询分类</th>
                                 <th style="text-align: center;width: 10%">姓名</th>
                                 <th style="text-align: center;width: 10%">电话</th>
                                 <th style="text-align: center;width: 10%">创建时间</th>
+                                <th style="text-align: center;width: 5%" class="jy">操作</th>
                             </tr>
                             </thead>
                             <tbody id="menu-placeholder" style="text-align: center">
@@ -180,6 +181,13 @@
         <!--<td data-toggle="modal" data-target="#myModal1" onclick="showuserInfo('{{id}}','{{huifu}}')" style="cursor: pointer;color:#3C6E31">平台回复</td>-->
         <td>{{phone}}</td>
         <td>{{create_time}}</td>
+        <td class="jy">
+            {{#equal status 2}}
+            已采纳
+            {{else}}
+            <span class="fa fa-check" onclick="putclick('{{id}}',2)" title="采纳"></span>
+            {{/equal}}
+        </td>
     </tr>
     {{/datas}}
 </script>

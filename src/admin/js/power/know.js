@@ -15,10 +15,12 @@ $(function() {
     if(pagetype=="jy"){
         jQuery(".titlename").html("我要建议");
         jQuery(".lj").hide();
+        jQuery(".jy").show();
         base_url_course="/rs/suggest";
         queryList();
     }else{
         jQuery(".lj").show();
+        jQuery(".jy").hide();
         zhget("/rs/wish_category", {order:"create_time desc"}).then( function(result) {
             if(result.code==200) {
                 var html="<option value=''>全部</option>";
@@ -115,6 +117,10 @@ function queryList() {
             buildTable(result, 'menu-template', 'menu-placeholder');
             if(pagetype=="jy") {
                 jQuery(".lj").hide();
+                jQuery(".jy").show();
+            }else{
+                jQuery(".lj").show();
+                jQuery(".jy").hide();
             }
         }
     });
@@ -192,4 +198,15 @@ function showuserInfo(id,huifu){
 function resultokbtn(){
     var result=jQuery("#result").val();
     jQuery("#resulclosebtn").trigger("click");
+}
+function putclick(id,status){
+    if(confirm("确认采纳该建议？")){
+        zhput(base_url_course+"/"+id,{status:status}).then( function(result) {
+            $.hideActionLoading();
+            if(checkData(result,'put','queryList','table-goodsList')) {
+                showSuccess("采纳成功");
+                queryList();
+            }
+        });
+    }
 }
