@@ -93,7 +93,7 @@ function queryList() {
         var ordertimeend1 = ordertimeend +" 23-59-59";
         if(ordertimestart!=""&&ordertimeend!=""){
             if(ordertimestart>ordertimeend){
-                showError("开始时间大于结束时间");
+                showError("开始时间不能大于结束时间");
                 return;
             }
             data.create_time='>=,'+ordertimestart+',<=,'+ordertimeend1;
