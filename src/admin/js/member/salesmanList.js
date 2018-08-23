@@ -153,11 +153,6 @@ function agreeClick(id,u_id){
         })
     }
 }
-Handlebars.registerHelper('equal', function(v1,v2, options) {
-    if(v1 ==v2) {
-        return options.fn(this);
-    }
-});
 Handlebars.registerHelper('gettimes', function(v1, options) {
     if(v1) {
             var time=(v1.slice(1,(v1.length-1))).split(",");

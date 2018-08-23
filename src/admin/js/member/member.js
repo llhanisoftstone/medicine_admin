@@ -153,7 +153,7 @@ Handlebars.registerHelper('is_judge', function(v1,v2, options) {
         return options.inverse(this);
     }
 });
-Handlebars.registerHelper('equal', function(v1, options) {
+Handlebars.registerHelper('equal_nv', function(v1, options) {
     if(v1 =="1") {
         return "男";
     }
