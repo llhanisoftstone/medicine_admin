@@ -95,7 +95,7 @@ function queryList(){
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
             }
-            buildTableByke(result, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+            buildTableByke(result,'event-template','event-placeholder','paginator',queryList,pageRows);
         }
     });
 }
