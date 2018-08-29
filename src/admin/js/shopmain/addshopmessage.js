@@ -35,11 +35,13 @@ function getmemberInfo(){
             $("#name").val(result.rows[0].name);
             $("#category").val(result.rows[0].category);
             $("#title_pic1").val(result.rows[0].picpath);
-            var aimurl = targetUrl+"/upload";
-            if(result.rows[0].details){
-                result.rows[0].details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
-                UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
-            }
+            setTimeout(function() {
+                var aimurl = targetUrl + "/upload";
+                if (result.rows[0].details) {
+                    result.rows[0].details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
+                    UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
+                }
+            },500);
         }
     })
 }

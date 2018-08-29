@@ -120,7 +120,7 @@ function checkfrm() {
                 setCookie('compid', rs.compid);
                 setCookie('uid', rs.userid);
                 setCookie('userrank', rs.userrank);
-                setCookie('storeid', rs.storeid);
+                setCookie('storeid', rs.store_id);
                 sessionStorage.setItem("compid",rs.compid);
                 sessionStorage.setItem("uid",rs.userid);
                 sessionStorage.setItem("userrank",rs.userrank);
