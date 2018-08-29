@@ -5,8 +5,7 @@ var base_url_member='/rs/store';
 var city_zone = '/rs/city_zone';
 var compid;
 $(function() {
-    // compid = getCookie('storeid');
-    compid="2";
+    compid = getCookie('storeid');
     getprovince();
     $.initSystemFileUpload($("#titleForm"), onUploadDetailPic);
     $("#savebtn").bind("click",saveData);
