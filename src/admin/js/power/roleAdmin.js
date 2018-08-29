@@ -169,7 +169,7 @@ function onUserSaveClick() {
         username: username,
         phone: username,
         nickname: nickname,
-        rank: 90,
+        rank:90,
         status:1
     };
     if(organiz&&organiz!='-1'){

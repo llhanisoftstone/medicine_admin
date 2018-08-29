@@ -95,9 +95,10 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%;">序号</th>
-                                <th style="width: 65%;" id="categoryName">快捷语名称</th>
+                                <th style="width: 55%;" id="categoryName">快捷语名称</th>
                                 <th style="width: 10%;">顺序</th>
-                                <th style="width: 15%;">操作</th>
+                                <th style="width: 15%;">创建时间</th>
+                                <th style="width: 10%;">操作</th>
                             </tr>
                             </thead>
                             <tbody id="goodsModel-placeholder">
@@ -125,6 +126,7 @@
         <td style="text-align:center;">{{rowNum}}</td>
         <td style="text-align:center;">{{details}}</td>
         <td style="text-align: center;">{{order_code}}</td>
+        <td style="text-align: center;">{{create_time}}</td>
         <td style="text-align: center;">
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}','{{details}}','{{order_code}}')"></span>
             &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>

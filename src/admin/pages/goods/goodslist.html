@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/bignumber.js"></script>
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
+    <script type="text/javascript"  src="js/common/defaults-zh_CN.js"></script>
+</head>
+
+<body>
+<div id="wrapper" class="row reasonRefund">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                        <li>
+                            <a>光电农业产品管理</a>
+                        </li>
+                        <li>产品管理</li>
+                    </ul>
+                    <!--<span class="fa fa-home">&nbsp;&nbsp;</span>产品列表-->
+                    <div style="float: right;">
+                        <button type="button" onclick="onAddClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
+                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                    </div>
+                </div>
+                <div class="searchDataDiv">
+                    <div class="tryoutSearch" style="display: none;">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form role="form" id="TalentTryoutSearchForm">
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label>产品ID：</label>
+                                            <div class="pinput">
+                                                <input placeholder="产品ID" id="goodsId" name="goodsId" class="form-control " value="" maxlength="8">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>产品名称：</label>
+                                            <div class="pinput">
+                                                <input placeholder="产品名称" id="name" name="name" class="form-control " value="" maxlength="20">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group" id="tagDiv">
+                                            <label>所属标签：</label>
+                                            <div class="pinput">
+                                                <select id="belong_tag" name="tag_names" class="form-control"  >
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label>产品分类：</label>
+                                            <div class="pinput">
+                                                <select onchange="" id="type" class="form-control"  >
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>产品状态：</label>
+                                            <div class="pinput">
+                                                <select id="status" class="form-control"  >
+                                                    <option value="">全部</option>
+                                                    <!--<option value="0">草稿</option>-->
+                                                    <!--<option value="1">待审核</option>-->
+                                                    <!--<option value="2">拒绝</option>-->
+                                                    <option value="3">上架</option>
+                                                    <option value="4">下架</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group pbtn-group">
+                                        <!--<button type="button" class="btn btn-default" id="exportData">导出</button>-->
+                                        <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
+                                        <button type="button" class="fa fa-reply-all btn btn-default" onclick="resetinput()" id="resetSearchBtn" >重置</button>
+                                        <!--<button id="exportData" onclick="exportGoodsData()" class="fa fa-search   btn btn-default" type="button">导出</button>-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive" id="table-goodsList" style="text-align: center">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 10%">产品ID</th>
+                                <th style="width: 15%">产品名称</th>
+                                <th style="width: 10%">分类</th>
+                                <th style="width: 10%">所属标签</th>
+                                <th style="width: 8%">市场价</th>
+                                <th style="width: 8%">会员价</th>
+                                <th style="width: 8%">内部员工价</th>
+                                <th style="width: 15%">创建时间</th>
+                                <th style="width: 5%">产品状态</th>
+                                <th style="width: 5%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="menu-placeholder">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                    <div style="float: right;margin-right: 50px;">
+                        <ul id="paginator"></ul>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+
+
+
+<script id="menu-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr>
+        <td>{{rowNum}}</td>
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{goods_category_name}}</td>
+        <td>{{tag_names}}</td>
+        <td>{{getprice price}}</td>
+        <td>{{getprice price_leaguer}}</td>
+        <td>{{getprice price_inner}}</td>
+        <td>{{create_time}}</td>
+        <td st="{{status}}">{{getstatusname status}}</td>
+        <td>
+            {{#notsuperif status 4}}
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
+            {{/notsuperif}}
+            {{#superif status 3}}
+            <span class="fa fa-download" title="下架" onclick="updatestatus(this, '{{id}}','4')"></span>
+            {{/superif}}
+            {{#superif status 4}}
+            <span class="fa fa-upload" title="上架" onclick="updatestatus(this, '{{id}}','3')"></span>
+            {{/superif}}
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+
+<input id="pageIndex" type="hidden" value="">
+<script type="text/javascript" src="js/goods/goodsList.js"></script>
+</body>
+</html>

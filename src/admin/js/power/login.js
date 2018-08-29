@@ -106,8 +106,9 @@ function checkfrm() {
                      alert("您输入的密码有误")
                  }else if(rs.code==606){
                      alert("您输入的用户不存在")
+                 }else if(rs.code==303){
+                     alert("该账号被禁用，请联系管理员");
                  }else{
-                     //alert(1)
                      alert(rs.err);
                  }
 
