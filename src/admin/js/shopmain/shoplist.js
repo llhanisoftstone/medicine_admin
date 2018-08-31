@@ -67,6 +67,10 @@ function queryList(){
         if(realname!=''){
             data.name=realname;
         }
+        var category=$("#category").val();
+        if(category&&category!="-1"){
+            data.category=category;
+        }
         var startTime=$("#startTime").val();
         var endTime=$("#endTime").val();
         if(startTime!=''||endTime!==''){
