@@ -169,6 +169,7 @@ function addcompanyuser(){
     if(!name){
         return showError("请输入店铺名称")
     }
+    $("#submitstore").attr("disabled","disabled");
     var data={
         name:name,
     }
@@ -177,24 +178,27 @@ function addcompanyuser(){
             if(res.code==200){
                 showSuccess("修改成功");
                 $("#addModal").modal("hide")
+                $("#submitstore").attr("disabled",false);
                 $("#addModal input").val("")
                 cleardiv()
                 queryList()
             }else{
                 showError("修改失败")
+                $("#submitstore").attr("disabled",false);
             }
         })
     }else{
-        data.auto_id=1;
             zhpost('/rs/store',data).then(function(res){
                 if(res.code==200){
                     showSuccess("新增成功");
                     $("#addModal").modal("hide")
                     $("#addModal input").val("")
+                    $("#submitstore").attr("disabled",false);
                     cleardiv()
                     queryList()
                 }else{
                     showError("新增失败")
+                    $("#submitstore").attr("disabled",false);
                 }
             })
     }

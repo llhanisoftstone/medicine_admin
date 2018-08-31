@@ -134,15 +134,8 @@ function clearinput(){
     // $("#pic").show();
     $("#newCircleModal input").val('');
 }
-var clickbtn=$('#adduniversitybtn');
+
 function adduniversityuser(){
-    if(clickbtn.hasClass('disable')){
-        setTimeout(function(){
-            clickbtn.removeClass('disable');
-        },1000);
-        return;
-    }
-    clickbtn.addClass('disable');
     var id=$("#cid").val()
     var username = $("#addusername").val().trim()
     // var name = $("#comp_name").val().trim();
@@ -166,6 +159,7 @@ function adduniversityuser(){
             return showError("请输入6位以上的密码")
         }
     }
+    $('#adduniversitybtn').attr("disabled","disabled");
     var data={
         username:username,
         name:name,
@@ -181,13 +175,17 @@ function adduniversityuser(){
                 $("#addModal").modal("hide")
                 $("#addModal input").val("")
                 cleardiv();
+                $('#adduniversitybtn').attr("disabled",false);
                 queryList()
             }else if (res.code == 606){
                 showError("该账号已存在")
+                $('#adduniversitybtn').attr("disabled",false);
             }else if(res.code == 804){
                 showError("该店铺已有管理员账号")
+                $('#adduniversitybtn').attr("disabled",false);
             }else{
                 showError("修改失败")
+                $('#adduniversitybtn').attr("disabled",false);
             }
         })
     }else{
@@ -197,16 +195,21 @@ function adduniversityuser(){
                 showSuccess("新增成功");
                 $("#addModal").modal("hide")
                 $("#addModal input").val("")
+                $('#adduniversitybtn').attr("disabled",false);
                 cleardiv()
                 queryList()
             }else if (res.code == 606){
                 showError("该账号已存在")
+                $('#adduniversitybtn').attr("disabled",false);
             }else if(res.code == 803){
                 showError("该手机号已经注册过了")
+                $('#adduniversitybtn').attr("disabled",false);
             }else if(res.code == 804){
                 showError("该店铺已有管理员账号")
+                $('#adduniversitybtn').attr("disabled",false);
             }else{
                 showError("修改失败")
+                $('#adduniversitybtn').attr("disabled",false);
             }
         })
     }
