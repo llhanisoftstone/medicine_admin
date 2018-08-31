@@ -191,6 +191,7 @@ function adduniversityuser(){
             }
         })
     }else{
+        data.auto_id=1;
         zhpost('/rs/member',data).then(function(res){
             if(res.code==200){
                 showSuccess("新增成功");

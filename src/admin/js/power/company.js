@@ -185,6 +185,7 @@ function addcompanyuser(){
             }
         })
     }else{
+        data.auto_id=1;
             zhpost('/rs/store',data).then(function(res){
                 if(res.code==200){
                     showSuccess("新增成功");
