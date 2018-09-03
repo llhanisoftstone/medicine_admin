@@ -23,7 +23,6 @@
                     <div style="float: right;">
                         <button type="button" id="addNew" onclick="backquestion()" class=" fa btn btn-default fa-share-square">返回</button>
                     </div>
-                    <!--<span class="fa fa-home">&nbsp;&nbsp;</span>产品规格列表-->
                 </div>
 
 
@@ -99,7 +98,8 @@
                                 </tbody>
                             </table>
                             <div style="text-align: center">
-                                <buttton class="fa fa-save btn btn-default" id="save" onclick="savedata()">保存</buttton>
+                                <buttton class="fa fa-save btn btn-default" id="saveasdraft" onclick="savedata('0')"> 保存为草稿</buttton>
+                                <buttton class="fa fa-save btn btn-default" id="save" onclick="savedata('1')"> 提交审核</buttton>
                             </div>
                         </div>
                     </div>

@@ -88,6 +88,10 @@ function queryList(){
         if(category_id&&category_id!="-1"){
             data.category_id=category_id;
         }
+        var status=$("#status").val();
+        if(status && status!="-1"){
+            data.status=status;
+        }
         var rank_id=$("#rank").val();
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
@@ -135,6 +139,19 @@ function delClick(id) {
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
             }
             queryList()
+        })
+    }
+}
+//提交审核
+function submitcheck(id){
+    if(confirm("确定要直接提交审核该题目吗？")) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 1}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("提交成功");
+            } else {
+                showError("提交失败")
+            }
         })
     }
 }

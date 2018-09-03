@@ -115,7 +115,7 @@ function changeText(that){
 function backquestion(){
     window.location.href="/admin/admin.html#pages/question.html";
 }
-function savedata(){
+function savedata(_status){
     var data={}
     if(!$("#name").val().trim()){
         showError("题目不能为空")
@@ -164,6 +164,9 @@ function savedata(){
     if(!isright){
         showError("请选择正确答案")
         return
+    }
+    if(_status){
+        data.status=_status;
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){

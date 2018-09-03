@@ -76,6 +76,19 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>状态：</label>
+                                                <div class="pinput">
+                                                    <select id="status" class="form-control">
+                                                        <option value="-1">全部</option>
+                                                        <option value="0">草稿</option>
+                                                        <option value="1">待审核</option>
+                                                        <option value="2">通过</option>
+                                                        <option value="3">拒绝</option>
+                                                        <option value="4">下架</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group  pbtn-group ">
                                             <button id="searchDataBtn" class="fa fa-search   btn btn-default" type="button">查询
@@ -100,6 +113,7 @@
                                 <th style="width: 10%;" >出题者</th>
                                 <th style="width: 10%;" >难度等级</th>
                                 <th style="width: 10%;" >答案</th>
+                                <th style="width:5%;">状态</th>
                                 <th style="width: 15%;">操作</th>
                             </tr>
                             </thead>
@@ -129,7 +143,17 @@
         <td style="text-align:center;">{{organiz_name}}</td>
         <td style="text-align:center;">{{rank}}</td>
         <td style="text-align:center;">{{answers}}</td>
+        <td style="text-align:center;">
+            {{#equal status 0}}草稿{{/equal}}
+            {{#equal status 1}}待审核{{/equal}}
+            {{#equal status 2}}通过{{/equal}}
+            {{#equal status 3}}拒绝{{/equal}}
+            {{#equal status 4}}下架{{/equal}}
+        </td>
         <td style="text-align: center;">
+            {{#equal status 0}}
+            &nbsp;<span class="fa fa-upload" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
+            {{/equal}}
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
             &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
         </td>
