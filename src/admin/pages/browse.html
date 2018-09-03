@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="wrapper" class="row report">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                    <li>
+                        <a>统计管理</a>
+                    </li>
+                    <li>产品浏览量</li>
+                </ul>
+                <div style="float:right; margin-top: -2px;">
+                    <button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                </div>
+            </div>
+            <div>
+                <div class="reasonSearch" style="display: none">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="reasonSearchForm">
+                                <div class="body">
+                                    <div class="row" >
+                                        <div class="col-md-4 form-group">
+                                            <label>产品名称：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="nickname" check-type="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>产品浏览量：</label>
+                                            <div class="pinput">
+                                                <input type="text"  oninput="num_limit(this,{max:5,dec:false})"placeholder="请输入" maxlength="20" class="form-control" id="num" check-type="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>时间：</label>
+                                            <div class="pinput">
+                                                <input placeholder="请输入开始时间" value="" id="getTimeStart"
+                                                       name="get_time" readonly="readonly"
+                                                       onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                                       class="form-control pdate-time"
+                                                       style="width: 45%; float: left;">
+                                                <label style="float: left; width:10%;text-align: center;">—</label>
+                                                <input placeholder="请输入结束时间" value="" id="getTimeEnd" name="dtGetTimeEnd"
+                                                       readonly="readonly"
+                                                       onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})"
+                                                       class="form-control pdate-time" style="width: 45%; float: left;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group  pbtn-group">
+                                    <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
+                                    <button type="button" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" >重置</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive" id="table-member">
+                    <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th class="col-sm-3">产品ID</th>
+                            <th class="col-sm-3">产品名称</th>
+                            <th class="col-sm-3">产品浏览量</th>
+                            <!--<th class="col-sm-3">上架时间</th>-->
+                        </tr>
+                        </thead>
+                        <tbody id="list">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                <div style="float: right;margin-right: 50px;">
+                    <ul id="paginator"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/x-handlebars-template" id="list-template">
+    {{#datas}}
+    <tr>
+        <td class="col-sm-3">产品ID</td>
+        <td class="col-sm-3">产品名称</td>
+        <td class="col-sm-3">产品浏览量</td>
+        <!--<td class="col-sm-3">上架时间</td>-->
+    </tr>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/power/browse.js"></script>
+</body>
+
+</html>
