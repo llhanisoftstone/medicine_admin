@@ -64,7 +64,7 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'create_time desc',
+        order:'status,create_time desc',
         page: currentPageNo,
         size: pageRows
     }
