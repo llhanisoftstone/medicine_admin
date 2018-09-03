@@ -64,9 +64,12 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'status,create_time desc',
+        order:'create_time desc',
         page: currentPageNo,
         size: pageRows
+    }
+    if(pagetype=="jy"){
+        data.order="status,create_time desc"
     }
     if(isSearch){
         data.search=1;
