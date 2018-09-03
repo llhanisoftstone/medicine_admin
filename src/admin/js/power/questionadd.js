@@ -31,9 +31,14 @@ function getcategory(){
     })
 }
 function getorg(){
+    var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
     $("#shopname").html("");
     $("#shopnames").html("");
-    zhget('/rs/organiz').then(function(result){
+    var data={};
+    if(organizId){
+        data.id=organizId;
+    }
+    zhget('/rs/organiz',data).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows

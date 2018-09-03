@@ -11,7 +11,7 @@ function back(){
 }
 
 $(function(){
-    UE.getEditor('userProtocolAddUE');
+    var protocaleditor=UE.getEditor('userProtocolAddUE');
     $('#goods_buttonid1').bind("click", onSaveClick1);
     var id=getQueryByName("id");
     var read=getQueryByName("read");
@@ -21,6 +21,7 @@ $(function(){
         $("#user_form input").attr("disabled","disabled");
         $("#user_form select").attr("disabled","disabled");
         $("#user_form button").attr("disabled","disabled");
+        // protocaleditor.setDisabled();
     }
     if(copy=='copy'){
         $(".text-center").hide();
@@ -99,6 +100,10 @@ function getGoodsById(id){
             $("#company").val(result.rows[0].organiz_id);
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
+                var read=getQueryByName("read");
+                if(read=='read'){
+                    UE.getEditor('userProtocolAddUE').setDisabled();
+                }
             },500);
         }
     });

@@ -409,7 +409,9 @@ function buildTableByPage(datas, template, placeholder,isAppend){
 function loginout() {
     delCookie('signature')
     delCookie('compid');
-    delCookie('sid')
+    delCookie('organiz_id');
+    delCookie('sid');
+    sessionStorage.removeItem('organiz_id');
     window.location = 'adminLogin.html';
     // zhpost('/op/loginout', {}, function (rs) {
     //     if (rs.err) {

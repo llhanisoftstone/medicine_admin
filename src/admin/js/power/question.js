@@ -18,6 +18,7 @@ var issearchValue=false;
 var integrals;
 var categoryArr=[]
 var organizArr=[]
+var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     getorg();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -72,7 +73,8 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc,create_time desc',
-        status:'<,99'
+        status:'<,99',
+        organiz_id:organizid,
     }
     if(issearchModel){
         data.search=1;
