@@ -158,7 +158,7 @@
                             <th>序号</th>
                             <td>店铺名称</td>
                             <th>创建时间</th>
-                            <!--<th>操作</th>-->
+                            <th>状态</th>
                         </tr>
                         </thead>
                         <input id="pageIndex" type="hidden"/>
@@ -213,10 +213,7 @@
         <td>{{rowNum}}</td>
         <td>{{name}}</td>
         <td>{{create_time}}</td>
-        <!--<td>-->
-            <!--<span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>-->
-            <!--<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>-->
-        <!--</td>-->
+        <td>{{#is_judge status 1}}启用{{else}}禁用{{/is_judge}}</td>
     </tr>
     {{/datas}}
 </script>
