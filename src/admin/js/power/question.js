@@ -152,11 +152,6 @@ function searchbtn(){
     currentPageNo=1;
     queryList();
 }
-Handlebars.registerHelper('equal', function(v1,v2, options) {
-    if(v1 ==v2) {
-        return options.fn(this);
-    }
-});
 Handlebars.registerHelper('ifequal', function(v1,v2, options) {
     if(v1 ==v2) {
         return options.fn(this);
