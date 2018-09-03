@@ -1,15 +1,4 @@
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by kechen on 2016/10/13.
- */
+
 var base_url_goodsCategory='/rs/questions';
 var integrals;
 $(function() {
@@ -31,14 +20,9 @@ function getcategory(){
     })
 }
 function getorg(){
-    var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
     $("#shopname").html("");
     $("#shopnames").html("");
-    var data={};
-    if(organizId){
-        data.id=organizId;
-    }
-    zhget('/rs/organiz',data).then(function(result){
+    zhget('/rs/organiz').then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
@@ -84,9 +68,11 @@ function queryList(){
         }
     })
 }
+/*
 function addoption(){
     $('#userHelpModal').modal('show');
-}
+}*/
+/*
 function onSaveHelpClick(){
     if(!$("#HelpId").val().trim()){
         showError("请输入选项")
@@ -103,6 +89,7 @@ function onSaveHelpClick(){
     }
     buildTableByPage(addawser, 'goodsCategory1-template', 'answer',true);
 }
+*/
 function escmodal(){
     $('#userHelpModal').modal('hide');
     $("#HelpId").val('')
@@ -118,9 +105,10 @@ function changeText(that){
 }
 
 function backquestion(){
-    window.location.href="/admin/admin.html#pages/question.html";
+    window.location.href="/admin/admin.html#pages/questioncheck.html";
 }
-function savedata(_status){
+/*
+function savedata(){
     var data={}
     if(!$("#name").val().trim()){
         showError("题目不能为空")
@@ -170,9 +158,6 @@ function savedata(_status){
         showError("请选择正确答案")
         return
     }
-    if(_status){
-        data.status=_status;
-    }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
             if(result.code == 200){
@@ -190,6 +175,7 @@ function savedata(_status){
         })
     }
 }
+*/
 Handlebars.registerHelper('equal', function(v1,v2, options) {
     if(v1 ==v2) {
         return options.fn(this);
