@@ -12,7 +12,6 @@ $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
-        debugger
         onSearchClick();
         searchData();
     }else{
@@ -20,14 +19,6 @@ $(function() {
     }
 });
 
-Handlebars.registerHelper("superif", function (v1,v2, options) {
-    if (v1==v2) {
-        return options.fn(this);
-    }
-});
-Handlebars.registerHelper('getindex', function(v1, options) {
-    return v1+1;
-});
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
@@ -52,6 +43,7 @@ function queryList() {
         order:'is_hot desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
+        ins:['status','1',"2","3","4"],
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
@@ -75,6 +67,11 @@ function queryList() {
         var is_hot=$("#is_hot").val();
         if(is_hot!='全部'){
             data.is_hot=is_hot;
+        }
+        var status=$("#status").val();
+        if(status && status!="-1"){
+            delete data.ins;
+            data.status=status;
         }
     }
     $.showActionLoading();
@@ -215,3 +212,12 @@ function onSearchClick() {
         opacity : 'toggle'
     }, "slow");
 }
+
+Handlebars.registerHelper("superif", function (v1,v2, options) {
+    if (v1==v2) {
+        return options.fn(this);
+    }
+});
+Handlebars.registerHelper('getindex', function(v1, options) {
+    return v1+1;
+});

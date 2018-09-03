@@ -67,6 +67,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label>状态：</label>
+                                            <div class="pinput">
+                                                <select id="status" class="form-control" name="status">
+                                                    <option value="-1">全部</option>
+                                                    <option value="0">草稿</option>
+                                                    <option value="1">待审核</option>
+                                                    <option value="2">通过</option>
+                                                    <option value="3">拒绝</option>
+                                                    <option value="4">下架</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 pbtn-group">
                                         <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
                                         <button type="button" class="fa fa-reply-all btn btn-default" onclick="resetinput()" id="resetSearchBtn" >重置</button>
@@ -90,6 +105,7 @@
                                 <th style="text-align: center;width: 10%">部门</th>
                                 <th style="text-align: center;width: 30%">简介</th>
                                 <th style="text-align: center;width: 10%">是否热点</th>
+                                <th style="width:5%;">状态</th>
                                 <th style="text-align: center;width: 10%">操作</th>
                             </tr>
                             </thead>
@@ -122,6 +138,13 @@
         <td>{{organiz_name}}</td>
         <td>{{remark}}</td>
         <td>{{#superif is_hot 0}}否{{/superif}}{{#superif is_hot 1}}是{{/superif}}</td>
+        <td style="text-align:center;">
+            {{#equal status 0}}草稿{{/equal}}
+            {{#equal status 1}}待审核{{/equal}}
+            {{#equal status 2}}通过{{/equal}}
+            {{#equal status 3}}拒绝{{/equal}}
+            {{#equal status 4}}下架{{/equal}}
+        </td>
         <td>
             &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
             {{#superif is_hot 0}}

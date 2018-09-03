@@ -12,7 +12,9 @@ function back(){
 
 $(function(){
     var protocaleditor=UE.getEditor('userProtocolAddUE');
-    $('#goods_buttonid1').bind("click", onSaveClick1);
+    var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+    // $('#goods_buttonid1').bind("click", onSaveClick1);
+    // $('#goods_buttonid0').bind("click", onSaveClick1);
     var id=getQueryByName("id");
     var read=getQueryByName("read");
     var copy=getQueryByName("copy");
@@ -21,13 +23,18 @@ $(function(){
         $("#user_form input").attr("disabled","disabled");
         $("#user_form select").attr("disabled","disabled");
         $("#user_form button").attr("disabled","disabled");
-        // protocaleditor.setDisabled();
     }
     if(copy=='copy'){
         $(".text-center").hide();
         $(".copyGoods").show();
     }
-    zhget("/rs/organiz", {order:"create_time desc"}).then( function(result) {
+    var odata={
+        order:"create_time desc",
+    };
+    if(organizId){
+        odata.id=organizId;
+    }
+    zhget("/rs/organiz", odata).then( function(result) {
         var html="<option value=''>全部</option>";
         for(var i=0;i<result.rows.length;i++){
             html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
@@ -113,13 +120,12 @@ function getGoodsById(id){
 function status(selected){
     var status = $("#status");
     status.val(selected);
-
 }
 
-function onSaveClick1(){
+function onSaveClick(){
     saveData()
 }
-function  saveData(){
+function  saveData(_status){
     var title=$.trim($("#title").val());
     if(title==""){
         return showError("请输入标题");
@@ -140,6 +146,9 @@ function  saveData(){
         unique_code:unique_code,
         organiz_id:copmpany
     };
+    if(_status){
+        data.status=_status;
+    }
     var details = UE.getEditor('userProtocolAddUE').getContent();
     var len = UE.getEditor('userProtocolAddUE').getContentLength(true);
     if(len > 3000){

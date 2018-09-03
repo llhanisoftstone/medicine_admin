@@ -12,7 +12,6 @@ $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
-        debugger
         onSearchClick();
         searchData();
     }else{
@@ -75,6 +74,10 @@ function queryList() {
         var is_hot=$("#is_hot").val();
         if(is_hot!='全部'){
             data.is_hot=is_hot;
+        }
+        var status=$("#status").val();
+        if(status && status!="-1"){
+            data.status=status;
         }
     }
     $.showActionLoading();
