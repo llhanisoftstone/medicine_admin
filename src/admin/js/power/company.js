@@ -58,7 +58,7 @@ function queryList(){
     var data = {
         page: currentPageNo,
         size: pageRows,
-        status:1
+        status:'<>,9'
     }
     if(isSearch){
         var realname=$("#nickname").val();
