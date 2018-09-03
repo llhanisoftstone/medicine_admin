@@ -1,5 +1,5 @@
 
-var base_url_goodsCategory='/rs/phrase_set';
+var base_url_goodsCategory='/rs/v_hot_recomment';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -13,6 +13,10 @@ $(function() {
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
+    $("#resetSaveBtn", $(".reasonRefund")).bind("click", function(){
+        $("#userAddForm", $(".reasonRefund"))[0].reset();
+        queryList();
+    });
     $("#userAddcategory", $(".reasonRefund")).unbind("click");
     $("#userAddcategory", $(".reasonRefund")).bind("click", onSavecategoryData);
 });
@@ -23,13 +27,42 @@ function queryList(){
     var data={
         page: currentPageNo,
         size: pageRows,
-        order:'create_time desc',
+        order:'status asc, create_time desc',
+        status:'<>,99'
     }
     if(issearchModel){
         data.search=1;
-        var name=$.trim($("#name").val());
-        if($.trim(name) != ''){
-            data.details=name;
+        var name=$("#searchstorename").val();
+        var ticket_id=$('#searchticketname').val();
+        if(name && name !='-1'){
+            data.store_id=name;
+        }
+        if(ticket_id && ticket_id !='-1'){
+            data.ticket_id=ticket_id;
+        }
+        var startTime=$("#startTimesearch").val();
+        var endTime=$("#endTimesearch").val();
+        if(startTime!=''||endTime!==''){
+            if(startTime!=''&&endTime!==''){
+                if(startTime<endTime){
+                    data.strat_time='>=,'+startTime;
+                    data.end_time='<=,'+endTime
+                }else{
+                    showError("结束时间不能大于开始时间")
+                    return
+                }
+            }else{
+                if(startTime){
+                    data.strat_time='>=,'+startTime
+                }
+                if(endTime){
+                    data.end_time='<=,'+endTime
+                }
+            }
+        }
+        var status=$('#status').val();
+        if(status && status !='-1'){
+            data.status=status;
         }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
@@ -46,6 +79,80 @@ function queryList(){
         }
     })
 }
+function onSavecategoryData(){
+    var name=$("#storename").val();
+    var modelid=$("#storename").attr("_id");
+    var order=$('#order_code').val().trim();
+    var ticket_id=$('#ticketname').val();
+    if(!name || name=='-1'){
+        showError('请选择店铺');
+        return;
+    }
+    if(!ticket_id || ticket_id=='-1'){
+        showError('请选择优惠券');
+        return;
+    }
+    if(!order){
+        showError('请输入顺序');
+        return;
+    }
+    var startTime=$("#startTime").val();
+    var endTime=$("#endTime").val();
+        if(startTime!=''&& endTime!==''){
+            if(startTime>endTime){
+                showError("结束时间不能早于开始时间")
+                return
+            }
+        }else{
+            showError('请选择有效期');
+            return;
+        }
+
+    if(modelid=="" || modelid==null || modelid==undefined){
+        var add_data={
+            ticket_id:ticket_id,
+            // auto_id:1
+        };
+        if(order){
+            add_data.order_code=order;
+        }
+        if(startTime){
+            add_data.strat_time=startTime;
+        }
+        if(endTime){
+            add_data.end_time=endTime;
+        }
+        zhpost(base_url_goodsCategory,add_data).then(function(result){
+            if(checkData(result,'post')){
+                resetinput();
+                $(".addModels").hide();
+                queryList()
+            }
+        })
+    }else{
+        var editdata={
+            ticket_id:ticket_id,
+        };
+        if(order){
+            editdata.order_code=order;
+        }
+        if(startTime){
+            add_data.strat_time=startTime;
+        }
+        if(endTime){
+            add_data.end_time=endTime;
+        }
+        zhput(base_url_goodsCategory+"/"+modelid,editdata).then(function(result){
+            if(checkData(result,'put')){
+                $(".addModels").hide();
+                $("#storename").removeAttr("_id");
+                resetinput();
+                queryList()
+            }
+        })
+    }
+}
+
 function getstorename(){
     $("#storename").html("");
     $("#searchstorename").html("");
@@ -136,23 +243,29 @@ function addGoodsModels(dom){
         height : 'show',
         opacity : 'show'
     }, "slow");
-    $("#addName").attr("_id","");
+    $("#storename").attr("_id","");
 }
 
-function onUpdateClick(id,name,order) {;
-    $("#addName").attr("_id",id);
-    $("#addName").val(name);
+function onUpdateClick(store_id,ticket_id,id,order,strat_time,end_time) {
+    getticketinfo(store_id);
+    $("#storename").attr("_id",id);
+    $("#storename").val(store_id);
     $("#order_code").val(order);
+    $("#startTime").val(strat_time);
+    $("#endTime").val(end_time);
+    setTimeout(function(){
+        $("#ticketname").val(ticket_id);
+    },300)
     $(".reasonSearch", $(".reasonRefund")).css("display", "none");
     $(".addModels", $(".reasonRefund")).animate({
         height : 'show',
         opacity : 'show'
     }, "slow");
 }
-function delClick(id) {
-    if (confirm("确定要删除该快捷语吗？")) {
-        zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
-            checkData(result, 'delete');
+function enableClick(id) {
+    if (confirm("确定要启用该优惠券吗？")) {
+        zhput(base_url_goodsCategory + "/" + id,{status:1}).then(function (result) {
+            checkData(result, 'put');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
             }
@@ -160,44 +273,14 @@ function delClick(id) {
         })
     }
 }
-
-function onSavecategoryData(){
-    var name=$("#addName").val().trim();
-    var modelid=$("#addName").attr("_id");
-    var order=$('#order_code').val().trim();
-    if(!name){
-        showError('请输入快捷语');
-        return;
-    }
-    if(modelid==""||modelid==null||modelid==undefined){
-        var add_data={
-            details:name,
-            auto_id:1
-        };
-        if(order){
-            add_data.order_code=order;
-        }
-        zhpost(base_url_goodsCategory,add_data).then(function(result){
-            if(checkData(result,'post')){
-                resetinput();
-                $(".addModels").hide();
-                queryList()
+function disableClick(id) {
+    if (confirm("确定要禁用该优惠券吗？")) {
+        zhput(base_url_goodsCategory + "/" + id,{status:2}).then(function (result) {
+            checkData(result, 'put');
+            if($("#goodsModel-placeholder").find("tr").length == 1){
+                currentPageNo = currentPageNo>1?currentPageNo-1:1
             }
-        })
-    }else{
-        var editdata={
-            details:name
-        };
-        if(order){
-            editdata.order_code=order;
-        }
-        zhput(base_url_goodsCategory+"/"+modelid,editdata).then(function(result){
-            if(checkData(result,'put')){
-                $(".addModels").hide();
-                $("#addName").removeAttr("_id");
-                resetinput();
-                queryList()
-            }
+            queryList()
         })
     }
 }
