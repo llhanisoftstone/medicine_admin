@@ -137,25 +137,20 @@ function clearinput(){
 
 function adduniversityuser(){
     var id=$("#cid").val()
-    var username = $("#addusername").val().trim()
-    // var name = $("#comp_name").val().trim();
+    var username = $("#addusername").val().trim();
     var comp=$("#comp").selectpicker('val');
-    var password = $("#password").val().trim()
-    if( !comp || comp == ''){
-        $("#comp").focus();
+    var password = $("#password").val().trim();
+    if(!comp || comp == ''){
         return showError("请选择店铺名称")
     }
-    if( !username || username == ''){
-        $("#addusername").focus();
+    if(!username || username == ''){
         return showError("请输入账号");
     }
     if(username.length<6){
-        $("#addusername").focus();
         return showError("请输入6位以上的账号")
     }
     if(!id){
         if(password.length<6){
-            $("#password").focus();
             return showError("请输入6位以上的密码")
         }
     }
