@@ -4,6 +4,7 @@
 var base_url='/rs/statistics_answer';
 var currentPageNo = 1;
 var pageRows = 10;
+var onequerylist = true;
 $(function(){
     getOrganiztion();
     var page = getUrlParamsValue("page");
@@ -14,15 +15,20 @@ $(function(){
         $("#reasonSearchForm", $(".report"))[0].reset();
         currentPageNo = 1;
         pageRows = 10;
-        queryList();
+        setTimeout(function(){
+            queryList();
+        },300)
+
     });
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
-    queryList();
+    setTimeout(function(){
+        queryList();
+    },300)
 
 })
 function getOrganiztion(){
-    zhget('/rs/company').then( function(result) {
+    zhget('/rs/organiz').then( function(result) {
         buildTableNoPage(result, 'select-template','select');
         initselect("select")
     })
@@ -50,31 +56,32 @@ function searchData(){
 
 }
 function queryList(){
+    var organiz_id=$("#select").val();
     var data = {
         page: currentPageNo,
         size: pageRows,
+        organiz_id:organiz_id
     };
     if(isSearch){
-        var organiz_id=$("#select").val();
-        data.organiz_id=organiz_id;
         var startTime = $("#getTimeStart").val();
         var endTime = $("#getTimeEnd").val();
-        if(startTime!=''||endTime!==''){
-            if(startTime!=''&&endTime!==''){
-                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
-                    data.start_time='>=,'+startTime;
-                    data.end_time='<=,'+endTime;
+        if(startTime!=""||endTime!=""){
+            if(startTime!=""&&endTime!==""){
+                if(new Date(startTime)<new Date(endTime)){
+                    data.start_time=startTime;
+                    data.end_time=endTime;
                 }else{
                     showError("结束时间不能小于开始时间");
                     return
                 }
-            }else{
-                if(startTime){
-                    data.start_time='>=,'+startTime
-                }
-                if(endTime){
-                    data.end_time='<=,'+endTime
-                }
+            }
+            if(startTime==""){
+                showError("请选择开始时间");
+                return;
+            }
+            if(endTime==""){
+                showError("请选择结束时间");
+                return;
             }
         }
         data.search = 1;
@@ -82,6 +89,7 @@ function queryList(){
 
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(result) {
+        console.log(result)
         var rows= result.questions_list;
         for (var i = 0; i < rows.length; i++) {
             var indexCode = rows[i];
@@ -89,9 +97,11 @@ function queryList(){
         }
         jQuery("#count").html(result.count);
         jQuery("#type_count").html(result.type_count);
-        buildTableByPage(result.type_list,'kind-template','kind',false)
+        buildTableNoPage(result.type_list,'kind-template','kind')
         var datas={}
-        datas[0]=rows;
+        datas.rows=rows;
+        datas.count=rows.length;
+        datas.records=datas.count;
         buildTableByke(datas, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;

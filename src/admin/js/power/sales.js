@@ -45,43 +45,46 @@ function queryList(){
     if(isSearch){
         var nickname=jQuery("#nickname").val();
         if(nickname!=""){
-            data.nickname=nickname;
+            data.name=nickname;
+            data.search = 1;
         }
-        var count=jQuery("#num").val();
-        if(count!=""){
-            data.count=count;
-        }
+        // var count=jQuery("#num").val();
+        // if(count!=""){
+        //     data.scount=count;
+        // }
         var startTime = $("#getTimeStart").val();
         var endTime = $("#getTimeEnd").val();
-        if(startTime!=''||endTime!==''){
-            if(startTime!=''&&endTime!==''){
-                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
-                    data.start_time='>=,'+startTime;
-                    data.end_time='<=,'+endTime;
+        if(startTime!=""||endTime!==""){
+            if(startTime!=""&&endTime!=""){
+                if(new Date(startTime)<new Date(endTime)){
+                    data.start_time=startTime;
+                    data.end_time=endTime;
                 }else{
                     showError("结束时间不能小于开始时间");
                     return
                 }
             }else{
-                if(startTime){
-                    data.start_time='>=,'+startTime
+                if(startTime==""){
+                    showError("请选择开始时间");
+                    return;
                 }
-                if(endTime){
-                    data.end_time='<=,'+endTime
+                if(endTime==""){
+                    showError("请选择结束时间");
+                    return;
                 }
             }
         }
-        data.search = 1;
     }
 
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(res) {
+        console.log(res);
         var rows= res.rows;
         for (var i = 0; i < rows.length; i++) {
             var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
-        buildTableByke(res, 'event-template', 'event','paginator',queryList,pageRows);
+        buildTableByke(res, 'list-template', 'list','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);
