@@ -24,7 +24,7 @@ $(function(){
 })
 function getOrganiztion(){
     zhget('/rs/company').then( function(result) {
-        buildTableNoPage(result, 'select-template','select');
+        buildTableNoPage(result,'select-template','select');
         initselect("select")
     })
 }
@@ -56,32 +56,13 @@ function queryList(){
         size: pageRows,
     };
     if(isSearch){
-        var organiz_id=$("#select").val();
-        data.organiz_id=organiz_id;
-        var startTime = $("#getTimeStart").val();
-        var endTime = $("#getTimeEnd").val();
-        if(startTime!=''||endTime!==''){
-            if(startTime!=''&&endTime!==''){
-                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
-                    data.start_time='>=,'+startTime;
-                    data.end_time='<=,'+endTime;
-                }else{
-                    showError("结束时间不能小于开始时间");
-                    return
-                }
-            }else{
-                if(startTime){
-                    data.start_time='>=,'+startTime
-                }
-                if(endTime){
-                    data.end_time='<=,'+endTime
-                }
-            }
-        }
+        var comp_id=$("#select").val();
+        data.comp_id=comp_id;
         data.search = 1;
     }
 
     $("#event-placeholder").html("");
+    console.log(data);
     zhget(base_url,data).then( function(res) {
         var rows= res.comp_list;
         for (var i = 0; i < rows.length; i++) {
@@ -89,7 +70,9 @@ function queryList(){
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
         var datas={};
-        datas[0]=rows;
+        datas.rows=rows;
+        datas.count=rows.length;
+        datas.records=datas.count;
         jQuery("#user").html(res.user);
         jQuery("#comp_user").html(res.comp_user);
         buildTableByke(datas, 'event-template', 'event','paginator',queryList,pageRows);

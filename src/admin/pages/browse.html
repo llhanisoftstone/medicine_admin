@@ -35,12 +35,12 @@
                                                 <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="nickname" check-type="required">
                                             </div>
                                         </div>
-                                        <div class="col-md-4 form-group">
-                                            <label>产品浏览量：</label>
-                                            <div class="pinput">
-                                                <input type="text"  oninput="num_limit(this,{max:5,dec:false})"placeholder="请输入" maxlength="20" class="form-control" id="num" check-type="required">
-                                            </div>
-                                        </div>
+                                        <!--<div class="col-md-4 form-group">-->
+                                            <!--<label>产品浏览量：</label>-->
+                                            <!--<div class="pinput">-->
+                                                <!--<input type="text"  oninput="num_limit(this,{max:5,dec:false})"placeholder="请输入" maxlength="20" class="form-control" id="num" check-type="required">-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="col-md-4 form-group">
                                             <label>时间：</label>
                                             <div class="pinput">
@@ -75,6 +75,7 @@
                     <table class="table table-striped table-bordered table-hover" style="text-align: center">
                         <thead>
                         <tr>
+                            <th>序号</th>
                             <th class="col-sm-3">产品ID</th>
                             <th class="col-sm-3">产品名称</th>
                             <th class="col-sm-3">产品浏览量</th>
@@ -97,9 +98,10 @@
 <script type="text/x-handlebars-template" id="list-template">
     {{#datas}}
     <tr>
-        <td class="col-sm-3">产品ID</td>
-        <td class="col-sm-3">产品名称</td>
-        <td class="col-sm-3">产品浏览量</td>
+        <td>{{rowNum}}</td>
+        <td class="col-sm-3">{{id}}</td>
+        <td class="col-sm-3">{{name}}</td>
+        <td class="col-sm-3">{{scount}}</td>
         <!--<td class="col-sm-3">上架时间</td>-->
     </tr>
     {{/datas}}
