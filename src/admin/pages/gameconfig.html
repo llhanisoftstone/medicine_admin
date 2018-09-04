@@ -73,21 +73,21 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             关卡
-                            <button class="fa fa-plus-circle btn btn-default" id="addoption" onclick="addoption()"> 新增关卡</button>
+                            <button class="fa fa-plus-circle btn btn-default" id="addoption" onclick="addgames()"> 新增关卡</button>
                         </div>
                         <div class="panel-body">
-                            <form role="form" id="userAddForm">
+                            <form role="form" id="gamesAddForm" style="display:none;">
                                 <div class="row">
                                     <div class="col-md-4 form-group">
-                                        <label >关卡数：</label>
+                                        <label for="level">关卡数：</label>
                                         <div class="pinput">
-                                            <input  id="level" readonly="readonly" disabled name="level" class="form-control" type="number" style="cursor: not-allowed">
+                                            <input  id="level" readonly="readonly" disabled name="level" data-level="" class="form-control" type="text" style="cursor: not-allowed" />
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label >本关答题数量：</label>
                                         <div class="pinput">
-                                            <input placeholder="请输入答题数量" id="max_step" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="max_step" class="form-control" type="number">
+                                            <input placeholder="请输入答题数量" id="max_step" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="max_step" class="form-control" type="tel">
                                         </div>
                                     </div>
 
@@ -102,7 +102,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-4 form-group isTicketShow" style="display:none;">
                                         <label for="storename">店铺名称：</label>
                                         <div class="pinput">
                                             <select id="storename" class="form-control" onchange="getTickets()">
@@ -110,7 +110,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-4 form-group isTicketShow" style="display:none;">
                                         <label for="ticketname">优惠券/产品：</label>
                                         <div class="pinput">
                                             <select id="ticketname" class="form-control" name="ticket_id">
@@ -120,10 +120,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group  pbtn-group ">
-                                    <button id="userAddcategory"  class="fa fa-save btn btn-default" type="button"> 保存关卡</button>
-                                    <button id="resetSaveBtn" type="button" class="fa fa-reply-all btn btn-default">
-                                        重置
-                                    </button>
+                                    <button id="levelsAddBtn"  class="fa fa-save btn btn-default" type="button" onclick="levelsAdd()"> 保存关卡</button>
+                                    <button id="resetSaveBtn" type="button" class="fa fa-reply-all btn btn-default">重置</button>
                                 </div>
                             </form>
                             <table class="table table-striped table-bordered table-hover" style="text-align: center">
@@ -142,10 +140,7 @@
                             <div class="text-center">
                                 <button datatype="require" type="button" class="btn fa fa-save btn-default" _status="0" onclick="saveData();" id="savebtn">保存</button>
                             </div>
-                            <!--<div style="text-align: center">-->
-                                <!--<buttton class="fa fa-save btn btn-default" id="saveasdraft" onclick="savedata('0')"> 保存为草稿</buttton>-->
-                                <!--<buttton class="fa fa-save btn btn-default" id="save" onclick="savedata('1')"> 提交审核</buttton>-->
-                            <!--</div>-->
+
                         </div>
                     </div>
                 </div>
@@ -169,15 +164,15 @@
             <td style="text-align:center;" >
                 {{#if reward}}
                         {{#each reward}}
-                            <span>优惠券id:{{id}}</span>
+                            <span>{{name}}</span>
                         {{/each}}
                     {{else}}
                         <span>无</span>
                 {{/if}}
             </td>
             <td style="text-align: center;">
-                <span class="fa fa-pencil-square-o" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
-                <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this)"></span>
+                <span class="fa fa-pencil-square-o" title="编辑" onclick="onLevelUpdate('{{id}}')"></span>
+                <span class="fa fa-trash-o" title="删除" onclick="onLevelDelete('{{id}}')"></span>
             </td>
         </tr>
         {{/each}}

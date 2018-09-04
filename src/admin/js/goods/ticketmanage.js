@@ -1,5 +1,6 @@
 
 var base_url_goodsCategory='/rs/v_hot_recomment';
+var base_url_edit='/rs/hot_recomment';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -134,7 +135,7 @@ function onSavecategoryData(){
         if(endTime){
             add_data.end_time=endTime;
         }
-        zhpost(base_url_goodsCategory,add_data).then(function(result){
+        zhpost(base_url_edit,add_data).then(function(result){
             if(checkData(result,'post')){
                 resetinput();
                 $(".addModels").hide();
@@ -149,12 +150,12 @@ function onSavecategoryData(){
             editdata.order_code=order;
         }
         if(startTime){
-            add_data.strat_time=startTime;
+            editdata.strat_time=startTime;
         }
         if(endTime){
-            add_data.end_time=endTime;
+            editdata.end_time=endTime;
         }
-        zhput(base_url_goodsCategory+"/"+modelid,editdata).then(function(result){
+        zhput(base_url_edit+"/"+modelid,editdata).then(function(result){
             if(checkData(result,'put')){
                 $(".addModels").hide();
                 $("#storename").removeAttr("_id");
@@ -276,7 +277,7 @@ function onUpdateClick(store_id,ticket_id,id,order,strat_time,end_time) {
 }
 function enableClick(id) {
     if (confirm("确定要启用该优惠券吗？")) {
-        zhput(base_url_goodsCategory + "/" + id,{status:1}).then(function (result) {
+        zhput(base_url_edit + "/" + id,{status:1}).then(function (result) {
             checkData(result, 'put');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
@@ -287,7 +288,7 @@ function enableClick(id) {
 }
 function disableClick(id) {
     if (confirm("确定要禁用该优惠券吗？")) {
-        zhput(base_url_goodsCategory + "/" + id,{status:2}).then(function (result) {
+        zhput(base_url_edit + "/" + id,{status:2}).then(function (result) {
             checkData(result, 'put');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
