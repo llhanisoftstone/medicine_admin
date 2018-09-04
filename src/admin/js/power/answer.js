@@ -5,6 +5,7 @@ var base_url='/rs/statistics_answer';
 var currentPageNo = 1;
 var pageRows = 10;
 $(function(){
+    getOrganiztion();
     var page = getUrlParamsValue("page");
     if(page&&page != "undefined"){
         currentPageNo = page;
@@ -18,9 +19,14 @@ $(function(){
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
     queryList();
-    initselect("select")
 
 })
+function getOrganiztion(){
+    zhget('/rs/company').then( function(result) {
+        buildTableNoPage(result, 'select-template','select');
+        initselect("select")
+    })
+}
 function showSearchPage() {
     $(".reasonSearch", $(".report")).animate({
         height : 'toggle',
@@ -32,7 +38,7 @@ function showSearchPage() {
 }
 function initselect(id){
     $('#'+id).selectpicker({
-        size: 10,
+        size: 8,
         width:'100%'
     });
 }
@@ -76,13 +82,17 @@ function queryList(){
 
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(result) {
-        debugger;
-        integrals = result.rows;
-        for (var i = 0; i < integrals.length; i++) {
-            var indexCode = integrals[i];
+        var rows= result.questions_list;
+        for (var i = 0; i < rows.length; i++) {
+            var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
-        buildTableByke(result, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+        jQuery("#count").html(result.count);
+        jQuery("#type_count").html(result.type_count);
+        buildTableByPage(result.type_list,'kind-template','kind',false)
+        var datas={}
+        datas[0]=rows;
+        buildTableByke(datas, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);

@@ -1,10 +1,12 @@
 /**
  * Created by pc on 2018/9/3.
  */
-var base_url='/rs/statistics_user_sale';
+var base_url='/rs/statistics_user';
 var currentPageNo = 1;
 var pageRows = 10;
+var onequerylist = true;
 $(function(){
+    getOrganiztion();
     var page = getUrlParamsValue("page");
     if(page&&page != "undefined"){
         currentPageNo = page;
@@ -18,9 +20,14 @@ $(function(){
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
     queryList();
-    initselect("select")
 
 })
+function getOrganiztion(){
+    zhget('/rs/company').then( function(result) {
+        buildTableNoPage(result, 'select-template','select');
+        initselect("select")
+    })
+}
 function showSearchPage() {
     $(".reasonSearch", $(".report")).animate({
         height : 'toggle',
@@ -32,7 +39,7 @@ function showSearchPage() {
 }
 function initselect(id){
     $('#'+id).selectpicker({
-        size: 10,
+        size: 8,
         width:'100%'
     });
 }
@@ -49,7 +56,8 @@ function queryList(){
         size: pageRows,
     };
     if(isSearch){
-        var select=$("#select").val();
+        var organiz_id=$("#select").val();
+        data.organiz_id=organiz_id;
         var startTime = $("#getTimeStart").val();
         var endTime = $("#getTimeEnd").val();
         if(startTime!=''||endTime!==''){
@@ -74,14 +82,17 @@ function queryList(){
     }
 
     $("#event-placeholder").html("");
-    zhget(base_url,data).then( function(result) {
-        debugger
-        integrals = result.rows;
-        for (var i = 0; i < integrals.length; i++) {
-            var indexCode = integrals[i];
+    zhget(base_url,data).then( function(res) {
+        var rows= res.comp_list;
+        for (var i = 0; i < rows.length; i++) {
+            var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
-        buildTableByke(result, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+        var datas={};
+        datas[0]=rows;
+        jQuery("#user").html(res.user);
+        jQuery("#comp_user").html(res.comp_user);
+        buildTableByke(datas, 'event-template', 'event','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);
