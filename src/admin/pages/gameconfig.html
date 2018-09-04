@@ -172,9 +172,9 @@
             </td>
             <td style="text-align: center;">
                 <span class="fa fa-pencil-square-o" title="编辑" onclick="onLevelUpdate('{{level}}','{{max_step}}','{{reward}}')"></span>
-
+                {{#equal deleteStatus true}}
                 <span class="fa fa-trash-o" title="删除" onclick="onLevelDelete('{{id}}','{{level}}')"></span>
-
+                {{/equal}}
             </td>
         </tr>
         {{/each}}

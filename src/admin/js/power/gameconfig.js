@@ -180,6 +180,7 @@ function levelsAdd(){
         leveljson.push(levelobj);
     }
     tempresult.rows[0].level_json=leveljson;
+    setDeleteStatus(leveljson)
     buildTableNoPage(tempresult, 'answer-template', 'answer');
     $('#gamesAddForm').animate({
         height : 'toggle',
@@ -207,6 +208,14 @@ function onLevelUpdate(level,max_step,reward){
         opacity : 'show'
     }, "slow");
 }
+function setDeleteStatus(leveljson){
+    if(leveljson){
+        for(var key in leveljson){
+            var len=leveljson.length-1;
+            leveljson[len].deleteStatus=true;
+        }
+    }
+}
 function onLevelDelete(id,level){
     if(confirm('您确定要删除该关卡吗？')){
         for(var key in leveljson){
@@ -215,6 +224,7 @@ function onLevelDelete(id,level){
             }
         }
         tempresult.rows[0].level_json=leveljson;
+        setDeleteStatus(leveljson)
         buildTableNoPage(tempresult, 'answer-template', 'answer');
     }
 }
@@ -232,6 +242,7 @@ function getGoodsById(id){
         $("#title_pic").val(result.rows[0].picpath);
         $("#sale_price").val(result.rows[0].price);
         leveljson=result.rows[0].level_json;
+        setDeleteStatus(leveljson)
         buildTableNoPage(result, 'answer-template', 'answer');
     });
 }
