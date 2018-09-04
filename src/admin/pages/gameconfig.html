@@ -171,8 +171,10 @@
                 {{/if}}
             </td>
             <td style="text-align: center;">
-                <span class="fa fa-pencil-square-o" title="编辑" onclick="onLevelUpdate('{{id}}')"></span>
-                <span class="fa fa-trash-o" title="删除" onclick="onLevelDelete('{{id}}')"></span>
+                <span class="fa fa-pencil-square-o" title="编辑" onclick="onLevelUpdate('{{level}}','{{max_step}}','{{reward}}')"></span>
+
+                <span class="fa fa-trash-o" title="删除" onclick="onLevelDelete('{{id}}','{{level}}')"></span>
+
             </td>
         </tr>
         {{/each}}

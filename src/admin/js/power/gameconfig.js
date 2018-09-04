@@ -43,7 +43,7 @@ function onUploadDetailPic(formObject, fileComp, list) {
     }
 }
 //获取店铺
-function getstorename(){
+function getstorename(store_id){
     $("#storename").html("");
     var data={
         status:'1'
@@ -53,7 +53,11 @@ function getstorename(){
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+                if(store_id==result.rows[i].id){
+                    html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>"
+                }else{
+                    html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+                }
             }
             $("#storename").append(html);
         }
@@ -68,7 +72,7 @@ function getTickets(){
         getticketinfo(id);
     }
 }
-function getticketinfo(storeid){
+function getticketinfo(storeid,tid){
     $("#ticketname").html("");
     var data={
         status:'<>,99'
@@ -81,7 +85,11 @@ function getticketinfo(storeid){
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"'>"+result.rows[i].name+"</option>"
+                if(tid==result.rows[i].id){
+                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' selected='selected'>"+result.rows[i].name+"</option>"
+                }else{
+                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"'>"+result.rows[i].name+"</option>"
+                }
             }
             $("#ticketname").append(html);
         }
@@ -156,12 +164,21 @@ function levelsAdd(){
             {
                 category: "ticket",
                 name:name,
-                id: ticket_id
+                id: ticket_id,
+                stroe_id: storename
             }
         );
         levelobj.reward=reward;
     }
-    leveljson.push(levelobj);
+    if(leveledit){
+        for(var key in leveljson){
+            if(leveljson[key].level==level){
+                leveljson[key]=levelobj;
+            }
+        }
+    }else{
+        leveljson.push(levelobj);
+    }
     tempresult.rows[0].level_json=leveljson;
     buildTableNoPage(tempresult, 'answer-template', 'answer');
     $('#gamesAddForm').animate({
@@ -170,11 +187,36 @@ function levelsAdd(){
     }, "slow");
     $("#gamesAddForm")[0].reset();
 }
-function onLevelUpdate(){
-
+var leveledit=false;//子关卡是否为编辑
+function onLevelUpdate(level,max_step,reward){
+    leveledit=true;
+    $("#max_step").val(max_step);
+    $('#level').val('第'+level+'关')
+        .attr('data-level',level);
+    if(reward){
+        $('#isTicket').val(2);
+        var storeid=reward[0].store_id;
+        getstorename(storeid);
+        $('.isTicketShow').show();
+    }else{
+        $('#isTicket').val(1);
+        $('.isTicketShow').hide();
+    }
+    $('#gamesAddForm').animate({
+        height : '100%',
+        opacity : 'show'
+    }, "slow");
 }
-function onLevelDelete(){
-
+function onLevelDelete(id,level){
+    if(confirm('您确定要删除该关卡吗？')){
+        for(var key in leveljson){
+            if(leveljson[key].level==level){
+                leveljson.splice(key,1)
+            }
+        }
+        tempresult.rows[0].level_json=leveljson;
+        buildTableNoPage(tempresult, 'answer-template', 'answer');
+    }
 }
 //获取对象个数
 function getObjLength(_obj){
