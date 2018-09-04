@@ -25,9 +25,9 @@
                     </li>
                     <li>会员人数</li>
                 </ul>
-                <!--<div style="float:right; margin-top: -2px;">-->
-                    <!--<button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>-->
-                <!--</div>-->
+                <div style="float:right; margin-top: -2px;">
+                    <button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                </div>
             </div>
             <div>
                 <div class="reasonSearch" >
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group  pbtn-group">
                                     <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
-                                    <!--<button type="button" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" >重置</button>-->
+                                    <button type="button" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" >重置</button>
                                 </div>
                             </form>
                         </div>
@@ -94,9 +94,10 @@
                     <table class="table table-striped table-bordered table-hover" style="text-align: center">
                         <thead>
                         <tr>
-                            <th class="col-sm-1">企业ID</th>
-                            <th class="col-sm-2">企业名称</th>
-                            <th class="col-sm-2">企业会员数量</th>
+                            <th class="col-sm-2">序号</th>
+                            <th class="col-sm-3">企业ID</th>
+                            <th class="col-sm-4">企业名称</th>
+                            <th class="col-sm-3">企业会员数量</th>
                         </tr>
                         </thead>
                         <tbody id="event">
@@ -128,6 +129,7 @@
 <script id="event-template" type="text/x-handlebars-template">
        {{#datas}}
         <tr>
+            <td></td>
             <td>{{id}}</td>
             <td>{{nickname}}</td>
             <td>{{realname}}</td>
