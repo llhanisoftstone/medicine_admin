@@ -1,5 +1,5 @@
 
-var base_url_goodsCategory='/rs/v_hot_recomment';
+var base_url_goodsCategory='/rs/game_config';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -19,18 +19,7 @@ $(function() {
     });
     $("#userAddcategory", $(".reasonRefund")).unbind("click");
     $("#userAddcategory", $(".reasonRefund")).bind("click", onSavecategoryData);
-    $('#searchticketname').on('click',function(){
-        var store=$('#searchstorename').val()
-        if(!store || store=='-1'){
-            return showError('请先选择店铺');
-        }
-    })
-    $('#ticketname').on('click',function(){
-        var store=$('#storename').val()
-        if(!store || store=='-1'){
-            return showError('请先选择店铺');
-        }
-    })
+
 });
 
 function queryList(){
@@ -249,31 +238,39 @@ function showSearchPage() {
     }, "slow");
 }
 function addGoodsModels(dom){
-    $(".reasonSearch", $(".reasonRefund")).css("display", "none");
-    $("#userAddForm", $(".reasonRefund"))[0].reset();
-    $(".addModels", $(".reasonRefund")).animate({
-        height : 'show',
-        opacity : 'show'
-    }, "slow");
-    $("#storename").attr("_id","");
+    location.href="admin.html#pages/gameconfig.html";
+    // $(".reasonSearch", $(".reasonRefund")).css("display", "none");
+    // $("#userAddForm", $(".reasonRefund"))[0].reset();
+    // $(".addModels", $(".reasonRefund")).animate({
+    //     height : 'show',
+    //     opacity : 'show'
+    // }, "slow");
+    // $("#storename").attr("_id","");
 }
 
-function onUpdateClick(store_id,ticket_id,id,order,strat_time,end_time) {
-    getticketinfo(store_id);
-    $("#storename").attr("_id",id);
-    $("#storename").val(store_id);
-    $("#order_code").val(order);
-    $("#startTime").val(strat_time);
-    $("#endTime").val(end_time);
-    setTimeout(function(){
-        $("#ticketname").val(ticket_id);
-    },300)
-    $(".reasonSearch", $(".reasonRefund")).css("display", "none");
-    $(".addModels", $(".reasonRefund")).animate({
-        height : 'show',
-        opacity : 'show'
-    }, "slow");
+function onUpdateClick(id,read) {
+    if(read=='read'){
+        location.href="admin.html#pages/gameconfig.html?pid="+id+'&read=read';
+    }else{
+        location.href="admin.html#pages/gameconfig.html?pid="+id;
+    }
+
+    // getticketinfo(store_id);
+    // $("#storename").attr("_id",id);
+    // $("#storename").val(store_id);
+    // $("#order_code").val(order);
+    // $("#startTime").val(strat_time);
+    // $("#endTime").val(end_time);
+    // setTimeout(function(){
+    //     $("#ticketname").val(ticket_id);
+    // },300)
+    // $(".reasonSearch", $(".reasonRefund")).css("display", "none");
+    // $(".addModels", $(".reasonRefund")).animate({
+    //     height : 'show',
+    //     opacity : 'show'
+    // }, "slow");
 }
+
 function enableClick(id) {
     if (confirm("确定要启用该优惠券吗？")) {
         zhput(base_url_goodsCategory + "/" + id,{status:1}).then(function (result) {
@@ -311,4 +308,14 @@ function searchbtn(){
 
 Handlebars.registerHelper("getindex", function (v1, options) {
     return v1+1;
+});
+Handlebars.registerHelper('priceformat', function(v1, options) {
+    if(!v1){
+        return 0;
+    }
+    if(v1<10000){
+        return v1;
+    }else{
+        return parseFloat(parseInt(v1)/10000).toFixed(2)+'万';
+    }
 });
