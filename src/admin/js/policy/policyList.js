@@ -8,6 +8,7 @@ var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
+var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
@@ -51,6 +52,8 @@ function queryList() {
         order:'is_hot desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
+        organiz_id:organizid,
+        status:'<,99',//状态：0-草稿；1-待审核，2-上架，3-拒绝，4-下架；
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
