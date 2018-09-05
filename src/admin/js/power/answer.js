@@ -18,7 +18,6 @@ $(function(){
         setTimeout(function(){
             queryList();
         },300)
-
     });
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);

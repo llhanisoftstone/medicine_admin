@@ -12,7 +12,8 @@ $(function(){
         currentPageNo = page;
     }
     $("#resetSearchBtn", $(".report")).bind("click", function(){
-        $("#reasonSearchForm", $(".report"))[0].reset();
+        jQuery("#select").selectpicker("val","");
+         $("#reasonSearchForm", $(".report"))[0].reset();
         currentPageNo = 1;
         pageRows = 10;
         queryList();
