@@ -165,7 +165,7 @@ function levelsAdd(){
                 category: "ticket",
                 name:name,
                 id: ticket_id,
-                stroe_id: storename
+                store_id: storename
             }
         );
         levelobj.reward=reward;
@@ -196,8 +196,15 @@ function onLevelUpdate(level,max_step,reward){
         .attr('data-level',level);
     if(reward){
         $('#isTicket').val(2);
+        for(var key in leveljson){
+            if(leveljson[key].level==level){
+                reward=leveljson[key].reward;
+            }
+        }
         var storeid=reward[0].store_id;
-        getstorename(storeid);
+        var ticketid=reward[0].id;
+        $('#storename').val(storeid);
+        getticketinfo(storeid,ticketid);//设定ticket
         $('.isTicketShow').show();
     }else{
         $('#isTicket').val(1);
