@@ -118,10 +118,12 @@ function checkfrm() {
                 sessionStorage.setItem('menu',JSON.stringify(rs.menu));
                 setCookie('sid', rs.sid);
                 setCookie('compid', rs.compid);
+                setCookie('organiz_id', rs.organiz_id);
                 setCookie('uid', rs.userid);
                 setCookie('userrank', rs.userrank);
                 setCookie('storeid', rs.store_id);
                 sessionStorage.setItem("compid",rs.compid);
+                sessionStorage.setItem("organiz_id",rs.organiz_id);
                 sessionStorage.setItem("uid",rs.userid);
                 sessionStorage.setItem("userrank",rs.userrank);
                 window.location = 'admin.html';

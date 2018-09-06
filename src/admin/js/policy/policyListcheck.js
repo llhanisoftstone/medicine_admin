@@ -8,7 +8,6 @@ var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
-var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
@@ -20,14 +19,6 @@ $(function() {
     }
 });
 
-Handlebars.registerHelper("superif", function (v1,v2, options) {
-    if (v1==v2) {
-        return options.fn(this);
-    }
-});
-Handlebars.registerHelper('getindex', function(v1, options) {
-    return v1+1;
-});
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
@@ -52,8 +43,7 @@ function queryList() {
         order:'is_hot desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
-        organiz_id:organizid,
-        status:'<,99',//状态：0-草稿；1-待审核，2-上架，3-拒绝，4-下架；
+        ins:['status','1',"2","3","4"],
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
@@ -80,6 +70,7 @@ function queryList() {
         }
         var status=$("#status").val();
         if(status && status!="-1"){
+            delete data.ins;
             data.status=status;
         }
     }
@@ -101,9 +92,6 @@ function queryList() {
     });
 }
 
-function onAddClick() {
-    location.href="admin.html#pages/policy/addpolicy.html"
-}
 function onSetUpClick(id,ishot) {
     if(ishot == 0){
         if(confirm("确认要设置该政策为热点信息吗？")) {
@@ -124,7 +112,7 @@ function onSetUpClick(id,ishot) {
         }
     }
 }
-function onUpdateClick(id,copy) {
+function viewDetail(id,copy) {
     var thispage  = window.location.hash;
     thispage = thispage.replace('#','');
     setlocalStorageCookie("thispage",thispage);
@@ -137,11 +125,65 @@ function onUpdateClick(id,copy) {
     var pageRecord = $("#paginator li.active a").text();
     setlocalStorageCookie("pageRecord",pageRecord);
     if(copy=='copy'){
-        location.href="admin.html#pages/policy/addpolicy.html?id="+id+'&copy=copy';
+        location.href="admin.html#pages/policy/addpolicy.html?id="+id+'&copy=copy&read=read';
     }else{
-        location.href="admin.html#pages/policy/addpolicy.html?id="+id;
+        location.href="admin.html#pages/policy/addpolicy.html?id="+id+'&read=read';
     }
 }
+//状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
+//下架
+function questiondown(id){
+    if(confirm("确定要下架该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 4}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("下架成功");
+            } else {
+                showError("下架失败")
+            }
+        })
+    }
+}
+//上架
+function questionup(id){
+    if(confirm("确定要上架该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 2}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("上架成功");
+            } else {
+                showError("上架失败")
+            }
+        })
+    }
+}
+//拒绝
+function rejectClick(id){
+    if(confirm("确定要拒绝该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 3}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("拒绝成功");
+            } else {
+                showError("拒绝失败")
+            }
+        })
+    }
+}
+//通过审核
+function agreeClick(id){
+    if(confirm("确定要通过该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 2}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("通过成功");
+            } else {
+                showError("通过失败")
+            }
+        })
+    }
+}
+/*
 function onDeleteClick(id) {
     if(confirm("确认要删除？")) {
         zhdelete(base_url_course + "/" + id).then(function (result) {
@@ -163,9 +205,19 @@ function onDeleteClick(id) {
         });
     }
 }
+*/
 function onSearchClick() {
     $(".tryoutSearch", $(".reasonRefund")).animate({
         height : 'toggle',
         opacity : 'toggle'
     }, "slow");
 }
+
+Handlebars.registerHelper("superif", function (v1,v2, options) {
+    if (v1==v2) {
+        return options.fn(this);
+    }
+});
+Handlebars.registerHelper('getindex', function(v1, options) {
+    return v1+1;
+});

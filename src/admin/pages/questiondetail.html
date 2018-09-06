@@ -18,14 +18,12 @@
                         <li id="pid">
                             <a>题目管理</a>
                         </li>
-                        <li>题目管理</li>
+                        <li>题目详情</li>
                     </ul>
                     <div style="float: right;">
                         <button type="button" id="addNew" onclick="backquestion()" class=" fa btn btn-default fa-share-square">返回</button>
                     </div>
                 </div>
-
-
                 <!-- /.panel-heading -->
                 <div class="panel-body">
 
@@ -42,13 +40,13 @@
                                                 <label>题目名称：</label>
                                                 <div class="pinput">
                                                     <input placeholder="题目名称" id="name" name="name"
-                                                           maxlength="50" class="form-control points">
+                                                          disabled="disabled" readonly="readonly" maxlength="50" class="form-control ">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label>分类：</label>
                                                 <div class="pinput">
-                                                    <select id="videonames" class="form-control">
+                                                    <select id="videonames" class="form-control" disabled="disabled" readonly="readonly">
 
                                                     </select>
                                                 </div>
@@ -56,7 +54,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label form="shopnames">出题者：</label>
                                                 <div class="pinput">
-                                                    <select id="shopnames" class="form-control">
+                                                    <select id="shopnames" class="form-control" disabled="disabled" readonly="readonly">
 
                                                     </select>
                                                 </div>
@@ -66,7 +64,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label>难度：</label>
                                                 <div class="pinput">
-                                                    <select id="rank" class="form-control">
+                                                    <select id="rank" class="form-control" disabled="disabled" readonly="readonly">
                                                         <option value="-1">全部</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
@@ -83,7 +81,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             选项
-                            <button class="fa fa-plus-circle btn btn-default" id="addoption" onclick="addoption()">新增选项</button>
+                            <!--<button class="fa fa-plus-circle btn btn-default" id="addoption" onclick="addoption()">新增选项</button>-->
                         </div>
 
                         <div class="panel-body">
@@ -98,8 +96,7 @@
                                 </tbody>
                             </table>
                             <div style="text-align: center">
-                                <buttton class="fa fa-save btn btn-default" id="saveasdraft" onclick="savedata('0')"> 保存为草稿</buttton>
-                                <buttton class="fa fa-save btn btn-default" id="save" onclick="savedata('1')"> 提交审核</buttton>
+                                <!--<buttton class="fa fa-save btn btn-default" id="save" onclick="savedata()">保存</buttton>-->
                             </div>
                         </div>
                     </div>
@@ -109,29 +106,6 @@
             <!-- /.panel -->
         </div>
     </div>
-</div>
-<div id="userHelpModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title">选项</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal" id="user_form">
-                    <input type="text" maxlength="10" id="HelpId" class="form-control points">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="escmodal()">取消</button>
-                <button onclick="onSaveHelpClick()" type="button" class=" btn btn-default" id="user_buttonid">确认</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>
 
 <script id="goodsCategory1-template" type="text/x-handlebars-template">
@@ -143,14 +117,13 @@
             <input type="radio" name="right" value="true" checked onclick="changeText(this)" class="ri">
             {{/equal}}
             {{#equal right false}}
-            <input type="radio" name="right" value="false" onclick="changeText(this)" class="ri">
+            <input type="radio" name="right" value="false" onclick="changeText(this)" class="ri" disabled="disabled">
             {{/equal}}
-            <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this)"></span>
         </td>
     </tr>
     {{/datas}}
 </script>
-<script type="text/javascript" src="js/power/questionadd.js"></script>
+<script type="text/javascript" src="js/power/questiondetail.js"></script>
 </body>
 
 </html>
