@@ -12,8 +12,8 @@ $(function(){
         currentPageNo = page;
     }
     $("#resetSearchBtn", $(".report")).bind("click", function(){
+        // $("#reasonSearchForm", $(".report"))[0].reset();
         jQuery("#select").selectpicker("val","");
-         $("#reasonSearchForm", $(".report"))[0].reset();
         currentPageNo = 1;
         pageRows = 10;
         queryList();
@@ -63,7 +63,6 @@ function queryList(){
     }
 
     $("#event-placeholder").html("");
-    console.log(data);
     zhget(base_url,data).then( function(res) {
         var rows= res.comp_list;
         for (var i = 0; i < rows.length; i++) {

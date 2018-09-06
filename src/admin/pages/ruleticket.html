@@ -21,12 +21,12 @@
                         <li>
                             <a>产品管理</a>
                         </li>
-                        <li>产品管理</li>
+                        <li>发放规则</li>
                     </ul>
                     <!--<span class="fa fa-home">&nbsp;&nbsp;</span>产品列表-->
                     <div style="float: right;">
-                        <button type="button" onclick="onAddClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
-                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                        <button type="button" onclick="onAddruleClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
+                        <button type="button" id="searchBtn" onclick="onSearchruleClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
                     </div>
                 </div>
                 <div class="searchDataDiv">
@@ -65,11 +65,11 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%">序号</th>
-                                <th style="width: 10%">产品ID</th>
-                                <th style="width: 10%">类型</th>
-                                <th style="width: 25%">产品名称</th>
-                                <th style="width: 20%">产品价格</th>
-                                <th style="width: 20%">创建时间</th>
+                                <th style="width: 20%">产品名称</th>
+                                <th style="width: 15%">类型</th>
+                                <th style="width: 15%">产品数量</th>
+                                <th style="width: 15%">生效时间</th>
+                                <th style="width: 15%">失效时间</th>
                                 <th style="width: 10%">操作</th>
                             </tr>
                             </thead>
@@ -96,23 +96,20 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{id}}</td>
+        <td>{{title}}</td>
+        <th>{{#superif type 1}}随机发放{{/superif}}{{#superif type 2}}特定场景发放{{/superif}}</th>
+        <td>{{total_amount}}</td>
+        <td>{{start_time}}</td>
+        <td>{{end_time}}</td>
         <td>
-            {{#equal type 1}}线上优惠券{{/equal}}
-            {{#equal type 2}}实物商品{{/equal}}
-        </td>
-        <td>{{name}}</td>
-        <td>{{getprice price}}</td>
-        <td>{{create_time}}</td>
-        <td>
-            <!--<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>-->
-            <span class=" fa fa-trash-o" title="删除" onclick="delClickup('{{id}}')" title="删除"></span>
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
+            <!--<span class=" fa fa-trash-o" title="删除" onclick="delClickup('{{id}}')" title="删除"></span>-->
         </td>
     </tr>
     {{/datas}}
 </script>
 
 <input id="pageIndex" type="hidden" value="">
-<script type="text/javascript" src="js/goods/goodsList.js"></script>
+<script type="text/javascript" src="js/ruleticket.js"></script>
 </body>
 </html>

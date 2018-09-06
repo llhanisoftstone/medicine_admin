@@ -12,6 +12,9 @@
         .operate span:hover{
             text-decoration: none;
         }
+        li{
+            list-style:none;
+        }
 
     </style>
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
@@ -50,6 +53,17 @@
                                     <div class="col-md-4 form-group">
                                         <label>用户昵称：</label> <div class="pinput"><input placeholder="用户姓名" name="nickname" class="form-control " value="" maxlength="20"></div>
                                     </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="organiz">所属类别</label>
+                                        <div class="pinput">
+                                            <select name="" id="rqanak" class="form-control">
+                                                <option value="-1">全部</option>
+                                                <option value="31">店铺</option>
+                                                <option value="90">机关</option>
+                                            </select>
+                                            <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
+                                        </div>
+                                    </div>
                                     <div class="col-md-4  form-group">
                                         <label>创建时间：</label> <div class="pinput">
                                         <span id="dtBindTimeStart_input"></span><input placeholder="请输入开始时间" datatype="timeverify" ltname="dtBindTimeEnd" pop="不能大于结束时间" value="" id="dtBindTimeStart" name="dtBindTimeStart" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd'})" class="form-control pdate-time" style="width: 45%; float: left;">
@@ -73,12 +87,12 @@
                             <thead>
                             <tr>
                                 <th class="col-lg-1">用户ID</th>
-                                <th class="col-lg-1">登录账号</th>
+                                <th class="col-lg-2">登录账号</th>
                                 <th class="col-lg-1">用户昵称</th>
-                                <th class="col-lg-1">角色名称</th>
-                                <th class="col-lg-1">所属机关</th>
+                                <th class="col-lg-2">角色名称</th>
+                                <th class="col-lg-2">所属机关</th>
                                 <th class="col-lg-2">创建时间</th>
-                                <th>操作</th>
+                                <th class="col-lg-2">操作</th>
                             </tr>
                             </thead>
                             <tbody id="user-placeholder">
@@ -111,6 +125,17 @@
                 <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
                 <div class="form-horizontal" id="user_form">
                     <div class="form-group">
+                        <label for="organiz" class="col-sm-2 control-label">所属类别</label>
+                        <div class="col-sm-9">
+                            <select name="" id="rqanakmember" class="form-control" onchange="showSelect()">
+                                <option value="-1">请选择</option>
+                                <option value="31">店铺</option>
+                                <option value="90">机关</option>
+                            </select>
+                            <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">登录账号</label>
                         <div class="col-sm-9">
                             <input type="text" style="display: none" class="form-control" id="userid" >
@@ -130,11 +155,20 @@
                             <input type="password" placeholder="请输入账号密码" class="form-control" id="userpwd" minlength="6" maxlength="20" datatype="require slen numberletter">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group organizmember" style="display:none">
                         <label for="organiz" class="col-sm-2 control-label">所属机关</label>
                         <div class="col-sm-9">
                             <select name="" id="organiz" class="form-control">
                                 <option value="-1">无</option>
+                            </select>
+                            <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
+                        </div>
+                    </div>
+                    <div class="form-group membershop" style="display:none">
+                        <label for="shopcompany" class="col-sm-2 control-label">所属店铺</label>
+                        <div class="col-sm-9">
+                            <select name="" id="shopcompany" class="form-control">
+                                <option value="-1">请选择</option>
                             </select>
                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                         </div>
@@ -177,7 +211,12 @@
     </tr>
     {{/datas}}
 </script>
-
+<script id="brand-template" type="text/x-handlebars-template">
+    <option value="">请选择</option>
+    {{#datas}}
+    <option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>{{name}}</option>
+    {{/datas}}
+</script>
 <script type="text/javascript" src="js/power/roleAdmin.js"></script>
 </body>
 </html>
