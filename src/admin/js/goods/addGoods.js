@@ -7,9 +7,11 @@ var pageRows = 10;
 var operation = "add";
 var compid;
 var id;
+var u_id;
 $(function(){
     compid = getCookie('storeid');
     id=getQueryString("pid");
+    getmember();
     UE.getEditor('userProtocolAddUE',{
         initialFrameWidth :'100%',//设置编辑器宽度
         initialFrameHeight:'600',//设置编辑器高度
@@ -25,6 +27,13 @@ $(function(){
     $.initSystemFileUpload($("#titleForm"), onUploadDetailPic);
 
 });
+function getmember(){
+    zhget('/rs/member',{store_id:compid,rank:20}).then(function(result){
+        if(result.code==200){
+            u_id=result.rows[0].id;
+        }
+    })
+}
 function back(){
     history.go(-1);
 }
@@ -42,6 +51,7 @@ function getGoodsById(id){
     zhget(base_url_goods+"/"+id,{}).then(function(result) {
         $.hideActionLoading();
         $("#id").val(result.rows[0].id);
+        $("#type").val(result.rows[0].type);
         $("#name").val(result.rows[0].name);
         $("#title_pic").val(result.rows[0].picurl);
         $("#sale_price").val(formatPriceFixed2(result.rows[0].price));
@@ -59,6 +69,12 @@ function getGoodsById(id){
 
 function  saveData(){
     //获取产品基本信息
+    var type=$("#type").val();
+    if(!type||type=="-1"){
+        showError("请选择类型");
+        $("#type").focus();
+        return;
+    }
     var name=$.trim($("#name").val());
     if(!name||name.trim()==""){
         showError("请输入产品名称");
@@ -83,10 +99,12 @@ function  saveData(){
     var url="/rs/ticket";
     var urldata={
         name:name,
+        type:type,
         picurl:title_pic,
         price:price_leaguer*100,
         details:details,
-        store_id:compid
+        store_id:compid,
+        u_id:u_id,
     };
     saveData=null;
     if (operation == "add") {

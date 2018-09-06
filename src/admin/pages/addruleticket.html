@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/bignumber.js"></script>
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
+    <script type="text/javascript"  src="js/common/defaults-zh_CN.js"></script>
+    <style>
+        li{
+            list-style:none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="wrapper" style="overflow:visible">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                    <li>
+                        <a>产品管理</a>
+                    </li>
+                    <li>发放规则</li>
+                </ul>
+                <div style="float: right;">
+                    <button type="button" id="backBtn" onclick="back()" class=" fa fa-share-square btn btn-default"> 返回</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <!--<form id="addGoodsForm">-->
+                                <div class="" id="user_form">
+                                    <form id="titleForm">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label form="goodscompid">产品：</label>
+                                                <div class="pinput">
+                                                    <select placeholder="产品" id="goodscompid" onchange="tabcomp(this)" name="comp_id" data-live-search ="true" class="selectpicker">
+                                                        <option value="">请选择产品</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>类型：</label>
+                                                <div class="pinput">
+                                                    <select placeholder="请选择类型" id="type" name="type" class="form-control ">
+                                                        <option value="-1">请选择</option>
+                                                        <option value="1">随机发放</option>
+                                                        <option value="2">特定场景发放</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>数量：</label>
+                                                <div class="pinput">
+                                                    <input placeholder="数量" onkeyup="value=value.replace(/[^\d]/g,'')"  class="form-control" id="total_num" maxlength="7">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>开始时间：</label> <div class="pinput"><input placeholder="请选择开始时间" id="dtStartTime" name="start_time"  readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                            </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>结束时间：</label> <div class="pinput"><input placeholder="请选择结束时间" id="dtEndTime" name="end_time"  readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button datatype="require" type="button" _getGoodsIsActivityIn="0" class="btn fa fa-save btn-default" _status="0" onclick="saveData();" id="savebtn">保存</button>
+                                        </div>
+                                        <input id="id" style="display: none;"/>
+                                    </form>
+                                </div>
+                                <!--</form>-->
+                            </div>
+
+
+
+
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="brand-template" type="text/x-handlebars-template">
+    <option value="">请选择</option>
+    {{#datas}}
+    <option value="{{id}}">{{name}}</option>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/addruleticket.js"></script>
+
+
+</body>
+
+</html>
+
