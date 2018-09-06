@@ -328,7 +328,8 @@ function delClick(el,userid,usernames){
 function initselect(id){
     $('#'+id).selectpicker({
         size: 10,
-        width:'100%'
+        width:'100%',
+        noneSelectedText:'请选择'
     });
 }
 Handlebars.registerHelper('equal', function(v1,v2, options) {
