@@ -46,7 +46,7 @@
                                         <div class="col-md-4 form-group">
                                             <label >顺序：</label>
                                             <div class="pinput">
-                                                <input placeholder="请输入顺序" id="order_code" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="order_code" class="form-control" type="number">
+                                                <input placeholder="请输入顺序" id="order_code" oninput="num_limit(this,{max:5})" name="order_code" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
