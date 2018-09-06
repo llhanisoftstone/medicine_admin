@@ -66,10 +66,9 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'status,create_time desc',
+        order:'create_time desc',
         page: currentPageNo,
         size: pageRows,
-        status:1,
         store_id:compid,
     }
     if(isSearch){
