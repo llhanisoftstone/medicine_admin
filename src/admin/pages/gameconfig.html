@@ -37,37 +37,68 @@
                                     <div class="col-md-4 form-group">
                                         <label for="name">关卡名称：</label>
                                         <div class="pinput">
-                                            <input placeholder="关卡名称" datatype="require" class="form-control" id="name" maxlength="20">
+                                            <input placeholder="请输入关卡名称" datatype="require" class="form-control" id="name" maxlength="20">
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="title_pic">展示图片：</label>
+                                        <label for="storename">所属店铺：</label>
                                         <div class="pinput">
-                                            <div class="input-group" >
-                                                <input placeholder="请上传图片(219*220)" readonly type="text" id="title_pic" class="form-control" style="cursor: pointer;" datatype="require">
-                                                <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
-                                                    <i class="glyphicon glyphicon-search">
-                                                    <input type="file" name="picfile[]" placeholder="" value="pic file" refattr="title_pic" id="title_picfile"  multiple="multiple" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
-                                                    </i>
-                                                </span>
-                                            </div>
+                                            <select id="storename" class="form-control" onchange="getTickets()">
+
+                                            </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="ticketname">优惠券/产品：</label>
+                                        <div class="pinput">
+                                            <select id="ticketname" class="form-control" name="ticket_id">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label >答题数量：</label>
+                                        <div class="pinput">
+                                            <input placeholder="请输入答题数量" id="max_step" datatype="require" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="max_step" class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label >顺序：</label>
+                                        <div class="pinput">
+                                            <input placeholder="请输入顺序" id="order_code" datatype="require" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="order_code" class="form-control" type="number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label>有效期：</label>
+                                        <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="strat_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                            <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-4 form-group">-->
+                                        <!--<label for="title_pic">展示图片：</label>-->
+                                        <!--<div class="pinput">-->
+                                            <!--<div class="input-group" >-->
+                                                <!--<input placeholder="请上传图片(219*220)" readonly type="text" id="title_pic" class="form-control" style="cursor: pointer;" datatype="require">-->
+                                                <!--<span class="input-group-addon" style="cursor: pointer;overflow: hidden;">-->
+                                                    <!--<i class="glyphicon glyphicon-search">-->
+                                                    <!--<input type="file" name="picfile[]" placeholder="" value="pic file" refattr="title_pic" id="title_picfile"  multiple="multiple" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">-->
+                                                    <!--</i>-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                     <div class="col-md-4 form-group">
                                         <label for="sale_price">价格：</label>
                                         <div class="pinput">
                                             <input placeholder="价格，没有填0" oninput="num_limit(this,{max:8,maxval:99999.99,dec:2})" datatype="require money mlen" class="form-control" maxlength="8" id="sale_price" >
                                         </div>
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <label for="sale_price">顺序：</label>
-                                        <div class="pinput">
-                                            <input placeholder="排序编号" oninput="num_limit(this,{max:8,maxval:99999,dec:false})" datatype="require money mlen" class="form-control" maxlength="8" id="order_code" >
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="row">
-
+                                    <div class="text-center">
+                                        <button datatype="require" type="button" class="btn fa fa-save btn-default" _status="0" onclick="saveGameData();" id="savebtn">保存</button>
+                                    </div>
                                 </div>
 
                         <input id="id" style="display: none;"/>
@@ -75,6 +106,7 @@
                         </div>
                         <!--</form>-->
                     </div>
+                <!--
                 <div class="panel-body">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -150,6 +182,7 @@
                         </div>
                     </div>
                 </div>
+                -->
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel -->
