@@ -36,8 +36,8 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc, create_time desc',
-        status:'<>,99',
-        id:'>,10',//对战和闯关是固定的，不查
+        id:'>=,10',
+        status:'<>,99'
     }
     if(issearchModel){
         data.search=1;

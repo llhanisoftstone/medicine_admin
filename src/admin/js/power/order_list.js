@@ -6,7 +6,7 @@ var isSearch=false;
 var currentPageNo = 1;
 //var status_desc=['待付款','待发货','等待收货','待评论','交易成功','交易取消','退款','退货','失效','退款中','退款成功','退款失败']
 var pageRows = 10;
-var store_id=getCookie("store_id")
+var store_id = getCookie('storeid');
 //返回定位必须-start
 var searchForm; //查询条件JSON
 $(document).ready(function(){
