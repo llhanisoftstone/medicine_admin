@@ -103,12 +103,12 @@ function bindDataToggleModal(){
 //     }
 //     loadOrderReturnPriceModel(orderCode, detailId, iPrice,mainId,mainnum);
 // }
-function chargeoff(id,o_id){
+function chargeoff(id,name,o_id){
     var data = {
         status:1,
         //order_id:o_id
     }
-    if(confirm("您确定要核销该二维码吗？")){
+    if(confirm("您确定要核销"+name+"吗？")){
         zhput("/rs/member_ticket/"+ id,data).then(function(result){
             if(result.code == 200){
                 showSuccess('核销成功');
