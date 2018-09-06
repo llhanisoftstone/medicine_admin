@@ -249,6 +249,7 @@ function getGoodsById(id){
         $("#title_pic").val(result.rows[0].picpath);
         $("#sale_price").val(result.rows[0].price);
         leveljson=result.rows[0].level_json;
+        $("#order_code").val(result.rows[0].order_code);
         setDeleteStatus(leveljson)
         buildTableNoPage(result, 'answer-template', 'answer');
     });
@@ -273,11 +274,17 @@ function saveData(){
         showError("请配置关卡");
         return;
     }
+    var order_code=$.trim($("#order_code").val());
+    if(!order_code||order_code.trim()==""){
+        showError("请输入排序序号");
+        return;
+    }
     var urldata={
         name:name,
         picpath:title_pic,
         price:price_leaguer,
-        level_json:leveljson
+        level_json:leveljson,
+        order_code:order_code
     };
     saveData=null;
     if (operation == "add") {

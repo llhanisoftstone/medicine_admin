@@ -59,6 +59,12 @@
                                             <input placeholder="价格，没有填0" oninput="num_limit(this,{max:8,maxval:99999.99,dec:2})" datatype="require money mlen" class="form-control" maxlength="8" id="sale_price" >
                                         </div>
                                     </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="sale_price">顺序：</label>
+                                        <div class="pinput">
+                                            <input placeholder="排序编号" oninput="num_limit(this,{max:8,maxval:99999,dec:false})" datatype="require money mlen" class="form-control" maxlength="8" id="order_code" >
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
 

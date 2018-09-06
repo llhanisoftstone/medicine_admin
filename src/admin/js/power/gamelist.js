@@ -29,6 +29,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc, create_time desc',
+        id:'>=,10',
         status:'<>,99'
     }
     if(issearchModel){
