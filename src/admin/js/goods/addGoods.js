@@ -51,6 +51,7 @@ function getGoodsById(id){
     zhget(base_url_goods+"/"+id,{}).then(function(result) {
         $.hideActionLoading();
         $("#id").val(result.rows[0].id);
+        $("#type").val(result.rows[0].type);
         $("#name").val(result.rows[0].name);
         $("#title_pic").val(result.rows[0].picurl);
         $("#sale_price").val(formatPriceFixed2(result.rows[0].price));
@@ -68,6 +69,12 @@ function getGoodsById(id){
 
 function  saveData(){
     //获取产品基本信息
+    var type=$("#type").val();
+    if(!type||type=="-1"){
+        showError("请选择类型");
+        $("#type").focus();
+        return;
+    }
     var name=$.trim($("#name").val());
     if(!name||name.trim()==""){
         showError("请输入产品名称");
@@ -92,6 +99,7 @@ function  saveData(){
     var url="/rs/ticket";
     var urldata={
         name:name,
+        type:type,
         picurl:title_pic,
         price:price_leaguer*100,
         details:details,

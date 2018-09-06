@@ -265,12 +265,12 @@ function saveData(){
         return;
     }
     var price_leaguer=$.trim($("#sale_price").val());
-    if(!price_leaguer||price_leaguer==""||price_leaguer<=0){
+    if(price_leaguer == "" || price_leaguer<0){
         showError("请输入价格！");
         return;
     }
     if(leveljson.length==0 || isEmptyObject(leveljson)){
-        showError("请配置关卡");
+        showError("请配置关卡信息");
         return;
     }
     var urldata={
