@@ -45,10 +45,10 @@ function getGoodsById(id){
         $("#name").val(result.rows[0].name);
         $("#title_pic").val(result.rows[0].picurl);
         $("#sale_price").val(formatPriceFixed2(result.rows[0].price));
-        var aimurl = targetUrl+"/upload";
+        var aimurl = 'src="'+targetUrl+"/upload/";
         setTimeout(function(){
             if(result.rows[0].details){
-                var details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
+                var details = result.rows[0].details.replace(/src=\"\/upload\//g, aimurl);
                 UE.getEditor('userProtocolAddUE').setContent(details);
             }
         },500)

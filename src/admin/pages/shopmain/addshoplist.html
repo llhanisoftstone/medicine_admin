@@ -75,6 +75,12 @@
                                 <input placeholder="请输入店铺地址" id="address" name="address" datatype="require" value="" maxlength="30" class="form-control ">
                             </div>
                         </div>
+                        <div class="col-md-4 form-group">
+                            <label>联系电话：</label>
+                            <div class="pinput">
+                                <input type="tel" placeholder="请输入联系电话" class="form-control" id="phone" name="phone" onkeyup="this.value=this.value.replace(/[^\d-]/g,'')" onafterpaste="this.value=this.value.replace(/[^\d-]/g,'')" maxlength="15">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8 form-group">

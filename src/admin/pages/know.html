@@ -184,7 +184,8 @@
         <td class="jy">
             {{#equal status 2}}
             已采纳
-            {{else}}
+            {{/equal}}
+            {{#equal status 0}}
             <span class="fa fa-check" onclick="putclick('{{id}}',2)" title="采纳"></span>
             {{/equal}}
         </td>

@@ -52,10 +52,10 @@ function getmemberInfo(){
                 jQuery("#name").val(jQuery("#name").val().slice(0,4))
             }
             setTimeout(function() {
-                var aimurl = targetUrl + "/upload";
+                var aimurl = 'src="'+targetUrl+"/upload/";
                 if (result.rows[0].details) {
-                    result.rows[0].details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
-                    UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
+                    var details = result.rows[0].details.replace(/src=\"\/upload\//g, aimurl);
+                    UE.getEditor('userProtocolAddUE').setContent(details);
                 }
             },500);
         }

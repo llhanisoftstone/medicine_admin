@@ -57,6 +57,7 @@ function getmemberInfo(){
             }else {
                 $("#picpath").attr("src",'./img/bg_shop.jpg');
             }
+            $("#phone").val(result.rows[0].phone)
             $("#name").val(result.rows[0].name);
             if(result.rows[0].province_id){
                 $("#province").val(result.rows[0].province_id);
@@ -193,6 +194,17 @@ function saveData(){
         return showError("请输入店铺详细地址");
     }else{
         data.address = address;
+    }
+    var ph=/^((\+?86)|(\(\+86\)))?(13[0123456789][0-9]{8}|15[0123456789][0-9]{8}|17[0123456789][0-9]{8}|18[0123456789][0-9]{8}|147[0-9]{8}|1349[0-9]{7}|19[0123456789][0-9]{8}|16[0123456789][0-9]{8})$/;
+    var fm = /^((\d{2,3})-?)?(\d{1,4})?(-?(\d{8,9}))?$/;
+    var mb = /^400-([0-9]){1}([0-9-]{6})([0-9]){1}$/;
+    var phone = $("#phone").val().trim();
+    if(phone==""){
+        return showError("请输入联系电话");
+    }else if (!ph.test(phone) && !mb.test(phone) && !fm.test(phone)){
+        return showError("请输入正确的联系电话");
+    }else{
+        data.phone = phone;
     }
     var summary = $("#summary").val().trim();
     if (!summary){
