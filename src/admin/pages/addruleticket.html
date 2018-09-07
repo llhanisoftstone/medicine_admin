@@ -42,11 +42,9 @@
                                     <form id="titleForm">
                                         <div class="row">
                                             <div class="col-md-4 form-group">
-                                                <label form="goodscompid">产品：</label>
+                                                <label form="goodscompid">规则名称：</label>
                                                 <div class="pinput">
-                                                    <select placeholder="产品" id="goodscompid" onchange="tabcomp(this)" name="comp_id" data-live-search ="true" class="selectpicker">
-                                                        <option value="">请选择产品</option>
-                                                    </select>
+                                                    <input placeholder="规则名称" type="text"  class="form-control" id="title" maxlength="14">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
@@ -75,6 +73,41 @@
                                                 <label>结束时间：</label> <div class="pinput"><input placeholder="请选择结束时间" id="dtEndTime" name="end_time"  readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time"></div>
                                             </div>
                                         </div>
+                                        <!--规格列表-->
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                产品列表
+                                                <!--<div class="btn btn-default" style="display: inline-block;background-size:80px; width: 80px;height: 35px;">-->
+
+                                                <button type="button" id="Specifications" onclick="addrow()" onkeypress="javascript:return gosearch();" class="fa btn btn-default">新增产品</button>
+                                                <!--</div>-->
+                                            </div>
+                                            <div class="panel-body">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="col-sm-4" style="max-width: 160px;">产品名称</th>
+                                                        <th class="col-sm-4">数量</th>
+                                                        <th class="col-sm-4" style="padding-left: 20px;">操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="menu-placeholder">
+                                                    <tr>
+                                                        <td  style="max-width: 160px;" _index="0">
+                                                            <select  class="selectpicker" id="goodscompid" title="请选择" data-live-search ="true">
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input name="stock_count" placeholder="请输入" onkeyup="value=value.replace(/[^\d]/g,'')"  class="form-control" maxlength="7">
+                                                        </td>
+                                                        <td style="text-align:center">
+                                                            <span class="btn-link" style="margin-top: 5px;display: block;cursor: pointer;padding-left: 13px;" onclick="onDeleteClick(this)">删除</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div class="text-center">
                                             <button datatype="require" type="button" _getGoodsIsActivityIn="0" class="btn fa fa-save btn-default" _status="0" onclick="saveData();" id="savebtn">保存</button>
                                         </div>
@@ -97,7 +130,6 @@
     </div>
 </div>
 <script id="brand-template" type="text/x-handlebars-template">
-    <option value="">请选择</option>
     {{#datas}}
     <option value="{{id}}">{{name}}</option>
     {{/datas}}

@@ -10,20 +10,28 @@ var pageRows = 10;
 var curId = curMenuId;
 var isSearch=false;
 var compid;
+var u_id;
 $(function() {
     compid = getCookie('storeid');
+
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
         onSearchClick();
         searchData();
-
     }else{
-        queryList();
+        getmember();
     }
     updateMenuLocationInfo();
 });
-
+function getmember(){
+    zhget('/rs/member',{store_id:compid,rank:20}).then(function(result){
+        if(result.code==200){
+            u_id=result.rows[0].id;
+            queryList();
+        }
+    })
+}
 var statusname=["草稿","待审核","拒绝","上架","下架",'pc产品无状态']
 Handlebars.registerHelper('getstatusname', function(value, options) {
     return statusname[value]
@@ -69,7 +77,7 @@ function queryList() {
         order:'create_time desc',
         page: currentPageNo,
         size: pageRows,
-        store_id:compid,
+        u_id:u_id,
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
@@ -81,13 +89,19 @@ function queryList() {
                 $("select[name='"+key+"']").val(searchForm[key]);
             }
         }
-        var id=$("#goodsId").val();
-        if(id!=''){
-            data.id=id;
+        var dtStartTimeStart=$("#dtStartTimeStart").val();
+        var dtStartTimeEnd=$("#dtStartTimeEnd").val();
+        var dtEndTimeStart=$("#dtEndTimeStart").val();
+        var dtEndTimeEnd=$("#dtEndTimeEnd").val();
+        var end_time = new Date(dtStartTimeEnd);
+        end_time = new Date((end_time/1000+86400)*1000).Format("yyyy-MM-dd");//结束时间加一天
+        if(dtStartTimeStart!=''&&dtStartTimeEnd!=''){
+            data.start_time='>,'+dtStartTimeStart+",<,"+end_time;
         }
-        var name=$("#name").val();
-        if(name!=''){
-            data.name=name;
+        var end_time1 = new Date(dtEndTimeEnd);
+        end_time1 = new Date((end_time1/1000+86400)*1000).Format("yyyy-MM-dd");//结束时间加一天
+        if(dtEndTimeStart!=''&&dtEndTimeEnd!=''){
+            data.end_time='>,'+dtEndTimeStart+",<,"+end_time1;
         }
         data.search=1;
     }
