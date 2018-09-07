@@ -58,8 +58,14 @@ function getmemberInfo(){
                 $("#picpath").attr("src",'./img/bg_shop.jpg');
             }
             $("#name").val(result.rows[0].name);
-            $("#province").val(result.rows[0].province_id);
-            getcity(result.rows[0].province_id,result.rows[0].city_id,result.rows[0].area_id);
+            if(result.rows[0].province_id){
+                $("#province").val(result.rows[0].province_id);
+                if(result.rows[0].city_id||result.rows[0].area_id){
+                    getcity(result.rows[0].province_id,result.rows[0].city_id,result.rows[0].area_id);
+                }
+            }
+
+
             $("#address").val(result.rows[0].address);
             $("#summary").val(result.rows[0].details)
             createBanner(result);//加载banner图和详情图
@@ -88,6 +94,8 @@ function getcity(id,city='-1',zone='-1'){
             if(city!='-1'){
                 $("#city").val(city);
                 getzone(city,zone)
+            }else{
+                $("#city").val("-1");
             }
         }
     })
@@ -102,6 +110,8 @@ function getzone(id,zone='-1'){
             $("#zone").html(h)
             if(zone!='-1'){
                 $("#zone").val(zone);
+            }else{
+                $("#zone").val("-1");
             }
         }
     })
@@ -118,20 +128,23 @@ $("#city").change(function(){
 // 加载banner图和详情图
 function createBanner(result){
     //加载banner图
-    var banner=(result.rows[0].bannerpath).split(",");
-    if(banner!=null&&banner.length>0){
-        for(var i =0;i<banner.length;i++){
-            var bannerhtml="<tr>";
-            if(banner[i].indexOf("http://")>-1){
-                bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+banner[i]+'></td>';
-            }else{
-                bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+targetUrl+banner[i]+'></td>';
+    if(result.rows[0].bannerpath!=""){
+        var banner=(result.rows[0].bannerpath).split(",");
+        if(banner!=null&&banner.length>0){
+            for(var i =0;i<banner.length;i++){
+                var bannerhtml="<tr>";
+                if(banner[i].indexOf("http://")>-1){
+                    bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+banner[i]+'></td>';
+                }else{
+                    bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+targetUrl+banner[i]+'></td>';
+                }
+                bannerhtml+='<td>  <button style="margin-top: 35px;"  class="btn-link" onclick="onDeleteClick1(this)">删除</button> </td>';
+                bannerhtml+="</tr>";
+                $("#banner").append(bannerhtml);
             }
-            bannerhtml+='<td>  <button style="margin-top: 35px;"  class="btn-link" onclick="onDeleteClick1(this)">删除</button> </td>';
-            bannerhtml+="</tr>";
-            $("#banner").append(bannerhtml);
         }
     }
+
 }
 
 function compare(property){
