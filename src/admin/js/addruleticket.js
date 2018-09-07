@@ -129,6 +129,7 @@ function  saveData(){
         showError("请输入规则名称");
         return;
     }
+    urldata.u_id=u_id;
     var type=$("#type").val()
     if(type&&type!="-1"){
         urldata.type=type;

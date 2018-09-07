@@ -25,7 +25,7 @@ $(function() {
     updateMenuLocationInfo();
 });
 function getmember(){
-    zhget('/rs/member',{store_id:compid,rank:31}).then(function(result){
+    zhget('/rs/member',{store_id:compid,rank:20}).then(function(result){
         if(result.code==200){
             u_id=result.rows[0].id;
             queryList();
@@ -129,7 +129,41 @@ function queryList() {
     });
 }
 function agreeClick(id){
+    if(confirm("确定要通过该审核吗？")) {
+        zhput(base_url_goods + "/" + id, {status: 2}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("审核成功");
+            } else {
+                showError("审核失败")
+            }
+        })
+    }
+}
+function rejectClick(id){
+    if(confirm("确定要拒绝该审核吗？")) {
+        zhput(base_url_goods + "/" + id, {status: 3}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("拒绝成功");
+            } else {
+                showError("拒绝失败")
+            }
+        })
+    }
+}
+function clickdetail(id){
+    zhget("/rs/ticket_send_detail", {rule_id:id}).then(function (result) {
+        if (result.code == 200) {
+            var html="";
+          for(var i=0;i<result.rows.length;i++){
+             html+="<tr><td>"+result.rows[i].ticket_id+"</td><td>"+result.rows[i].amount+"</td></tr>"
+          }
+          $("#infotable").html(html);
+            $('#myModal').modal('show');
 
+        }
+    })
 }
 function onAddruleClick() {
     location.href="admin.html#pages/addruleticket.html"

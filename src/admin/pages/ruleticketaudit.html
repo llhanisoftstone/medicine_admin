@@ -21,13 +21,8 @@
                         <li>
                             <a>产品管理</a>
                         </li>
-                        <li>发放规则</li>
+                        <li>发放规则审核</li>
                     </ul>
-                    <!--<span class="fa fa-home">&nbsp;&nbsp;</span>产品列表-->
-                    <div style="float: right;">
-                        <button type="button" onclick="onAddruleClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
-                        <button type="button" id="searchBtn" onclick="onSearchruleClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
-                    </div>
                 </div>
                 <div class="searchDataDiv">
                     <div class="tryoutSearch" style="display: none;">
@@ -119,6 +114,7 @@
                                 <th style="width: 15%">开始时间</th>
                                 <th style="width: 15%">结束时间</th>
                                 <th style="width: 10%">状态</th>
+                                <th style="width: 10%">操作</th>
                             </tr>
                             </thead>
                             <tbody id="menu-placeholder">
@@ -180,6 +176,12 @@
         <td>{{start_time}}</td>
         <td>{{end_time}}</td>
         <td>{{#superif status 1}}待审核{{/superif}}{{#superif status 2}}通过{{/superif}}{{#superif status 3}}拒绝{{/superif}}</td>
+        <td>
+            {{#superif status 1}}
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}')" title="通过"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}')" title="拒绝"></span>
+            {{/superif}}
+        </td>
     </tr>
     {{/datas}}
 </script>
