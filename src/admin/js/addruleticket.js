@@ -31,11 +31,13 @@ function getmember(){
         }
     })
 }
+var selected1='';
 function shopselect(goodscompid){
     var data={};
     data.status="1";
     data.store_id=compid;
     zhget('/rs/ticket',data).then(function(result){
+        selected1=result;
         if(result.code==200) {
             buildTableNoPage(result, 'brand-template', 'goodscompid');
             initselect('goodscompid');
@@ -50,7 +52,8 @@ function shopselect(goodscompid){
 function initselect(id){
     $('#'+id).selectpicker({
         size: 10,
-        width:'100%'
+        width:'100%',
+        noneSelectedText : '请选择',
     });
 }
 //根据id查询产品数据
@@ -65,19 +68,68 @@ function getGoodsById(id){
     });
 
 }
+var iModelsType=[];
+var index=0;
+function getrow1(){
+    var trlength=$("#menu-placeholder").find("tr").length;
+    if(trlength>0){
+        var se1=$("#menu-placeholder").find("tr:last").children().eq(0).children().find("select").children();//select1元素集合
+        var amount=$("#menu-placeholder").find("tr:last").children().eq(1).children();//数量
+        iModelsType[0]={};
+        iModelsType[0].se1=se1;
+        iModelsType[0].index=$("#menu-placeholder").find("tr:last").children().eq(0).attr("_index");
+        var dom1select=$("#menu-placeholder").find("tr:last").children().eq(0).children().find("select").find("option:selected").val();
+        selected1=dom1select;
+        iModelsType[0].amount=amount;
+    }else{//当前产品没有规格
+        var html='<tr><td  style="max-width: 160px;"><select  class="selectpicker" id="goodscompid" title="请选择" data-live-search ="true"></select></td>';
+        html+="<td><input name='stock_count' placeholder='请输入' onkeyup='value=value.replace(/[^\d]/g,"+'""'+")'  class='form-control' maxlength='7'></td>";
+        html+='<td style="text-align:center"><span class="btn-link" style="margin-top: 5px;display: block;cursor: pointer;padding-left: 13px;" onclick="onDeleteClick(this)">删除</span>';
+        html+='</td></tr>';
+        shopselect(goodscompid);
+    }
 
-function  saveData(){
-    var urldata={
-        u_id:u_id
-    };
-    //获取产品基本信息
-    var title=$("#goodscompid").val();
-    if(title&&title!="-1"){
-        urldata.ticket_id=title;
+}
+function addrow(){
+    getrow1();
+    var trlength=parseFloat(iModelsType[0].index)+1;
+    var html='<tr><td _index="'+trlength+'" style="max-width: 160px;"><select id="index'+trlength+'goodscompid" onchange="shopselect(this)" title="请选择" data-live-search="true" class="selectpicker">';
+    for(var i=1;i<iModelsType[0].se1.length;i++){//新增select1
+        if($(iModelsType[0].se1[i]).val()==selected1){
+            html+='<option selected="selected" value='+$(iModelsType[0].se1[i]).val()+'>'+$(iModelsType[0].se1[i]).html()+'</option>';
+        }else{
+            html+='<option value='+$(iModelsType[0].se1[i]).val()+'>'+$(iModelsType[0].se1[i]).html()+'</option>';
+        }
+    }
+    html+='</select></td>';
+    html+="<td><input name='stock_count' placeholder='请输入' oninput=\"this.value=this.value.replace(/\\D/g,'')\"  class='form-control' maxlength='7'></td>";
+    html+='<td style="text-align:center"><span class="btn-link" style="margin-top: 5px;display: block;cursor: pointer;padding-left: 13px;" onclick="onDeleteClick(this)">删除</span>';
+    html+='</td></tr>';
+    $("#menu-placeholder").append(html)
+    initselect("index"+trlength+"goodscompid");
+}
+//删除产品
+function onDeleteClick(dom){
+    if($("#menu-placeholder tr").length!=1){
+        $(dom).parent("td").parent("tr").remove();
     }else{
-        showError("请选择产品");
+        showError('产品至少保存一个');
         return;
     }
+}
+function  saveData(){
+    var urldata={
+    };
+    var goodsdata=[];
+    //获取产品基本信息
+    var title=$("#title").val().trim();
+    if(title){
+        urldata.title=title;
+    }else{
+        showError("请输入规则名称");
+        return;
+    }
+    urldata.u_id=u_id;
     var type=$("#type").val()
     if(type&&type!="-1"){
         urldata.type=type;
@@ -112,11 +164,25 @@ function  saveData(){
         showError("请选择结束时间");
         return;
     }
+    var doms=jQuery("#menu-placeholder tr");
+    for(var i=0;i<doms.length;i++){
+        goodsdata[i]={};
+        goodsdata[i].ticket_id=$(doms[i]).children().eq(0).find("option:selected").val();
+        if(goodsdata[i].ticket_id==''||goodsdata[i].ticket_id=='-1'){
+            showError('请选择产品名称');
+            return;
+        }
+        goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
+        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
+            showError('请输入产品数量');
+            return;
+        }
+    }
     $("#savebtn").attr("disabled","disabled");
     if (operation == "add") {
         urldata.auto_id=1;
         $.showActionLoading();
-        zhpost(base_url_goods,urldata).then(function(result) {
+        zhpost(base_url_goods,{urldata:urldata,goodsdata:goodsdata}).then(function(result) {
             $.hideActionLoading();
             if(checkData(result,'post')) {
                 location.href="admin.html#pages/ruleticket.html";
