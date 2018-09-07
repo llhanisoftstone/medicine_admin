@@ -114,10 +114,6 @@ function queryList(){
         }
         result.type_list.rows = result.type_list;
         buildTableNoPage(result.type_list,'kind-template','kind')
-        var datas={}
-        datas.rows=list.rows;
-        datas.count=list.count;
-        datas.records=list.records;
         if(list.rows.length > 0){
             for(var i=0; i<list.rows.length; i++){
                 if(list.rows[i].is_right && list.rows[i].count){
@@ -134,7 +130,7 @@ function queryList(){
                 }
             }
         }
-        buildTableByke(datas, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+        buildTableByke(result.questions_list, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);
