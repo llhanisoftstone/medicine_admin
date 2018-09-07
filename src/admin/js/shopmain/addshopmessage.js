@@ -20,6 +20,15 @@ $(function() {
         getmemberInfo();
     }
 });
+function catechange(el){
+    var val=el.value
+    if(val==2){
+        jQuery("#name").attr("maxlength","50")
+    }else{
+        jQuery("#name").attr("maxlength","4")
+        jQuery("#name").val(jQuery("#name").val().slice(0,4))
+    }
+}
 // 图片上传
 function onUploadHeaderPic(formObject, fileComp, list)
 {
