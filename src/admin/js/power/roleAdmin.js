@@ -44,7 +44,7 @@ function getcompany(){
                 for (var i = 0; i < result.rows.length; i++) {
                     html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
                 }
-                $("#shopcompany").append(html);
+                $("#shopcompany").html(html);
             }
         }
     });
@@ -120,6 +120,7 @@ function queryList() {
 
 function onUserAddClick() {
     cleanForm();
+    $(".modal-title").html("账号新增")
     operation = "add";
     $("#username").removeAttr("readonly");
     $("#userpwd").removeAttr("readonly");
@@ -136,6 +137,10 @@ function cleanForm() {
     $("#picShow").attr("src","");
     $("#picPath").val("");
     $("#organiz").val("-1");
+    $("#rqanakmember").val("-1")
+    $("#shopcompany").val("-1")
+    $(".organizmember").hide();
+    $(".membershop").hide();
 }
 function onSearchClick() {
     cleanForm();
@@ -146,6 +151,7 @@ function onSearchClick() {
 }
 function onUpdateClick(userid) {
     fillForm(userid);
+    $(".modal-title").html("账号编辑")
     operation = "modify";
     $("#username").attr("readonly", "readonly");
     $("#picPath").attr("readonly", "readonly");

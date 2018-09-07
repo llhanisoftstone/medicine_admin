@@ -48,8 +48,8 @@ function getGoodsById(id){
         var aimurl = targetUrl+"/upload";
         setTimeout(function(){
             if(result.rows[0].details){
-                result.rows[0].details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
-                UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
+                var details = result.rows[0].details.replace(/\/upload|http:\/\/ht.lifeonway.com\/upload/g, aimurl);
+                UE.getEditor('userProtocolAddUE').setContent(details);
             }
         },500)
 
