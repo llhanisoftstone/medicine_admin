@@ -134,7 +134,7 @@ function createBanner(result){
         if(banner!=null&&banner.length>0){
             for(var i =0;i<banner.length;i++){
                 var bannerhtml="<tr>";
-                if(banner[i].indexOf("http://")>-1){
+                if(banner[i].indexOf("http://")>-1||banner[i].indexOf("https://")>-1){
                     bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+banner[i]+'></td>';
                 }else{
                     bannerhtml+='<td><img style="width: 90px;height: 90px;background-size: 90px" src='+targetUrl+banner[i]+'></td>';
