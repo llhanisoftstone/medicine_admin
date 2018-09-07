@@ -1,5 +1,6 @@
 
 var base_url_goodsCategory='/rs/game_config';
+var base_url_getconfig='/rs/v_game_config';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -10,6 +11,7 @@ $(function() {
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
+        $('#ticketname').html('');
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
@@ -19,7 +21,12 @@ $(function() {
     });
     $("#userAddcategory", $(".reasonRefund")).unbind("click");
     $("#userAddcategory", $(".reasonRefund")).bind("click", onSavecategoryData);
-
+    $('#ticketname').on('click',function(){
+        var store=$('#storename').val()
+        if(!store || store=='-1'){
+            return showError('请先选择店铺');
+        }
+    })
 });
 
 function queryList(){
@@ -29,21 +36,29 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc, create_time desc',
-        status:'<>,99',
-        id:'>,10',//对战和闯关是固定的，不查
+        id:'>=,10',
+        status:'<>,99'
     }
     if(issearchModel){
         data.search=1;
-        var name=$("#searchstorename").val();
-        var ticket_id=$('#searchticketname').val();
-        if(name && name !='-1'){
-            data.store_id=name;
+        var name=$.trim($("#name").val());
+        var storename=$("#storename").val();
+        var ticket_id=$('#ticketname').val();
+        if(name){
+            data.name=name;
+        }
+        if(storename && storename !='-1'){
+            data.store_id=storename;
         }
         if(ticket_id && ticket_id !='-1'){
             data.ticket_id=ticket_id;
         }
-        var startTime=$("#startTimesearch").val();
-        var endTime=$("#endTimesearch").val();
+        var status=$('#status').val();
+        if(status && status !='-1'){
+            data.status=status;
+        }
+        var startTime=$("#startTime").val();//上架时间
+        var endTime=$("#endTime").val();//下架时间
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
                 if(startTime<endTime){
@@ -62,12 +77,27 @@ function queryList(){
                 }
             }
         }
-        var status=$('#status').val();
-        if(status && status !='-1'){
-            data.status=status;
+        var startTimesearch=$("#startTimesearch").val();//创建时间开始
+        var endTimesearch=$("#endTimesearch").val();//创建时间结束
+        if(startTimesearch!=''||endTimesearch!==''){
+            if(startTimesearch!='' && endTimesearch!==''){
+                if(startTimesearch < endTimesearch){
+                    data.create_time='>,'+startTimesearch+',<,'+endTimesearch
+                }else{
+                    return showError("结束时间大于开始时间")
+                }
+            }else{
+                if(startTimesearch){
+                    data.create_time='>,'+startTimesearch
+                }
+                if(endTimesearch){
+                    data.create_time='<,'+endTimesearch
+                }
+            }
         }
+
     }
-    zhget(base_url_goodsCategory,data).then(function (result) {
+    zhget(base_url_getconfig,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
             $("#querylistnull").remove();
             $("#pid").attr("_pid",0);

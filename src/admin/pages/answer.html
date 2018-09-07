@@ -104,7 +104,7 @@
                     <table class="table table-striped table-bordered table-hover" style="text-align: center">
                         <thead>
                         <tr>
-                            <th class="col-sm-4">分类名称</th>
+                            <th class="col-sm-2">分类名称</th>
                             <th class="col-sm-4">正确数量</th>
                             <th class="col-sm-4">错误数量</th>
                         </tr>
@@ -117,14 +117,13 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <th class="col-sm-1">题目ID</th>
-                            <th class="col-sm-3">题目名称</th>
-                            <th class="col-sm-3">企业答题人数</th>
+                            <th class="col-sm-2">题目ID</th>
+                            <th class="col-sm-4">题目名称</th>
                             <th class="col-sm-2">答对人数</th>
                             <th class="col-sm-2">答错人数</th>
                         </tr>
                         </thead>
-                        <tbody id="event">
+                        <tbody id="event-placeholder">
 
                         </tbody>
                     </table>
@@ -145,9 +144,9 @@
 <script id="kind-template" type="text/x-handlebars-template">
     {{#datas}}
     <tr>
-        <td class="col-sm-2">分类一</td>
-        <td class="col-sm-2">100</td>
-        <td class="col-sm-2">50</td>
+        <td class="col-sm-2">{{category_name}}</td>
+        <td class="col-sm-2">{{yes_sum}}</td>
+        <td class="col-sm-2">{{wrong_sum}}</td>
     </tr>
     {{/datas}}
 </script>
@@ -155,11 +154,10 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{id}}</td>
-        <td>{{name}}</td>
-        <td>{{realname}}</td>
-        <td>{{nickname}}</td>
-        <td>{{realname}}</td>
+        <td>{{question_id}}</td>
+        <td>{{question_name}}</td>
+        <td>{{yes_sum}}</td>
+        <td>{{wrong_sum}}</td>
     </tr>
     {{/datas}}
 </script>
