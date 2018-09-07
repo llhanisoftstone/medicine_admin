@@ -25,7 +25,7 @@ $(function() {
     updateMenuLocationInfo();
 });
 function getmember(){
-    zhget('/rs/member',{store_id:compid,rank:20}).then(function(result){
+    zhget('/rs/member',{store_id:compid,rank:31}).then(function(result){
         if(result.code==200){
             u_id=result.rows[0].id;
             queryList();
@@ -74,7 +74,7 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'create_time desc',
+        order:'status asc,create_time desc',
         page: currentPageNo,
         size: pageRows,
         u_id:u_id,
@@ -88,6 +88,18 @@ function queryList() {
                 $("input[name='"+key+"']").val(searchForm[key]);
                 $("select[name='"+key+"']").val(searchForm[key]);
             }
+        }
+        var title=$("#title").val().trim();
+        if(title){
+            data.title=title;
+        }
+        var type=$("#type").val();
+        if(type&&type!="-1"){
+            data.type=type;
+        }
+        var status=$("#status").val();
+        if(status&&status!="-1"){
+            data.status=status;
         }
         var dtStartTimeStart=$("#dtStartTimeStart").val();
         var dtStartTimeEnd=$("#dtStartTimeEnd").val();
@@ -116,7 +128,9 @@ function queryList() {
         }
     });
 }
+function agreeClick(id){
 
+}
 function onAddruleClick() {
     location.href="admin.html#pages/addruleticket.html"
 }

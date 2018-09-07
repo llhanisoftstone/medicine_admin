@@ -56,9 +56,9 @@
                                             <div class="pinput">
                                                 <select placeholder="请选择状态" id="status" name="status" class="form-control ">
                                                     <option value="-1">请选择</option>
-                                                    <option value="0">待审核</option>
-                                                    <option value="1">启用</option>
-                                                    <option value="2">禁用</option>
+                                                    <option value="1">待审核</option>
+                                                    <option value="2">启用</option>
+                                                    <option value="3">拒绝</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -185,8 +185,8 @@
         <td>{{#superif status 1}}待审核{{/superif}}</td>
         <td>
             {{#superif status 1}}
-            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}',)" title="通过"></span>
-            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}',)" title="拒绝"></span>
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}')" title="通过"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}')" title="拒绝"></span>
             {{/superif}}
         </td>
     </tr>
