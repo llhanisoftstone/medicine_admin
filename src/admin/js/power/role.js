@@ -4,6 +4,7 @@ var role = [];
 var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
+var updatepower_json={};
 
 $(function() {
     queryList();
@@ -60,15 +61,15 @@ function onSaveClick() {
         showError("请输入角色权限");
         return;
     }
-
     var data = {
         name:name ,
         remark: $("#remark").val().trim(),
-        power_json:'{}'
     };
     if (operation == "add") {
+        data.power_json='{}';
         zhpost(base_url_role, data, saveResult);
     } else {
+        data.power_json=updatepower_json;
         zhput(base_url_role + "/" + id, data).then(saveResult);
     }
 }
@@ -92,7 +93,7 @@ function fillForm(id) {
             $("#id").val(item.id);
             $("#name").val(item.name);
             $("#remark").val(item.remark);
-            // $("#picalt").val(item.introduction);
+            updatepower_json=item.power_json;
             return;
         }
     }

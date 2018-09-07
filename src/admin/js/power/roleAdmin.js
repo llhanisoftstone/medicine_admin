@@ -15,6 +15,7 @@ $(function () {
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
     getOrganiz();
+    getcompany();
 });
 
 function getOrganiz() {
@@ -30,7 +31,40 @@ function getOrganiz() {
         }
     })
 }
-
+function getcompany(){
+    var data={
+        status:1    //0-禁；1-有效；9删除
+    }
+    $("#shopcompany").append("");
+    zhget('/rs/store',data).then(function(result) {
+        if(result.code==200) {
+            var html="";
+            if (result.code == 200) {
+                html += "<option value='-1'>请选择</option>";
+                for (var i = 0; i < result.rows.length; i++) {
+                    html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
+                }
+                $("#shopcompany").html(html);
+            }
+        }
+    });
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
+}
+function showSelect(){
+    var rank=$("#rqanakmember").val();
+    if(rank&&rank==31){
+        $(".organizmember").hide();
+        $(".membershop").show();
+    }else if(rank&&rank==90){
+        $(".organizmember").show();
+        $(".membershop").hide();
+    }
+}
 function queryList() {
     $("#paginator").show();
     var data = {
@@ -40,8 +74,13 @@ function queryList() {
     data.rank = '>,30';
     if(isselect){
         data = searchData;
+        var rank=$("#rqanak").val();
+        if(rank&&rank!="-1"){
+            data.rank =rank;
+        }else{
+            data.rank = '>,30';
+        }
         data.search =1;
-        data.rank = '>,30';
     }
     data.order="create_time desc";
     data.status='<,99';
@@ -81,6 +120,7 @@ function queryList() {
 
 function onUserAddClick() {
     cleanForm();
+    $(".modal-title").html("账号新增")
     operation = "add";
     $("#username").removeAttr("readonly");
     $("#userpwd").removeAttr("readonly");
@@ -97,6 +137,10 @@ function cleanForm() {
     $("#picShow").attr("src","");
     $("#picPath").val("");
     $("#organiz").val("-1");
+    $("#rqanakmember").val("-1")
+    $("#shopcompany").val("-1")
+    $(".organizmember").hide();
+    $(".membershop").hide();
 }
 function onSearchClick() {
     cleanForm();
@@ -107,6 +151,7 @@ function onSearchClick() {
 }
 function onUpdateClick(userid) {
     fillForm(userid);
+    $(".modal-title").html("账号编辑")
     operation = "modify";
     $("#username").attr("readonly", "readonly");
     $("#picPath").attr("readonly", "readonly");
@@ -119,7 +164,17 @@ function fillForm(id) {
             $("#userid").val(id);
             $("#username").val(res.rows[0].username);
             $("#nickname").val(res.rows[0].nickname);
-            $("#organiz").val(res.rows[0].organiz_id);
+
+            $("#rqanakmember").val(res.rows[0].rank)
+            if(res.rows[0].rank==31){
+                $(".organizmember").hide();
+                $(".membershop").show();
+                $("#shopcompany").val(res.rows[0].store_id);
+            }else if(res.rows[0].rank==90){
+                $(".organizmember").show();
+                $(".membershop").hide();
+                $("#organiz").val(res.rows[0].organiz_id);
+            }
         }else {
             if(res.code==601){
                 showError("登陆超时！");
@@ -152,8 +207,13 @@ function delClick(el,userid,username){
     })
 }
 function onUserSaveClick() {
+    var rank=$("#rqanakmember").val();
     var userid = $("#userid").val();
     var username = $("#username").val().trim();
+    if(rank==""||rank=="-1"){
+        showError("请选择所属类别")
+        return;
+    }
     if(username==null||username==""){
         showError("账号不能为空！")
         return;
@@ -169,15 +229,27 @@ function onUserSaveClick() {
         username: username,
         phone: username,
         nickname: nickname,
-        rank:90,
+        rank:rank,
         status:1
     };
-    if(organiz&&organiz!='-1'){
-        data.organiz_id=organiz;
-    }else{
-        showError("请选择机关！");
-        return;
+    if(rank==31){
+        var comp=$("#shopcompany").val();
+        if(comp&&comp!='-1'){
+            data.store_id=comp;
+        }else{
+            showError("请选择所属店铺");
+            return;
+        }
     }
+    if(rank==90){
+        if(organiz&&organiz!='-1'){
+            data.organiz_id=organiz;
+        }else{
+            showError("请选择机关");
+            return;
+        }
+    }
+
     if (operation == "add") {
         data.auto_id=1;
         zhget(base_url_user, {username:username}).then( function (result) {
@@ -263,6 +335,7 @@ function memberSearchCancel() {
      $("#dtBindTimeStart").val("");
     $("#dtBindTimeEnd").val("");
     $('#organiz').val('');
+    $('#rqanak').val('-1');
     memberSearch();
 }
 
