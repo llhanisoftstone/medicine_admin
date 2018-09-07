@@ -44,6 +44,13 @@ function getmemberInfo(){
             $("#name").val(result.rows[0].name);
             $("#category").val(result.rows[0].category);
             $("#title_pic1").val(result.rows[0].picpath);
+            var val=result.rows[0].category
+            if(val==2){
+                jQuery("#name").attr("maxlength","50")
+            }else{
+                jQuery("#name").attr("maxlength","4")
+                jQuery("#name").val(jQuery("#name").val().slice(0,4))
+            }
             setTimeout(function() {
                 var aimurl = 'src="'+targetUrl+"/upload/";
                 if (result.rows[0].details) {
