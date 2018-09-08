@@ -27,11 +27,10 @@
                         <li>
                             <a>政策百科</a>
                         </li>
-                        <li>政策列表</li>
+                        <li>政策百科审核</li>
                     </ul>
                     <div style="float: right;">
-                        <button type="button" onclick="onAddClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
-                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;查询</button>
+                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
                     </div>
                 </div>
                 <div class="searchDataDiv">
@@ -43,7 +42,7 @@
                                         <div class="col-md-4 form-group">
                                             <label>标题：</label>
                                             <div class="pinput">
-                                                <input placeholder="标题" id="title" name="title" class="form-control " value="">
+                                                <input placeholder="请输入标题" id="title" name="title" class="form-control " value="">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
@@ -73,7 +72,6 @@
                                             <div class="pinput">
                                                 <select id="status" class="form-control" name="status">
                                                     <option value="-1">全部</option>
-                                                    <option value="0">草稿</option>
                                                     <option value="1">待审核</option>
                                                     <option value="2">通过</option>
                                                     <option value="3">拒绝</option>
@@ -146,19 +144,33 @@
             {{#equal status 4}}下架{{/equal}}
         </td>
         <td>
-            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
-            {{#superif is_hot 0}}
-            &nbsp;<span class="fa fa-star-o" aria-hidden="true" title="设置热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-            {{/superif}}
-            {{#superif is_hot 1}}
-            &nbsp;<span class="fa fa-star" aria-hidden="true" title="取消热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-            {{/superif}}
-            &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
+            <span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{#equal status 2}}
+            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}',)" title="下架"></span>
+                {{#superif is_hot 0}}
+                &nbsp;<span class="fa fa-star-o" aria-hidden="true" title="设置热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
+                {{/superif}}
+                {{#superif is_hot 1}}
+                &nbsp;<span class="fa fa-star" aria-hidden="true" title="取消热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
+                {{/superif}}
+            {{/equal}}
+            {{#equal status 1}}
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}',)" title="通过"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}',)" title="拒绝"></span>
+            {{/equal}}
+            {{#equal status 4}}
+            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}',)" title="上架"></span>
+            {{/equal}}
+
+            <!--&nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>-->
+
+            <!--&nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>-->
+
         </td>
     </tr>
     {{/datas}}
 </script>
 <input id="pageIndex" type="hidden" value="">
-<script type="text/javascript" src="js/policy/policyList.js"></script>
+<script type="text/javascript" src="js/policy/policyListcheck.js"></script>
 </body>
 </html>

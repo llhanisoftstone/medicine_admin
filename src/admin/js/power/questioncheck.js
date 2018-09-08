@@ -1,15 +1,4 @@
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by Administrator on 2018/4/27.
- */
-/**
- * Created by kechen on 2016/10/13.
- */
+
 var base_url_goodsCategory='/rs/questions';
 var currentPageNo = 1;
 var pageRows = 10;
@@ -18,7 +7,6 @@ var issearchValue=false;
 var integrals;
 var categoryArr=[]
 var organizArr=[]
-var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     getorg();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -73,8 +61,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc,create_time desc',
-        status:'<,99',
-        organiz_id:organizid,
+        ins:['status','1',"2","3","4"],
     }
     if(issearchModel){
         data.search=1;
@@ -92,6 +79,7 @@ function queryList(){
         }
         var status=$("#status").val();
         if(status && status!="-1"){
+            delete data.ins;
             data.status=status;
         }
         var rank_id=$("#rank").val();
@@ -129,10 +117,10 @@ function showSearchPage() {
         opacity : 'toggle'
     }, "slow");
 }
-
-function onUpdateClick(id) {
-    window.location.href="/admin/admin.html#pages/questionadd.html?id="+id;
+function viewDetail(id) {
+    window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
 }
+/*
 function delClick(id) {
     if (confirm("确定要删除该题目吗？")) {
         zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
@@ -143,23 +131,61 @@ function delClick(id) {
             queryList()
         })
     }
-}
-//提交审核
-function submitcheck(id){
-    if(confirm("确定要直接提交审核该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 1}).then(function (result) {
+}*/
+//状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
+//下架
+function questiondown(id){
+    if(confirm("确定要下架该题目吗？")) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 4}).then(function (result) {
             if (result.code == 200) {
                 queryList();
-                showSuccess("提交成功");
+                showSuccess("下架成功");
             } else {
-                showError("提交失败")
+                showError("下架失败")
             }
         })
     }
 }
-function addvideolist(){
-    window.location.href="/admin/admin.html#pages/questionadd.html";
+//上架
+function questionup(id){
+    if(confirm("确定要上架该题目吗？")) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("上架成功");
+            } else {
+                showError("上架失败")
+            }
+        })
+    }
 }
+//拒绝
+function rejectClick(id){
+    if(confirm("确定要拒绝该题目吗？")) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 3}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("拒绝成功");
+            } else {
+                showError("拒绝失败")
+            }
+        })
+    }
+}
+//通过审核
+function agreeClick(id){
+    if(confirm("确定要通过该题目吗？")) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("通过成功");
+            } else {
+                showError("通过失败")
+            }
+        })
+    }
+}
+
 //重置
 function resetinput(){
     $("#userAddForm", $(".reasonRefund"))[0].reset();
@@ -171,6 +197,11 @@ function searchbtn(){
     currentPageNo=1;
     queryList();
 }
+Handlebars.registerHelper('equal', function(v1,v2, options) {
+    if(v1 ==v2) {
+        return options.fn(this);
+    }
+});
 Handlebars.registerHelper('ifequal', function(v1,v2, options) {
     if(v1 ==v2) {
         return options.fn(this);
