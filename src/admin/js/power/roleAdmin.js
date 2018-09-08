@@ -28,8 +28,15 @@ function getOrganiz() {
                 html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
             }
             $("#organiz").append(html);
+            initselect('organiz');
         }
     })
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
 }
 function getcompany(){
     var data={
@@ -45,6 +52,7 @@ function getcompany(){
                     html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
                 }
                 $("#shopcompany").html(html);
+                initselect('shopcompany');
             }
         }
     });
@@ -169,11 +177,11 @@ function fillForm(id) {
             if(res.rows[0].rank==31){
                 $(".organizmember").hide();
                 $(".membershop").show();
-                $("#shopcompany").val(res.rows[0].store_id);
+                $('#shopcompany').selectpicker('val', res.rows[0].store_id);
             }else if(res.rows[0].rank==90){
                 $(".organizmember").show();
                 $(".membershop").hide();
-                $("#organiz").val(res.rows[0].organiz_id);
+                $('#organiz').selectpicker('val', res.rows[0].organiz_id);
             }
         }else {
             if(res.code==601){

@@ -2,7 +2,13 @@
 <html lang="en">
 
 <head>
-
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/bignumber.js"></script>
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
+    <script type="text/javascript"  src="js/common/defaults-zh_CN.js"></script>
     <style>
         .operate a.role:hover{
             color:#3C6E31;
@@ -17,9 +23,6 @@
         }
 
     </style>
-    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
-    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
-    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -122,7 +125,7 @@
                 <h4 class="modal-title">账号新增</h4>
             </div>
             <form>
-                <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
+                <div class="modal-body" style="padding-top: 25px;">
                 <div class="form-horizontal" id="user_form">
                     <div class="form-group">
                         <label for="organiz" class="col-sm-2 control-label">所属类别</label>
@@ -158,16 +161,16 @@
                     <div class="form-group organizmember" style="display:none">
                         <label for="organiz" class="col-sm-2 control-label">所属机关</label>
                         <div class="col-sm-9">
-                            <select name="" id="organiz" class="form-control">
-                                <option value="-1">无</option>
+                            <select  id="organiz" class="selectpicker" data-live-search ="true" >
+
                             </select>
-                            <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                         </div>
                     </div>
                     <div class="form-group membershop" style="display:none">
                         <label for="shopcompany" class="col-sm-2 control-label">所属店铺</label>
                         <div class="col-sm-9">
-                            <select name="" id="shopcompany" class="form-control">
+                            <select  id="shopcompany" class="selectpicker" data-live-search ="true" >
+
                             </select>
                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                         </div>
