@@ -22,7 +22,8 @@ function queryList(){
     var data={
         page: currentPageNo,
         size: pageRows,
-        order:'create_time desc'
+        order:'create_time desc',
+        status:'<>,99',
     }
     if(issearchModel){
         data.search=1;
@@ -73,7 +74,7 @@ function onUpdateClick(id,name) {
 }
 function delClick(id) {
     if (confirm("确定要删除该分类吗？")) {
-        zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id,{status:99}).then(function (result) {
             checkData(result, 'delete');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
