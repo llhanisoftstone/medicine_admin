@@ -4,6 +4,7 @@ var pageRows = 10;
 var issearchModel=false;
 var issearchValue=false;
 var integrals;
+var issubmit=false;
 $(function() {
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -85,6 +86,10 @@ function delClick(id) {
 function onSavecategoryData(){
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
+    if(issubmit){
+        return;
+    }
+    issubmit=true;
     if(modelid==""||modelid==null||modelid==undefined){
         zhpost(base_url_goodsCategory,{c_name:name,auto_id:1}).then(function(result){
             if(checkData(result,'post')){
@@ -92,6 +97,7 @@ function onSavecategoryData(){
                 $(".addModels").hide();
                 queryList()
             }
+            issubmit=false;
         })
     }else{
         zhput(base_url_goodsCategory+"/"+modelid,{c_name:name}).then(function(result){
@@ -101,6 +107,7 @@ function onSavecategoryData(){
                 resetinput();
                 queryList()
             }
+            issubmit=false;
         })
     }
 }
