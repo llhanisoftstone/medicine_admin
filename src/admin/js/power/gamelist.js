@@ -19,8 +19,7 @@ $(function() {
         $("#userAddForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
-    $("#userAddcategory", $(".reasonRefund")).unbind("click");
-    $("#userAddcategory", $(".reasonRefund")).bind("click", onSavecategoryData);
+
     $('#ticketname').on('click',function(){
         var store=$('#storename').val()
         if(!store || store=='-1'){
@@ -36,7 +35,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc, create_time desc',
-        id:'>=,10',
+        id:'>,10',
         status:'<>,99'
     }
     if(issearchModel){
@@ -84,7 +83,7 @@ function queryList(){
                 if(startTimesearch < endTimesearch){
                     data.create_time='>,'+startTimesearch+',<,'+endTimesearch
                 }else{
-                    return showError("结束时间大于开始时间")
+                    return showError("结束时间不能大于开始时间")
                 }
             }else{
                 if(startTimesearch){
@@ -111,79 +110,6 @@ function queryList(){
         }
     })
 }
-function onSavecategoryData(){
-    var name=$("#storename").val();
-    var modelid=$("#storename").attr("_id");
-    var order=$('#order_code').val().trim();
-    var ticket_id=$('#ticketname').val();
-    if(!name || name=='-1'){
-        showError('请选择店铺');
-        return;
-    }
-    if(!ticket_id || ticket_id=='-1'){
-        showError('请选择优惠券');
-        return;
-    }
-    if(!order){
-        showError('请输入顺序');
-        return;
-    }
-    var startTime=$("#startTime").val();
-    var endTime=$("#endTime").val();
-        if(startTime!=''&& endTime!==''){
-            if(startTime>endTime){
-                showError("结束时间不能早于开始时间")
-                return
-            }
-        }else{
-            showError('请选择有效期');
-            return;
-        }
-
-    if(modelid=="" || modelid==null || modelid==undefined){
-        var add_data={
-            ticket_id:ticket_id,
-            // auto_id:1
-        };
-        if(order){
-            add_data.order_code=order;
-        }
-        if(startTime){
-            add_data.strat_time=startTime;
-        }
-        if(endTime){
-            add_data.end_time=endTime;
-        }
-        zhpost(base_url_goodsCategory,add_data).then(function(result){
-            if(checkData(result,'post')){
-                resetinput();
-                $(".addModels").hide();
-                queryList()
-            }
-        })
-    }else{
-        var editdata={
-            ticket_id:ticket_id,
-        };
-        if(order){
-            editdata.order_code=order;
-        }
-        if(startTime){
-            add_data.strat_time=startTime;
-        }
-        if(endTime){
-            add_data.end_time=endTime;
-        }
-        zhput(base_url_goodsCategory+"/"+modelid,editdata).then(function(result){
-            if(checkData(result,'put')){
-                $(".addModels").hide();
-                $("#storename").removeAttr("_id");
-                resetinput();
-                queryList()
-            }
-        })
-    }
-}
 
 function getstorename(){
     $("#storename").html("");
@@ -201,7 +127,6 @@ function getstorename(){
             $("#storename").append(html);
             $("#searchstorename").append(html);
         }
-        //getticketinfo();
     })
 }
 function getTickets(){
@@ -231,6 +156,7 @@ function getticketinfo(storeid){
         }
     })
 }
+/*
 //查询项
 function getsearchTickets(){
     var id=$('#searchstorename').val();
@@ -260,7 +186,7 @@ function getsearchticketinfo(storeid){
         }
     })
 }
-
+*/
 function showSearchPage() {
     $(".addModels", $(".reasonRefund")).css("display", "none");
     $(".reasonSearch", $(".reasonRefund")).animate({
@@ -270,13 +196,6 @@ function showSearchPage() {
 }
 function addGoodsModels(dom){
     location.href="admin.html#pages/gameconfig.html";
-    // $(".reasonSearch", $(".reasonRefund")).css("display", "none");
-    // $("#userAddForm", $(".reasonRefund"))[0].reset();
-    // $(".addModels", $(".reasonRefund")).animate({
-    //     height : 'show',
-    //     opacity : 'show'
-    // }, "slow");
-    // $("#storename").attr("_id","");
 }
 
 function onUpdateClick(id,read) {
@@ -285,21 +204,6 @@ function onUpdateClick(id,read) {
     }else{
         location.href="admin.html#pages/gameconfig.html?pid="+id;
     }
-
-    // getticketinfo(store_id);
-    // $("#storename").attr("_id",id);
-    // $("#storename").val(store_id);
-    // $("#order_code").val(order);
-    // $("#startTime").val(strat_time);
-    // $("#endTime").val(end_time);
-    // setTimeout(function(){
-    //     $("#ticketname").val(ticket_id);
-    // },300)
-    // $(".reasonSearch", $(".reasonRefund")).css("display", "none");
-    // $(".addModels", $(".reasonRefund")).animate({
-    //     height : 'show',
-    //     opacity : 'show'
-    // }, "slow");
 }
 
 function enableClick(id) {

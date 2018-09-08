@@ -253,8 +253,10 @@ function getGoodsById(id){
         $("#endTime").val(result.rows[0].end_time);
         //$("#title_pic").val(result.rows[0].picpath);
         $("#sale_price").val(result.rows[0].price);
-        $("#storename").val(result.rows[0].store_id);//需要数据库返回
-        getticketinfo(result.rows[0].store_id,result.rows[0].ticket_id);//设定ticket内容
+        setTimeout(function () {
+            $("#storename").val(result.rows[0].store_id);
+            getticketinfo(result.rows[0].store_id,result.rows[0].ticket_id);
+        },500)
         leveljson=result.rows[0].level_json;
     });
 }

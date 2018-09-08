@@ -59,19 +59,19 @@
                                     <div class="col-md-4 form-group">
                                         <label >答题数量：</label>
                                         <div class="pinput">
-                                            <input placeholder="请输入答题数量" id="max_step" datatype="require" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="max_step" class="form-control" type="number">
+                                            <input placeholder="请输入答题数量" id="max_step" datatype="require" oninput="num_limit(this,{max:5})" name="max_step" class="form-control" type="number">
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label >顺序：</label>
                                         <div class="pinput">
-                                            <input placeholder="请输入顺序" id="order_code" datatype="require" oninput="if(this.value.length>5){this.value=this.value.slice(0,5)}" name="order_code" class="form-control" type="number">
+                                            <input placeholder="请输入顺序" id="order_code" datatype="require" oninput="num_limit(this,{max:5})" name="order_code" class="form-control" type="number">
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label>有效期：</label>
-                                        <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="strat_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
-                                            <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                        <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="strat_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control pdate-time">
+                                            <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control pdate-time">
                                         </div>
                                     </div>
                                     <!--<div class="col-md-4 form-group">-->
