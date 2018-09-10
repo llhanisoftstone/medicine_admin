@@ -7,11 +7,12 @@ var issearchModel=false;
 var issearchValue=false;
 var integrals;
 $(function() {
-    getstorename()//获取店铺列表
+    getstorename(); //获取店铺列表
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
-        $('#ticketname').html('');
+        $('#ticketname').html("<option value='-1'>请选择</option>");
+        $("#storename").selectpicker('val','-1');
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
@@ -113,7 +114,6 @@ function queryList(){
 
 function getstorename(){
     $("#storename").html("");
-    $("#searchstorename").html("");
     var data={
         status:'1'
     };
@@ -124,15 +124,19 @@ function getstorename(){
             for(var i=0;i<result.rows.length;i++){
                 html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
             }
-            $("#storename").append(html);
-            $("#searchstorename").append(html);
+            $("#storename").append(html)
+                .selectpicker({
+                    size: 10,
+                    width:'100%'
+                });
         }
     })
 }
+
 function getTickets(){
     var id=$('#storename').val();
     if(id =='-1'){
-        $("#ticketname").html("");
+        $("#ticketname").html("<option value='-1'>请选择</option>");
     }else{
         getticketinfo(id);
     }
@@ -152,41 +156,43 @@ function getticketinfo(storeid){
             for(var i=0;i<result.rows.length;i++){
                 html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
             }
-            $("#ticketname").append(html);
+        }else if(result.code==602){
+            html+="<option value='-1'>请选择</option>";
         }
+        $("#ticketname").append(html);
     })
 }
 /*
-//查询项
-function getsearchTickets(){
-    var id=$('#searchstorename').val();
-    if(id =='-1'){
-        $("#searchticketname").html("");
-    }else{
-        getsearchticketinfo(id);
-    }
-}
-//查询项
-function getsearchticketinfo(storeid){
-    $("#searchticketname").html("");
-    var data={
-        status:'<>,99'
-    };
-    if(storeid){
-        data.store_id=storeid;
-    }
-    zhget('/rs/ticket',data).then(function(result){
-        var html="";
-        if(result.code==200){
-            html+="<option value='-1'>请选择</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-            $("#searchticketname").append(html);
-        }
-    })
-}
-*/
+ //查询项
+ function getsearchTickets(){
+ var id=$('#searchstorename').val();
+ if(id =='-1'){
+ $("#searchticketname").html("");
+ }else{
+ getsearchticketinfo(id);
+ }
+ }
+ //查询项
+ function getsearchticketinfo(storeid){
+ $("#searchticketname").html("");
+ var data={
+ status:'<>,99'
+ };
+ if(storeid){
+ data.store_id=storeid;
+ }
+ zhget('/rs/ticket',data).then(function(result){
+ var html="";
+ if(result.code==200){
+ html+="<option value='-1'>请选择</option>";
+ for(var i=0;i<result.rows.length;i++){
+ html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+ }
+ $("#searchticketname").append(html);
+ }
+ })
+ }
+ */
 function showSearchPage() {
     $(".addModels", $(".reasonRefund")).css("display", "none");
     $(".reasonSearch", $(".reasonRefund")).animate({

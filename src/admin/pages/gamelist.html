@@ -2,9 +2,16 @@
 <html lang="en">
 
 <head>
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
     <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
     <script src="js/common/formValidator/validator.js"></script>
+    <style>
+        .dropdown-menu li{
+            list-style: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,13 +56,13 @@
                                             <div class="col-md-4 form-group">
                                                 <label for="name">关卡名称：</label>
                                                 <div class="pinput">
-                                                    <input id="name" class="form-control" />
+                                                    <input id="name" class="form-control" placeholder="请输入"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label for="storename">所属店铺：</label>
                                                 <div class="pinput">
-                                                    <select id="storename" class="form-control" onchange="getTickets()">
+                                                    <select id="storename" class="form-control" data-live-search ="true" onchange="getTickets()">
 
                                                     </select>
                                                 </div>
@@ -64,7 +71,7 @@
                                                 <label for="ticketname">优惠券/产品：</label>
                                                 <div class="pinput">
                                                     <select id="ticketname" class="form-control">
-
+                                                        <option value="-1">请选择</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -171,6 +178,12 @@
     </tr>
     {{/datas}}
 </script>
+<!--<script id="store-template" type="text/x-handlebars-template">-->
+<!--<option value="">请选择</option>-->
+<!--{{#datas}}-->
+<!--<option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>{{name}}</option>-->
+<!--{{/datas}}-->
+<!--</script>-->
 <script type="text/javascript" src="js/power/gamelist.js"></script>
 </body>
 
