@@ -57,23 +57,22 @@ function queryList(){
         if(status && status !='-1'){
             data.status=status;
         }
-        var startTime=$("#startTime").val();//上架时间
-        var endTime=$("#endTime").val();//下架时间
+        var startTime=$("#startTime").val();//有效期开始
+        var endTime=$("#endTime").val();//有效期结束时间
         if(startTime!=''||endTime!==''){
-            if(startTime!=''&&endTime!==''){
+            if(startTime!='' && endTime!==''){
                 if(startTime<endTime){
                     data.strat_time='>=,'+startTime;
                     data.end_time='<=,'+endTime
                 }else{
-                    showError("结束时间不能大于开始时间")
-                    return
+                    return showError("结束时间不能大于开始时间");
                 }
             }else{
                 if(startTime){
-                    data.strat_time='>=,'+startTime
+                    data.strat_time='>=,'+startTime;
                 }
                 if(endTime){
-                    data.end_time='<=,'+endTime
+                    data.end_time='<=,'+endTime;
                 }
             }
         }
@@ -95,7 +94,6 @@ function queryList(){
                 }
             }
         }
-
     }
     zhget(base_url_getconfig,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
@@ -162,37 +160,7 @@ function getticketinfo(storeid){
         $("#ticketname").append(html);
     })
 }
-/*
- //查询项
- function getsearchTickets(){
- var id=$('#searchstorename').val();
- if(id =='-1'){
- $("#searchticketname").html("");
- }else{
- getsearchticketinfo(id);
- }
- }
- //查询项
- function getsearchticketinfo(storeid){
- $("#searchticketname").html("");
- var data={
- status:'<>,99'
- };
- if(storeid){
- data.store_id=storeid;
- }
- zhget('/rs/ticket',data).then(function(result){
- var html="";
- if(result.code==200){
- html+="<option value='-1'>请选择</option>";
- for(var i=0;i<result.rows.length;i++){
- html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
- }
- $("#searchticketname").append(html);
- }
- })
- }
- */
+
 function showSearchPage() {
     $(".addModels", $(".reasonRefund")).css("display", "none");
     $(".reasonSearch", $(".reasonRefund")).animate({

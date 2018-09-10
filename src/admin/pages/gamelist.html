@@ -75,13 +75,12 @@
                                                     </select>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4 form-group">
                                                 <label>有效期：</label>
-                                                <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="startTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
-                                                    <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                                <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="startTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control pdate-time">
+                                                    <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control pdate-time">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
@@ -96,8 +95,8 @@
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label>创建时间：</label>
-                                                <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTimesearch" name="startTimesearch" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
-                                                    <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTimesearch" name="endTimesearch" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                                <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTimesearch" name="startTimesearch" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTimesearch\')}'})" class="form-control pdate-time">
+                                                    <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTimesearch" name="endTimesearch" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTimesearch\')}'})" class="form-control pdate-time">
                                                 </div>
                                             </div>
                                         </div>
