@@ -13,7 +13,6 @@ var compid;
 var u_id;
 $(function() {
     compid = getCookie('storeid');
-
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
@@ -29,6 +28,8 @@ function getmember(){
         if(result.code==200){
             u_id=result.rows[0].id;
             queryList();
+        }else{
+            return showError("该店铺已被禁用，请联系管理员")
         }
     })
 }
