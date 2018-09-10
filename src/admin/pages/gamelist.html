@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body">
+                <div class="panel-body" style="min-height:400px; ">
                     <div class="addModels" style="display: none;">
                         <div class="panel panel-default">
                             <!-- /.panel-heading -->
@@ -75,6 +75,9 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-4 form-group">
                                                 <label>有效期：</label>
                                                 <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="startTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
@@ -98,7 +101,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group pbtn-group">
                                             <button id="searchDataBtn" class="fa fa-search   btn btn-default" type="button">查询
                                             </button>
