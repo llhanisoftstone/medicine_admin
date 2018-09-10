@@ -158,7 +158,7 @@ function clickdetail(id){
         if (result.code == 200) {
             var html="";
           for(var i=0;i<result.rows.length;i++){
-             html+="<tr><td>"+result.rows[i].ticket_id+"</td><td>"+result.rows[i].amount+"</td></tr>"
+             html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].amount+"</td></tr>"
           }
           $("#infotable").html(html);
             $('#myModal').modal('show');
