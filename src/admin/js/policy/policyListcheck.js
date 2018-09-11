@@ -40,7 +40,7 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'is_hot desc,create_time desc',
+        order:'status asc, is_hot desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
         ins:['status','1',"2","3","4"],

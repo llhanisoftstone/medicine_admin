@@ -19,7 +19,6 @@ $(function(){
         operation = "modify";
         getGoodsById(id);
     }
-    //$.initSystemFileUpload($("#titleForm"), onUploadDetailPic);
     $('#ticketname').on('click',function(){
         var store=$('#storename').val()
         if(!store || store=='-1'){
@@ -36,13 +35,7 @@ $(function(){
 function back(){
     history.go(-1);
 }
-/*function onUploadDetailPic(formObject, fileComp, list) {
-    var attrs = fileComp.attr("refattr");
-    if(list.length > 0 && list[0].code == 200){
-        var sAttachUrl = list[0].url;
-        $("#"+attrs, formObject).val(sAttachUrl);
-    }
-}*/
+
 //获取店铺
 function getstorename(store_id){
     $("#storename").html("");
@@ -60,14 +53,18 @@ function getstorename(store_id){
                     html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
                 }
             }
-            $("#storename").append(html);
+            $("#storename").append(html)
+                .selectpicker({
+                    size: 10,
+                    width:'100%'
+                });
         }
     })
 }
 function getTickets(){
     var tid=$('#storename').val();
     if(tid =='-1'){
-        $("#ticketname").html("");
+        $("#ticketname").html("<option value='-1'>请选择</option>");
     }else{
         getticketinfo(tid);
     }
@@ -91,8 +88,10 @@ function getticketinfo(storeid,tid){
                     html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
                 }
             }
-            $("#ticketname").append(html);
+        }else if(result.code==602){
+            html+="<option value='-1'>请选择</option>";
         }
+        $("#ticketname").append(html);
     })
 }
 //是否显示优惠券
@@ -138,57 +137,7 @@ var tempresult={
         level_json:[]
     }]
 };
-/*
-function levelsAdd(){
-    var levelobj={};//单个关卡json数据
-    var max_step=$.trim($("#max_step").val());
-    if(!max_step||max_step.trim()==""){
-        $("#max_step").focus();
-        return showError("请输入答题数量");
-    }
-    var level=$('#level').attr('data-level');
-    levelobj.level=level;
-    levelobj.max_step=max_step;
-    var status=$('#isTicket').val();//是否有礼物/券
-    if(status==2){
-        var storename=$('#storename').val();
-        var ticket_id=$('#ticketname').val();
-        var name=$('#ticketname option:selected').attr('data-name');
-        if(!storename || storename=='-1'){
-            return showError('请选择店铺');
-        }
-        if(!ticket_id || ticket_id=='-1'){
-            return showError('请选择优惠券');
-        }
-        var reward=[];
-        reward.push(
-            {
-                category: "ticket",
-                name:name,
-                id: ticket_id,
-                store_id: storename
-            }
-        );
-        levelobj.reward=reward;
-    }
-    if(leveledit){
-        for(var key in leveljson){
-            if(leveljson[key].level==level){
-                leveljson[key]=levelobj;
-            }
-        }
-    }else{
-        leveljson.push(levelobj);
-    }
-    tempresult.rows[0].level_json=leveljson;
-    setDeleteStatus(leveljson)
-    buildTableNoPage(tempresult, 'answer-template', 'answer');
-    $('#gamesAddForm').animate({
-        height : 'toggle',
-        opacity : 'show'
-    }, "slow");
-    $("#gamesAddForm")[0].reset();
-}*/
+
 var leveledit=false;//子关卡是否为编辑
 function onLevelUpdate(level,max_step,reward){
     leveledit=true;
@@ -254,7 +203,7 @@ function getGoodsById(id){
         //$("#title_pic").val(result.rows[0].picpath);
         $("#sale_price").val(result.rows[0].price);
         setTimeout(function () {
-            $("#storename").val(result.rows[0].store_id);
+            $("#storename").selectpicker('val',result.rows[0].store_id);
             getticketinfo(result.rows[0].store_id,result.rows[0].ticket_id);
         },500)
         leveljson=result.rows[0].level_json;
@@ -266,11 +215,6 @@ function saveGameData(){
         showError("请输入关卡名称");
         return;
     }
-    /*var title_pic=$.trim($("#title_pic").val());
-    if(!title_pic||title_pic.trim()==""){
-        showError("请上传图片");
-        return;
-    }*/
     var storename=$('#storename').val();
     var ticket_id=$('#ticketname').val();
     var type=$('#ticketname option:selected').attr('data-type');
@@ -302,17 +246,14 @@ function saveGameData(){
         showError("请输入价格");
         return;
     }
-    /*if(leveljson.length==0 || isEmptyObject(leveljson)){
-        showError("请配置关卡信息");
-        return;
-    }*/
+
     var levelobj={};//单个关卡json数据
     var reward=[];
     var category='';
     if(type==1){
         category='ticket';//数据库要求优惠券存ticket
     }else if(type==2){
-        category='goods';//数据库要求实物存goods
+        category='goods';//实物存goods
     }
     reward.push(
         {
@@ -338,7 +279,6 @@ function saveGameData(){
         strat_time:startTime,
         end_time:endTime,
         order_code:order_code,
-        //picpath:title_pic,
         price:price_leaguer,
         level_json:leveljson
     };
