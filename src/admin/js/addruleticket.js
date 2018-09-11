@@ -78,28 +78,16 @@ function getrow1(){
         iModelsType[0]={};
         iModelsType[0].se1=se1;
         iModelsType[0].index=$("#menu-placeholder").find("tr:last").children().eq(0).attr("_index");
-        var dom1select=$("#menu-placeholder").find("tr:last").children().eq(0).children().find("select").find("option:selected").val();
-        selected1=dom1select;
         iModelsType[0].amount=amount;
-    }else{//当前产品没有规格
-        var html='<tr><td  style="max-width: 160px;"><select  class="selectpicker" id="goodscompid" title="请选择" data-live-search ="true"></select></td>';
-        html+="<td><input name='stock_count' placeholder='请输入' onkeyup='value=value.replace(/[^\d]/g,"+'""'+")'  class='form-control' maxlength='7'></td>";
-        html+='<td style="text-align:center"><span class="btn-link" style="margin-top: 5px;display: block;cursor: pointer;padding-left: 13px;" onclick="onDeleteClick(this)">删除</span>';
-        html+='</td></tr>';
-        shopselect(goodscompid);
     }
 
 }
 function addrow(){
     getrow1();
     var trlength=parseFloat(iModelsType[0].index)+1;
-    var html='<tr><td _index="'+trlength+'" style="max-width: 160px;"><select id="index'+trlength+'goodscompid" onchange="shopselect(this)" title="请选择" data-live-search="true" class="selectpicker">';
+    var html='<tr><td _index="'+trlength+'" style="max-width: 160px;"><select id="index'+trlength+'goodscompid" onchange="shopselect1(this)" title="请选择" data-live-search="true" class="selectpicker">';
     for(var i=1;i<iModelsType[0].se1.length;i++){//新增select1
-        if($(iModelsType[0].se1[i]).val()==selected1){
-            html+='<option selected="selected" value='+$(iModelsType[0].se1[i]).val()+'>'+$(iModelsType[0].se1[i]).html()+'</option>';
-        }else{
-            html+='<option value='+$(iModelsType[0].se1[i]).val()+'>'+$(iModelsType[0].se1[i]).html()+'</option>';
-        }
+        html+='<option value='+$(iModelsType[0].se1[i]).val()+'>'+$(iModelsType[0].se1[i]).html()+'</option>';
     }
     html+='</select></td>';
     html+="<td><input name='stock_count' placeholder='请输入' oninput=\"this.value=this.value.replace(/\\D/g,'')\"  class='form-control' maxlength='7'></td>";
@@ -107,6 +95,11 @@ function addrow(){
     html+='</td></tr>';
     $("#menu-placeholder").append(html)
     initselect("index"+trlength+"goodscompid");
+    $("index"+trlength+"goodscompid").selectpicker('val',"");
+}
+function shopselect1(dom){
+    var id=$(dom).parents("td").children("select").attr("id");
+    initselect(id);
 }
 //删除产品
 function onDeleteClick(dom){

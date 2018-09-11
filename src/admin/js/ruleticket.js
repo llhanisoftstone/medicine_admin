@@ -13,7 +13,6 @@ var compid;
 var u_id;
 $(function() {
     compid = getCookie('storeid');
-
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
@@ -29,6 +28,8 @@ function getmember(){
         if(result.code==200){
             u_id=result.rows[0].id;
             queryList();
+        }else{
+            return showError("该店铺已被禁用，请联系管理员")
         }
     })
 }
@@ -157,7 +158,7 @@ function clickdetail(id){
         if (result.code == 200) {
             var html="";
           for(var i=0;i<result.rows.length;i++){
-             html+="<tr><td>"+result.rows[i].ticket_id+"</td><td>"+result.rows[i].amount+"</td></tr>"
+             html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].amount+"</td></tr>"
           }
           $("#infotable").html(html);
             $('#myModal').modal('show');
