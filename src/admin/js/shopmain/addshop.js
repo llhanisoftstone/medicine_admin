@@ -10,7 +10,9 @@ $(function() {
     $.initSystemFileUpload($("#titleForm"), onUploadDetailPic);
     $("#savebtn").bind("click",saveData);
     var id=getUrlParamsValue("id");
-    getmemberInfo(id);
+    setTimeout(function(){
+        getmemberInfo(id);
+    },300)
 });
 
 function onUploadDetailPic(formObject, fileComp, list) {
