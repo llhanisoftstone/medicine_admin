@@ -84,9 +84,9 @@
                                                 <div class="pinput">
                                                     <select id="name" class="form-control">
                                                         <option value="">请选择</option>
-                                                        <option value="1">成功</option>
-                                                        <option value="2">失败</option>
-                                                        <!--<option value="3">平局</option>-->
+                                                        <option value="1">正确</option>
+                                                        <option value="2">错误</option>
+                                                        <option value="3">失败</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -144,7 +144,7 @@
     {{#datas}}
     <tr>
         <td style="text-align:center;">{{rowNum}}</td>
-        <td style="text-align:center;">{{#equal category 1}}成功{{/equal}}{{#equal category 2}}失败{{/equal}}{{#equal category 3}}平局{{/equal}}</td>
+        <td style="text-align:center;">{{#equal category 1}}正确{{/equal}}{{#equal category 2}}错误{{/equal}}{{#equal category 3}}失败{{/equal}}</td>
         <td style="text-align:center;">{{details}}</td>
         <td style="text-align: center;">
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}','{{category}}','{{details}}')"></span>
