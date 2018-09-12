@@ -136,6 +136,9 @@ function  saveData(_status){
     var remark=$.trim($("#remark").val());
     var unique_code = $("#unique_code").val();
     var copmpany=jQuery("#company").val();
+    if(!pic_abbr || pic_abbr==""){
+        return showError("请上传列表图");
+    }
     if(!copmpany){
         return showError("请选择部门");
     }
