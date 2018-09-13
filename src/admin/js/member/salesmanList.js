@@ -114,10 +114,8 @@ function forbid(id,u_id){
     if(confirm("确定要禁用该合作商功能吗？")) {
         zhput("/rs/cooperator" + "/" + id, {status: 3}).then(function (result) {
             if (result.code == 200) {
-                zhput("/rs/member/" + u_id,{rank:1}).then(function(result){
                     queryList();
                     showSuccess("禁用成功");
-                })
             } else {
                 showError("禁用失败")
             }
@@ -128,10 +126,8 @@ function openstart(id,u_id){
     if(confirm("确定要启用该合作商功能吗？")) {
         zhput("/rs/cooperator" + "/" + id, {status: 1}).then(function (result) {
             if (result.code == 200) {
-                zhput("/rs/member/" + u_id,{rank:20}).then(function(result){
                     queryList();
                     showSuccess("启用成功");
-                })
             } else {
                 showError("启用失败")
             }
@@ -142,10 +138,8 @@ function agreeClick(id,u_id){
     if(confirm("确定要通过吗？")) {
         zhput("/rs/cooperator" + "/" + id, {status: 1}).then(function (result) {
             if (result.code == 200) {
-                zhput("/rs/member/" + u_id,{rank:20}).then(function(result){
                     queryList();
                     showSuccess("审核通过");
-                })
 
             } else {
                 showError("审核失败")

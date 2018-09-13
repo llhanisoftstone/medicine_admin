@@ -111,7 +111,6 @@ function checkfrm() {
                  }else{
                      alert(rs.err);
                  }
-
                 $('#username').focus();
             }
             else {
