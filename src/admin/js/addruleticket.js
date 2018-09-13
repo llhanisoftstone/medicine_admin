@@ -137,26 +137,6 @@ function  saveData(){
         showError("请输入数量");
         return;
     }
-    var dtStartTime=$("#dtStartTime").val().trim();
-    if(dtStartTime){
-        urldata.start_time=dtStartTime;
-    }else{
-        showError("请选择开始时间");
-        return;
-    }
-    var dtEndTime=$("#dtEndTime").val().trim();
-    if(dtEndTime){
-        var date1 = new Date(dtStartTime);
-        var date2= new Date(dtEndTime);
-        if(date2.getTime() < date1.getTime()){
-            return showError("结束时间不能晚于开始时间");
-        }else{
-            urldata.end_time=dtEndTime;
-        }
-    }else{
-        showError("请选择结束时间");
-        return;
-    }
     var doms=jQuery("#menu-placeholder tr");
     for(var i=0;i<doms.length;i++){
         goodsdata[i]={};
