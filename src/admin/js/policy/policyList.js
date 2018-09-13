@@ -194,10 +194,10 @@ function questiondown(id){
         })
     }
 }
-//上架
+//上架   下架之后再上架就是待审核
 function questionup(id){
     if(confirm("确定要上架该政策百科吗？")) {
-        zhput(base_url_course + "/" + id, {status: 2}).then(function (result) {
+        zhput(base_url_course + "/" + id, {status: 1}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("上架成功");

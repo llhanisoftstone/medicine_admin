@@ -43,12 +43,12 @@
                                 <div class="" id="user_form">
                                     <form id="titleForm">
                                         <div class="row">
-                                            <div class="col-md-4 form-group">
-                                                <label for="name">关卡名称：</label>
-                                                <div class="pinput">
-                                                    <input placeholder="请输入关卡名称" datatype="require" class="form-control" id="name" maxlength="20">
-                                                </div>
-                                            </div>
+                                            <!--<div class="col-md-4 form-group">-->
+                                                <!--<label for="name">关卡名称：</label>-->
+                                                <!--<div class="pinput">-->
+                                                    <!--<input placeholder="请输入关卡名称" datatype="require" class="form-control" id="name" maxlength="20">-->
+                                                <!--</div>-->
+                                            <!--</div>-->
                                             <div class="col-md-4 form-group">
                                                 <label for="storename">所属店铺：</label>
                                                 <div class="pinput">
@@ -63,6 +63,12 @@
                                                     <select id="ticketname" class="form-control" name="ticket_id">
                                                         <option value="-1">请选择</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 form-group">
+                                                <label for="count">优惠券/产品数量：</label>
+                                                <div class="pinput">
+                                                    <input  type="text" class="form-control" id="count" disabled="disabled" readonly="readonly">
                                                 </div>
                                             </div>
                                         </div>
@@ -80,20 +86,20 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
-                                                <label>有效期：</label>
+                                                <label>首页显示有效期：</label>
                                                 <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="strat_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control pdate-time">
                                                     <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control pdate-time">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4 form-group">
-                                                <label for="sale_price">价格：</label>
-                                                <div class="pinput">
-                                                    <input placeholder="价格，没有填0" oninput="num_limit(this,{max:8,maxval:99999.99,dec:2})" datatype="require money mlen" class="form-control" maxlength="8" id="sale_price" >
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--<div class="row">-->
+                                            <!--<div class="col-md-4 form-group">-->
+                                                <!--<label for="sale_price">价格：</label>-->
+                                                <!--<div class="pinput">-->
+                                                    <!--<input placeholder="价格，没有填0" oninput="num_limit(this,{max:8,maxval:99999.99,dec:2})" datatype="require money mlen" class="form-control" maxlength="8" id="sale_price" >-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
                                         <div class="row">
                                             <div class="text-center">
                                                 <button datatype="require" type="button" class="btn fa fa-save btn-default" _status="0" onclick="saveGameData();" id="savebtn">保存</button>

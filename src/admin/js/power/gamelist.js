@@ -41,12 +41,12 @@ function queryList(){
     }
     if(issearchModel){
         data.search=1;
-        var name=$.trim($("#name").val());
+        // var name=$.trim($("#name").val());
         var storename=$("#storename").val();
         var ticket_id=$('#ticketname').val();
-        if(name){
-            data.name=name;
-        }
+        // if(name){
+        //     data.name=name;
+        // }
         if(storename && storename !='-1'){
             data.store_id=storename;
         }

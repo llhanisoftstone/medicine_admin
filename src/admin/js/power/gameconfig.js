@@ -72,7 +72,8 @@ function getTickets(){
 function getticketinfo(storeid,tid){
     $("#ticketname").html("");
     var data={
-        status:'<>,99'
+        status:'<>,99',
+        type:2
     };
     if(storeid){
         data.store_id=storeid;
@@ -210,11 +211,11 @@ function getGoodsById(id){
     });
 }
 function saveGameData(){
-    var name=$.trim($("#name").val());
-    if(!name){
-        showError("请输入关卡名称");
-        return;
-    }
+    // var name=$.trim($("#name").val());
+    // if(!name){
+    //     showError("请输入关卡名称");
+    //     return;
+    // }
     var storename=$('#storename').val();
     var ticket_id=$('#ticketname').val();
     var type=$('#ticketname option:selected').attr('data-type');
@@ -238,14 +239,16 @@ function saveGameData(){
         if(startTime>endTime){
             return showError("结束时间不能早于开始时间")
         }
-    }else{
-        return showError('请选择有效期');
+    }else if(startTime!='' && endTime==''){
+        return showError('请选择结束时间');
+    }else if(endTime!='' && startTime==''){
+        return showError('请选择开始时间');
     }
-    var price_leaguer=$.trim($("#sale_price").val());
-    if(price_leaguer == "" || price_leaguer<0){
-        showError("请输入价格");
-        return;
-    }
+    // var price_leaguer=$.trim($("#sale_price").val());
+    // if(price_leaguer == "" || price_leaguer<0){
+    //     showError("请输入价格");
+    //     return;
+    // }
 
     var levelobj={};//单个关卡json数据
     var reward=[];
