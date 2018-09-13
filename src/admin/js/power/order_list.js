@@ -92,8 +92,13 @@ function createInfoList(result){
         timestampToTime(end);
         mainOrder.end_time=timestampToTime(end);
         mainOrder.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+        if(mainOrder.status == 0 || mainOrder.status == 1){
+            result.rows[i].trcolpan=3;
+        }else{
+            result.rows[i].trcolpan=2;
+        }
     }
-    buildTableByke(result, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+    buildTableByke(result, 'list-template', 'list-placeholder','paginator',queryList,pageRows);
 }
 function queryList() {
     var data={
