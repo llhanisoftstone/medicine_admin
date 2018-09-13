@@ -146,14 +146,36 @@
             {{#equal status 4}}下架{{/equal}}
         </td>
         <td>
-            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
-            {{#superif is_hot 0}}
-            &nbsp;<span class="fa fa-star-o" aria-hidden="true" title="设置热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-            {{/superif}}
-            {{#superif is_hot 1}}
-            &nbsp;<span class="fa fa-star" aria-hidden="true" title="取消热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-            {{/superif}}
+            {{#equal status 0}}
+            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
+            &nbsp;<span class="fa fa-send-o" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
             &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 1}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 2}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}',)" title="下架"></span>
+                {{#superif is_hot 0}}
+                &nbsp;<span class="fa fa-star-o" aria-hidden="true" title="设置热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
+                {{/superif}}
+                {{#superif is_hot 1}}
+                &nbsp;<span class="fa fa-star" aria-hidden="true" title="取消热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
+                {{/superif}}
+            {{/equal}}
+            {{#equal status 3}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
+            &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 4}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}',)" title="上架"></span>
+            &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
+            {{/equal}}
+
+
         </td>
     </tr>
     {{/datas}}
