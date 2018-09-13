@@ -142,17 +142,18 @@ function getTickets(){
 function getticketinfo(storeid){
     $("#ticketname").html("");
     var data={
-        status:'<>,99'
+        status:2, //审核通过的
+        type:2,
     };
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/ticket',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+                html+="<option value='"+result.rows[i].ticket_id+"'>"+result.rows[i].name+"</option>"
             }
         }else if(result.code==602){
             html+="<option value='-1'>请选择</option>";

@@ -72,27 +72,68 @@ function getTickets(){
 function getticketinfo(storeid,tid){
     $("#ticketname").html("");
     var data={
-        status:'<>,99',
-        type:2
+        status:2, //审核通过的
+        type:2,
     };
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/ticket',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
                 if(tid==result.rows[i].id){
-                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' rule_id='"+result.rows[i].rule_id+"' data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
                 }else{
-                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' rule_id='"+result.rows[i].rule_id+"'data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
                 }
             }
         }else if(result.code==602){
             html+="<option value='-1'>请选择</option>";
         }
         $("#ticketname").append(html);
+    })
+}
+function setAmount(){
+    var amount=$('#ticketname option:selected').attr('data-amount');
+    var sale_amount=$('#ticketname option:selected').attr('sale_amount');
+    var send_amount=$('#ticketname option:selected').attr('send_amount');
+    var rule_id=$('#ticketname option:selected').attr('rule_id');
+    var ticktetid=$('#ticketname option:selected').val();
+    amount=parseInt(amount)
+    sale_amount=parseInt(sale_amount)
+    send_amount=parseInt(send_amount)
+    var countNum;
+    if(amount!=0){
+        countNum=amount-send_amount;
+        $('#count').val(countNum);
+    }else{
+        countNum=sale_amount-send_amount;
+        $('#count').val(countNum);
+    }
+    if(ticktetid!=-1){
+        getoldinfo(ticktetid)
+    }
+}
+function getoldinfo(tid){
+    var data={};
+    if(!tid || tid==-1){
+        return;
+    }else{
+        data.ticket_id=tid;
+    }
+    zhget(base_url_getconfig,data).then(function(result){
+        if(result.code==200){
+            operation = "modify";
+            id=result.rows[0].id;
+            $("#id").val(id)
+            $('#order_code').val(result.rows[0].order_code);
+            $('#startTime').val(result.rows[0].strat_time);
+            $('#endTime').val(result.rows[0].end_time);
+            leveljson=result.rows[0].level_json;
+            $('#max_step').val(leveljson[0].max_step);
+        }
     })
 }
 //是否显示优惠券
@@ -277,12 +318,10 @@ function saveGameData(){
         leveljson.push(levelobj);
     }
     var urldata={
-        name:name,
         ticket_id:ticket_id,
         strat_time:startTime,
         end_time:endTime,
         order_code:order_code,
-        price:price_leaguer,
         level_json:leveljson
     };
     saveGameData=null;
