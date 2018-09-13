@@ -61,7 +61,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'status asc,create_time desc',
-        ins:['status','1',"2","3","4"],
+        status:'>,0'
     }
     if(issearchModel){
         data.search=1;
