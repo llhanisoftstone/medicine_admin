@@ -171,8 +171,12 @@ function searchbtn(){
     currentPageNo=1;
     queryList();
 }
-Handlebars.registerHelper('ifequal', function(v1,v2, options) {
-    if(v1 ==v2) {
+//查看详情
+function viewDetail(id) {
+window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+}
+Handlebars.registerHelper('ifequal', function(v1,v2,v3,v4, options) {
+    if(v1 == v2||v1 == v3||v1 == v4) {
         return options.fn(this);
     }else {
         return options.inverse(this);
