@@ -166,10 +166,6 @@ function  saveData(){
             return;
         }
         goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
-        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
-            showError('请输入产品数量');
-            return;
-        }
     }
     $("#savebtn").attr("disabled","disabled");
     if (operation == "add") {
