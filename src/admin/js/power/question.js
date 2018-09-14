@@ -45,7 +45,10 @@ function getcategory(){
 function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
-    zhget('/rs/organiz').then(function(result){
+    var data={
+        id:organizid,
+    }
+    zhget('/rs/organiz',data).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows

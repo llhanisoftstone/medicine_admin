@@ -9,6 +9,7 @@ var operation = "add";
 var compid;
 var id;
 var leveljson=[];//关卡json数据
+var rule_id; //配置规则表id
 $(function(){
     getstorename();
     compid = getCookie('storeid');
@@ -83,40 +84,60 @@ function getticketinfo(storeid,tid){
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                if(tid==result.rows[i].id){
-                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' rule_id='"+result.rows[i].rule_id+"' data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
+                if(tid==result.rows[i].ticket_id){
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"'  data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
                 }else{
-                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' rule_id='"+result.rows[i].rule_id+"'data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
                 }
             }
         }else if(result.code==602){
             html+="<option value='-1'>请选择</option>";
         }
         $("#ticketname").append(html);
+        setAmount();
     })
 }
-function setAmount(){
-    var amount=$('#ticketname option:selected').attr('data-amount');
-    var sale_amount=$('#ticketname option:selected').attr('sale_amount');
-    var send_amount=$('#ticketname option:selected').attr('send_amount');
-    var rule_id=$('#ticketname option:selected').attr('rule_id');
+//获取到优惠券信息后，设置库存数量，并检查该优惠券之前是否被设置过
+function afterGetTicket(){
+    clearInfo();
+    setAmount()
     var ticktetid=$('#ticketname option:selected').val();
-    amount=parseInt(amount)
-    sale_amount=parseInt(sale_amount)
-    send_amount=parseInt(send_amount)
-    var countNum;
-    if(amount!=0){
-        countNum=amount-send_amount;
-        $('#count').val(countNum);
-    }else{
-        countNum=sale_amount-send_amount;
-        $('#count').val(countNum);
-    }
     if(ticktetid!=-1){
-        getoldinfo(ticktetid)
+        getOldTicketInfo(ticktetid)
     }
 }
-function getoldinfo(tid){
+function setAmount(){
+    var ticktetid=$('#ticketname option:selected').val();
+    if(ticktetid!=-1){
+        var amount=$('#ticketname option:selected').attr('data-amount');
+        var sale_amount=$('#ticketname option:selected').attr('sale_amount');
+        var send_amount=$('#ticketname option:selected').attr('send_amount');
+        // rule_id=$('#ticketname option:selected').attr('rule_id');
+        amount=parseInt(amount);
+        sale_amount=parseInt(sale_amount);
+        send_amount=parseInt(send_amount);
+        var countNum;
+        if(amount!=0){
+            countNum=amount-send_amount;
+            $('#count').val(countNum);
+        }else{
+            countNum=sale_amount-send_amount;
+            $('#count').val(countNum);
+        }
+    }
+}
+function clearInfo(){
+    operation = "add";
+    $('#count').val('');
+    $("#id").val('')
+    $('#order_code').val('');
+    $('#startTime').val('');
+    $('#endTime').val('');
+    leveljson=[];
+    $('#max_step').val('');
+}
+//检查该优惠券之前是否被设置过
+function getOldTicketInfo(tid){
     var data={};
     if(!tid || tid==-1){
         return;
@@ -133,6 +154,8 @@ function getoldinfo(tid){
             $('#endTime').val(result.rows[0].end_time);
             leveljson=result.rows[0].level_json;
             $('#max_step').val(leveljson[0].max_step);
+        }else if(result.code==602){
+            //operation = "add";
         }
     })
 }
