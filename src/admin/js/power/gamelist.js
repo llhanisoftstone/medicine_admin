@@ -144,6 +144,7 @@ function getticketinfo(storeid){
     var data={
         status:2, //审核通过的
         type:2,
+        ticket_status:'<>,99'
     };
     if(storeid){
         data.store_id=storeid;

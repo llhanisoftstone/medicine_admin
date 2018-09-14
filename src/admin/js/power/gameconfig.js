@@ -16,6 +16,13 @@ $(function(){
     compid = getCookie('storeid');
     id=getQueryString("pid");
     edit=getQueryByName("edit");
+    if(edit==1){
+        $('#storename').attr("disabled","disabled");
+        $('#ticketname').attr("disabled","disabled");
+    }else{
+        $('#storename').removeAttr("disabled");
+        $('#ticketname').removeAttr("disabled");
+    }
     if(!id || id==''||id==null){
         operation = "add";
     }else{
