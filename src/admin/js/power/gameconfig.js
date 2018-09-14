@@ -354,6 +354,9 @@ function saveGameData(){
         order_code:order_code,
         level_json:leveljson
     };
+    if(startTime==''&& endTime==''){
+        urldata.deltime=1;
+    }
     if (operation == "add") {
         urldata.auto_id="1";
         $.showActionLoading();
