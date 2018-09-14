@@ -140,11 +140,11 @@ function rejectClick(id){
     }
 }
 function clickdetail(id){
-    zhget("/rs/ticket_send_detail", {rule_id:id}).then(function (result) {
+    zhget("/rs/v_ticket_send_rule_list", {id:id}).then(function (result) {
         if (result.code == 200) {
             var html="";
           for(var i=0;i<result.rows.length;i++){
-             html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].amount+"</td></tr>"
+             html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].total_amount+"</td></tr>"
           }
           $("#infotable").html(html);
             $('#myModal').modal('show');
