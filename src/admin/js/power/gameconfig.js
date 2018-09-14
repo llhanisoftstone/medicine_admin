@@ -143,7 +143,7 @@ function clearInfo(){
         $('#startTime').val('');
         $('#endTime').val('');
         $('#max_step').val('');
-
+        leveljson=[];
 }
 //检查该优惠券之前是否被设置过
 function getOldTicketInfo(tid){
@@ -332,9 +332,9 @@ function saveGameData(){
     var levelobj={};//单个关卡json数据
     var reward=[];
     var category='';
-    if(type==1){
+    if(type==2){
         category='ticket';//数据库要求优惠券存ticket
-    }else if(type==2){
+    }else if(type==3){
         category='goods';//实物存goods
     }
     reward.push(
