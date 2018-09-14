@@ -37,7 +37,11 @@ $(function(){
     zhget("/rs/organiz", odata).then( function(result) {
         var html="<option value=''>全部</option>";
         for(var i=0;i<result.rows.length;i++){
-            html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+            if(result.rows[i].id==organizId){
+                html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
+            }else{
+                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+            }
         }
         jQuery("#company").html(html);
 
