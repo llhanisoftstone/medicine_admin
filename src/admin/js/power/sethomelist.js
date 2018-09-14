@@ -98,9 +98,14 @@ function clickdetailset(id){
         if (result.code == 200) {
             var html="";
             var list=result.rows[0].ps_json;
-            html+="<tr><td>"+list.ticket_id+"</td><td>"+list.strat_time+"</td><td>"+list.end_time+"</td><td>"+list.order_code+"</td><td>"+list.level_json[0].max_step+"</td></tr>"
-            $("#infotable").html(html);
-            $('#myModalset').modal('show');
+            if(list.ticket_id){
+                html+="<tr><td>"+list.ticket_id+"</td><td>"+list.strat_time+"</td><td>"+list.end_time+"</td><td>"+list.order_code+"</td><td>"+list.level_json[0].max_step+"</td></tr>"
+                $("#infotable").html(html);
+                $('#myModalset').modal('show');
+            }else{
+                showError("暂无详情")
+            }
+
 
         }
     })
