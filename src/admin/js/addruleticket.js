@@ -131,7 +131,7 @@ function  saveData(){
         return;
     }
     var total_amount=$("#total_num").val().trim();
-    if(total_amount){
+    if(total_amount&&total_amount>0){
         urldata.total_amount=total_amount;
     }else{
         showError("请输入默认数量");
