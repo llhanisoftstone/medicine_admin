@@ -134,7 +134,7 @@ function  saveData(){
     if(total_amount){
         urldata.total_amount=total_amount;
     }else{
-        showError("请输入数量");
+        showError("请输入默认数量");
         return;
     }
     var doms=jQuery("#menu-placeholder tr");
