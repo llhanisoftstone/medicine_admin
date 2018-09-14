@@ -139,6 +139,9 @@ function  saveData(_status){
     if(!pic_abbr || pic_abbr==""){
         return showError("请上传列表图");
     }
+    if(!remark){
+        return showError("请输入简介");
+    }
     if(!copmpany){
         return showError("请选择部门");
     }
