@@ -146,7 +146,7 @@ function  saveData(){
             return;
         }
         goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
-        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
+        if(goodsdata[i].amount<=0||goodsdata[i].amount==""||goodsdata[i].amount==null){
             goodsdata[i].amount=total_amount;
         }
     }
