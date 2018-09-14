@@ -1,5 +1,4 @@
 
-var base_url_goodsCategory='/rs/game_config';
 var base_url_getconfig='/rs/log_game_config';
 var currentPageNo = 1;
 var pageRows = 10;
@@ -7,7 +6,6 @@ var issearchModel=false;
 var issearchValue=false;
 var integrals;
 $(function() {
-    getstorename(); //获取店铺列表
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
@@ -20,13 +18,6 @@ $(function() {
         $("#userAddForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
-
-    $('#ticketname').on('click',function(){
-        var store=$('#storename').val()
-        if(!store || store=='-1'){
-            return showError('请先选择店铺');
-        }
-    })
 });
 
 function queryList(){
@@ -40,39 +31,12 @@ function queryList(){
     if(issearchModel){
         data.search=1;
         var name=$.trim($("#name").val());
-        var storename=$("#storename").val();
-        var ticket_id=$('#ticketname').val();
+        var nickname=$("#nickname").val();
         if(name){
             data.name=name;
         }
-        if(storename && storename !='-1'){
-            data.store_id=storename;
-        }
-        if(ticket_id && ticket_id !='-1'){
-            data.ticket_id=ticket_id;
-        }
-        var status=$('#status').val();
-        if(status && status !='-1'){
-            data.status=status;
-        }
-        var startTime=$("#startTime").val();//有效期开始
-        var endTime=$("#endTime").val();//有效期结束时间
-        if(startTime!=''||endTime!==''){
-            if(startTime!='' && endTime!==''){
-                if(startTime<endTime){
-                    data.strat_time='>=,'+startTime;
-                    data.end_time='<=,'+endTime
-                }else{
-                    return showError("结束时间不能大于开始时间");
-                }
-            }else{
-                if(startTime){
-                    data.strat_time='>=,'+startTime;
-                }
-                if(endTime){
-                    data.end_time='<=,'+endTime;
-                }
-            }
+        if(nickname){
+            data.nickname=nickname;
         }
         var startTimesearch=$("#startTimesearch").val();//创建时间开始
         var endTimesearch=$("#endTimesearch").val();//创建时间结束
@@ -108,56 +72,6 @@ function queryList(){
     })
 }
 
-function getstorename(){
-    $("#storename").html("");
-    var data={
-        status:'1'
-    };
-    zhget('/rs/store',data).then(function(result){
-        var html="";
-        if(result.code==200){
-            html+="<option value='-1'>请选择</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-            $("#storename").append(html)
-                .selectpicker({
-                    size: 10,
-                    width:'100%'
-                });
-        }
-    })
-}
-
-function getTickets(){
-    var id=$('#storename').val();
-    if(id =='-1'){
-        $("#ticketname").html("<option value='-1'>请选择</option>");
-    }else{
-        getticketinfo(id);
-    }
-}
-function getticketinfo(storeid){
-    $("#ticketname").html("");
-    var data={
-        status:'<>,99'
-    };
-    if(storeid){
-        data.store_id=storeid;
-    }
-    zhget('/rs/ticket',data).then(function(result){
-        var html="";
-        if(result.code==200){
-            html+="<option value='-1'>请选择</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-        }else if(result.code==602){
-            html+="<option value='-1'>请选择</option>";
-        }
-        $("#ticketname").append(html);
-    })
-}
 
 function showSearchPage() {
     $(".addModels", $(".reasonRefund")).css("display", "none");
@@ -166,40 +80,7 @@ function showSearchPage() {
         opacity : 'toggle'
     }, "slow");
 }
-function addGoodsModels(dom){
-    location.href="admin.html#pages/gameconfig.html";
-}
 
-function onUpdateClick(id,read) {
-    if(read=='read'){
-        location.href="admin.html#pages/gameconfig.html?pid="+id+'&read=read';
-    }else{
-        location.href="admin.html#pages/gameconfig.html?pid="+id;
-    }
-}
-
-function enableClick(id) {
-    if (confirm("确定要启用该优惠券吗？")) {
-        zhput(base_url_goodsCategory + "/" + id,{status:1}).then(function (result) {
-            checkData(result, 'put');
-            if($("#goodsModel-placeholder").find("tr").length == 1){
-                currentPageNo = currentPageNo>1?currentPageNo-1:1
-            }
-            queryList()
-        })
-    }
-}
-function disableClick(id) {
-    if (confirm("确定要禁用该优惠券吗？")) {
-        zhput(base_url_goodsCategory + "/" + id,{status:2}).then(function (result) {
-            checkData(result, 'put');
-            if($("#goodsModel-placeholder").find("tr").length == 1){
-                currentPageNo = currentPageNo>1?currentPageNo-1:1
-            }
-            queryList()
-        })
-    }
-}
 //重置
 function resetinput(){
     $("#userAddForm", $(".reasonRefund"))[0].reset();
@@ -212,7 +93,18 @@ function searchbtn(){
     queryList();
 }
 
+function clickdetailset(id){
+    zhget("/rs/log_game_config/"+id).then(function (result) {
+        if (result.code == 200) {
+            var html="";
+            var list=result.rows[0].ps_json;
+            html+="<tr><td>"+list.ticket_id+"</td><td>"+list.strat_time+"</td><td>"+list.end_time+"</td><td>"+list.order_code+"</td><td>"+list.level_json[0].max_step+"</td></tr>"
+            $("#infotable").html(html);
+            $('#myModalset').modal('show');
 
+        }
+    })
+}
 Handlebars.registerHelper("getindex", function (v1, options) {
     return v1+1;
 });

@@ -53,45 +53,18 @@
                                     <form role="form" id="reasonSearchForm">
                                         <div class="row">
                                             <div class="col-md-4 form-group">
-                                                <label for="name">关卡名称：</label>
+                                                <label for="name">优惠券名称：</label>
                                                 <div class="pinput">
                                                     <input id="name" class="form-control" placeholder="请输入"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
-                                                <label for="storename">所属店铺：</label>
+                                                <label for="name">操作人：</label>
                                                 <div class="pinput">
-                                                    <select id="storename" class="form-control" data-live-search ="true" onchange="getTickets()">
+                                                    <input id="nickname" class="form-control" placeholder="请输入"/>
+                                                </div>
+                                            </div>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 form-group">
-                                                <label for="ticketname">优惠券/产品：</label>
-                                                <div class="pinput">
-                                                    <select id="ticketname" class="form-control">
-                                                        <option value="-1">请选择</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 form-group">
-                                                <label>有效期：</label>
-                                                <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTime" name="startTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control pdate-time">
-                                                    <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请选择"  id="endTime" name="endTime" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control pdate-time">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 form-group">
-                                                <label>状态：</label>
-                                                <div class="pinput">
-                                                    <select id="status" class="form-control">
-                                                        <option value="-1">全部</option>
-                                                        <option value="1">启用</option>
-                                                        <option value="2">禁用</option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             <div class="col-md-4 form-group">
                                                 <label>创建时间：</label>
                                                 <div class="pinput"><input style="float: left;width:45%;" placeholder="请选择"  id="startTimesearch" name="startTimesearch" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTimesearch\')}'})" class="form-control pdate-time">
@@ -116,14 +89,11 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%;">序号</th>
-                                <th style="width: 10%;">关卡名称</th>
-                                <th style="width: 10%;">所属店铺</th>
-                                <th style="width: 10%;">优惠券/产品</th>
-                                <th style="width: 20%;">有效期</th>
-                                <th style="width: 10%;">顺序</th>
-                                <th style="width: 10%;">创建时间</th>
-                                <th style="width: 10%;">优惠券/产品状态</th>
-                                <th style="width: 10%;">状态</th>
+                                <th style="width: 20%;">优惠券名称</th>
+                                <th style="width: 20%;">操作人</th>
+                                <th style="width: 10%;">操作方式</th>
+                                <th style="width: 20%;">详情</th>
+                                <th style="width: 20%;">操作时间</th>
                             </tr>
                             </thead>
                             <tbody id="goodsModel-placeholder">
@@ -142,7 +112,39 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="myModalset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    详情
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div style="min-height:85px;">
+                    <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                        <tr>
+                            <th style="width:20%">优惠券id</th>
+                            <th style="width:20%">开始时间</th>
+                            <th style="width:20%">结束时间</th>
+                            <th style="width:20%">顺序</th>
+                            <th style="width:20%">答题数</th>
+                        </tr>
+                        <tbody id="infotable">
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 
 <script id="goodsCategory1-template" type="text/x-handlebars-template">
@@ -150,28 +152,13 @@
     <tr>
         <td style="text-align:center;">{{rowNum}}</td>
         <td style="text-align:center;">{{name}}</td>
-        <td style="text-align:center;">{{store_name}}</td>
-        <td style="text-align:center;">{{ticket_name}}</td>
-        <td style="text-align:center;">{{strat_time}} ~ {{end_time}}</td>
-        <td style="text-align: center;">{{order_code}}</td>
+        <td style="text-align:center;">{{nickname}}</td>
+        <td style="text-align: center;">{{request_method}}</td>
+        <td style="text-align:center;"><button type="button" class="btn btn-info mui-button picBtn" onclick="clickdetailset('{{id}}')">查看</button></td>
         <td style="text-align: center;">{{create_time}}</td>
-        <td style="text-align: center;">
-            {{#equal ticket_status 1}}有效{{/equal}}
-            {{#equal ticket_status 99}}已删除{{/equal}}
-        </td>
-        <td style="text-align: center;">
-            {{#equal status 1}}启用{{/equal}}
-            {{#equal status 2}}禁用{{/equal}}
-        </td>
     </tr>
     {{/datas}}
 </script>
-<!--<script id="store-template" type="text/x-handlebars-template">-->
-<!--<option value="">请选择</option>-->
-<!--{{#datas}}-->
-<!--<option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>{{name}}</option>-->
-<!--{{/datas}}-->
-<!--</script>-->
 <script type="text/javascript" src="js/power/sethomelist.js"></script>
 </body>
 
