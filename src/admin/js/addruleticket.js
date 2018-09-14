@@ -146,6 +146,9 @@ function  saveData(){
             return;
         }
         goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
+        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
+            goodsdata[i].amount=total_amount;
+        }
     }
     $("#savebtn").attr("disabled","disabled");
     if (operation == "add") {
