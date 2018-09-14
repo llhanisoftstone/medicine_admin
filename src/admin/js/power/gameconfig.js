@@ -77,6 +77,7 @@ function getticketinfo(storeid,tid){
     var data={
         status:2, //审核通过的
         type:2,
+
     };
     if(storeid){
         data.store_id=storeid;
@@ -354,7 +355,7 @@ function saveGameData(){
         order_code:order_code,
         level_json:leveljson
     };
-    if(startTime==''&& endTime==''){
+    if(startTime==''&& endTime=='' && operation == "modify"){
         urldata.deltime=1;
     }
     if (operation == "add") {
