@@ -173,12 +173,8 @@ function addGoodsModels(dom){
     location.href="admin.html#pages/gameconfig.html";
 }
 
-function onUpdateClick(id,read) {
-    if(read=='read'){
-        location.href="admin.html#pages/gameconfig.html?pid="+id+'&read=read';
-    }else{
-        location.href="admin.html#pages/gameconfig.html?pid="+id;
-    }
+function onUpdateClick(id,edit) {
+    location.href="admin.html#pages/gameconfig.html?pid="+id+'&edit=1';
 }
 
 function enableClick(id) {

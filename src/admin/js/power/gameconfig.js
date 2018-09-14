@@ -10,10 +10,12 @@ var compid;
 var id;
 var leveljson=[];//关卡json数据
 var rule_id; //配置规则表id
+var edit='';
 $(function(){
     getstorename();
     compid = getCookie('storeid');
     id=getQueryString("pid");
+    edit=getQueryByName("edit");
     if(!id || id==''||id==null){
         operation = "add";
     }else{
@@ -112,7 +114,6 @@ function setAmount(){
         var amount=$('#ticketname option:selected').attr('data-amount');
         var sale_amount=$('#ticketname option:selected').attr('sale_amount');
         var send_amount=$('#ticketname option:selected').attr('send_amount');
-        // rule_id=$('#ticketname option:selected').attr('rule_id');
         amount=parseInt(amount);
         sale_amount=parseInt(sale_amount);
         send_amount=parseInt(send_amount);
@@ -127,14 +128,14 @@ function setAmount(){
     }
 }
 function clearInfo(){
-    operation = "add";
-    $('#count').val('');
-    $("#id").val('')
-    $('#order_code').val('');
-    $('#startTime').val('');
-    $('#endTime').val('');
-    leveljson=[];
-    $('#max_step').val('');
+    $('#tips').html('').hide();
+        operation = "add";
+        $('#count').val('');
+        $('#order_code').val('');
+        $('#startTime').val('');
+        $('#endTime').val('');
+        $('#max_step').val('');
+
 }
 //检查该优惠券之前是否被设置过
 function getOldTicketInfo(tid){
@@ -146,17 +147,23 @@ function getOldTicketInfo(tid){
     }
     zhget(base_url_getconfig,data).then(function(result){
         if(result.code==200){
+            $('#tips').html('该优惠券/产品已设置过，将直接修改该关卡配置').show();
             operation = "modify";
-            id=result.rows[0].id;
-            $("#id").val(id)
+            // id=result.rows[0].id;
+            // $("#id").val(id)
             $('#order_code').val(result.rows[0].order_code);
             $('#startTime').val(result.rows[0].strat_time);
             $('#endTime').val(result.rows[0].end_time);
             leveljson=result.rows[0].level_json;
             $('#max_step').val(leveljson[0].max_step);
         }else if(result.code==602){
-            //operation = "add";
+            if(edit==1){
+                operation = "modify";
+            }else{
+                operation = "add";
+            }
         }
+        console.log(operation)
     })
 }
 //是否显示优惠券
@@ -347,7 +354,9 @@ function saveGameData(){
         order_code:order_code,
         level_json:leveljson
     };
-    saveGameData=null;
+    if(startTime==''&& endTime==''){
+        urldata.deltime=1;
+    }
     if (operation == "add") {
         urldata.auto_id="1";
         $.showActionLoading();
