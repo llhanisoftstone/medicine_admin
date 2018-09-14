@@ -157,7 +157,12 @@
         <td style="text-align:center;">{{ticket_name}}</td>
         <td style="text-align:center;">{{store_name}}</td>
         <!--<td style="text-align:center;">{{priceformat price}}元</td>-->
-        <td style="text-align:center;">{{strat_time}} ~ {{end_time}}</td>
+        <td style="text-align:center;">
+            {{#if strat_time}}
+                {{strat_time}} ~ {{end_time}}
+            {{/if}}
+
+        </td>
         <td style="text-align: center;">{{order_code}}</td>
         <td style="text-align: center;">{{create_time}}</td>
         <td style="text-align: center;">
