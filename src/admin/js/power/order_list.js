@@ -59,6 +59,29 @@ function chargeoff(id,name,o_id){
         status:1,
     }
     if(confirm("您确定要核销"+name+"吗？")){
+        var use_time="";
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth();
+        var day = now.getDay();
+        var hour = now.getHours();
+        var minu = now.getMinutes();
+        var sec = now.getSeconds();
+        month = month + 1;
+        if (month < 10){
+            month = "0" + month;
+        }
+        if (hour < 10){
+            hour = "0" + hour;
+        }
+        if (minu < 10){
+            minu = "0" + minu;
+        }
+        if (sec < 10){
+            sec = "0" + sec;
+        }
+        use_time=year+"-"+month+"-"+day+" "+hour+":"+minu+":"+sec
+        data.use_time=use_time;
         zhput("/rs/member_ticket/"+ id,data).then(function(result){
             if(result.code == 200){
                 showSuccess('核销成功');
