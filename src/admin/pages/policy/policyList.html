@@ -148,7 +148,7 @@
         <td>
             {{#equal status 0}}
             &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
-            &nbsp;<span class="fa fa-send-o" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
+            &nbsp;<span class="fa fa-check-square-o" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
             &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
             {{/equal}}
             {{#equal status 1}}
