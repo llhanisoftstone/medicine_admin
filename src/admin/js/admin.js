@@ -317,12 +317,19 @@ function buildPaginator(paginator, total,callBack,records) {
     $($('#' + paginator).siblings()).remove();
     var endPage = currPage*10;
     var startPage = endPage-9;
-    var html = "<span id='pagSpan' style='display: block;float:left; margin: 20px 0; line-height: 30px; padding-right:15px;'>显示  "+startPage +"- "+endPage+" 条 共计 "+records+" 条</span><input onkeyup=\"this.value=this.value.replace(/\\D/g,'')\" placeholder='' max='"+total+"' type='number'id='goToPagePaginator' style='width: 60px;float:left; margin: 20px 0;' name='name' class='form-control ' maxlength='50'><div onclick='goToPagePaginator(\""+paginator+"\")' style='float: left;cursor:pointer;margin: 20px 10px;padding: 6px 12px;line-height: 1.42857143;color: #337ab7;text-decoration: none;background-color: #fff;border: 1px solid #ddd;'>GO</div>";
+    var html = "<span id='pagSpan' style='display: block;float:left; margin: 20px 0; line-height: 30px; padding-right:15px;'>显示  "+startPage +"- "+endPage+" 条 共计 "+records+" 条</span><input onkeyup=\"this.value=this.value.replace(/\\D/g,'')\" placeholder='' max='"+total+"' type='number'id='goToPagePaginator' style='width: 60px;float:left; margin: 20px 0;' name='name' class='form-control ' maxlength='50'><div onclick='goToPagePaginator(\""+paginator+"\","+total+")' style='float: left;cursor:pointer;margin: 20px 10px;padding: 6px 12px;line-height: 1.42857143;color: #337ab7;text-decoration: none;background-color: #fff;border: 1px solid #ddd;'>GO</div>";
     $(html).insertBefore($('#' + paginator))
 }
-function goToPagePaginator(paginator){
+function goToPagePaginator(paginator,endPage){
     "use strict";
     var page=$("#goToPagePaginator").val();
+    if(page==''){
+        showError('请输入正确的页码');
+        return;
+    }else if(page>endPage){
+        showError('页数不存在');
+        return;
+    }
     $("#" + paginator).bootstrapPaginator("show",page);
     currentPageNo = page;
     queryList();
