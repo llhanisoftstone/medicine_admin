@@ -135,7 +135,7 @@ function onUpdateClick(id) {
 }
 function delClick(id) {
     if (confirm("确定要删除该题目吗？")) {
-        zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id,{status:99}).then(function (result) {
             checkData(result, 'delete');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
@@ -171,8 +171,12 @@ function searchbtn(){
     currentPageNo=1;
     queryList();
 }
-Handlebars.registerHelper('ifequal', function(v1,v2, options) {
-    if(v1 ==v2) {
+//查看详情
+function viewDetail(id) {
+window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+}
+Handlebars.registerHelper('ifequal', function(v1,v2,v3,v4, options) {
+    if(v1 == v2||v1 == v3||v1 == v4) {
         return options.fn(this);
     }else {
         return options.inverse(this);

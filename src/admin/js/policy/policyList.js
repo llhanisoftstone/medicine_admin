@@ -142,6 +142,23 @@ function onUpdateClick(id,copy) {
         location.href="admin.html#pages/policy/addpolicy.html?id="+id;
     }
 }
+//提交审核
+function submitcheck(id){
+    if(confirm("确定要直接提交审核该题目吗？")) {
+        zhput(base_url_course + "/" + id, {status: 1}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("提交成功");
+            } else {
+                showError("提交失败")
+            }
+        })
+    }
+}
+//查看详情
+function viewDetail(id) {
+    location.href="admin.html#pages/policy/addpolicy.html?id="+id+'&copy=copy&read=read';
+}
 function onDeleteClick(id) {
     if(confirm("确认要删除？")) {
         zhdelete(base_url_course + "/" + id).then(function (result) {
@@ -161,6 +178,33 @@ function onDeleteClick(id) {
                 showError('删除失败！');
             }
         });
+    }
+}
+//状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
+//下架
+function questiondown(id){
+    if(confirm("确定要下架该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 4}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("下架成功");
+            } else {
+                showError("下架失败")
+            }
+        })
+    }
+}
+//上架   下架之后再上架就是待审核
+function questionup(id){
+    if(confirm("确定要上架该政策百科吗？")) {
+        zhput(base_url_course + "/" + id, {status: 1}).then(function (result) {
+            if (result.code == 200) {
+                queryList();
+                showSuccess("上架成功");
+            } else {
+                showError("上架失败")
+            }
+        })
     }
 }
 function onSearchClick() {

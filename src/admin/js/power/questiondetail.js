@@ -105,7 +105,8 @@ function changeText(that){
 }
 
 function backquestion(){
-    window.location.href="/admin/admin.html#pages/questioncheck.html";
+    // window.location.href="/admin/admin.html#pages/questioncheck.html";
+    history.go(-1)
 }
 /*
 function savedata(){
