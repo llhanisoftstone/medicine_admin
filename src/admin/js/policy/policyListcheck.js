@@ -206,6 +206,59 @@ function onDeleteClick(id) {
     }
 }
 */
+
+/*
+function rejectClick(id){
+    $('#user_buttonids').show();
+    $('#viewthereason').hide();
+    $("#reject_Reasons").attr('readonly',false)
+        .val("");
+    $('#rejectModal').modal('show');
+    $("#rejectId").val(id);
+}
+function onSaveRejectClick(){
+    var id=$("#rejectId").val();
+    var reject_reason=$("#reject_Reasons").val().trim();
+    var data={
+        status:"2"
+    };
+    if(reject_reason==null||reject_reason==""){
+        $("#reject_Reasons").focus();
+        return showError("请输入拒绝原因")
+    }else{
+        data.remark=reject_reason;
+    }
+    $('#rejectModal').modal('hide');
+    zhput(base_url_course + "/" + id, {status: 3}).then(function (result) {
+        if (result.code == 200) {
+            queryList();
+            showSuccess("拒绝成功");
+        } else {
+            showError("拒绝失败")
+        }
+    })
+}
+
+//查看拒绝原因
+function viewReason(id){
+    $('#user_buttonids').hide();
+    $('#viewthereason').show();
+    var data={
+        id:id
+    }
+    zhget(base_url_course,data).then(function(result){
+        if(result.code==200){
+            var remarks=result.rows[0].remark;
+            $('#reject_Reasons')
+                .attr('readonly',true)
+                .val(remarks);
+            $('#rejectModal').modal('show');
+        }else{
+            processError(result)
+        }
+    })
+}
+*/
 function onSearchClick() {
     $(".tryoutSearch", $(".reasonRefund")).animate({
         height : 'toggle',
