@@ -130,6 +130,10 @@ function queryList() {
         }
         var ordertimeend1 = ordertimeend +" 23-59-59";
         if(ordertimestart!=""&&ordertimeend!=""){
+            if(Date.parse(ordertimestart)-Date.parse(ordertimeend)>0){
+                showError('开始时间不能大于结束时间');
+                return;
+            }
             data.get_time='>=,'+ordertimestart+',<=,'+ordertimeend1;
         }else if(ordertimestart!=""&&ordertimeend==""){
             data.get_time='>=,'+ordertimestart;

@@ -134,7 +134,7 @@ function  saveData(){
     if(total_amount){
         urldata.total_amount=total_amount;
     }else{
-        showError("请输入数量");
+        showError("请输入默认数量");
         return;
     }
     var doms=jQuery("#menu-placeholder tr");
@@ -146,6 +146,9 @@ function  saveData(){
             return;
         }
         goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
+        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
+            goodsdata[i].amount=total_amount;
+        }
     }
     $("#savebtn").attr("disabled","disabled");
     if (operation == "add") {
