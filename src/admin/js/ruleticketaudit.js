@@ -19,20 +19,10 @@ $(function() {
         onSearchClick();
         searchData();
     }else{
-        getmember();
+        queryList();
     }
     updateMenuLocationInfo();
 });
-function getmember(){
-    zhget('/rs/member',{store_id:compid,rank:20}).then(function(result){
-        if(result.code==200){
-            u_id=result.rows[0].id;
-            queryList();
-        }else{
-            return showError("该店铺已被禁用，请联系管理员")
-        }
-    })
-}
 var statusname=["草稿","待审核","拒绝","上架","下架",'pc产品无状态']
 Handlebars.registerHelper('getstatusname', function(value, options) {
     return statusname[value]
@@ -143,10 +133,10 @@ function clickdetail(id){
     zhget("/rs/v_ticket_send_rule_list", {id:id}).then(function (result) {
         if (result.code == 200) {
             var html="";
-          for(var i=0;i<result.rows.length;i++){
-             html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].total_amount+"</td></tr>"
-          }
-          $("#infotable").html(html);
+            for(var i=0;i<result.rows.length;i++){
+                html+="<tr><td>"+result.rows[i].name+"</td><td>"+result.rows[i].total_amount+"</td></tr>"
+            }
+            $("#infotable").html(html);
             $('#myModal').modal('show');
 
         }

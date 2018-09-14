@@ -41,12 +41,12 @@ function queryList(){
     }
     if(issearchModel){
         data.search=1;
-        var name=$.trim($("#name").val());
+        // var name=$.trim($("#name").val());
         var storename=$("#storename").val();
         var ticket_id=$('#ticketname').val();
-        if(name){
-            data.name=name;
-        }
+        // if(name){
+        //     data.name=name;
+        // }
         if(storename && storename !='-1'){
             data.store_id=storename;
         }
@@ -142,17 +142,18 @@ function getTickets(){
 function getticketinfo(storeid){
     $("#ticketname").html("");
     var data={
-        status:'<>,99'
+        status:2, //审核通过的
+        type:2,
     };
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/ticket',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+                html+="<option value='"+result.rows[i].ticket_id+"'>"+result.rows[i].name+"</option>"
             }
         }else if(result.code==602){
             html+="<option value='-1'>请选择</option>";
@@ -172,12 +173,8 @@ function addGoodsModels(dom){
     location.href="admin.html#pages/gameconfig.html";
 }
 
-function onUpdateClick(id,read) {
-    if(read=='read'){
-        location.href="admin.html#pages/gameconfig.html?pid="+id+'&read=read';
-    }else{
-        location.href="admin.html#pages/gameconfig.html?pid="+id;
-    }
+function onUpdateClick(id,edit) {
+    location.href="admin.html#pages/gameconfig.html?pid="+id+'&edit=1';
 }
 
 function enableClick(id) {
