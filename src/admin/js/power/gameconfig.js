@@ -157,8 +157,8 @@ function getOldTicketInfo(tid){
         if(result.code==200){
             $('#tips').html('该优惠券/产品已设置过，将直接修改该关卡配置').show();
             operation = "modify";
-            // id=result.rows[0].id;
-            // $("#id").val(id)
+            id=result.rows[0].id;
+            $("#id").val(id)
             $('#order_code').val(result.rows[0].order_code);
             $('#startTime').val(result.rows[0].strat_time);
             $('#endTime').val(result.rows[0].end_time);
