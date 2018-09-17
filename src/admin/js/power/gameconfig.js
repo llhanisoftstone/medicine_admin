@@ -85,6 +85,7 @@ function getticketinfo(storeid,tid){
         // status:2, //审核通过的
         // type:2,
         // ticket_status:'<>,99'
+        order: 'ticket_id desc'
     };
     if(storeid){
         data.store_id=storeid;
