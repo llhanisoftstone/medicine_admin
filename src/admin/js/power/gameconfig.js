@@ -16,6 +16,7 @@ $(function(){
     compid = getCookie('storeid');
     id=getQueryString("pid");
     edit=getQueryByName("edit");
+    console.log(edit)
     if(edit==1){
         $('#storename').attr("disabled","disabled");
         $('#ticketname').attr("disabled","disabled");

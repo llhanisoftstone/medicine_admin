@@ -6,14 +6,17 @@ var pageRows = 10;
 var issearchModel=false;
 var issearchValue=false;
 var integrals;
+locationHistory('reasonSearchForm');
 $(function() {
     getstorename(); //获取店铺列表
+    backInitHistory();
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
         $('#ticketname').html("<option value='-1'>请选择</option>");
         $("#storename").selectpicker('val','-1');
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
+        currentPageNo = 1;
         queryList();
     });
     $("#resetSaveBtn", $(".reasonRefund")).bind("click", function(){
@@ -39,7 +42,7 @@ function queryList(){
         id:'>,10',
         status:'<>,99'
     }
-    if(issearchModel){
+    if(isSearch){
         data.search=1;
         // var name=$.trim($("#name").val());
         var storename=$("#storename").val();
@@ -171,11 +174,11 @@ function showSearchPage() {
     }, "slow");
 }
 function addGoodsModels(dom){
-    location.href="admin.html#pages/gameconfig.html";
+    location.href="admin.html?_t="+Math.random()+"#pages/gameconfig.html";
 }
 
 function onUpdateClick(id,edit) {
-    location.href="admin.html#pages/gameconfig.html?pid="+id+'&edit=1';
+    location.href="admin.html?_t="+Math.random()+"#pages/gameconfig.html?pid="+id+'&edit=1';
 }
 
 function enableClick(id) {
@@ -208,7 +211,7 @@ function resetinput(){
 //搜索
 function searchbtn(){
     currentPageNo=1;
-    issearchModel=true;
+    isSearch=true;
     queryList();
 }
 
