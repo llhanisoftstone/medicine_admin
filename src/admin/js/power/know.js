@@ -21,7 +21,7 @@ $(function() {
     }else{
         jQuery(".lj").show();
         jQuery(".jy").hide();
-        zhget("/rs/wish_category", {order:"create_time desc"}).then( function(result) {
+        zhget("/rs/wish_category", {order:"create_time desc",status:1}).then( function(result) {
             if(result.code==200) {
                 var html="<option value=''>全部</option>";
                 for(var i=0;i<result.rows.length;i++){

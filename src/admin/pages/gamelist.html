@@ -178,14 +178,14 @@
         </td>
         <td style="text-align: center;">
             {{#equal status 1}}启用{{/equal}}
-            {{#equal status 2}}禁用{{/equal}}
+            {{#equal status 0}}禁用{{/equal}}
         </td>
         <td style="text-align: center;">
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
             {{#equal status 1}}
             &nbsp;<span class="fa fa-lock" title="禁用" onclick="disableClick('{{id}}')"></span>
             {{/equal}}
-            {{#equal status 2}}
+            {{#equal status 0}}
             &nbsp;<span class="fa fa-unlock" title="启用" onclick="enableClick('{{id}}')"></span>
             {{/equal}}
         </td>

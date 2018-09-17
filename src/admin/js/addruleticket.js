@@ -131,11 +131,14 @@ function  saveData(){
         return;
     }
     var total_amount=$("#total_num").val().trim();
-    if(total_amount&&total_amount>0){
-        urldata.total_amount=total_amount;
-    }else{
+    if(total_amount==""||total_amount==undefined){
         showError("请输入默认数量");
         return;
+    }else if(total_amount<=0){
+        showError("请输入大于0的默认数量");
+        return;
+    }else{
+        urldata.total_amount=total_amount;
     }
     var doms=jQuery("#menu-placeholder tr");
     for(var i=0;i<doms.length;i++){
