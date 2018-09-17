@@ -13,7 +13,7 @@ $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
-        onSearchClick();
+        // onSearchClick();
         searchData();
     }else{
         queryList();

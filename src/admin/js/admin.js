@@ -1,4 +1,4 @@
-var localURL = 'http://'+location.hostname + (location.port ? ":" + location.port : "");
+var localURL = 'https://'+location.hostname + (location.port ? ":" + location.port : "");
 include("/configs.js");
 
 function include(jssrc){
@@ -58,7 +58,7 @@ function hashchangehandler() {
     var thisUrl = window.location.hash;
     if(thisUrl.indexOf("?")<0&&tarpage != hash){
         dellocalStorageCookie("thispage");
-        dellocalStorageCookie("pageRecord");
+        // dellocalStorageCookie("pageRecord");
         dellocalStorageCookie("searchForm");
         $("#pageIndex").val("");
     }
@@ -509,7 +509,7 @@ function initSession() {
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var url = window.location.href;
-    var params = url.substr(url.indexOf("?"));
+    var params = url.substr(url.lastIndexOf("?"));
     var r = params.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 }
@@ -1427,3 +1427,62 @@ function closemessage(){
         bottom : '-180',
     }, "slow");
 }
+/**********************获取历史定位start****/
+/**
+ * 返回历史定位
+ * 注意1. 搜索表单中每一项需要有name属性，建议跟数据库字段设为一致
+ *    2. HTML页面添加 <input id="pageIndex" type="hidden">
+ *    3. 任何需要跳转的页面，需添加Math.random(),否则window.onbeforeunload监听不到,例如： location.href="admin.html?_t="+Math.random()+"#pages/goods/addGoods.html"
+ *    4. 页面点击查询按钮时调用 saveSearchFormData(formId)方法，formId为当前页搜索项form的id
+ *    5. 页面调用 locationHistory(formId)方法
+ *    6. 页面加载完成调用backInitHistory()方法
+ *    7. 是否为查询请使用isSearch=true或false;
+ * **/
+var isSearch=false; //是否查询
+var searchForm; //查询条件JSON
+//获取当前页面url
+var currPageName  = (window.location.hash).replace('#','');
+/**
+ * 监听页面跳转
+ * **/
+function locationHistory(formId){
+//当前页面跳转、刷新之前保存页码和表单数据，需要在页面跳转时添加Math.random(),否则监听不到
+    window.onbeforeunload=function(){
+        saveSearchFormData(formId);
+    };
+}
+function saveSearchFormData(formId){
+    searchForm = $("#"+formId).form2json();
+    setlocalStorageCookie(currPageName,JSON.stringify(searchForm));
+    var pageRecord = $("#paginator li.active a").text();
+    setlocalStorageCookie("pageRecord",pageRecord);
+}
+/**
+ * 页面返回后设置查询数据
+ * **/
+function backInitHistory(){
+    getpageRecord();
+    searchForm = getlocalStorageCookie(currPageName);
+    searchForm = JSON.parse(searchForm);
+    if(searchForm && searchForm != '{}'){
+        dellocalStorageCookie(currPageName);
+        isSearch=true;
+        for(var key in searchForm){
+            $("input[name='"+key+"']").val(searchForm[key]);
+            $("select[name='"+key+"']").val(searchForm[key]);
+        }
+    }
+}
+/**
+ * 获取跳转前当前页面页码
+ *
+ * **/
+function getpageRecord(){
+    pageRecord =parseInt(getlocalStorageCookie("pageRecord")) ;
+    if(pageRecord && pageRecord > 0){
+        dellocalStorageCookie("pageRecord");
+        $("#pageIndex").val(pageRecord);
+        currentPageNo = pageRecord;
+    }
+}
+/**********************获取历史定位end***/
