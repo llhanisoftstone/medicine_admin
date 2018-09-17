@@ -152,7 +152,7 @@ function getticketinfo(storeid){
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/v_ticket_send_detail',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail_group_by',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
