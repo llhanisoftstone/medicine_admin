@@ -99,14 +99,15 @@
         <td>{{id}}</td>
         <td>
             {{#equal type 1}}线上优惠券{{/equal}}
-            {{#equal type 2}}实物商品{{/equal}}
+            {{#equal type 2}}线下优惠券{{/equal}}
+            {{#equal type 3}}实体店产品{{/equal}}
         </td>
         <td>{{name}}</td>
         <td>{{getprice price}}</td>
         <td>{{create_time}}</td>
         <td>
-            <!--<span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>-->
-            <span class=" fa fa-trash-o" title="删除" onclick="delClickup('{{id}}')" title="删除"></span>
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
+            <!--<span class=" fa fa-trash-o" title="删除" onclick="delClickup('{{id}}')" title="删除"></span>-->
         </td>
     </tr>
     {{/datas}}

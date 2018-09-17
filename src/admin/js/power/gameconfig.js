@@ -9,10 +9,20 @@ var operation = "add";
 var compid;
 var id;
 var leveljson=[];//关卡json数据
+var rule_id; //配置规则表id
+var edit='';
 $(function(){
     getstorename();
     compid = getCookie('storeid');
     id=getQueryString("pid");
+    edit=getQueryByName("edit");
+    if(edit==1){
+        $('#storename').attr("disabled","disabled");
+        $('#ticketname').attr("disabled","disabled");
+    }else{
+        $('#storename').removeAttr("disabled");
+        $('#ticketname').removeAttr("disabled");
+    }
     if(!id || id==''||id==null){
         operation = "add";
     }else{
@@ -72,26 +82,97 @@ function getTickets(){
 function getticketinfo(storeid,tid){
     $("#ticketname").html("");
     var data={
-        status:'<>,99'
+        // status:2, //审核通过的
+        // type:2,
+        // ticket_status:'<>,99'
+        order: 'ticket_id desc'
     };
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/ticket',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail_group_by',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                if(tid==result.rows[i].id){
-                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
+                if(tid==result.rows[i].ticket_id){
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"'  data-type='"+result.rows[i].type+"' selected='selected'>"+result.rows[i].name+"</option>"
                 }else{
-                    html+="<option value='"+result.rows[i].id+"' data-name='"+result.rows[i].name+"' data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
+                    html+="<option value='"+result.rows[i].ticket_id+"' data-name='"+result.rows[i].name+"' data-amount='"+result.rows[i].amount+"' sale_amount='"+result.rows[i].sale_amount+"' send_amount='"+result.rows[i].send_amount+"' data-type='"+result.rows[i].type+"'>"+result.rows[i].name+"</option>"
                 }
             }
         }else if(result.code==602){
             html+="<option value='-1'>请选择</option>";
         }
         $("#ticketname").append(html);
+        setAmount();
+    })
+}
+//获取到优惠券信息后，设置库存数量，并检查该优惠券之前是否被设置过
+function afterGetTicket(){
+    clearInfo();
+    setAmount()
+    var ticktetid=$('#ticketname option:selected').val();
+    if(ticktetid!=-1){
+        getOldTicketInfo(ticktetid)
+    }
+}
+function setAmount(){
+    var ticktetid=$('#ticketname option:selected').val();
+    if(ticktetid!=-1){
+        var amount=$('#ticketname option:selected').attr('data-amount');
+        var sale_amount=$('#ticketname option:selected').attr('sale_amount');
+        var send_amount=$('#ticketname option:selected').attr('send_amount');
+        amount=parseInt(amount);
+        sale_amount=parseInt(sale_amount);
+        send_amount=parseInt(send_amount);
+        var countNum;
+        if(amount!=0){
+            countNum=amount-send_amount;
+            $('#count').val(countNum);
+        }else{
+            countNum=sale_amount-send_amount;
+            $('#count').val(countNum);
+        }
+    }
+}
+function clearInfo(){
+    $('#tips').html('').hide();
+        operation = "add";
+        $('#count').val('');
+        $('#order_code').val('');
+        $('#startTime').val('');
+        $('#endTime').val('');
+        $('#max_step').val('');
+        leveljson=[];
+}
+//检查该优惠券之前是否被设置过
+function getOldTicketInfo(tid){
+    var data={};
+    if(!tid || tid==-1){
+        return;
+    }else{
+        data.ticket_id=tid;
+    }
+    zhget(base_url_getconfig,data).then(function(result){
+        if(result.code==200){
+            $('#tips').html('该优惠券/产品已设置过，将直接修改该关卡配置').show();
+            operation = "modify";
+            id=result.rows[0].id;
+            $("#id").val(id)
+            $('#order_code').val(result.rows[0].order_code);
+            $('#startTime').val(result.rows[0].strat_time);
+            $('#endTime').val(result.rows[0].end_time);
+            leveljson=result.rows[0].level_json;
+            $('#max_step').val(leveljson[0].max_step);
+        }else if(result.code==602){
+            if(edit==1){
+                operation = "modify";
+            }else{
+                operation = "add";
+            }
+        }
+        console.log(operation)
     })
 }
 //是否显示优惠券
@@ -210,11 +291,11 @@ function getGoodsById(id){
     });
 }
 function saveGameData(){
-    var name=$.trim($("#name").val());
-    if(!name){
-        showError("请输入关卡名称");
-        return;
-    }
+    // var name=$.trim($("#name").val());
+    // if(!name){
+    //     showError("请输入关卡名称");
+    //     return;
+    // }
     var storename=$('#storename').val();
     var ticket_id=$('#ticketname').val();
     var type=$('#ticketname option:selected').attr('data-type');
@@ -238,21 +319,23 @@ function saveGameData(){
         if(startTime>endTime){
             return showError("结束时间不能早于开始时间")
         }
-    }else{
-        return showError('请选择有效期');
+    }else if(startTime!='' && endTime==''){
+        return showError('请选择结束时间');
+    }else if(endTime!='' && startTime==''){
+        return showError('请选择开始时间');
     }
-    var price_leaguer=$.trim($("#sale_price").val());
-    if(price_leaguer == "" || price_leaguer<0){
-        showError("请输入价格");
-        return;
-    }
+    // var price_leaguer=$.trim($("#sale_price").val());
+    // if(price_leaguer == "" || price_leaguer<0){
+    //     showError("请输入价格");
+    //     return;
+    // }
 
     var levelobj={};//单个关卡json数据
     var reward=[];
     var category='';
-    if(type==1){
+    if(type==2){
         category='ticket';//数据库要求优惠券存ticket
-    }else if(type==2){
+    }else if(type==3){
         category='goods';//实物存goods
     }
     reward.push(
@@ -274,15 +357,15 @@ function saveGameData(){
         leveljson.push(levelobj);
     }
     var urldata={
-        name:name,
         ticket_id:ticket_id,
         strat_time:startTime,
         end_time:endTime,
         order_code:order_code,
-        price:price_leaguer,
         level_json:leveljson
     };
-    saveGameData=null;
+    if(startTime==''&& endTime=='' && operation == "modify"){
+        urldata.deltime=1;
+    }
     if (operation == "add") {
         urldata.auto_id="1";
         $.showActionLoading();

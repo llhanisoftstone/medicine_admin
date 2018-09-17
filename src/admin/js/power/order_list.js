@@ -59,6 +59,9 @@ function chargeoff(id,name,o_id){
         status:1,
     }
     if(confirm("您确定要核销"+name+"吗？")){
+        var use_time="";
+        var now = new Date().Format('yyyy-MM-dd hh:mm:ss');;
+        data.use_time=now;
         zhput("/rs/member_ticket/"+ id,data).then(function(result){
             if(result.code == 200){
                 showSuccess('核销成功');
@@ -92,8 +95,13 @@ function createInfoList(result){
         timestampToTime(end);
         mainOrder.end_time=timestampToTime(end);
         mainOrder.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+        if(mainOrder.status == 0 || mainOrder.status == 1){
+            result.rows[i].trcolpan=3;
+        }else{
+            result.rows[i].trcolpan=2;
+        }
     }
-    buildTableByke(result, 'event-template', 'event-placeholder','paginator',queryList,pageRows);
+    buildTableByke(result, 'list-template', 'list-placeholder','paginator',queryList,pageRows);
 }
 function queryList() {
     var data={
@@ -122,6 +130,10 @@ function queryList() {
         }
         var ordertimeend1 = ordertimeend +" 23-59-59";
         if(ordertimestart!=""&&ordertimeend!=""){
+            if(Date.parse(ordertimestart)-Date.parse(ordertimeend)>0){
+                showError('开始时间不能大于结束时间');
+                return;
+            }
             data.get_time='>=,'+ordertimestart+',<=,'+ordertimeend1;
         }else if(ordertimestart!=""&&ordertimeend==""){
             data.get_time='>=,'+ordertimestart;

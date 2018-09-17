@@ -9,6 +9,7 @@ var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
 $(function() {
+    getorganiz();
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
@@ -43,7 +44,7 @@ function queryList() {
         order:'status asc, is_hot desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
-        ins:['status','1',"2","3","4"],
+        status:'>,0,<,99'
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
@@ -59,6 +60,10 @@ function queryList() {
         if(title!=''){
             data.title = title;
             data.search=1;
+        }
+        var organiz_id=$("#shopnames").val();
+        if(organiz_id && organiz_id!='-1'){
+            data.organiz_id=organiz_id;
         }
         var unique_code=$("#unique_code").val();
         if(unique_code!='全部'){
@@ -91,7 +96,20 @@ function queryList() {
         }
     });
 }
-
+function getorganiz(){
+    $("#shopname").html("");
+    $("#shopnames").html("");
+    zhget('/rs/organiz').then(function(result){
+        var html="";
+        if(result.code==200){
+            html+="<option value='-1'>请选择</option>";
+            for(var i=0;i<result.rows.length;i++){
+                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
+            }
+            $("#shopnames").append(html);
+        }
+    })
+}
 function onSetUpClick(id,ishot) {
     if(ishot == 0){
         if(confirm("确认要设置该政策为热点信息吗？")) {
@@ -204,6 +222,59 @@ function onDeleteClick(id) {
             }
         });
     }
+}
+*/
+
+/*
+function rejectClick(id){
+    $('#user_buttonids').show();
+    $('#viewthereason').hide();
+    $("#reject_Reasons").attr('readonly',false)
+        .val("");
+    $('#rejectModal').modal('show');
+    $("#rejectId").val(id);
+}
+function onSaveRejectClick(){
+    var id=$("#rejectId").val();
+    var reject_reason=$("#reject_Reasons").val().trim();
+    var data={
+        status:"2"
+    };
+    if(reject_reason==null||reject_reason==""){
+        $("#reject_Reasons").focus();
+        return showError("请输入拒绝原因")
+    }else{
+        data.remark=reject_reason;
+    }
+    $('#rejectModal').modal('hide');
+    zhput(base_url_course + "/" + id, {status: 3}).then(function (result) {
+        if (result.code == 200) {
+            queryList();
+            showSuccess("拒绝成功");
+        } else {
+            showError("拒绝失败")
+        }
+    })
+}
+
+//查看拒绝原因
+function viewReason(id){
+    $('#user_buttonids').hide();
+    $('#viewthereason').show();
+    var data={
+        id:id
+    }
+    zhget(base_url_course,data).then(function(result){
+        if(result.code==200){
+            var remarks=result.rows[0].remark;
+            $('#reject_Reasons')
+                .attr('readonly',true)
+                .val(remarks);
+            $('#rejectModal').modal('show');
+        }else{
+            processError(result)
+        }
+    })
 }
 */
 function onSearchClick() {

@@ -101,7 +101,7 @@
                                 <th style="width: 52px;">操作</th>
                             </tr>
                             </thead>
-                            <tbody id="event-placeholder">
+                            <tbody id="list-placeholder">
 
                             </tbody>
                         </table>
@@ -145,65 +145,10 @@
         </div>
     </div>
 </div>
-<!-- 确认退款 -->
-<!--<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="OrderRefundModal">-->
-    <!--<div class="modal-dialog" role="document">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                <!--<h4 class="modal-title">提示</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--<p>是否同意退款申请?</p>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal" id="refund_refuse">拒绝</button>-->
-                <!--<button type="button" class="btn btn-primary" id="refund_firm">确认</button>-->
-            <!--</div>-->
-        <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>&lt;!&ndash; /.modal-dialog &ndash;&gt;-->
-<!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
-<!--&lt;!&ndash;退款原因&ndash;&gt;-->
-<!--<div class="modal fade"  id="OrderLogisticsModal"  tabindex="-1" role="dialog" aria-labelledby="ChoseOrderLogisticsModalLabel" aria-hidden="true">-->
-    <!--<div class="modal-dialog" >-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                <!--<h4 class="modal-title">退款原因</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body" id="reasonbody">-->
-                <!--<div class="title"></div>-->
-                <!--<div class="img_box"></div>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button id="closeOrderLogisticsModal" type="button" class="btn btn-default fa fa-times" data-dismiss="modal"> 关闭</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash;退款进度&ndash;&gt;-->
-<!--<div class="modal fade" id="OrderReturnPriceModal" tabindex="-2" role="dialog" aria-labelledby="ChoseOrderReturnPriceModalLabel" aria-hidden="true">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                <!--<h4 class="modal-title">退款进度</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-                <!--退款进度-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default fa fa-times" data-dismiss="modal"> 关闭</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-<!--<div class="orderLogisticDiv"></div>-->
-<!--<div class="orderRefundPrice"></div>-->
-<script id="event-template" type="text/x-handlebars-template">
+<script id="list-template" type="text/x-handlebars-template">
     {{#datas}}
-    <tr  class="gradeA" style="background-color: rgb(182, 182, 182);">
-        <td rowspan="3" class="text-center">{{rowNum}}</td>
+    <tr  class="gradeA " style="background-color: rgb(182, 182, 182);width:100%;">
+        <td rowspan="{{trcolpan}}" class="text-center">{{rowNum}}</td>
         <td colspan="3" >
             <span style="margin-right: 80px;">主订单号：{{id}}</span>
             <span style="margin-left: 50px;">优惠券名称：{{name}}</span>
@@ -231,14 +176,14 @@
         </td>
         <td></td>
     </tr>
-    <tr style="background-color: rgb(240,240,240);">
+    <tr style="background-color: rgb(240,240,240);width:100%;">
         <td colspan="5">{{name}}</td>
     </tr>
     <!--待使用、交易成功状态才可以核销-->
     {{#equal status 2}}
-    <tr></tr>
+    <tr style="width:100%;"></tr>
     {{else }}
-    <tr style="background-color: rgb(255, 255, 255);">
+    <tr style="background-color: rgb(255, 255, 255);width:100%;">
         <td colspan="3">
             验证码：{{ticket_code}}
         </td>

@@ -39,23 +39,30 @@
                                     <div class="col-md-4 form-group">
                                         <label for="name">类型：</label>
                                         <div class="pinput">
-                                            <select name="type" id="type" datatype="require" class="form-control">
+                                            <select name="type" id="type" datatype="require" class="form-control" onchange="showname()">
                                                 <option value="-1">请选择</option>
                                                 <!--<option value="1">线上优惠券</option>-->
-                                                <option value="2" selected="selected">实物商品</option>
+                                                <option value="2">线下优惠券</option>
+                                                <option value="3">实体店产品</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="name">产品名称：</label>
+                                        <label for="name" class="titlename">优惠券名称：</label>
                                         <div class="pinput">
-                                            <input placeholder="产品名称" datatype="require" class="form-control" id="name" maxlength="10">
+                                            <input placeholder="优惠券名称" datatype="require" class="form-control" id="name" maxlength="10">
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="sale_price">价格：</label>
                                         <div class="pinput">
                                             <input placeholder="价格" oninput="num_limit(this,{max:8,maxval:99999.99,dec:2})" datatype="require money mlen" class="form-control" maxlength="8" id="sale_price" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="sale_price">有效期：</label>
+                                        <div class="pinput">
+                                            <input placeholder="有效期（天）" oninput="num_limit(this,{max:7,maxval:999999})" datatype="require money" class="form-control" maxlength="7" id="effect_hour" >
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
