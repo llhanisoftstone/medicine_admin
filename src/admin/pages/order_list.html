@@ -151,7 +151,8 @@
         <td rowspan="{{trcolpan}}" class="text-center">{{rowNum}}</td>
         <td colspan="3" >
             <span style="margin-right: 80px;">主订单号：{{id}}</span>
-            <span style="margin-left: 50px;">店铺名称：{{store_name}}</span>
+            <span>用户ID:{{u_id}}</span>
+            <span style="margin-left: 50px;">姓名：{{nickname}}</span>
             <div style="padding:5px 0;">
                 <span>领取时间：{{get_time}}</span>
                 {{#equal status 0}}
@@ -165,8 +166,7 @@
                 {{/equal}}
 
             </div>
-            <span>用户ID:{{u_id}}</span>
-            <span style="margin-left: 50px;">姓名：{{nickname}}</span>
+            <span>店铺名称：{{store_name}}</span>
             <span class="newremark" style="margin-left:50px;">店铺联系电话:{{phone}}</span><br>
         </td>
         <td>
