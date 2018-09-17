@@ -23,6 +23,7 @@ $(function() {
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
     queryList();
+    getCompany()
 });
 
 
@@ -34,6 +35,15 @@ function showSearchPage() {
     if($(".reasonSearch").is(":visible")) {
         isSearch = false;
     }
+}
+function getCompany(){
+    zhget('/rs/company').then(function(res){
+        if(res.code == 200){
+            for(var i=0;i<res.rows.length;i++){
+                $("#company").append('<option value="'+res.rows[i].id+'">'+res.rows[i].name+'</option>')
+            }
+        }
+    })
 }
 
 // 用户信息页面渲染
@@ -58,6 +68,7 @@ function queryList(){
         var endTime = $("#getTimeEnd").val();
         var status = $("#status").val();
         var nickname = $("#nickname").val();
+        var comp_id = $("#company").val();
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
                 if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
@@ -83,6 +94,9 @@ function queryList(){
         }
         if(nickname != ''){
             data.nickname = nickname;
+        }
+        if(comp_id!=-1){
+            data.comp_id=comp_id
         }
         data.search = 1;
     }
