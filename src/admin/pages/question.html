@@ -159,10 +159,20 @@
             {{#equal status 1}}
             <span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
             {{/equal}}
-            {{#ifequal status 2 3 4}}
+            {{#equal status 2}}
+            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 3}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
             &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
             &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
-            {{/ifequal}}
+            {{/equal}}
+            {{#equal status 4}}
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
+            {{/equal}}
+
         </td>
     </tr>
     {{/datas}}

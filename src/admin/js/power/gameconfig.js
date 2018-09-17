@@ -16,6 +16,7 @@ $(function(){
     compid = getCookie('storeid');
     id=getQueryString("pid");
     edit=getQueryByName("edit");
+    console.log(edit)
     if(edit==1){
         $('#storename').attr("disabled","disabled");
         $('#ticketname').attr("disabled","disabled");
@@ -82,14 +83,15 @@ function getTickets(){
 function getticketinfo(storeid,tid){
     $("#ticketname").html("");
     var data={
-        status:2, //审核通过的
-        type:2,
-        ticket_status:'<>,99'
+        // status:2, //审核通过的
+        // type:2,
+        // ticket_status:'<>,99'
+        order: 'ticket_id desc'
     };
     if(storeid){
         data.store_id=storeid;
     }
-    zhget('/rs/v_ticket_send_detail',data).then(function(result){
+    zhget('/rs/v_ticket_send_detail_group_by',data).then(function(result){
         var html="";
         if(result.code==200){
             html+="<option value='-1'>请选择</option>";
@@ -143,7 +145,7 @@ function clearInfo(){
         $('#startTime').val('');
         $('#endTime').val('');
         $('#max_step').val('');
-
+        leveljson=[];
 }
 //检查该优惠券之前是否被设置过
 function getOldTicketInfo(tid){
@@ -157,8 +159,8 @@ function getOldTicketInfo(tid){
         if(result.code==200){
             $('#tips').html('该优惠券/产品已设置过，将直接修改该关卡配置').show();
             operation = "modify";
-            // id=result.rows[0].id;
-            // $("#id").val(id)
+            id=result.rows[0].id;
+            $("#id").val(id)
             $('#order_code').val(result.rows[0].order_code);
             $('#startTime').val(result.rows[0].strat_time);
             $('#endTime').val(result.rows[0].end_time);
@@ -332,9 +334,9 @@ function saveGameData(){
     var levelobj={};//单个关卡json数据
     var reward=[];
     var category='';
-    if(type==1){
+    if(type==2){
         category='ticket';//数据库要求优惠券存ticket
-    }else if(type==2){
+    }else if(type==3){
         category='goods';//实物存goods
     }
     reward.push(

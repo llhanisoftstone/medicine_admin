@@ -131,7 +131,7 @@ function  saveData(){
         return;
     }
     var total_amount=$("#total_num").val().trim();
-    if(total_amount){
+    if(total_amount&&total_amount>0){
         urldata.total_amount=total_amount;
     }else{
         showError("请输入默认数量");
@@ -146,7 +146,7 @@ function  saveData(){
             return;
         }
         goodsdata[i].amount=$(doms[i]).children().eq(1).children("input").val();
-        if(goodsdata[i].amount==""||goodsdata[i].amount==null){
+        if(goodsdata[i].amount<=0||goodsdata[i].amount==""||goodsdata[i].amount==null){
             goodsdata[i].amount=total_amount;
         }
     }

@@ -178,8 +178,8 @@ function searchbtn(){
 function viewDetail(id) {
 window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
 }
-Handlebars.registerHelper('ifequal', function(v1,v2,v3,v4, options) {
-    if(v1 == v2||v1 == v3||v1 == v4) {
+Handlebars.registerHelper('ifequal', function(v1,v2,v3, options) {
+    if(v1 == v2||v1 == v3) {
         return options.fn(this);
     }else {
         return options.inverse(this);

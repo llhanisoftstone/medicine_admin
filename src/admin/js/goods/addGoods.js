@@ -62,6 +62,7 @@ function getGoodsById(id){
         $.hideActionLoading();
         $("#id").val(result.rows[0].id);
         $("#type").val(result.rows[0].type);
+        $("#effect_hour").val(result.rows[0].effect_hour);
         var types=result.rows[0].type;
         if(types&&types==2){
             $(".titlename").html("优惠券名称：");
@@ -105,8 +106,12 @@ function  saveData(){
     }
     var price_leaguer=$.trim($("#sale_price").val());
     if(!price_leaguer||price_leaguer==""||price_leaguer<=0){
-        showError("请输入价格！");
+        showError("请输入价格");
         return;
+    }
+    var effect_hour=$("#effect_hour").val().trim();
+    if(effect_hour==""||effect_hour==null){
+        showError("请输入有效期")
     }
     //获取详情列表数据
     var details=UE.getEditor('userProtocolAddUE').getContent();
@@ -118,6 +123,7 @@ function  saveData(){
     var urldata={
         name:name,
         type:type,
+        effect_hour:effect_hour,
         picurl:title_pic,
         price:price_leaguer*100,
         details:details,
