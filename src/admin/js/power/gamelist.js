@@ -194,7 +194,7 @@ function enableClick(id) {
 }
 function disableClick(id) {
     if (confirm("确定要禁用该优惠券吗？")) {
-        zhput(base_url_goodsCategory + "/" + id,{status:2}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id,{status:0}).then(function (result) {
             checkData(result, 'put');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
