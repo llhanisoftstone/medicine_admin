@@ -19,13 +19,17 @@ var integrals;
 var categoryArr=[]
 var organizArr=[]
 var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+locationHistory('reasonSearchForm');
 $(function() {
     getorg();
+    backInitHistory();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
+        currentPageNo = 1;
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
+    setTimeout(queryList,500)
 });
 function getcategory(){
     $("#videonames").html("");
@@ -39,7 +43,6 @@ function getcategory(){
             }
             $("#videonames").append(html);
         }
-        queryList();
     })
 }
 function getorg(){
@@ -134,7 +137,7 @@ function showSearchPage() {
 }
 
 function onUpdateClick(id) {
-    window.location.href="/admin/admin.html#pages/questionadd.html?id="+id;
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questionadd.html?id="+id;
 }
 function delClick(id) {
     if (confirm("确定要删除该题目吗？")) {
@@ -161,7 +164,7 @@ function submitcheck(id){
     }
 }
 function addvideolist(){
-    window.location.href="/admin/admin.html#pages/questionadd.html";
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questionadd.html";
 }
 //重置
 function resetinput(){
@@ -176,7 +179,7 @@ function searchbtn(){
 }
 //查看详情
 function viewDetail(id) {
-window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questiondetail.html?id="+id;
 }
 Handlebars.registerHelper('ifequal', function(v1,v2,v3, options) {
     if(v1 == v2||v1 == v3) {

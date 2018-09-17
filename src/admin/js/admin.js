@@ -1,4 +1,4 @@
-var localURL = 'https://'+location.hostname + (location.port ? ":" + location.port : "");
+var localURL = 'http://'+location.hostname + (location.port ? ":" + location.port : "");
 include("/configs.js");
 
 function include(jssrc){
@@ -1432,7 +1432,8 @@ function closemessage(){
  * 返回历史定位
  * 注意1. 搜索表单中每一项需要有name属性，建议跟数据库字段设为一致
  *    2. HTML页面添加 <input id="pageIndex" type="hidden">
- *    3. 任何需要跳转的页面，需添加Math.random(),否则window.onbeforeunload监听不到,例如： location.href="admin.html?_t="+Math.random()+"#pages/goods/addGoods.html"
+ *    3. 任何需要跳转的页面，需添加Math.random(),否则window.onbeforeunload监听不到,例如：
+ *       location.href="admin.html?_t="+Math.random()+"#pages/goods/addGoods.html"
  *    4. 页面点击查询按钮时调用 saveSearchFormData(formId)方法，formId为当前页搜索项form的id
  *    5. 页面调用 locationHistory(formId)方法
  *    6. 页面加载完成调用backInitHistory()方法
