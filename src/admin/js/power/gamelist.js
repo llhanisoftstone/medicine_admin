@@ -35,7 +35,7 @@ function queryList(){
     var data={
         page: currentPageNo,
         size: pageRows,
-        order:'status asc, create_time desc',
+        order:'order_code desc, status desc, create_time desc',
         id:'>,10',
         status:'<>,99'
     }
