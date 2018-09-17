@@ -1,4 +1,4 @@
-var localURL = 'http://'+location.hostname + (location.port ? ":" + location.port : "");
+var localURL = 'https://'+location.hostname + (location.port ? ":" + location.port : "");
 include("/configs.js");
 
 function include(jssrc){
