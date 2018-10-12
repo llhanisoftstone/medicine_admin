@@ -62,7 +62,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label for="storename">所属店铺：</label>
                                                 <div class="pinput">
-                                                    <select id="storename" class="form-control" data-live-search ="true" onchange="getTickets()">
+                                                    <select id="storename" name="storename" class="form-control" data-live-search ="true" onchange="getTickets()">
 
                                                     </select>
                                                 </div>
@@ -70,7 +70,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label for="ticketname">优惠券/产品：</label>
                                                 <div class="pinput">
-                                                    <select id="ticketname" class="form-control">
+                                                    <select id="ticketname" class="form-control" name="ticketname">
                                                         <option value="-1">请选择</option>
                                                     </select>
                                                 </div>
@@ -87,7 +87,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label>状态：</label>
                                                 <div class="pinput">
-                                                    <select id="status" class="form-control">
+                                                    <select id="status" class="form-control" name="status">
                                                         <option value="-1">全部</option>
                                                         <option value="1">启用</option>
                                                         <option value="2">禁用</option>
@@ -146,7 +146,7 @@
         </div>
     </div>
 </div>
-
+<input id="pageIndex" type="hidden">
 
 
 <script id="goodsCategory1-template" type="text/x-handlebars-template">
@@ -178,14 +178,14 @@
         </td>
         <td style="text-align: center;">
             {{#equal status 1}}启用{{/equal}}
-            {{#equal status 2}}禁用{{/equal}}
+            {{#equal status 0}}禁用{{/equal}}
         </td>
         <td style="text-align: center;">
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
             {{#equal status 1}}
             &nbsp;<span class="fa fa-lock" title="禁用" onclick="disableClick('{{id}}')"></span>
             {{/equal}}
-            {{#equal status 2}}
+            {{#equal status 0}}
             &nbsp;<span class="fa fa-unlock" title="启用" onclick="enableClick('{{id}}')"></span>
             {{/equal}}
         </td>
