@@ -155,9 +155,9 @@ function delClick(id) {
     }
 }
 //提交审核
-function submitcheck(id){
+function submitcheck(id,type){
     if(confirm("确定要直接提交审核该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 1}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 1,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("提交成功");
