@@ -104,6 +104,10 @@ function queryList(){
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
         }
+        var type=$("#suery_type").val()
+        if(type>=0){
+            data.type=type;
+        }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {

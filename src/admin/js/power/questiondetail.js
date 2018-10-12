@@ -61,6 +61,7 @@ function queryList(){
                 $("#videonames").val(result.rows[0].category_id)
                 $("#shopnames").val(result.rows[0].organiz_id)
                 $("#rank").val(result.rows[0].rank)
+                $("#suery_type").val(result.rows[0].type)
                 var indexCode = integrals[i];
             }
             var answer={rows:result.rows[0].answer_json}

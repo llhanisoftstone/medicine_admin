@@ -1,4 +1,4 @@
-var localURL = 'https://'+location.hostname + (location.port ? ":" + location.port : "");
+var localURL = 'http://'+location.hostname + (location.port ? ":" + location.port : "");
 include("/configs.js");
 
 function include(jssrc){
@@ -1441,6 +1441,7 @@ function closemessage(){
  * **/
 var isSearch=false; //是否查询
 var searchForm; //查询条件JSON
+var pageRecord;
 //获取当前页面url
 var currPageName  = (window.location.hash).replace('#','');
 /**
