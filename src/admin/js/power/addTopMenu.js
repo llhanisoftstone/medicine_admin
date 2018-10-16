@@ -27,7 +27,7 @@ $(function(){
         $("#title_pic2").attr("placeholder","请上传图标(249*165)")
     }
 
-    if(targetid==''){
+    if(targetid==''||targetid==null){
         operation="add";
     }else{
         //    修改
