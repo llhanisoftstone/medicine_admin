@@ -2,7 +2,9 @@ var base_url='/rs/main_column';
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
+var comp_id;
 $(function() {
+    comp_id=getCookie('compid');
     $.initSystemFileUploadnotLRZ($("#userAddForm"), onUploadDetailPic);
     $("#resetSearchBtn", $(".bannerreport")).bind("click", function(){
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();
@@ -13,6 +15,11 @@ $(function() {
     $("#searchBtn", $(".bannerreport")).unbind("click");
     $("#searchBtn", $(".bannerreport")).bind("click", showSearchPage);
     queryList()
+    if(comp_id){
+      $(".targetselect").hide()
+    }else{
+        $(".targetselect").show()
+    }
 
 });
 // 图片上传
@@ -99,6 +106,11 @@ function queryList() {
         page: currentPageNo,
         size: pageRows,
     }
+    if(comp_id){
+        data.comp_id=comp_id;
+    }else{
+        data.comp_id=0;
+    }
     if(isSearch){
         var title=$("#titlebanner").val();
         var status=$("#status").val();
@@ -158,22 +170,30 @@ function savedatamain(){
         icon_path:icon_path,
         sequence:sequence
     }
-    var target_type=$("#type").val();
-    if(target_type&&target_type!="-1"){
-        data.target_type=target_type;
+    if(comp_id){
+        data.comp_id=comp_id;
+        data.target_type=1;
+        data.show_css=1;
     }else{
-        return showError("请选择二级页面类型")
-    }
-    var show_css=$("#typestyle").val();
-    if(target_type==1){
-        if(show_css&&show_css!="-1"){
-            data.show_css=show_css
+        data.comp_id=0;
+        var target_type=$("#type").val();
+        if(target_type&&target_type!="-1"){
+            data.target_type=target_type;
         }else{
-            return showError("请选择样式类型")
+            return showError("请选择二级页面类型")
         }
-    }else if(target_type==2){
-        data.show_css=3;
+        var show_css=$("#typestyle").val();
+        if(target_type==1){
+            if(show_css&&show_css!="-1"){
+                data.show_css=show_css
+            }else{
+                return showError("请选择样式类型")
+            }
+        }else if(target_type==2){
+            data.show_css=3;
+        }
     }
+
     var id=$("#configid").val();
     if(id){
         zhput("/rs/main_column/"+id,data).then(function(result){
