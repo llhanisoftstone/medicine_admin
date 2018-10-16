@@ -86,6 +86,10 @@ function queryList(){
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
         }
+        var type=$("#suery_type").val()
+        if(type>=0){
+            data.type=type;
+        }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
@@ -134,9 +138,9 @@ function delClick(id) {
 }*/
 //状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
 //下架
-function questiondown(id){
+function questiondown(id,type){
     if(confirm("确定要下架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 4}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 4,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("下架成功");
@@ -147,9 +151,9 @@ function questiondown(id){
     }
 }
 //上架
-function questionup(id){
+function questionup(id,type){
     if(confirm("确定要上架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("上架成功");
@@ -160,9 +164,9 @@ function questionup(id){
     }
 }
 //拒绝
-function rejectClick(id){
+function rejectClick(id,type){
     if(confirm("确定要拒绝该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 3}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 3,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("拒绝成功");
@@ -173,9 +177,9 @@ function rejectClick(id){
     }
 }
 //通过审核
-function agreeClick(id){
+function agreeClick(id,type){
     if(confirm("确定要通过该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("通过成功");

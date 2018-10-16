@@ -87,6 +87,16 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>类别：</label>
+                                                <div class="pinput">
+                                                    <select id="suery_type" name='type' class="form-control">
+                                                        <option value="-1">全部</option>
+                                                        <option value="0">单选</option>
+                                                        <option value="1">问卷调查</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group  pbtn-group ">
                                             <button id="searchDataBtn" class="fa fa-search   btn btn-default" type="button">查询
@@ -111,6 +121,7 @@
                                 <th style="width: 10%;" >出题者</th>
                                 <th style="width: 5%;" >难度等级</th>
                                 <th style="width: 10%;" >答案</th>
+                                <th style="width: 10%;" >类型</th>
                                 <th style="width:5%;">状态</th>
                                 <th style="width: 15%;">操作</th>
                             </tr>
@@ -168,6 +179,10 @@
         <td style="text-align:center;">{{rank}}</td>
         <td style="text-align:center;" title="{{answers}}">{{answers}}</td>
         <td style="text-align:center;">
+            {{#equal type 0}}单选{{/equal}}
+            {{#equal type 1}}调查问卷{{/equal}}
+        </td>
+        <td style="text-align:center;">
             {{#equal status 0}}草稿{{/equal}}
             {{#equal status 1}}待审核{{/equal}}
             {{#equal status 2}}通过{{/equal}}
@@ -177,14 +192,14 @@
         <td style="text-align: center;">
             <span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
             {{#equal status 2}}
-            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}',)" title="下架"></span>
+            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}','{{type}}')" title="下架"></span>
             {{/equal}}
             {{#equal status 1}}
-            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}',)" title="通过"></span>
-            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}',)" title="拒绝"></span>
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}','{{type}}')" title="通过"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}','{{type}}')" title="拒绝"></span>
             {{/equal}}
             {{#equal status 4}}
-            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}',)" title="上架"></span>
+            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}','{{type}}')" title="上架"></span>
             {{/equal}}
         </td>
     </tr>

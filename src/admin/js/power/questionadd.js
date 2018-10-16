@@ -81,6 +81,7 @@ function queryList(){
                 $("#videonames").val(result.rows[0].category_id)
                 $("#shopnames").val(result.rows[0].organiz_id)
                 $("#rank").val(result.rows[0].rank)
+                $("#suery_type").val(result.rows[0].type)
                 var indexCode = integrals[i];
             }
             var answer={rows:result.rows[0].answer_json}
@@ -176,6 +177,10 @@ function savedata(_status){
     }
     if(_status){
         data.status=_status;
+    }
+    var type=$("#suery_type").val()
+    if(type>=0){
+        data.type=type;
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){

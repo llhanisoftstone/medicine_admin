@@ -106,8 +106,10 @@ function queryList() {
     });
 }
 function agreeClick(id){
+    $.showActionLoading();
     if(confirm("确定要通过该审核吗？")) {
         zhput(base_url_goods + "/" + id, {status: 2}).then(function (result) {
+            $.hideActionLoading();
             if (result.code == 200) {
                 queryList();
                 showSuccess("审核成功");

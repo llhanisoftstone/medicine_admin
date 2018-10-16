@@ -19,13 +19,17 @@ var integrals;
 var categoryArr=[]
 var organizArr=[]
 var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+locationHistory('reasonSearchForm');
 $(function() {
     getorg();
+    backInitHistory();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
+        currentPageNo = 1;
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
         queryList();
     });
+    setTimeout(queryList,500)
 });
 function getcategory(){
     $("#videonames").html("");
@@ -39,7 +43,6 @@ function getcategory(){
             }
             $("#videonames").append(html);
         }
-        queryList();
     })
 }
 function getorg(){
@@ -101,6 +104,10 @@ function queryList(){
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
         }
+        var type=$("#suery_type").val()
+        if(type>=0){
+            data.type=type;
+        }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
@@ -134,7 +141,7 @@ function showSearchPage() {
 }
 
 function onUpdateClick(id) {
-    window.location.href="/admin/admin.html#pages/questionadd.html?id="+id;
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questionadd.html?id="+id;
 }
 function delClick(id) {
     if (confirm("确定要删除该题目吗？")) {
@@ -148,9 +155,9 @@ function delClick(id) {
     }
 }
 //提交审核
-function submitcheck(id){
+function submitcheck(id,type){
     if(confirm("确定要直接提交审核该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 1}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 1,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("提交成功");
@@ -161,7 +168,7 @@ function submitcheck(id){
     }
 }
 function addvideolist(){
-    window.location.href="/admin/admin.html#pages/questionadd.html";
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questionadd.html";
 }
 //重置
 function resetinput(){
@@ -176,7 +183,7 @@ function searchbtn(){
 }
 //查看详情
 function viewDetail(id) {
-window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questiondetail.html?id="+id;
 }
 Handlebars.registerHelper('ifequal', function(v1,v2,v3, options) {
     if(v1 == v2||v1 == v3) {
