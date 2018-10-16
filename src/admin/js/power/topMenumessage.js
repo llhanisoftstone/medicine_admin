@@ -100,10 +100,9 @@ function searchData(){
 // 页面渲染
 function queryList() {
     var data = {
-        order:'sequence desc,create_time desc',
+        order:'sequence desc',
         page: currentPageNo,
         size: pageRows,
-        status:"1",
         column_id:getQueryString("pid"),
     }
     if(isSearch){
