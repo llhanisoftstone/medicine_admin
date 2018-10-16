@@ -8,7 +8,7 @@ var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
 var searchForm; //查询条件JSON
-
+var urank=sessionStorage.getItem('userrank');
 $(function() {
     $("#resetSearchBtn", $(".bannerreport")).bind("click", function(){
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();

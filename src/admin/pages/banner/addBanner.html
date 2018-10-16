@@ -28,13 +28,30 @@
                                     <input placeholder="请输入" datatype="require" id="titlebanner" name="titlebanner" type="text" maxlength="20" class="form-control ">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>类型：</label>
-                                    <div class="pinput">
-                                        <select placeholder="请选择类型" id="category" name="iTypeId" class="form-control ">
-                                        </select>
+                            <!--<div class="col-md-4">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label>类型：</label>-->
+                                    <!--<div class="pinput">-->
+                                        <!--<select placeholder="请选择类型" id="category" name="iTypeId" class="form-control ">-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-md-4 form-group">
+                                <label for="title_pic2">图片：</label>
+                                <div class="pinput">
+                                    <div class="input-group">
+                                        <input id="title_pic2" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="上传图片">
+                                        <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                        <i class="glyphicon glyphicon-search">
+                                            <input type="file" name="picfile[]" value="pic file" uptype="community" id="signfile" multiple="multiple" refattr="title_pic2" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
+                                        </i>
+                                    </span>
                                     </div>
+                                </div>
+                                <label for="title_pic2"></label>
+                                <div class="pinput" style="color:red;">
+                                    (banner图尺寸750*342)
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -52,23 +69,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 form-group">
-                                <label for="title_pic2">图片：</label>
-                                <div class="pinput">
-                                    <div class="input-group">
-                                        <input id="title_pic2" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="上传图片">
-                                        <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
-                                        <i class="glyphicon glyphicon-search">
-                                            <input type="file" name="picfile[]" value="pic file" uptype="community" id="signfile" multiple="multiple" refattr="title_pic2" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
-                                        </i>
-                                    </span>
-                                    </div>
-                                </div>
-                                <label for="title_pic2"></label>
-                                <div class="pinput" style="color:red;">
-                                    (banner图尺寸750px*342px)
-                                </div>
-                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="pic_link">链接：</label>
@@ -78,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4" style="color:red;">
-                                访问链接：请输入app内部页面链接地址(如:"index.html?pid=''")
+                                访问链接：请输入小程序内部页面链接地址(如:"index?pid=''")
                             </div>
                         </div>
                         </div>
