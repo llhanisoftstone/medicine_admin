@@ -12,12 +12,19 @@
  */
 var base_url_goodsCategory='/rs/questions';
 var integrals;
+var compid=sessionStorage.getItem('compid');
+var urank=sessionStorage.getItem('userrank');
 $(function() {
     getorg();
+    if(urank==80){
+        $('#suery_type_box').hide();
+    }else{
+        $('#suery_type_box').show();
+    }
 });
 function getcategory(){
     $("#videonames").html("");
-    zhget('/rs/questions_category').then(function(result){
+    zhget('/rs/questions_category',{comp_id:compid}).then(function(result){
         var html="";
         if(result.code==200){
             categoryArr=result.rows
@@ -181,6 +188,9 @@ function savedata(_status){
     var type=$("#suery_type").val()
     if(type>=0){
         data.type=type;
+    }
+    if(urank==80){//企业管理员
+        data.type=0;
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){

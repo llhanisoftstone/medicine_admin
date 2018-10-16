@@ -97,7 +97,7 @@ function onSaveClick() {
     }
     if(urank==91){// category:1首页，2公司主页
         data.category=1;
-    }else{//待改为企业管理员的rank
+    }else if(urank==80){//企业管理员的rank:80
         data.category=2;
         data.comp_id=compid;
     }
