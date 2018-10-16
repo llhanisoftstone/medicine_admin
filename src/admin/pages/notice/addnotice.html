@@ -37,14 +37,14 @@
                                 <div class="col-md-4 form-group">
                                     <label>标题：</label>
                                     <div class="pinput">
-                                        <input placeholder="标题" id="title" datatype="require" name="title" maxlength="50" class="form-control " value="">
+                                        <input placeholder="请输入标题" id="name" datatype="require" name="name" maxlength="30" class="form-control " value="">
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label for="pic_abbr">列表图：</label>
                                     <div class="pinput">
                                         <div class="input-group">
-                                            <input id="pic_abbr" datatype="require" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="请上传图片（180*135）">
+                                            <input id="pic_abbr" datatype="require" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="请上传图片（xx*xx）">
                                             <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
                                         <i class="glyphicon glyphicon-search">
                                             <input type="file" name="picfile[]" value="pic file" uptype="community" id="signfile" multiple="multiple" refattr="pic_abbr" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;" accept=".jpg,.png,.jpeg,.bmp">
@@ -54,27 +54,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
-                                    <label>简介：</label>
+                                    <label>顺序：</label>
                                     <div class="pinput">
-                                        <input placeholder="简介" id="remark" datatype="require" name="remark" class="form-control " value="" maxlength="50">
+                                        <input placeholder="请输入顺序" id="sequence" oninput="num_limit(this,{max:11,dec:false})" datatype="require" name="sequence" class="form-control " value="" maxlength="11">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 form-group">
-                                    <label>类型:</label>
+                                    <label>是否首页显示:</label>
                                     <div class="pinput">
-                                        <select id="unique_code" name="unique_code" class="form-control">
-                                            <option value="zcbl">办理类</option>
-                                            <option value="zcbk">政策类</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 form-group">
-                                    <label>部门:</label>
-                                    <div class="pinput">
-                                        <select id="company" name="company" class="form-control">
-
+                                        <select id="is_main" name="is_main" class="form-control">
+                                            <option value="1">是</option>
+                                            <option value="0">否</option>
                                         </select>
                                     </div>
                                 </div>
@@ -82,7 +74,7 @@
                             <div class="row">
                                 <div class=" col-md-10" style="padding-top: 15px;">
                                     <div class="col-md-12 form-group" style="padding-left: 0">
-                                        <label>详情：</label>
+                                        <label>内容：</label>
                                         <div class="pinput" id="ckedId" style="width: 90%;">
                                             <div id="userProtocolAddUE" style="width: 90%;height: 500px;"></div>
                                         </div>
@@ -91,8 +83,8 @@
                             </div>
                             <!--详情列表-->
                             <div class="text-center">
-                                <buttton class="fa fa-save btn btn-default"  _status="0" onclick="saveData('0')"> 保存为草稿</buttton>
-                                <button datatype="require" type="button" _getGoodsIsActivityIn="0" class="fa fa-save btn btn-default" _status="1" id="goods_buttonid1" onclick="saveData('1')"> 提交审核</button>
+                                <buttton class="fa fa-save btn btn-default"  _status="0" onclick="saveData('1')"> 保存</buttton>
+                                <!--<button datatype="require" type="button" _getGoodsIsActivityIn="0" class="fa fa-save btn btn-default" _status="1" id="goods_buttonid1" onclick="saveData('1')"> 提交审核</button>-->
                             </div>
                             <input id="id" style="display: none;"/>
                         </form>

@@ -1,11 +1,10 @@
 /**
  * Created by Administrator on 2018/2/10.
  */
-var base_url_infomation='/rs/infomation';
+var base_url_infomation='/rs/notify';
 var currentPageNo = 1;
 var pageRows = 10;
 var operation = "add";
-include("/configs.js");
 function back(){
     history.go(-1);
 }
@@ -28,7 +27,7 @@ $(function(){
         $(".text-center").hide();
         $(".copyGoods").show();
     }
-    var odata={
+    /*var odata={
         order:"create_time desc",
     };
     if(organizId){
@@ -43,17 +42,16 @@ $(function(){
                 html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
             }
         }
-        jQuery("#company").html(html);
+        // jQuery("#company").html(html);
 
-        if(id==''||id==null){
-            operation = "add";
-            status()
-        }else{
-            operation = "modify";
-            getGoodsById(id);
-        }
-    });
-
+    });*/
+    if(id==''||id==null){
+        operation = "add";
+        status()
+    }else{
+        operation = "modify";
+        getGoodsById(id);
+    }
     $.initSystemFileUploadnotLRZ($("#titleForm"), onUploadDetailPic);
 
 });
@@ -100,17 +98,16 @@ function onUploadDetailPic(formObject, fileComp, list) {
 //根据id查询产品数据
 function getGoodsById(id){
     $.showActionLoading();
-    zhget("/rs/infomation/"+id).then(function(result) {
+    zhget(base_url_infomation+"/"+id).then(function(result) {
         $.hideActionLoading();
         if(result.code == 200){
             $("#id").val(result.rows[0].id);
-            $("#title").val(result.rows[0].title);
-            $("#pic_abbr").val(result.rows[0].pic_abbr);
-            $("#remark").val(result.rows[0].remark);
-            $("#unique_code").val(result.rows[0].unique_code);
-            $("#company").val(result.rows[0].organiz_id);
+            $("#name").val(result.rows[0].name);
+            $("#pic_abbr").val(result.rows[0].list_pic_path);
+            $("#sequence").val(result.rows[0].sequence);
+            $("#is_main").val(result.rows[0].is_main);
             setTimeout(function(){
-                UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
+                UE.getEditor('userProtocolAddUE').setContent(result.rows[0].content);
                 var read=getQueryByName("read");
                 if(read=='read'){
                     UE.getEditor('userProtocolAddUE').setDisabled();
@@ -130,44 +127,36 @@ function onSaveClick(){
     saveData()
 }
 function  saveData(_status){
-    var title=$.trim($("#title").val());
-    if(title==""){
+    var name=$.trim($("#name").val());
+    if(name==""){
         return showError("请输入标题");
-    }else if(title.length<=2){
+    }else if(name.length<=2){
         return showError("标题名称长度至少为3个字");
     }
     var pic_abbr = $("#pic_abbr").val();
-    var remark=$.trim($("#remark").val());
-    var unique_code = $("#unique_code").val();
-    var copmpany=jQuery("#company").val();
     if(!pic_abbr || pic_abbr==""){
         return showError("请上传列表图");
     }
-    if(!remark){
-        return showError("请输入简介");
+    var sequence=$.trim($("#sequence").val());
+    if(sequence!=0 && sequence ==''){
+        return showError("请输入顺序");
     }
-    if(!copmpany){
-        return showError("请选择部门");
-    }
+    var is_main=$("#is_main").val();
     var data={
-        title:title,
-        pic_abbr:pic_abbr,
-        remark:remark,
-        unique_code:unique_code,
-        organiz_id:copmpany
+        name:name,
+        list_pic_path:pic_abbr,
+        sequence:sequence,
+        is_main:is_main
     };
-    if(_status){
-        data.status=_status;
-    }
-    var details = UE.getEditor('userProtocolAddUE').getContent();
+    var content = UE.getEditor('userProtocolAddUE').getContent();
     var len = UE.getEditor('userProtocolAddUE').getContentLength(true);
     if(len > 3000){
-        return showError("你输入的字符个数已经超出最大允许值!");
+        return showError("你输入内容的字符个数已经超出最大允许值!");
     }
-    if(details==""){
+    if(content==""){
         return showError("请输入详情");
     }else{
-        data.details=details;
+        data.content=content;
     }
     $.showActionLoading();
     $(this).attr("disabled","disabled");
@@ -176,13 +165,13 @@ function  saveData(_status){
         zhpost(base_url_infomation,data).then(function(result) {
             $.hideActionLoading();
             if(checkData(result,'post')) {
-                location.href="admin.html#pages/policy/policyList.html"
+                location.href="admin.html#pages/notice/noticelist.html"
             }
         });
     } else {
         zhput(base_url_infomation + "/" + id, data).then(function(result) {
             if(checkData(result,'put')) {
-                location.href="admin.html#pages/policy/policyList.html"
+                location.href="admin.html#pages/notice/noticelist.html"
             }
         });
     }

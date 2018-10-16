@@ -43,45 +43,21 @@
                                         <div class="col-md-4 form-group">
                                             <label>标题：</label>
                                             <div class="pinput">
-                                                <input placeholder="标题" id="title" name="title" class="form-control " value="">
+                                                <input placeholder="标题" id="name" name="name" class="form-control " value="">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
-                                            <label>类型：</label>
+                                            <label>是否首页展示：</label>
                                             <div class="pinput">
-                                                <select id="unique_code" name="unique_code" class="form-control">
-                                                    <option>全部</option>
-                                                    <option value="zcbl">办理类</option>
-                                                    <option value="zcbk">政策类</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <label>是否热点：</label>
-                                            <div class="pinput">
-                                                <select id="is_hot" class="form-control"  >
-                                                    <option>全部</option>
+                                                <select id="is_main" class="form-control"  >
+                                                    <option value="-1">全部</option>
                                                     <option value="0">否</option>
                                                     <option value="1">是</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-4 form-group">
-                                            <label>状态：</label>
-                                            <div class="pinput">
-                                                <select id="status" class="form-control" name="status">
-                                                    <option value="-1">全部</option>
-                                                    <option value="0">草稿</option>
-                                                    <option value="1">待审核</option>
-                                                    <option value="2">通过</option>
-                                                    <option value="3">拒绝</option>
-                                                    <option value="4">下架</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="col-lg-12 pbtn-group">
                                         <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
                                         <button type="button" class="fa fa-reply-all btn btn-default" onclick="resetinput()" id="resetSearchBtn" >重置</button>
@@ -99,13 +75,10 @@
                             <thead>
                             <tr style="text-align: center">
                                 <th style="text-align: center;width: 5%">序号</th>
-                                <th style="text-align: center;width: 10%">标题</th>
+                                <th style="text-align: center;width: 15%">标题</th>
                                 <th style="text-align: center;width: 10%">列表图</th>
-                                <th style="text-align: center;width: 10%">类型</th>
-                                <th style="text-align: center;width: 10%">部门</th>
-                                <th style="text-align: center;width: 30%">简介</th>
-                                <th style="text-align: center;width: 10%">是否热点</th>
-                                <th style="width:5%;">状态</th>
+                                <th style="text-align: center;width: 5%">是否首页展示</th>
+                                <th style="text-align: center;width: 5%">顺序</th>
                                 <th style="text-align: center;width: 10%">操作</th>
                             </tr>
                             </thead>
@@ -132,50 +105,14 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{title}}</td>
-        <td><img src="{{pic_abbr}}" style="width:100px;height:80px;"></td>
-        <td>{{unique_code}}</td>
-        <td>{{organiz_name}}</td>
-        <td>{{remark}}</td>
-        <td>{{#superif is_hot 0}}否{{/superif}}{{#superif is_hot 1}}是{{/superif}}</td>
-        <td style="text-align:center;">
-            {{#equal status 0}}草稿{{/equal}}
-            {{#equal status 1}}待审核{{/equal}}
-            {{#equal status 2}}通过{{/equal}}
-            {{#equal status 3}}拒绝{{/equal}}
-            {{#equal status 4}}下架{{/equal}}
-        </td>
+        <td>{{name}}</td>
+        <td><img src="{{list_pic_path}}" style="width:100px;height:80px;"></td>
+        <td>{{#superif is_main 0}}否{{/superif}}{{#superif is_main 1}}是{{/superif}}</td>
+        <td>{{sequence}}</td>
         <td>
-            {{#equal status 0}}
             &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
-            &nbsp;<span class="fa fa-check-square-o" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
+            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
             &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
-            {{/equal}}
-            {{#equal status 1}}
-            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
-            {{/equal}}
-            {{#equal status 2}}
-            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
-            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}',)" title="下架"></span>
-                {{#superif is_hot 0}}
-                &nbsp;<span class="fa fa-star-o" aria-hidden="true" title="设置热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-                {{/superif}}
-                {{#superif is_hot 1}}
-                &nbsp;<span class="fa fa-star" aria-hidden="true" title="取消热点" onclick="onSetUpClick('{{id}}','{{is_hot}}')"></span>
-                {{/superif}}
-            {{/equal}}
-            {{#equal status 3}}
-            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
-            &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
-            &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
-            {{/equal}}
-            {{#equal status 4}}
-            &nbsp;<span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
-            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}',)" title="上架"></span>
-            &nbsp;<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
-            {{/equal}}
-
-
         </td>
     </tr>
     {{/datas}}

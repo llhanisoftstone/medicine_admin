@@ -1,14 +1,14 @@
 /**
  * Created by Administrator on 2018/2/10.
  */
-var base_url_course = '/rs/infomation';
+var base_url_course = '/rs/notify';
 var list = [];
 var menu = [];
 var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
-var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+// var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
@@ -49,11 +49,11 @@ function queryList() {
         currentPageNo = pageRecord;
     }
     var data={
-        order:'status asc, is_hot desc,create_time desc',
+        order:'is_main desc,sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
-        organiz_id:organizid,
-        status:'<,99',//状态：0-草稿；1-待审核，2-上架，3-拒绝，4-下架；
+        // organiz_id:organizid,
+        status:'1'
     }
     if(isSearch){
         var searchForm = getlocalStorageCookie("searchForm");
@@ -65,22 +65,14 @@ function queryList() {
                 $("select[name='"+key+"']").val(searchForm[key]);
             }
         }
-        var title = $("#title").val();
-        if(title!=''){
-            data.title = title;
+        var name = $("#name").val();
+        if(name!=''){
+            data.name = name;
             data.search=1;
         }
-        var unique_code=$("#unique_code").val();
-        if(unique_code!='全部'){
-            data.unique_code=unique_code;
-        }
-        var is_hot=$("#is_hot").val();
-        if(is_hot!='全部'){
-            data.is_hot=is_hot;
-        }
-        var status=$("#status").val();
-        if(status && status!="-1"){
-            data.status=status;
+        var is_main=$("#is_main").val();
+        if(is_main!="-1"){
+            data.is_main=is_main;
         }
     }
     $.showActionLoading();
@@ -89,12 +81,7 @@ function queryList() {
         if(checkData(result,'get','queryList','table-goodsList')) {
             for (var i = 0; i < result.rows.length; i++) {
                 result.rows[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
-                if(result.rows[i].unique_code == 'zcbl'){
-                    result.rows[i].unique_code = "办理类";
-                }else{
-                    result.rows[i].unique_code = "政策类";
-                }
-                result.rows[i].pic_abbr = targetUrl + result.rows[i].pic_abbr;
+                result.rows[i].list_pic_path = targetUrl + result.rows[i].list_pic_path;
             }
             buildTable(result, 'menu-template', 'menu-placeholder');
         }
