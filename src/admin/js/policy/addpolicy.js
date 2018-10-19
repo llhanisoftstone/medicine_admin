@@ -47,17 +47,35 @@ $(function(){
 
         if(id==''||id==null){
             operation = "add";
+            getinfo_column();
             status()
         }else{
             operation = "modify";
             getGoodsById(id);
         }
     });
-
     $.initSystemFileUploadnotLRZ($("#titleForm"), onUploadDetailPic);
 
 });
+function getinfo_column(column_id){
+    zhget("/rs/info_column").then( function(result) {
+        var html="<option value=''>全部</option>";
+        for(var i=0;i<result.rows.length;i++){
+            if(result.rows[i].id==column_id){
+                html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
+            }else{
+                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+            }
+        }
+        jQuery("#info_column").html(html);
 
+        // if(id==''||id==null){
+        //     operation = "add";
+        // }else{
+        //     operation = "modify";
+        // }
+    });
+}
 function compare(property){
     return function(a,b){
         var value1 = a[property];
@@ -109,6 +127,7 @@ function getGoodsById(id){
             $("#remark").val(result.rows[0].remark);
             $("#unique_code").val(result.rows[0].unique_code);
             $("#company").val(result.rows[0].organiz_id);
+            getinfo_column(result.rows[0].column_id);
             setTimeout(function(){
                 UE.getEditor('userProtocolAddUE').setContent(result.rows[0].details);
                 var read=getQueryByName("read");
@@ -140,6 +159,7 @@ function  saveData(_status){
     var remark=$.trim($("#remark").val());
     var unique_code = $("#unique_code").val();
     var copmpany=jQuery("#company").val();
+    var info_column=jQuery("#info_column").val();
     if(!pic_abbr || pic_abbr==""){
         return showError("请上传列表图");
     }
@@ -149,12 +169,16 @@ function  saveData(_status){
     if(!copmpany){
         return showError("请选择部门");
     }
+    if(!info_column){
+        return showError("请选择百科分类");
+    }
     var data={
         title:title,
         pic_abbr:pic_abbr,
         remark:remark,
         unique_code:unique_code,
-        organiz_id:copmpany
+        organiz_id:copmpany,
+        column_id:info_column,
     };
     if(_status){
         data.status=_status;
