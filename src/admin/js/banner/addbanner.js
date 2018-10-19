@@ -10,6 +10,7 @@ var base_url_category='/rs/banner_category';
 var operation = "add";
 var id=0;
 var urank=sessionStorage.getItem('userrank');
+var compid=sessionStorage.getItem('compid');
 $(function(){
     //绑定上传图片详情控件change事件
     $.initSystemFileUpload($("#user_form"), onUploadDetailPic);
@@ -96,8 +97,9 @@ function onSaveClick() {
     }
     if(urank==91){// category:1首页，2公司主页
         data.category=1;
-    }else{//待改为企业管理员的rank
+    }else if(urank==80){//企业管理员的rank:80
         data.category=2;
+        data.comp_id=compid;
     }
     /*if(urlpath.trim()==''){
         data.urlnull=1

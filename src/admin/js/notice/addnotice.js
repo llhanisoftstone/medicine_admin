@@ -5,6 +5,8 @@ var base_url_infomation='/rs/notify';
 var currentPageNo = 1;
 var pageRows = 10;
 var operation = "add";
+var urank=sessionStorage.getItem('userrank');
+var compid=sessionStorage.getItem('compid');
 function back(){
     history.go(-1);
 }
@@ -146,7 +148,8 @@ function  saveData(_status){
         name:name,
         list_pic_path:pic_abbr,
         sequence:sequence,
-        is_main:is_main
+        is_main:is_main,
+        comp_id:compid
     };
     var content = UE.getEditor('userProtocolAddUE').getContent();
     var len = UE.getEditor('userProtocolAddUE').getContentLength(true);

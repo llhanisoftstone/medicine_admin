@@ -8,6 +8,8 @@ var operation = "add";
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
+var urank=sessionStorage.getItem('userrank');
+var compid=sessionStorage.getItem('compid');
 // var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 $(function() {
     var searchForm = getlocalStorageCookie("searchForm");
@@ -52,7 +54,7 @@ function queryList() {
         order:'is_main desc,sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
-        // organiz_id:organizid,
+        comp_id:compid,
         status:'1'
     }
     if(isSearch){

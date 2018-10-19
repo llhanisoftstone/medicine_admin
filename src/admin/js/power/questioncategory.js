@@ -10,6 +10,7 @@ var pageRows = 10;
 var issearchModel=false;
 var issearchValue=false;
 var integrals;
+var compid=sessionStorage.getItem('compid');
 $(function() {
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -28,6 +29,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         order:'create_time desc',
+        comp_id:compid
     }
     if(issearchModel){
         data.search=1;
@@ -99,7 +101,14 @@ function onSavecategoryData(){
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
     if(modelid==""||modelid==null||modelid==undefined){
-        zhpost(base_url_goodsCategory,{name:name,auto_id:1}).then(function(result){
+        var sdata={
+            name:name,
+            auto_id:1
+        }
+        if(compid){
+            sdata.comp_id=compid;
+        }
+        zhpost(base_url_goodsCategory,sdata).then(function(result){
             if(checkData(result,'post')){
                 resetinput();
                 $(".addModels").hide();
@@ -107,7 +116,13 @@ function onSavecategoryData(){
             }
         })
     }else{
-        zhput(base_url_goodsCategory+"/"+modelid,{name:name}).then(function(result){
+        var putdata={
+            name:name,
+        }
+        if(compid){
+            putdata.comp_id=compid;
+        }
+        zhput(base_url_goodsCategory+"/"+modelid,putdata).then(function(result){
             if(checkData(result,'put')){
                 $(".addModels").hide();
                 $("#addName").removeAttr("_id");
