@@ -117,7 +117,7 @@ function queryList() {
         }
     }
     $("#banner-placeholder").html('');
-    zhget(base_url,data).then(function (result){
+    zhget('/rs/v_main_column_item',data).then(function (result){
             if(checkData(result,'get','queryList','table-member')) {
                 integrals = result.rows;
                 for (var i = 0; i < integrals.length; i++) {
