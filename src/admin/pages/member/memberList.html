@@ -93,12 +93,15 @@
                         <thead>
                         <tr>
                             <th class="col-sm-1">用户ID</th>
-                            <th class="col-sm-2">微信昵称</th>
+                            <th class="col-sm-1">微信昵称</th>
                             <th class="col-sm-1">姓名</th>
-                            <th class="col-sm-2">性别</th>
+                            <th class="col-sm-1">性别</th>
                             <th class="col-sm-2">手机号</th>
                             <th class="col-sm-2">企业</th>
                             <th class="col-sm-2">注册时间</th>
+                            <th class="col-sm-1">角色类型</th>
+                            <th class="col-sm-2">操作</th>
+
                         </tr>
                         </thead>
                         <tbody id="event-placeholder">
@@ -114,7 +117,42 @@
         </div>
     </div>
 </div>
+<div id="userModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">设置经办人</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="form-horizontal" id="user_form">
+                        <div class="form-group">
+                            <label for="tags" class="col-sm-2 control-label">添加标签</label>
+                            <div class="col-sm-9">
+                                <input type="text" data-uid='' oninput="this.value=this.value.replace(/\，/g,'')" placeholder="标签用英文逗号分隔" class="form-control" id="tags" check-type="required" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-9 text-center" style="color:blue;">
+                                点击确定即将该用户设置为经办人
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+                <div class="modal-footer"><input type="text" id="id" style="display:none;"/>
+                    <button type="button" class="fa btn btn-default" data-dismiss="modal">关闭</button>
+                    <button onclick="onSaveTagClick()" type="button" class="fa fa-save btn btn-default" id="user_buttonid">确定</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script id="event-template" type="text/x-handlebars-template">
     {{#datas}}
     <tr>
@@ -127,7 +165,17 @@
         <td>{{phone}}</td>
         <td>{{comp_name}}</td>
         <td>{{create_time}}</td>
-
+        <td>
+            {{#equal is_hr 1}}经办人{{/equal}}
+            {{#ifnull is_hr}}普通用户{{/ifnull}}
+        </td>
+        <td style="text-align: center;">
+            {{#equal is_hr 1}}
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdate('{{id}}','{{hr_tag}}')"></span>
+            {{else}}
+            <span class="fa fa-lock" aria-hidden="true" title="设为经办人" onclick="onSetPerson('{{id}}')"></span>
+            {{/equal}}
+        </td>
     </tr>
     {{/datas}}
 </script>

@@ -177,3 +177,50 @@ Handlebars.registerHelper('equal_nv', function(v1, options) {
         return "";
     }
 });
+//判断是否为空
+Handlebars.registerHelper('ifnull', function(v1, options) {
+    if(v1!=null&&v1!=''&&v1!=0) {
+        return options.inverse(this);
+    }else{
+        return options.fn(this);
+    }
+});
+function onSetPerson(id) {
+    if(confirm('您确定要将该用户设为经办人吗？')){
+        $('#tags').val('').attr('data-uid',id);
+        $('#userModal').modal('show');
+    }
+
+}
+function onSaveTagClick(){
+    var id=$('#tags').attr('data-uid');
+    var data={
+        is_hr:1
+    };
+    var tag=$('#tags').val();
+    if(tag==''){
+        $('#tags').focus();
+        return showError('请输入经办人标签')
+    }else{
+        data.hr_tag=tag;
+    }
+    zhput("/rs/member/"+id,data).then(function (result) {
+        if(result.code==200){
+            showSuccess("设置成功")
+            $('#tags').val('');
+            $('#userModal').modal('hide');
+            queryList();
+        }else {
+            showError("操作失败")
+        }
+    })
+}
+function onUpdate(id,tag){
+    $('#tags').attr('data-uid',id);
+    $('#tags').val(tag);
+    zhget("/rs/member/"+id).then(function (result) {
+        if(result.code==200){
+            $('#userModal').modal('show');
+        }
+    })
+}
