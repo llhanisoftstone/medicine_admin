@@ -1,5 +1,5 @@
 var base_url_user = '/rs/member';
-var base_url_organiz = '/rs/organiz';
+var base_url_organiz = '/rs/company';
 var base_url_role = '/rs/role';
 var reset_psd = "/rs/super_reset_password";
 var users = [];
