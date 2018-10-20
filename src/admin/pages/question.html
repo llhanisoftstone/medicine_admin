@@ -2,6 +2,24 @@
 <html lang="en">
 
 <head>
+    <style>
+        .questionbtn{
+            position:relative;
+        }
+        #sendExcel{
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            display: inline-block;
+            cursor: pointer;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+        }
+    </style>
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
     <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
     <script src="js/common/formValidator/validator.js"></script>
@@ -24,6 +42,13 @@
                     <div style="float: right;">
                         <button type="button" id="addNew" onclick="addvideolist()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
                         <button type="button" id="searchBtn" class="fa fa-search   btn btn-default" onclick="showSearchPage()">&nbsp;高级查询</button>
+                        <a href="http://http://fbox.o2oshangjia.cn/upload/excel/questions_template.xlsx" download="question_template">
+                            <button type="button" id="downloadExcel" class="fa fa-search   btn btn-default">下载题目导入模板</button>
+                        </a>
+                        <button type="button" class="fa btn btn-default questionbtn">
+                            导入题目
+                            <input type="file" class="fa btn btn-default" multiple="" id="sendExcel" name="files[]" value="导入题目" style="opacity: 0">
+                        </button>
                     </div>
                 </div>
 

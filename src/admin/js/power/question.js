@@ -30,6 +30,10 @@ $(function() {
         queryList();
     });
     setTimeout(queryList,500)
+    $("#sendExcel").unbind("change");
+    $("#sendExcel").bind("change", function() {
+        uploadquestion();
+    });
 });
 function getcategory(){
     $("#videonames").html("");
@@ -192,3 +196,47 @@ Handlebars.registerHelper('ifequal', function(v1,v2,v3, options) {
         return options.inverse(this);
     }
 });
+
+function uploadquestion(){
+    var content = $("#sendExcel").val();
+    if(content.length > 0) {
+        var formInfo = document.getElementById("sendExcel").files[0];
+        var formData = new FormData();
+        formData.append("picfile[]",formInfo)
+        formData.append("upType","excel")
+        upajax('/op/upload', formData, function (result) {
+            $("#sendExcel").val("")
+            //清空input,解决input同一文件不能多次选择
+            result = JSON.parse(result);
+            if(result.code== 200){
+                showSuccess("题目导入成功，请刷新页面查看结果");
+                return;
+            }
+            // else if(result.code==201) {
+            //     showError("题目导入部分失败，请在导入按钮处查看结果");
+            //     $("#errorCode").parent().parent().show();
+            //     $("#errorCode").html("导入失败，子订单ID为："+result.errIds.join() + "的数据请核对！")
+            //     return;
+            // }
+            // else if(result.code==202){
+            //     showError("题目导入失败，请在导入按钮处查看结果");
+            //     $("#errorCode").parent().parent().show();
+            //     $("#errorCode").html("导入失败，子订单ID为："+result.orderItemId+ "的数据请核对！")
+            //     return;
+            // }
+            // else if(result.code==203){
+            //     showError("导入文件内无有效数据")
+            //     return
+            // }
+            else if(result.code==204||result.code==205){
+                showError("文件格式错误")
+                return
+            }else {
+                showError("文件导入失败")
+                return
+            }
+        });
+    }
+    else
+        alert('请您选择需要上传的文件！');
+}
