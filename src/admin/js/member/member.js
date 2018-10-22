@@ -224,3 +224,19 @@ function onUpdate(id,tag){
         }
     })
 }
+function cancelSetPerson(id){
+    if(confirm('您确定要取消该经办人权限吗？')){
+        var data={
+            is_hr:0,
+            hr_tag:','
+        };
+        zhput("/rs/member/"+id,data).then(function (result) {
+            if(result.code==200){
+                showSuccess("取消成功")
+                queryList();
+            }else {
+                showError("操作失败")
+            }
+        })
+    }
+}
