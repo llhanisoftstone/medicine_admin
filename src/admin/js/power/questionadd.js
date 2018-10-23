@@ -45,7 +45,7 @@ function getorg(){
     if(organizId){
         data.id=organizId;
     }
-    zhget('/rs/organiz',data).then(function(result){
+    zhget('/rs/company',data).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
