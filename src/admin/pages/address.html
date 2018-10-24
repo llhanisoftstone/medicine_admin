@@ -135,7 +135,7 @@
                                 <div class="col-md-4 form-group">
                                     <label>联系电话：</label>
                                     <div class="pinput">
-                                        <input type="tel" maxlength="12" placeholder="请输入" class="form-control" id="linkphone" check-type="required">
+                                        <input type="text" maxlength="12" oninput="this.value=this.value.replace(/[^0-9|-]/g,'');" placeholder="请输入" class="form-control" id="linkphone" check-type="required">
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">

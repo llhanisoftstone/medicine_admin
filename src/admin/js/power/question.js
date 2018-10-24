@@ -10,7 +10,7 @@
 /**
  * Created by kechen on 2016/10/13.
  */
-var base_url_goodsCategory='/rs/questions';
+var base_url_goodsCategory='';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -20,6 +20,7 @@ var categoryArr=[]
 var organizArr=[]
 var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
 var compid=sessionStorage.getItem('compid') || getCookie('compid');
+var urank=sessionStorage.getItem('userrank');
 locationHistory('reasonSearchForm');
 $(function() {
     getorg();
@@ -54,9 +55,9 @@ function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
     var data={
-        id:organizid,
+        id:compid,
     }
-    zhget('/rs/organiz',data).then(function(result){
+    zhget('/rs/company',data).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
@@ -79,14 +80,19 @@ function rightKey(arr){
 function queryList(){
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
-    var comp_id=getCookie('compid');
     var data={
         page: currentPageNo,
         size: pageRows,
         order:'status asc,create_time desc',
         status:'<,99',
-        organiz_id:organizid,
     }
+    if(urank==80){ //80:企业管理员
+        data.comp_id=compid;
+    }
+    if(urank==90){//90:-机关账号;
+        data.organiz_id=organizid;
+    }
+
     if(issearchModel){
         data.search=1;
         var name=$.trim($("#name").val());
@@ -114,7 +120,7 @@ function queryList(){
             data.type=type;
         }
     }
-    zhget(base_url_goodsCategory,data).then(function (result) {
+    zhget('/rs/v_questions',data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
             $("#querylistnull").remove();
             integrals = result.rows;
