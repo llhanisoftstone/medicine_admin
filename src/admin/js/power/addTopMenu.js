@@ -64,7 +64,7 @@ function onUploadDetailPic(formObject, fileComp, list){
     }
 }
 function getQuestioncategory(){
-    zhget('/rs/questions_category').then( function(result) {
+    zhget('/rs/questions_category',{order:'create_time desc'}).then( function(result) {
         buildTableNoPage(result,'questioncategory-template','questioncategory');
         initselect("questioncategory")
         $(".bs-searchbox input").attr("maxlength","10");
@@ -79,7 +79,8 @@ function getOrganiztion(){
 function initselect(id){
     $('#'+id).selectpicker({
         size: 8,
-        width:'100%'
+        width:'100%',
+        noneSelectedText:"请选择"
     });
 }
 function back(){
