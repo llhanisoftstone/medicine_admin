@@ -71,6 +71,8 @@ function onAddClickmessage() {
     var id=getQueryString("pid");
     var target_type=getQueryString("target_type");
     var show_css=getQueryString("show_css");
+    $("#reasonSearchForm", $(".bannerreport"))[0].reset();
+    setlocalStorageCookie(currPageName,"{}");
     location.href="admin.html#pages/addhomemessage.html?pid="+id+"&target_type="+target_type+"&show_css="+show_css;
 }
 function onUpdateClick(targetid) {
@@ -123,6 +125,12 @@ function queryList() {
                 for (var i = 0; i < integrals.length; i++) {
                     var indexCode = integrals[i];
                     indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                    if(indexCode.rowNum.show_css==3){
+                        indexCode.name=indexCode.cp_name
+                    }
+                    if(indexCode.rowNum.show_css==3){
+                        indexCode.icon_path=indexCode.cp_picpath
+                    }
                     indexCode.icon_path=targetUrl+indexCode.icon_path;
                 }
                 buildTableByke(result, 'bannerhome-template', 'bannerhome-placeholder','paginator',queryList,pageRows);
