@@ -54,12 +54,14 @@ function queryList(){
 }
 function showSearchPage() {
     $(".addModels", $(".reasonRefund")).css("display", "none");
+    $('#name').val('')
     $(".reasonSearch", $(".reasonRefund")).animate({
         height : 'toggle',
         opacity : 'toggle'
     }, "slow");
 }
 function addGoodsModels(dom){
+    $('#name').val('')
     $(".reasonSearch", $(".reasonRefund")).css("display", "none");
     $("#userAddForm", $(".reasonRefund"))[0].reset();
     $(".addModels", $(".reasonRefund")).animate({

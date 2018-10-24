@@ -140,7 +140,7 @@ function  saveData(_status){
         return showError("请上传列表图");
     }
     var sequence=$.trim($("#sequence").val());
-    if(sequence!=0 && sequence ==''){
+    if(sequence ==''){
         return showError("请输入顺序");
     }
     var is_main=$("#is_main").val();

@@ -19,6 +19,7 @@ var integrals;
 var categoryArr=[]
 var organizArr=[]
 var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+var compid=sessionStorage.getItem('compid') || getCookie('compid');
 locationHistory('reasonSearchForm');
 $(function() {
     getorg();
@@ -204,6 +205,7 @@ function uploadquestion(){
         var formData = new FormData();
         formData.append("picfile[]",formInfo)
         formData.append("upType","excel")
+        formData.append("organiz_id",0)//服务端要求先写死为0
         upajax('/op/upload', formData, function (result) {
             $("#sendExcel").val("")
             //清空input,解决input同一文件不能多次选择

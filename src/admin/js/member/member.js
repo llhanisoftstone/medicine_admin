@@ -69,6 +69,7 @@ function queryList(){
         var status = $("#status").val();
         var nickname = $("#nickname").val();
         var comp_id = $("#company").val();
+        var usertype = $("#usertype").val();
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
                 if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
@@ -97,6 +98,9 @@ function queryList(){
         }
         if(comp_id!=-1){
             data.comp_id=comp_id
+        }
+        if(usertype!=-1){
+            data.is_hr=usertype
         }
         data.search = 1;
     }

@@ -103,11 +103,14 @@ function queryList() {
             var data = {
                 order:'status desc,create_time desc',
                 page: currentPageNo,
-                size: pageRows
-                // "!status":99
+                size: pageRows,
+                status:'<>,9'
             }
             if(compid){
                 data.comp_id=compid
+            }
+            if(urank==91){//平台管理员
+                data.category=1;
             }
             if(isSearch){
                 var title=$("#titlebanner").val();
@@ -140,7 +143,7 @@ function queryList() {
 // 删除按钮功能------写app=2
 function onDeleteClick(el,id){
     if(confirm("确认要删除？")) {
-        zhdelete(base_url_banner+"/"+id+"?app=02").done(function(result){
+        zhput(base_url_banner+"/"+id,{status:9}).done(function(result){
             // debugger
             if(result.code == 200){
                 showSuccess('删除成功！');
