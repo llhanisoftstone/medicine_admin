@@ -68,7 +68,7 @@ function showSelect(){
     if(rank&&rank==31){
         $(".organizmember").hide();
         $(".membershop").show();
-    }else if(rank&&rank==90){
+    }else if(rank&&rank==80){
         $(".organizmember").show();
         $(".membershop").hide();
     }
@@ -178,7 +178,7 @@ function fillForm(id) {
                 $(".organizmember").hide();
                 $(".membershop").show();
                 $('#shopcompany').selectpicker('val', res.rows[0].store_id);
-            }else if(res.rows[0].rank==90){
+            }else if(res.rows[0].rank==80){
                 $(".organizmember").show();
                 $(".membershop").hide();
                 $('#organiz').selectpicker('val', res.rows[0].organiz_id);
@@ -249,11 +249,11 @@ function onUserSaveClick() {
             return;
         }
     }
-    if(rank==90){
+    if(rank==80){
         if(organiz&&organiz!='-1'){
             data.organiz_id=organiz;
             data.comp_id=organiz;
-            data.rank=80;//80:企业管理员90:-机关账号;
+            data.rank=80;//80:企业管理员;
         }else{
             showError("请选择机关");
             return;

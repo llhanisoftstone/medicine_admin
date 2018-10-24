@@ -10,7 +10,7 @@
 /**
  * Created by kechen on 2016/10/13.
  */
-var base_url_goodsCategory='';
+var base_url_goodsCategory='/rs/questions';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
