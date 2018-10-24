@@ -388,6 +388,10 @@ function buildPaginatorByke(paginator,total,fu,callBack,records,sizePage,tableid
             showError('请输入正确的页码');
             return;
         }
+        if(thispage>$("#goToPagePaginator").attr("max")){
+            showError('页数不存在');
+            return;
+        }
         $("#" + paginator).bootstrapPaginator("show",thispage);
         currentPageNo = thispage;
         $("#"+tableid).attr("_pageNo",thispage);
