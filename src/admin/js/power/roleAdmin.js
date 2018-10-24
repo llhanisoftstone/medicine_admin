@@ -252,6 +252,8 @@ function onUserSaveClick() {
     if(rank==90){
         if(organiz&&organiz!='-1'){
             data.organiz_id=organiz;
+            data.comp_id=organiz;
+            data.rank=80;//80:企业管理员90:-机关账号;
         }else{
             showError("请选择机关");
             return;

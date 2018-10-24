@@ -9,6 +9,7 @@ var pageRows = 10;
 var isSearch=false;
 var searchForm; //查询条件JSON
 var urank=sessionStorage.getItem('userrank');
+var compid=sessionStorage.getItem('compid');
 $(function() {
     $("#resetSearchBtn", $(".bannerreport")).bind("click", function(){
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();
@@ -104,6 +105,9 @@ function queryList() {
                 page: currentPageNo,
                 size: pageRows
                 // "!status":99
+            }
+            if(compid){
+                data.comp_id=compid
             }
             if(isSearch){
                 var title=$("#titlebanner").val();
