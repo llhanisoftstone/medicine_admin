@@ -33,7 +33,7 @@ function getcategory(){
 function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
-    zhget('/rs/organiz').then(function(result){
+    zhget('/rs/company',{status:1}).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
