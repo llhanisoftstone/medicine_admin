@@ -79,6 +79,8 @@ function onUpdateClick(targetid) {
     var id=getQueryString("pid");
     var target_type=getQueryString("target_type");
     var show_css=getQueryString("show_css");
+    var pageRecord = $("#paginator li.active a").text();
+    setlocalStorageCookie("pageRecord",pageRecord);
     location.href="admin.html#pages/addhomemessage.html?pid="+id+"&target_type="+target_type+"&show_css="+show_css+"&targetid="+targetid;
 }
 function onSearchClickmessage() {
