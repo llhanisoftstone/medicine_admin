@@ -25,6 +25,7 @@ $(function() {
 // 图片上传
 function onUploadDetailPic(formObject, fileComp, list){
     var attrs = fileComp.attr("refattr");
+    debugger
     if(list.length > 0 && list[0].code == 200){
         var sAttachUrl = list[0].url;
         $("#"+attrs, formObject).val(sAttachUrl);
@@ -71,6 +72,9 @@ function onUpdateClick(id) {
             $("#type").val(datalist.target_type);
             if(datalist.target_type==1){
                 $("#typestyle").val(datalist.show_css);
+                $(".styleselect").show();
+            }else{
+                $(".styleselect").hide();
             }
         }
     })
@@ -165,6 +169,12 @@ function savedatamain(){
     var name=$("#title").val()
     var icon_path=$("#title_pic2").val();
     var sequence=$("#sequence").val();
+    if(name==""||name==null){
+        return showError("请输入标题")
+    }
+    if(sequence==""||sequence==null){
+        return showError("请输入顺序")
+    }
     var data={
         name:name,
         icon_path:icon_path,

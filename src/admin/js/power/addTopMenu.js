@@ -92,6 +92,15 @@ function onSaveClick() {
         var name=$("#titlebanner").val();
         var icon_path=$("#title_pic2").val();
         var sequence=$("#sequence").val();
+        if(name==""||name==null){
+            return showError("请输入名字")
+        }
+        if(sequence==""||sequence==null){
+            return showError("请输入显示顺序")
+        }
+        if(icon_path==""||icon_path==null){
+            return showError("请选择图标")
+        }
         var data={
             name:name,
             icon_path:icon_path,
