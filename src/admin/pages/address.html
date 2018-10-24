@@ -172,6 +172,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                            <label>状态：</label>
+                            <div class="pinput">
+                                <select  id="status" name="status" class="form-control ">
+                                    <option value="-1">请选择</option>
+                                    <option value="1">启用</option>
+                                    <option value="0">禁用</option>
+                                </select>
+                            </div>
+                            </div>
+                        </div>
                         <div class="form-group  pbtn-group">
                             <button type="button" style="margin-top:-10px;" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
                             <button type="button" style="margin-top:-10px;" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" onclick="resetData()">重置</button>
@@ -190,6 +202,7 @@
                                 <th style="width:10%">联系人</th>
                                 <th style="width:10%">联系电话</th>
                                 <th style="width:10%">显示顺序</th>
+                                <th style="width:5%">状态</th>
                                 <th style="width:10%">操作</th>
                             </tr>
                             </thead>
@@ -223,6 +236,10 @@
         <td>{{contacts}}</td>
         <td>{{phone}}</td>
         <td>{{sequence}}</td>
+        <td>
+            {{#equal status 0}}禁用{{/equal}}
+            {{#equal status 1}}启用{{/equal}}
+        </td>
         <td>
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
             <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this,'{{id}}')"></span>

@@ -37,6 +37,7 @@ function queryList() {
         var province=$("#province").val();
         var city=$("#city").val();
         var zone=$("#zone").val();
+        var status=$("#status").val();
         if(acceptanceReport!=''){
             data.name=acceptanceReport;
         }
@@ -54,6 +55,9 @@ function queryList() {
         }
         if(zone!='-1'){
             data.zone_id=zone;
+        }
+        if(status!='-1'){
+            data.status=status;
         }
         data.search=1;
     }
@@ -226,7 +230,7 @@ function fillForm(id) {
 }
 
 function cleanForm() {
-    $("#userAddForm", $("#wrapper"))[0].reset();
+    $("#reasonSearchForm")[0].reset();
 }
 
 var isSearch=false;
