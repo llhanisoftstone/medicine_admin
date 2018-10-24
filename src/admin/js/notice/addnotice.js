@@ -50,8 +50,10 @@ $(function(){
     if(id==''||id==null){
         operation = "add";
         status()
+        $('#breadname').html('新增通知');
     }else{
         operation = "modify";
+        $('#breadname').html('编辑通知');
         getGoodsById(id);
     }
     $.initSystemFileUploadnotLRZ($("#titleForm"), onUploadDetailPic);
