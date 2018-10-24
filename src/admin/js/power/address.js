@@ -33,7 +33,7 @@ function queryList() {
     if(isSearch){
         var acceptanceReport=$("#acceptanceReport").val();
         var linkphone=$("#linkphone").val();
-        var linkname=$("#linkname").val();
+        var name=$("#name").val();
         var province=$("#province").val();
         var city=$("#city").val();
         var zone=$("#zone").val();
@@ -42,10 +42,7 @@ function queryList() {
             data.name=acceptanceReport;
         }
         if(linkphone!=''){
-            data.link_phone=linkphone;
-        }
-        if(linkname!=''){
-            data.link_name=linkname;
+            data.phone=linkphone;
         }
         if(province!='-1'){
             data.province_id=province;
