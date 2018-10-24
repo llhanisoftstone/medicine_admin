@@ -217,6 +217,7 @@ function uploadquestion(){
             //清空input,解决input同一文件不能多次选择
             result = JSON.parse(result);
             if(result.code== 200){
+                queryList();
                 showSuccess("题目导入成功，请刷新页面查看结果");
                 return;
             }
