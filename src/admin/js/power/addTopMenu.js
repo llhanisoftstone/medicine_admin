@@ -67,6 +67,7 @@ function getQuestioncategory(){
     zhget('/rs/questions_category').then( function(result) {
         buildTableNoPage(result,'questioncategory-template','questioncategory');
         initselect("questioncategory")
+        $(".bs-searchbox input").attr("maxlength","10");
     })
 }
 function getOrganiztion(){
@@ -93,7 +94,7 @@ function onSaveClick() {
         var icon_path=$("#title_pic2").val().trim();
         var sequence=$("#sequence").val().trim();
         if(name==""||name==null){
-            return showError("请输入名字")
+            return showError("请输入标题")
         }
         if(sequence==""||sequence==null){
             return showError("请输入显示顺序")

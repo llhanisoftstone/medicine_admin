@@ -15,7 +15,7 @@ $(function() {
     $("#searchBtn", $(".bannerreport")).unbind("click");
     $("#searchBtn", $(".bannerreport")).bind("click", showSearchPage);
     queryList()
-    if(comp_id){
+    if(comp_id&&comp_id!="0"){
       $(".targetselect").hide()
     }else{
         $(".targetselect").show()
@@ -183,7 +183,7 @@ function savedatamain(){
         icon_path:icon_path,
         sequence:sequence
     }
-    if(comp_id){
+    if(comp_id&&comp_id!="0"){
         data.comp_id=comp_id;
         data.target_type=1;
         data.show_css=1;
