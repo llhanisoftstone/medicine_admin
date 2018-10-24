@@ -172,7 +172,6 @@ function fillForm(id) {
             $("#userid").val(id);
             $("#username").val(res.rows[0].username);
             $("#nickname").val(res.rows[0].nickname);
-
             $("#rqanakmember").val(res.rows[0].rank)
             if(res.rows[0].rank==31){
                 $(".organizmember").hide();
