@@ -81,10 +81,11 @@ function onAddClick() {
     cleanForm();
     operation = "add";
     $(".reasonSearch").css("display","none")
-    $(".addModelscompany", $("#wrapper")).animate({
-        height : 'toggle',
-        opacity : 'toggle'
-    }, "slow");
+    // $(".addModelscompany", $("#wrapper")).animate({
+    //     height : 'toggle',
+    //     opacity : 'toggle'
+    // }, "slow");
+    $(".addModelscompany", $("#wrapper")).show();
 }
 function onSearchClick() {
     $(".addModelscompany").css("display","none")
