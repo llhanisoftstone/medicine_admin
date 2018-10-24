@@ -21,8 +21,6 @@ function onUploadDetailPic(formObject, fileComp, list){
         $("#"+attrs, formObject).val(sAttachUrl);
     }
 }
-
-
 function queryList() {
     var data = {
         page: currentPageNo,
@@ -143,8 +141,8 @@ function onSaveClick() {
             return;
         }
     }
+    var sequence=$("#sequence").val().trim();
     data.contacts=$("#contacts").val();
-    data.sequence=$("#sequence").val();
     data.address=$("#address").val();
     var province=$("#provinceid").val();
     if(province!="-1"){
@@ -167,6 +165,12 @@ function onSaveClick() {
         showError("请选择区");
         return;
     }
+    if(sequence=='') {
+        return showError("请输入顺序");
+    }else{
+        data.sequence=sequence;
+    }
+
     if(postoff){
         return;
     }
@@ -204,6 +208,7 @@ function saveResult(result) {
         $(".reasonSearch").css("display","none")
         $(".addModelscompany").css("display","none")
         queryList();
+        $('#userAddForm')[0].reset();
         showSuccess('保存成功！');
         setTimeout(function(){
             postoff=false;
