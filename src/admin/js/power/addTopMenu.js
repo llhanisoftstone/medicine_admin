@@ -5,7 +5,9 @@ var base_url='/rs/main_column_item';
 var operation = "add";
 var targetid=0;
 var target_type;
+var comp_id;
 $(function(){
+    comp_id=getCookie('compid') || sessionStorage.getItem('compid');
     //绑定上传图片详情控件change事件
     $.initSystemFileUpload($("#user_form"), onUploadDetailPic);
     var id=getQueryString("pid");
@@ -64,7 +66,11 @@ function onUploadDetailPic(formObject, fileComp, list){
     }
 }
 function getQuestioncategory(){
-    zhget('/rs/questions_category',{order:'create_time desc'}).then( function(result) {
+    var data={order:'create_time desc'};
+    if(comp_id&&comp_id!="0"){
+        data.comp_id=comp_id;
+    }
+    zhget('/rs/questions_category',data).then( function(result) {
         buildTableNoPage(result,'questioncategory-template','questioncategory');
         initselect("questioncategory")
         $(".bs-searchbox input").attr("maxlength","10");
