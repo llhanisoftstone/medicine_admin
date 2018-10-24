@@ -25,7 +25,6 @@ $(function() {
 // 图片上传
 function onUploadDetailPic(formObject, fileComp, list){
     var attrs = fileComp.attr("refattr");
-    debugger
     if(list.length > 0 && list[0].code == 200){
         var sAttachUrl = list[0].url;
         $("#"+attrs, formObject).val(sAttachUrl);
@@ -51,6 +50,7 @@ function onAddClick() {
     $("#status").val("-1");
     isSearch=false;
     queryList();
+    $(".styleselect").hide()
     $(".addModels", $("#wrapper")).animate({
         height : 'show',
         opacity : 'show'
@@ -166,14 +166,17 @@ function forbid(id){
     }
 }
 function savedatamain(){
-    var name=$("#title").val()
-    var icon_path=$("#title_pic2").val();
-    var sequence=$("#sequence").val();
+    var name=$("#title").val().trim();
+    var icon_path=$("#title_pic2").val().trim();
+    var sequence=$("#sequence").val().trim();
     if(name==""||name==null){
         return showError("请输入标题")
     }
     if(sequence==""||sequence==null){
         return showError("请输入顺序")
+    }
+    if(icon_path==""||icon_path==null){
+        return showError("请选择图标")
     }
     var data={
         name:name,

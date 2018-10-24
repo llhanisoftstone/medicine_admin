@@ -14,6 +14,7 @@ $(function() {
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();
         currentPageNo = 1;
         pageRows = 10;
+        queryList();
     });
     $("body").on("input","#goToPagePaginator",function(){
         num_limit(this,{max:11,dec:false})

@@ -89,9 +89,9 @@ function back(){
 }
 function onSaveClick() {
     if(target_type==1){
-        var name=$("#titlebanner").val();
-        var icon_path=$("#title_pic2").val();
-        var sequence=$("#sequence").val();
+        var name=$("#titlebanner").val().trim();
+        var icon_path=$("#title_pic2").val().trim();
+        var sequence=$("#sequence").val().trim();
         if(name==""||name==null){
             return showError("请输入名字")
         }
