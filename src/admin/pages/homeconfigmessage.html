@@ -79,8 +79,8 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{#equal show_css 3}}{{cp_name}}{{else}}{{name}}{{/equal}}</td>
-        <td><a href="{{icon_path}}" target="_blank">{{#equal show_css 3}}<img src="{{cp_picpath}}" alt="" style="width:100px;height:100px">{{else}}<img src="{{icon_path}}" alt="" style="width:100px;height:100px">{{/equal}}</a></td>
+        <td>{{name}}</td>
+        <td><a href="{{icon_path}}" target="_blank"><img src="{{icon_path}}" alt="" style="width:100px;height:100px"></a></td>
         <td>
             <span class="fa fa-edit editOrder" style="cursor: pointer;" onclick="onUpdateClick('{{id}}')" title="编辑"></span>
             <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick('{{id}}')"></span>
