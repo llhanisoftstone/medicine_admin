@@ -104,7 +104,7 @@ function searchData(){
 // 页面渲染
 function queryList() {
     var data = {
-        order:'sequence desc',
+        order:'sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
         column_id:getQueryString("pid"),
