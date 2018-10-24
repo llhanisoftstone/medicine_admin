@@ -77,6 +77,7 @@ function queryList() {
 }
 
 function onAddClick() {
+    $("#userAddForm")[0].reset();
     cleanForm();
     operation = "add";
     $(".reasonSearch").css("display","none")
@@ -129,9 +130,24 @@ jQuery("#linkphone").on("input",function(){
 });
 function onSaveClick() {
     var data = {};
-    data.name=$("#name").val();
-    data.picpath=$("#title_pic2").val();
-    data.tag=$("#tag").val();
+    var name=$("#name").val().trim();
+    if(name=='') {
+        return showError("请输入机构名称");
+    }else{
+        data.name=name;
+    }
+    var picpath=$("#title_pic2").val();
+    if(picpath=='') {
+        return showError("请上传LOGO");
+    }else{
+        data.picpath=picpath;
+    }
+    var tag=$("#tag").val().trim();
+    if(tag=='') {
+        return showError("请输入标签");
+    }else{
+        data.tag=tag;
+    }
     var linkphone=$("#phone").val();
     if(linkphone&&linkphone!=""){
         if(validatePhoneAnd400(linkphone)){
@@ -140,10 +156,22 @@ function onSaveClick() {
             showError("请输入正确联系电话");
             return;
         }
+    }else{
+        return showError("请输入联系电话");
     }
     var sequence=$("#sequence").val().trim();
-    data.contacts=$("#contacts").val();
-    data.address=$("#address").val();
+    var contacts=$("#contacts").val().trim();
+    if(contacts=='') {
+        return showError("请输入联系人");
+    }else{
+        data.contacts=contacts;
+    }
+    var address=$("#address").val().trim();
+    if(address=='') {
+        return showError("请输入详细地址");
+    }else{
+        data.address=address;
+    }
     var province=$("#provinceid").val();
     if(province!="-1"){
         data.province_id=province;
