@@ -16,6 +16,7 @@ $(function() {
     }
     $("#resetSearchBtn", $(".report")).bind("click", function(){
         $("#reasonSearchForm", $(".report"))[0].reset();
+        $("#company").selectpicker("val",'');
         currentPageNo = 1;
         pageRows = 10;
         queryList();
@@ -42,6 +43,10 @@ function getCompany(){
             for(var i=0;i<res.rows.length;i++){
                 $("#company").append('<option value="'+res.rows[i].id+'">'+res.rows[i].name+'</option>')
             }
+            $("#company").selectpicker({
+                size: 10,
+                width:'100%'
+            });
         }
     })
 }
@@ -202,11 +207,18 @@ function onSaveTagClick(){
         is_hr:1
     };
     var tag=$('#tags').val();
+    var hr_code=$('#hr_code').val();
     if(tag==''){
         $('#tags').focus();
         return showError('请输入经办人标签')
     }else{
         data.hr_tag=tag;
+    }
+    if(hr_code==''){
+        $('#hr_code').focus();
+        return showError('请输入顺序')
+    }else{
+        data.hr_code=hr_code;
     }
     zhput("/rs/member/"+id,data).then(function (result) {
         if(result.code==200){

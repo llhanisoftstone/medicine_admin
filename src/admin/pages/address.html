@@ -65,7 +65,7 @@
                                         <div class="col-md-4 form-group">
                                             <label>联系电话：</label>
                                             <div class="pinput">
-                                                <input type="text" onkeyup="value=value.replace(/[^\d]/g,'')"  maxlength="12"  placeholder="请输入" class="form-control" id="phone" datatype="require">
+                                                <input type="text" oninput="this.value=this.value.replace(/[^(\d|\-)]$/g,'');"  maxlength="12"  placeholder="请输入" class="form-control" id="phone" datatype="require">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
@@ -135,7 +135,7 @@
                                 <div class="col-md-4 form-group">
                                     <label>联系电话：</label>
                                     <div class="pinput">
-                                        <input type="text" maxlength="12" oninput="this.value=this.value.replace(/[^0-9|-]/g,'');" placeholder="请输入" class="form-control" id="linkphone" check-type="required">
+                                        <input type="text" maxlength="12" oninput="this.value=this.value.replace(/[^(\d|\-)]$/g,'');" placeholder="请输入" class="form-control" id="linkphone" check-type="required">
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">

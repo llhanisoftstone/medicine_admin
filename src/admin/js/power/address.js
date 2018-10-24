@@ -42,10 +42,10 @@ function queryList() {
             data.name=acceptanceReport;
         }
         if(linkphone!=''){
-            data.link_phone=linkphone;
+            data.phone=linkphone;
         }
         if(linkname!=''){
-            data.link_name=linkname;
+            data.address=linkname;
         }
         if(province!='-1'){
             data.province_id=province;
@@ -324,12 +324,12 @@ function getzone(id,zone='-1'){
     })
 }
 $("#provinceid").change(function(){
-    $("#city").html("<option value='-1'>请选择</option>")
-    $("#zone").html("<option value='-1'>请选择</option>")
+    $("#cityid").html("<option value='-1'>请选择</option>")
+    $("#zoneid").html("<option value='-1'>请选择</option>")
     getcity($(this).val())
 })
 $("#cityid").change(function(){
-    $("#zone").html("<option value='-1'>请选择</option>")
+    $("#zoneid").html("<option value='-1'>请选择</option>")
     getzone($(this).val())
 })
 $("#province").change(function(){
