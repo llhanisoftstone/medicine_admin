@@ -207,11 +207,18 @@ function onSaveTagClick(){
         is_hr:1
     };
     var tag=$('#tags').val();
+    var hr_code=$('#hr_code').val();
     if(tag==''){
         $('#tags').focus();
         return showError('请输入经办人标签')
     }else{
         data.hr_tag=tag;
+    }
+    if(hr_code==''){
+        $('#hr_code').focus();
+        return showError('请输入顺序')
+    }else{
+        data.hr_code=hr_code;
     }
     zhput("/rs/member/"+id,data).then(function (result) {
         if(result.code==200){

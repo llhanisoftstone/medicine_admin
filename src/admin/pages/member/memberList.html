@@ -110,15 +110,16 @@
                     <table class="table table-striped table-bordered table-hover" style="text-align: center">
                         <thead>
                         <tr>
-                            <th class="col-sm-1">用户ID</th>
-                            <th class="col-sm-1">微信昵称</th>
-                            <th class="col-sm-1">姓名</th>
-                            <th class="col-sm-1">性别</th>
-                            <th class="col-sm-2">手机号</th>
-                            <th class="col-sm-2">企业</th>
-                            <th class="col-sm-2">注册时间</th>
-                            <th class="col-sm-1">角色类型</th>
-                            <th class="col-sm-2">操作</th>
+                            <th style="width:5%;">用户ID</th>
+                            <th  style="width:10%;">微信昵称</th>
+                            <th  style="width:5%;">姓名</th>
+                            <th  style="width:5%;">性别</th>
+                            <th  style="width:5%;">手机号</th>
+                            <th  style="width:10%;">企业</th>
+                            <th  style="width:10%;">注册时间</th>
+                            <th  style="width:5%;">角色类型</th>
+                            <th  style="width:5%;">顺序</th>
+                            <th  style="width:10%;">操作</th>
 
                         </tr>
                         </thead>
@@ -151,6 +152,12 @@
                             <label for="tags" class="col-sm-2 control-label">添加标签</label>
                             <div class="col-sm-9">
                                 <input type="text" data-uid='' oninput="this.value=this.value.replace(/\，/g,'')" placeholder="标签用英文逗号分隔" class="form-control" id="tags" check-type="required" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags" class="col-sm-2 control-label">顺序</label>
+                            <div class="col-sm-9">
+                                <input type="number" data-uid='' oninput="num_limit(this,{max:8,dec:false})"  maxlength="10" placeholder="请输入" class="form-control" id="hr_code" check-type="required" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -187,6 +194,7 @@
             {{#equal is_hr 1}}经办人{{/equal}}
             {{#ifnull is_hr}}普通用户{{/ifnull}}
         </td>
+        <td>{{hr_code}}</td>
         <td style="text-align: center;">
             {{#equal is_hr 1}}
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdate('{{id}}','{{hr_tag}}')"></span>
