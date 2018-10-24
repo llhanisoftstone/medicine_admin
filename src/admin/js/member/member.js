@@ -16,6 +16,7 @@ $(function() {
     }
     $("#resetSearchBtn", $(".report")).bind("click", function(){
         $("#reasonSearchForm", $(".report"))[0].reset();
+        $("#company").selectpicker("val",'');
         currentPageNo = 1;
         pageRows = 10;
         queryList();
@@ -42,6 +43,10 @@ function getCompany(){
             for(var i=0;i<res.rows.length;i++){
                 $("#company").append('<option value="'+res.rows[i].id+'">'+res.rows[i].name+'</option>')
             }
+            $("#company").selectpicker({
+                size: 10,
+                width:'100%'
+            });
         }
     })
 }
