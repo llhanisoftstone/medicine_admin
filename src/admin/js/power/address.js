@@ -37,6 +37,7 @@ function queryList() {
         var province=$("#province").val();
         var city=$("#city").val();
         var zone=$("#zone").val();
+        var status=$("#status").val();
         if(acceptanceReport!=''){
             data.name=acceptanceReport;
         }
@@ -54,6 +55,9 @@ function queryList() {
         }
         if(zone!='-1'){
             data.zone_id=zone;
+        }
+        if(status!='-1'){
+            data.status=status;
         }
         data.search=1;
     }
@@ -226,7 +230,7 @@ function fillForm(id) {
 }
 
 function cleanForm() {
-    $("#userAddForm", $("#wrapper"))[0].reset();
+    $("#reasonSearchForm")[0].reset();
 }
 
 var isSearch=false;
@@ -349,3 +353,28 @@ function validatePhoneAnd400(phonenum){
     var mobil400 = /^400-([0-9]){1}([0-9-]{6})([0-9]){1}$/;
     return isMob.test(phonenum) || fixMobil.test(phonenum)|| mobil400.test(phonenum) ;
 }
+function companyForbid(id) {
+    if(confirm("确认要禁用吗？")) {
+        zhput(base_url_acceptanceReport+"/"+id,{status:0}).then(function(result){
+            if(result.code == 200){
+                showSuccess('禁用成功！');
+                queryList();
+            }else{
+                showError("操作失败");
+            }
+        })
+    }
+}
+function companyStart(id) {
+    if(confirm("确认要启用吗？")) {
+        zhput(base_url_acceptanceReport+"/"+id,{status:1}).then(function(result){
+            if(result.code == 200){
+                showSuccess('启用成功！');
+                queryList();
+            }else{
+                showError("操作失败");
+            }
+        })
+    }
+}
+
