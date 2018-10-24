@@ -38,7 +38,7 @@ function showSearchPage() {
     }
 }
 function getCompany(){
-    zhget('/rs/company').then(function(res){
+    zhget('/rs/company',{status:1}).then(function(res){
         if(res.code == 200){
             for(var i=0;i<res.rows.length;i++){
                 $("#company").append('<option value="'+res.rows[i].id+'">'+res.rows[i].name+'</option>')
