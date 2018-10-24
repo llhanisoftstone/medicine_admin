@@ -4,7 +4,7 @@ var pageRows = 10;
 var isSearch=false;
 var comp_id;
 $(function() {
-    comp_id=getCookie('compid');
+    comp_id=getCookie('compid') || sessionStorage.getItem('compid');
     $.initSystemFileUploadnotLRZ($("#userAddForm"), onUploadDetailPic);
     $("#resetSearchBtn", $(".bannerreport")).bind("click", function(){
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();
