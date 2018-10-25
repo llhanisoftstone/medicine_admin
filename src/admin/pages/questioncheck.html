@@ -192,14 +192,14 @@
         <td style="text-align: center;">
             <span class="fa fa-file-text-o" aria-hidden="true" title="查看详情" onclick="viewDetail('{{id}}')"></span>
             {{#equal status 2}}
-            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}','{{type}}')" title="下架"></span>
+            &nbsp;<span class="fa fa-download" onclick="questiondown('{{id}}','{{type}}','{{category_id}}')" title="下架"></span>
             {{/equal}}
             {{#equal status 1}}
-            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}','{{type}}')" title="通过"></span>
-            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}','{{type}}')" title="拒绝"></span>
+            &nbsp;<span class="fa fa-check" onclick="agreeClick('{{id}}','{{type}}','{{category_id}}')" title="通过"></span>
+            &nbsp;<span class="fa fa-times" onclick="rejectClick('{{id}}','{{type}}','{{category_id}}')" title="拒绝"></span>
             {{/equal}}
             {{#equal status 4}}
-            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}','{{type}}')" title="上架"></span>
+            &nbsp;<span class="fa fa-upload" onclick="questionup('{{id}}','{{type}}','{{category_id}}')" title="上架"></span>
             {{/equal}}
         </td>
     </tr>

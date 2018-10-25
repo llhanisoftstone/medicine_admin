@@ -138,9 +138,9 @@ function delClick(id) {
 }*/
 //状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
 //下架
-function questiondown(id,type){
+function questiondown(id,type,category_id){
     if(confirm("确定要下架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 4,type:type}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 4,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("下架成功");
@@ -151,9 +151,9 @@ function questiondown(id,type){
     }
 }
 //上架
-function questionup(id,type){
+function questionup(id,type,category_id){
     if(confirm("确定要上架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("上架成功");
@@ -164,9 +164,9 @@ function questionup(id,type){
     }
 }
 //拒绝
-function rejectClick(id,type){
+function rejectClick(id,type,category_id){
     if(confirm("确定要拒绝该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 3,type:type}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 3,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("拒绝成功");
@@ -177,9 +177,9 @@ function rejectClick(id,type){
     }
 }
 //通过审核
-function agreeClick(id,type){
+function agreeClick(id,type,category_id){
     if(confirm("确定要通过该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("通过成功");

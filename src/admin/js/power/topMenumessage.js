@@ -45,6 +45,14 @@ $(function() {
         isSearch=false;
         $("#reasonSearchForm", $(".bannerreport"))[0].reset();
     }
+    var show_css=getQueryString("show_css");
+    if(show_css==3){
+        $(".nameshow").html("机构：")
+        $(".tabname").html("机构")
+    }else{
+        $(".nameshow").html("标题：")
+        $(".tabname").html("标题")
+    }
     queryList()
 
 });
@@ -104,6 +112,7 @@ function searchData(){
 // 页面渲染
 function queryList() {
     var data = {
+        status:1,
         order:'sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
@@ -127,10 +136,8 @@ function queryList() {
                 for (var i = 0; i < integrals.length; i++) {
                     var indexCode = integrals[i];
                     indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
-                    if(indexCode.rowNum.show_css==3){
+                    if(indexCode.show_css==3){
                         indexCode.name=indexCode.cp_name
-                    }
-                    if(indexCode.rowNum.show_css==3){
                         indexCode.icon_path=indexCode.cp_picpath
                     }
                     indexCode.icon_path=targetUrl+indexCode.icon_path;

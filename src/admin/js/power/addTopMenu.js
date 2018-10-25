@@ -137,18 +137,21 @@ function onSaveClick() {
             return showError("请选择机构")
         }
     }
+    $("#saveCarouselData").attr("disabled","disabled");
     if(operation=='add'){
         $.showActionLoading();
         zhpost(base_url,data).then(function (result){
             $.hideActionLoading();
             if(checkData(result,'post')){
                 back();
+                $("#saveCarouselData").attr("disabled",false);
             }
         })
     }else{
         zhput(base_url+'/'+targetid,data).then(function (result){
             if(checkData(result,'put')){
                 back();
+                $("#saveCarouselData").attr("disabled",false);
             }
         })
     }

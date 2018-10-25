@@ -26,7 +26,7 @@ function queryList() {
         page: currentPageNo,
         size: pageRows,
         status:'<,9',
-        order:'sequence desc,create_time desc'
+        order:'status desc,sequence desc,create_time desc'
     }
     if(isSearch){
         var acceptanceReport=$("#acceptanceReport").val();
