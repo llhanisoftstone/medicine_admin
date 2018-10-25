@@ -10,7 +10,7 @@
 /**
  * Created by kechen on 2016/10/13.
  */
-var base_url_goodsCategory='';
+var base_url_goodsCategory='/rs/questions';
 var currentPageNo = 1;
 var pageRows = 10;
 var issearchModel=false;
@@ -217,6 +217,7 @@ function uploadquestion(){
             //清空input,解决input同一文件不能多次选择
             result = JSON.parse(result);
             if(result.code== 200){
+                queryList();
                 showSuccess("题目导入成功，请刷新页面查看结果");
                 return;
             }
