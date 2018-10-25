@@ -70,12 +70,19 @@ function onUpdateClick(id) {
            $("#title_pic2").val(datalist.icon_path);
            $("#sequence").val(datalist.sequence);
             $("#type").val(datalist.target_type);
-            if(datalist.target_type==1){
-                $("#typestyle").val(datalist.show_css);
-                $(".styleselect").show();
-            }else{
+            if(datalist.comp_id){
+                $("#targetselect").hide();
                 $(".styleselect").hide();
+            }else{
+                $("#targetselect").show();
+                if(datalist.target_type==1){
+                    $("#typestyle").val(datalist.show_css);
+                    $(".styleselect").show();
+                }else{
+                    $(".styleselect").hide();
+                }
             }
+
         }
     })
 }
@@ -206,7 +213,7 @@ function savedatamain(){
             data.show_css=3;
         }
     }
-
+    $("#userAddcategory").attr("disabled","disabled")
     var id=$("#configid").val();
     if(id){
         zhput("/rs/main_column/"+id,data).then(function(result){
@@ -214,9 +221,11 @@ function savedatamain(){
                 showSuccess("修改成功");
                 queryList();
                 $(".addModels").css("display","none");
+                $("#userAddcategory").attr("disabled",false)
                 $(".reasonSearch").css("display","none");
             } else {
                 showError("修改失败")
+                $("#userAddcategory").attr("disabled",false)
             }
         })
     }else{
@@ -225,9 +234,11 @@ function savedatamain(){
                 showSuccess("添加成功");
                 queryList();
                 $(".addModels").css("display","none");
+                $("#userAddcategory").attr("disabled",false)
                 $(".reasonSearch").css("display","none");
             } else {
                 showError("添加失败")
+                $("#userAddcategory").attr("disabled",false)
             }
         })
     }
