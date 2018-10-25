@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="" class="reasonRefund">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                        <li id="pid">
+                            <a>用户管理</a>
+                        </li>
+                        <li>经办人标签</li>
+                    </ul>
+                    <div style="float: right;">
+                        <button type="button" id="addNew" onclick="addGoodsModels(this)" class="fa fa-plus-circle   btn btn-default"> 新建</button>
+                        <button type="button" id="searchBtn" class="fa fa-search   btn btn-default" onclick="showSearchPage()">&nbsp;高级查询</button>
+                    </div>
+                </div>
+
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="addModels" style="display: none;">
+                        <div class="panel panel-default">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper"></div>
+                                <!-- /.table-responsive -->
+
+                                <form role="form" id="userAddForm">
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <label id="model">分类名称：</label>
+                                            <div class="pinput">
+                                                <input type="text" placeholder="分类名称" datatype="require" id="addName" name="sName" class="form-control" value="" maxlength="4">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <button id="userAddcategory" datatype="require" class="fa fa-save btn btn-default" type="button">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <div class="searchDataDiv">
+                        <div class="reasonSearch" style="display: none;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="dataTable_wrapper"></div>
+                                    <!-- /.table-responsive -->
+
+                                    <form role="form" id="reasonSearchForm">
+                                        <div class="row">
+                                            <div class="col-md-4 form-group">
+                                                <label>标签名称：</label>
+                                                <div class="pinput">
+                                                    <input type="text" placeholder="分类名称" id="name" name="name"
+                                                           maxlength="4" class="form-control points">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 form-group">
+                                                <button id="searchDataBtn" class="fa fa-search   btn btn-default" type="button">查询
+                                                </button>
+                                                <button id="resetSearchBtn" type="button" class="fa fa-reply-all btn btn-default">
+                                                    重置
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" id="table-goodsCategory">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 5%;">序号</th>
+                                <th style="width: 60%;" id="categoryName">标签名称</th>
+                                <th style="width: 15%;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="goodsModel-placeholder">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                    <div style="float: right;margin-right: 50px;">
+                        <ul id="paginator"></ul>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+
+
+
+<script id="goodsCategory1-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr>
+        <td style="text-align:center;">{{rowNum}}</td>
+        <td style="text-align:center;">{{name}}</td>
+        <td style="text-align: center;">
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}','{{name}}','{{order_code}}')"></span>
+            &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/power/hr_tags.js"></script>
+</body>
+
+</html>

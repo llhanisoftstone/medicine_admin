@@ -39,7 +39,7 @@ $(function() {
 });
 function getcategory(){
     $("#videonames").html("");
-    zhget('/rs/questions_category').then(function(result){
+    zhget('/rs/questions_category',{comp_id:compid}).then(function(result){
         var html="";
         if(result.code==200){
             categoryArr=result.rows
@@ -133,7 +133,7 @@ function queryList(){
                     }
                 }
                 for(var j=0;j<organizArr.length;j++){
-                    if(integrals[i].organiz_id == organizArr[j].id){
+                    if(integrals[i].comp_id == organizArr[j].id){
                         integrals[i].organiz_name = organizArr[j].name
                     }
                 }
@@ -215,10 +215,10 @@ function uploadquestion(){
         upajax('/op/upload', formData, function (result) {
             $("#sendExcel").val("")
             //清空input,解决input同一文件不能多次选择
-            result = JSON.parse(result);
+            //result = JSON.parse(result);
             if(result.code== 200){
                 queryList();
-                showSuccess("题目导入成功，请刷新页面查看结果");
+                showSuccess("题目导入成功");
                 return;
             }
             // else if(result.code==201) {

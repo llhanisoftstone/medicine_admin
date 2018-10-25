@@ -38,12 +38,12 @@ function getcategory(){
     })
 }
 function getorg(){
-    var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+    //var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
     $("#shopname").html("");
     $("#shopnames").html("");
     var data={};
-    if(organizId){
-        data.id=organizId;
+    if(compid){
+        data.id=compid;
     }
     zhget('/rs/company',data).then(function(result){
         var html="";
@@ -51,7 +51,7 @@ function getorg(){
             organizArr=result.rows
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                if(result.rows[i].id==organizId){
+                if(result.rows[i].id==compid){
                     html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
                 }else{
                     html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
@@ -132,7 +132,10 @@ function changeText(that){
 function backquestion(){
     window.location.href="/admin/admin.html#pages/question.html";
 }
+var btnClicked=false;
 function savedata(_status){
+    if(btnClicked){return;}
+    btnClicked=true;
     var data={}
     if(!$("#name").val().trim()){
         showError("题目不能为空")
@@ -194,6 +197,7 @@ function savedata(_status){
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
+            btnClicked=false;
             if(result.code == 200){
                 showSuccess("修改成功")
                 window.location.href="/admin/admin.html#pages/question.html";
@@ -202,6 +206,7 @@ function savedata(_status){
     }else{
         data.auto_id=1
         zhpost(base_url_goodsCategory,data).then(function(result){
+            btnClicked=false;
             if(result.code == 200){
                 showSuccess("保存成功")
                 window.location.href="/admin/admin.html#pages/question.html";
