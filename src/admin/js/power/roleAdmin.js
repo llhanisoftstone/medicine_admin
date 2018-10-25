@@ -10,12 +10,12 @@ var searchData={};
 var isselect=false;
 
 $(function () {
+    getcompany();
     queryList();
     $.initSystemFileUpload($("#user_form"));
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
     getOrganiz();
-    getcompany();
 });
 
 function getOrganiz() {
@@ -38,6 +38,7 @@ function initselect(id){
         width:'100%'
     });
 }
+var storeArr=[];
 function getcompany(){
     var data={
         status:1    //0-禁；1-有效；9删除
@@ -47,6 +48,7 @@ function getcompany(){
         if(result.code==200) {
             var html="";
             if (result.code == 200) {
+                storeArr=result.rows;
                 html += "<option value='-1'>请选择</option>";
                 for (var i = 0; i < result.rows.length; i++) {
                     html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
@@ -105,6 +107,11 @@ function queryList() {
                         }else{
                             result.rows[i].power_id+=','+result.rows[i].power_json[j]
                         }
+                    }
+                }
+                for(var j=0;j<storeArr.length;j++){
+                    if(users[i].store_id == storeArr[j].id){
+                        users[i].store_name = storeArr[j].name
                     }
                 }
             }
