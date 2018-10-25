@@ -206,13 +206,14 @@ function onSaveTagClick(){
     var data={
         is_hr:1
     };
-    var tag=$('#tags').val();
+    var tags=$('#tags').multipleSelect('getSelects');
+    tags=tags.toString();
     var hr_code=$('#hr_code').val();
-    if(tag==''){
+    if(tags==''){
         $('#tags').focus();
-        return showError('请输入经办人标签')
+        return showError('请选择经办人标签')
     }else{
-        data.hr_tag=tag;
+        data.hr_tag=tags;
     }
     if(hr_code==''){
         $('#hr_code').focus();
@@ -231,14 +232,20 @@ function onSaveTagClick(){
         }
     })
 }
-function onUpdate(id,tag){
+function onUpdate(id,hr_code){
     $('#tags').attr('data-uid',id);
-    $('#tags').val(tag);
-    zhget("/rs/member/"+id).then(function (result) {
+    $('#hr_code').val(hr_code);
+    zhget("/rs/member_lable/"+id).then(function (result) {
         if(result.code==200){
-            $('#userModal').modal('show');
+            getTags(result.hr_tag)
+        }else{
+            getTags();
         }
     })
+
+    $('#userModal').modal('show');
+
+
 }
 function cancelSetPerson(id){
     if(confirm('您确定要取消该经办人权限吗？')){
@@ -255,4 +262,23 @@ function cancelSetPerson(id){
             }
         })
     }
+}
+function getTags(tag) {
+    var data={
+        status:1
+    };
+    zhget('/rs/label_info', data,function (result) {
+        var level = result.rows;
+        $("#tags").empty();
+        for (var i = 0; i < level.length; i++) {
+            $("#tags").append("<option  value='" + level[i].id + "'>&nbsp;" + level[i].name + "</option>");
+        };
+        $("#tags").multipleSelect({
+            multiple: true,
+        });
+        if(tag && tag!=''){
+            var tags=tag.split(',');
+            $('#tags').multipleSelect('setSelects', tags);
+        }
+    });
 }
