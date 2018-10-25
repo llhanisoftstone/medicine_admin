@@ -23,6 +23,7 @@ $(function() {
     });
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
+    getTags();
     queryList();
     getCompany()
 });
@@ -197,6 +198,7 @@ Handlebars.registerHelper('ifnull', function(v1, options) {
 function onSetPerson(id) {
     if(confirm('您确定要将该用户设为经办人吗？')){
         $('#tags').val('').attr('data-uid',id);
+        $('#tags').multipleSelect('uncheckAll');
         $('#userModal').modal('show');
     }
 
@@ -237,9 +239,10 @@ function onUpdate(id,hr_code){
     $('#hr_code').val(hr_code);
     zhget("/rs/member_lable/"+id).then(function (result) {
         if(result.code==200){
-            getTags(result.hr_list)
+            $('#tags').multipleSelect('setSelects', result.hr_list);
+            // getTags(result.hr_list)
         }else{
-            getTags();
+            //getTags();
         }
     })
 
@@ -263,7 +266,7 @@ function cancelSetPerson(id){
         })
     }
 }
-function getTags(tag) {
+function getTags() {
     var data={
         status:1
     };
@@ -273,13 +276,8 @@ function getTags(tag) {
         for (var i = 0; i < level.length; i++) {
             $("#tags").append("<option  value='" + level[i].id + "'>&nbsp;" + level[i].name + "</option>");
         };
-            $("#tags").multipleSelect({
-                multiple: true,
-            });
-            if(tag){
-                $('#tags').multipleSelect('setSelects', tag);
-            }else{
-                //$('#tags').multipleSelect('deselect_all');
-            }
+        $("#tags").multipleSelect({
+            multiple: true,
+        });
     });
 }
