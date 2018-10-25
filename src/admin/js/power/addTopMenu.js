@@ -143,8 +143,9 @@ function onSaveClick() {
         zhpost(base_url,data).then(function (result){
             $.hideActionLoading();
             if(result.code==206){
-                return  showError("已添加该企业，不能重复添加")
+               showError("已添加该企业，不能重复添加")
                 $("#saveCarouselData").attr("disabled",false);
+                return
             }else{
                 if(checkData(result,'post')){
                     back();
@@ -156,8 +157,10 @@ function onSaveClick() {
     }else{
         zhput(base_url+'/'+targetid,data).then(function (result){
             if(result.code==206){
-              return  showError("已添加该企业，不能重复添加")
+                showError("已添加该企业，不能重复添加")
                 $("#saveCarouselData").attr("disabled",false);
+                return
+
             }else{
                 if(checkData(result,'put')){
                     back();

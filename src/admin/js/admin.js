@@ -860,6 +860,13 @@ Handlebars.registerHelper('equal', function(v1,v2, options) {
         return options.inverse(this);
     }
 });
+Handlebars.registerHelper('litingisuse', function(v1,v2, options) {
+    if(v1 == v2) {
+        return options.fn(this);
+    }else{
+        return options.inverse(this);
+    }
+});
 //不等于
 Handlebars.registerHelper('budeng', function(v1,v2, options) {
     if(v1 != v2) {

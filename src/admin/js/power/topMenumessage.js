@@ -112,21 +112,17 @@ function searchData(){
 // 页面渲染
 function queryList() {
     var data = {
-        status:1,
         order:'sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
+        status:1,
         column_id:getQueryString("pid"),
     }
     if(isSearch){
         var title=$("#titlebanner").val();
-        var status=$("#status").val();
         if(title!=''&&title!=0){
             data.name=title;
             data.search=1;
-        }
-        if(status!=''&&status!=-1){
-            data.status=status;
         }
     }
     $("#banner-placeholder").html('');
@@ -143,6 +139,17 @@ function queryList() {
                     indexCode.icon_path=targetUrl+indexCode.icon_path;
                 }
                 buildTableByke(result, 'bannerhome-template', 'bannerhome-placeholder','paginator',queryList,pageRows);
+                if(result.rows[0].show_css==3){
+                    var list=$("#bannerhome-placeholder tr")
+                    if(list.length>=4){
+                        $("#addisshow").attr("disabled","disabled");
+                    }else{
+                        $("#addisshow").attr("disabled",false);
+                    }
+                }else{
+                    $("#addisshow").attr("disabled",false);
+                }
+
             }
 
     })
