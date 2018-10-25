@@ -72,8 +72,8 @@
                         <tr>
                             <th>序号</th>
                             <th>标题</th>
-                            <th>创建时间</th>
                             <th>图片</th>
+                            <th>创建时间</th>
                             <th>状态</th>
                             <th>操作</th>
                         </tr>
@@ -103,8 +103,8 @@
         <tr>
             <td>{{rowNum}}</td>
             <td>{{title}}</td>
-            <td>{{create_time}}</td>
             <td><a href="{{getpicurl picpath}}" target="_blank"><img src="{{getpicurl picpath}}" alt="" style="width:100px;"></a></td>
+            <td>{{create_time}}</td>
             <td>{{#superif status 1}}启用{{else}}禁用{{/superif}}</td>
             <td>
                 <span class="fa fa-edit editOrder" style="cursor: pointer;" onclick="onUpdateClick('{{id}}')" title="编辑"></span>
