@@ -197,19 +197,23 @@ function savedata(_status){
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
-            btnClicked=false;
             if(result.code == 200){
+                btnClicked=false;
                 showSuccess("修改成功")
                 window.location.href="/admin/admin.html#pages/question.html";
+            }else{
+                btnClicked=false;
             }
         })
     }else{
         data.auto_id=1
         zhpost(base_url_goodsCategory,data).then(function(result){
-            btnClicked=false;
             if(result.code == 200){
+                btnClicked=false;
                 showSuccess("保存成功")
                 window.location.href="/admin/admin.html#pages/question.html";
+            }else {
+                btnClicked=false;
             }
         })
     }

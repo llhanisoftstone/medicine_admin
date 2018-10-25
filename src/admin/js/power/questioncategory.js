@@ -25,6 +25,9 @@ $(function() {
 function queryList(){
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
+    if(!compid){
+        compid=sessionStorage.getItem('compid') || getCookie('compid');
+    }
     var data={
         page: currentPageNo,
         size: pageRows,

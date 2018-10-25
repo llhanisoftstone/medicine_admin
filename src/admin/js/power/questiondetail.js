@@ -22,7 +22,7 @@ function getcategory(){
 function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
-    zhget('/rs/organiz').then(function(result){
+    zhget('/rs/company').then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
@@ -59,7 +59,7 @@ function queryList(){
             for (var i = 0; i < integrals.length; i++) {
                 $("#name").val(result.rows[0].name)
                 $("#videonames").val(result.rows[0].category_id)
-                $("#shopnames").val(result.rows[0].organiz_id)
+                $("#shopnames").val(result.rows[0].comp_id)
                 $("#rank").val(result.rows[0].rank)
                 $("#suery_type").val(result.rows[0].type)
                 var indexCode = integrals[i];
