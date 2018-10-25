@@ -237,7 +237,7 @@ function onUpdate(id,hr_code){
     $('#hr_code').val(hr_code);
     zhget("/rs/member_lable/"+id).then(function (result) {
         if(result.code==200){
-            getTags(result.hr_tag)
+            getTags(result.hr_list)
         }else{
             getTags();
         }
@@ -276,9 +276,10 @@ function getTags(tag) {
         $("#tags").multipleSelect({
             multiple: true,
         });
-        if(tag && tag!=''){
-            var tags=tag.split(',');
-            $('#tags').multipleSelect('setSelects', tags);
+        if(tag){
+            $('#tags').multipleSelect('setSelects', tag);
+        }else{
+            //$('#tags').multipleSelect('deselect_all');
         }
     });
 }

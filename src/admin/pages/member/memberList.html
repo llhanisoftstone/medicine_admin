@@ -229,7 +229,7 @@
         <td>{{hr_code}}</td>
         <td style="text-align: center;">
             {{#equal is_hr 1}}
-            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdate('{{id}}','{{hr_tag}}','{{hr_code}}')"></span>
+            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdate('{{id}}','{{hr_code}}')"></span>
             <span class="fa fa-unlock" aria-hidden="true" title="取消经办人" onclick="cancelSetPerson('{{id}}')"></span>
             {{else}}
             <span class="fa fa-lock" aria-hidden="true" title="设为经办人" onclick="onSetPerson('{{id}}')"></span>
