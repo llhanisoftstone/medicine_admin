@@ -853,7 +853,14 @@ Handlebars.registerHelper('jiacount', function(v1,v2, options) {
     return parseFloat(v1)+parseFloat(v2);
 });
 //等于
-Handlebars.registerHelper('equalelse', function(v1,v2, options) {
+Handlebars.registerHelper('equal', function(v1,v2, options) {
+    if(v1 == v2) {
+        return options.fn(this);
+    }else{
+        return options.inverse(this);
+    }
+});
+Handlebars.registerHelper('litingisuse', function(v1,v2, options) {
     if(v1 == v2) {
         return options.fn(this);
     }else{
