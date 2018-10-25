@@ -10,7 +10,7 @@ var pageRows = 10;
 var issearchModel=false;
 var issearchValue=false;
 var integrals;
-var compid=sessionStorage.getItem('compid');
+var compid=sessionStorage.getItem('compid') || getCookie('compid');
 $(function() {
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -25,6 +25,9 @@ $(function() {
 function queryList(){
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
+    if(!compid){
+        compid=sessionStorage.getItem('compid') || getCookie('compid');
+    }
     var data={
         page: currentPageNo,
         size: pageRows,
