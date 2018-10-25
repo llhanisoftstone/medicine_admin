@@ -38,12 +38,12 @@ function getcategory(){
     })
 }
 function getorg(){
-    var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+    //var organizId=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
     $("#shopname").html("");
     $("#shopnames").html("");
     var data={};
-    if(organizId){
-        data.id=organizId;
+    if(compid){
+        data.id=compid;
     }
     zhget('/rs/company',data).then(function(result){
         var html="";
@@ -51,7 +51,7 @@ function getorg(){
             organizArr=result.rows
             html+="<option value='-1'>请选择</option>";
             for(var i=0;i<result.rows.length;i++){
-                if(result.rows[i].id==organizId){
+                if(result.rows[i].id==compid){
                     html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
                 }else{
                     html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
