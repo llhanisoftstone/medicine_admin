@@ -269,17 +269,17 @@ function getTags(tag) {
     };
     zhget('/rs/label_info', data,function (result) {
         var level = result.rows;
-        $("#tags").empty();
+        //$("#tags").empty();
         for (var i = 0; i < level.length; i++) {
             $("#tags").append("<option  value='" + level[i].id + "'>&nbsp;" + level[i].name + "</option>");
         };
-        $("#tags").multipleSelect({
-            multiple: true,
-        });
-        if(tag){
-            $('#tags').multipleSelect('setSelects', tag);
-        }else{
-            //$('#tags').multipleSelect('deselect_all');
-        }
+            $("#tags").multipleSelect({
+                multiple: true,
+            });
+            if(tag){
+                $('#tags').multipleSelect('setSelects', tag);
+            }else{
+                //$('#tags').multipleSelect('deselect_all');
+            }
     });
 }
