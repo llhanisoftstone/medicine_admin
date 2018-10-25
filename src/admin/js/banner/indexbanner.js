@@ -111,17 +111,15 @@ function queryList() {
             }
             if(urank==91){//平台管理员
                 data.category=1;
+            }else{
+                data.category=2;
             }
             if(isSearch){
                 var title=$("#titlebanner").val();
-                var category=$("#category option:selected").val();
                 var status=$("#status").val();
                 if(title!=''&&title!=0){
                     data.title=title;
                     data.search=1;
-                }
-                if(category!=''&&category!=0){
-                    data.category=category;
                 }
                 if(status!=''&&status!=-1){
                     data.status=status;
