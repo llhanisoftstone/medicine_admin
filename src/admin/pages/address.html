@@ -243,11 +243,11 @@
         <td>
             <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
             <!--<span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this,'{{id}}')"></span>-->
-            {{#equal status 0}}
+            {{#equalelse status 0}}
             <span class="fa fa-unlock" aria-hidden="true" title="启用" onclick="companyStart('{{id}}')"></span>
             {{else}}
             <span class="fa fa-lock" aria-hidden="true" title="禁用" onclick="companyForbid('{{id}}')"></span>
-            {{/equal}}
+            {{/equalelse}}
         </td>
     </tr>
     {{/datas}}
