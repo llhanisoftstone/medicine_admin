@@ -77,7 +77,7 @@ function queryList(){
         var usertype = $("#usertype").val();
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
-                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
+                if(startTime<endTime){
                     data.create_time='>=,'+startTime+',<=,'+endTime
                 }else{
                     alert("结束时间不能小于开始时间")
