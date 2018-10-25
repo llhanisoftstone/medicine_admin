@@ -142,17 +142,29 @@ function onSaveClick() {
         $.showActionLoading();
         zhpost(base_url,data).then(function (result){
             $.hideActionLoading();
-            if(checkData(result,'post')){
-                back();
+            if(result.code==206){
+                return  showError("已添加该企业，不能重复添加")
                 $("#saveCarouselData").attr("disabled",false);
+            }else{
+                if(checkData(result,'post')){
+                    back();
+                    $("#saveCarouselData").attr("disabled",false);
+                }
             }
+
         })
     }else{
         zhput(base_url+'/'+targetid,data).then(function (result){
-            if(checkData(result,'put')){
-                back();
+            if(result.code==206){
+              return  showError("已添加该企业，不能重复添加")
                 $("#saveCarouselData").attr("disabled",false);
+            }else{
+                if(checkData(result,'put')){
+                    back();
+                    $("#saveCarouselData").attr("disabled",false);
+                }
             }
+
         })
     }
 }
