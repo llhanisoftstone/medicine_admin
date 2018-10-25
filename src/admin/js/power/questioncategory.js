@@ -53,6 +53,7 @@ function queryList(){
     })
 }
 function showSearchPage() {
+    $('#addName').focus().blur();
     $(".addModels", $(".reasonRefund")).css("display", "none");
     $('#name').val('')
     $(".reasonSearch", $(".reasonRefund")).animate({
@@ -98,8 +99,10 @@ function delClick(id) {
         }
     })
 }
-
+var btnClicked=false;
 function onSavecategoryData(){
+    if(btnClicked){return;}
+    btnClicked=true;
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
     if(modelid==""||modelid==null||modelid==undefined){
@@ -112,6 +115,7 @@ function onSavecategoryData(){
         }
         zhpost(base_url_goodsCategory,sdata).then(function(result){
             if(checkData(result,'post')){
+                btnClicked=false;
                 resetinput();
                 $(".addModels").hide();
                 queryList()
@@ -126,6 +130,7 @@ function onSavecategoryData(){
         }
         zhput(base_url_goodsCategory+"/"+modelid,putdata).then(function(result){
             if(checkData(result,'put')){
+                btnClicked=false;
                 $(".addModels").hide();
                 $("#addName").removeAttr("_id");
                 resetinput();
