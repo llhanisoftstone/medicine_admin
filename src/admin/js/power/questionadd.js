@@ -132,7 +132,10 @@ function changeText(that){
 function backquestion(){
     window.location.href="/admin/admin.html#pages/question.html";
 }
+var btnClicked=false;
 function savedata(_status){
+    if(btnClicked){return;}
+    btnClicked=true;
     var data={}
     if(!$("#name").val().trim()){
         showError("题目不能为空")
@@ -194,6 +197,7 @@ function savedata(_status){
     }
     if(getQueryString("id")){
         zhput(base_url_goodsCategory+'/'+getQueryString("id"),data).then(function(result){
+            btnClicked=false;
             if(result.code == 200){
                 showSuccess("修改成功")
                 window.location.href="/admin/admin.html#pages/question.html";
@@ -202,6 +206,7 @@ function savedata(_status){
     }else{
         data.auto_id=1
         zhpost(base_url_goodsCategory,data).then(function(result){
+            btnClicked=false;
             if(result.code == 200){
                 showSuccess("保存成功")
                 window.location.href="/admin/admin.html#pages/question.html";

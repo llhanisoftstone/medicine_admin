@@ -39,7 +39,7 @@ $(function() {
 });
 function getcategory(){
     $("#videonames").html("");
-    zhget('/rs/questions_category').then(function(result){
+    zhget('/rs/questions_category',{comp_id:compid}).then(function(result){
         var html="";
         if(result.code==200){
             categoryArr=result.rows
