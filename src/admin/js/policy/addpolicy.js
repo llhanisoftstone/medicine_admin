@@ -58,7 +58,7 @@ $(function(){
 
 });
 function getinfo_column(column_id){
-    zhget("/rs/info_column").then( function(result) {
+    zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
         var html="<option value=''>全部</option>";
         for(var i=0;i<result.rows.length;i++){
             if(result.rows[i].id==column_id){
