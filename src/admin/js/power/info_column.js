@@ -76,7 +76,7 @@ function onUpdateClick(id,name,order_code) {
 function delClick(id) {
     zhget("/rs/infomation", {column_id:id,status:'<,99'}).then(function (result) {
         if (result.code == 200) {
-            showError("该分类下挂有题目，不能删除");
+            showError("该分类下有政策百科，不能删除");
         } else {
             if (confirm("确定要删除该分类吗？")) {
                 zhput(base_url_goodsCategory + "/" + id,{status:99}).then(function (result) {
