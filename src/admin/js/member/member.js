@@ -248,9 +248,8 @@ function onUpdate(id,hr_code){
 
     $('#userModal').modal('show');
 
-
 }
-function cancelSetPerson(id){
+function cancelSetPerson(id){  //跟需求确认过，取消经办人不删除以前的咨询数
     if(confirm('您确定要取消该经办人权限吗？')){
         var data={
             is_hr:0,
