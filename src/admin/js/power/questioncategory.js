@@ -62,7 +62,7 @@ function showSearchPage() {
     $(".reasonSearch", $(".reasonRefund")).animate({
         height : 'toggle',
         opacity : 'toggle'
-    }, "slow");
+    }, "fast");
 }
 function addGoodsModels(dom){
     $('#name').val('')
@@ -71,7 +71,7 @@ function addGoodsModels(dom){
     $(".addModels", $(".reasonRefund")).animate({
         height : 'show',
         opacity : 'show'
-    }, "slow");
+    }, "fast");
     $("#addName").attr("_id","");
 }
 
