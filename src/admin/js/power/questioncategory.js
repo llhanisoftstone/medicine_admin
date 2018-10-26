@@ -85,7 +85,7 @@ function onUpdateClick(id,name) {;
     }, "slow");
 }
 function delClick(id) {
-    zhget("/rs/questions", {category_id:id}).then(function (result) {
+    zhget("/rs/questions", {category_id:id,status:'<,99'}).then(function (result) {
         if (result.code == 200) {
             showError("该分类下挂有题目，不能删除");
         } else {
