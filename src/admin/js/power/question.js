@@ -101,7 +101,7 @@ function queryList(){
         }
         var comp_id=$("#shopnames").val();
         if(comp_id&&comp_id!="-1"){
-            data.organiz_id=comp_id;
+            data.comp_id=comp_id;
         }
         var category_id=$("#videonames").val();
         if(category_id&&category_id!="-1"){
