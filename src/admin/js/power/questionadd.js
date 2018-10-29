@@ -142,7 +142,8 @@ function savedata(_status){
         showError("题目不能为空")
         return
     }
-    if($("#videonames").val()=='-1'){
+    var cate=$("#videonames").val();
+    if(!cate || cate=='-1'){
         btnClicked=false;
         showError("请选择分类")
         return
