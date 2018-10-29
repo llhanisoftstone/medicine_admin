@@ -65,7 +65,7 @@ function queryList(){
 
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(res) {
-        var rows= res.comp_list;
+        var rows= res.comp_list.rows;
         for (var i = 0; i < rows.length; i++) {
             var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
