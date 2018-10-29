@@ -27,9 +27,10 @@ $(function(){
 
 })
 function getOrganiztion(){
-    zhget('/rs/organiz').then( function(result) {
+    zhget('/rs/company').then( function(result) {
         buildTableNoPage(result, 'select-template','select');
-        initselect("select")
+        initselect("select");
+        $(".bs-searchbox input").attr("maxlength","20");
     })
 }
 function showSearchPage() {

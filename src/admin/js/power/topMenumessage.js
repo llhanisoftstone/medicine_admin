@@ -3,6 +3,7 @@ var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
 var searchForm; //查询条件JSON
+var comp_id;
 //获取當前頁面url
 var currPageName  = (window.location.hash).replace('#','');
 //当前页面跳转、刷新之前保存页码和表单数据，需要在页面跳转时添加Math.random(),否则监听不到
@@ -20,6 +21,7 @@ function saveFormData(formId){
 }
 $(function() {
     getpageRecord();
+    comp_id=getCookie('compid') || sessionStorage.getItem('compid');
     searchForm = getlocalStorageCookie(currPageName);
     searchForm = JSON.parse(searchForm);
     if(searchForm && searchForm != '{}'){
@@ -49,9 +51,11 @@ $(function() {
     if(show_css==3){
         $(".nameshow").html("机构：")
         $(".tabname").html("机构")
+        $("#titlebanner").attr("maxlength","20")
     }else{
         $(".nameshow").html("标题：")
         $(".tabname").html("标题")
+        $("#titlebanner").attr("maxlength","4")
     }
     queryList()
 
@@ -115,8 +119,12 @@ function queryList() {
         order:'sequence desc,create_time desc',
         page: currentPageNo,
         size: pageRows,
-        status:1,
         column_id:getQueryString("pid"),
+    }
+    if(comp_id&&comp_id>0){
+        data.comp_id=comp_id;
+    }else{
+        data.comp_id=0;
     }
     if(isSearch){
         var title=$("#titlebanner").val();
