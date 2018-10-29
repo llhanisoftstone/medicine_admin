@@ -105,7 +105,7 @@ function queryList(){
         }
         var category_id=$("#videonames").val();
         if(category_id&&category_id!="-1"){
-            data.category_id=category_id;
+            data.category_id='=,'+category_id;
         }
         var status=$("#status").val();
         if(status && status!="-1"){
