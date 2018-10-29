@@ -7,7 +7,9 @@ var currentPageNo = 1;
 var pageRows = 10;
 var curId = curMenuId;
 var postoff=false;
+locationHistory('reasonSearchForm')
 $(function() {
+    backInitHistory()
     $.initSystemFileUpload($("#userAddForm"), onUploadDetailPic);
     queryList();
     getprovince()
@@ -271,6 +273,7 @@ var isSearch=false;
 function searchData(){
     isSearch=true;
     currentPageNo=1;
+    saveSearchFormData('reasonSearchForm')
     queryList();
 
 }
@@ -389,6 +392,8 @@ function validatePhoneAnd400(phonenum){
 }
 function companyForbid(id) {
     if(confirm("确认要禁用吗？")) {
+        var cpage=$("#paginator li.active a").text();
+        $('#pageIndex').val(cpage);
         zhput(base_url_acceptanceReport+"/"+id,{status:0}).then(function(result){
             if(result.code == 200){
                 showSuccess('禁用成功！');
@@ -401,6 +406,8 @@ function companyForbid(id) {
 }
 function companyStart(id) {
     if(confirm("确认要启用吗？")) {
+        var cpage=$("#paginator li.active a").text();
+        $('#pageIndex').val(cpage);
         zhput(base_url_acceptanceReport+"/"+id,{status:1}).then(function(result){
             if(result.code == 200){
                 showSuccess('启用成功！');

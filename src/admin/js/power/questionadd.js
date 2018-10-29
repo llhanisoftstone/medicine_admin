@@ -236,3 +236,6 @@ Handlebars.registerHelper('ifequal', function(v1,v2, options) {
         return options.inverse(this);
     }
 });
+$('#userHelpModal').on('hide.bs.modal', function () {
+    $('#HelpId').val('')
+})

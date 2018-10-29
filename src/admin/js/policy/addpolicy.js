@@ -35,7 +35,7 @@ $(function(){
         odata.id=organizId;
     }
     zhget("/rs/organiz", odata).then( function(result) {
-        var html="<option value=''>全部</option>";
+        var html="<option value=''>请选择</option>";
         for(var i=0;i<result.rows.length;i++){
             if(result.rows[i].id==organizId){
                 html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
@@ -59,7 +59,7 @@ $(function(){
 });
 function getinfo_column(column_id){
     zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
-        var html="<option value=''>全部</option>";
+        var html="<option value=''>请选择</option>";
         for(var i=0;i<result.rows.length;i++){
             if(result.rows[i].id==column_id){
                 html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";

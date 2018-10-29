@@ -128,20 +128,20 @@
                                 <div class="col-md-4 form-group">
                                     <label>机构名称：</label>
                                     <div class="pinput">
-                                        <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="acceptanceReport" check-type="required">
+                                        <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="acceptanceReport" check-type="required" name="acceptanceReport">
                                         <input type="hidden" id="id">
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label>联系电话：</label>
                                     <div class="pinput">
-                                        <input type="text" maxlength="12" oninput="this.value=this.value.replace(/[^(\d|\-)]$/g,'');" placeholder="请输入" class="form-control" id="linkphone" check-type="required">
+                                        <input type="text" maxlength="12" oninput="this.value=this.value.replace(/[^(\d|\-)]$/g,'');" placeholder="请输入" class="form-control" id="linkphone" check-type="required" name="linkphone">
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-group">
                                     <label>联系地址：</label>
                                     <div class="pinput">
-                                        <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="linkname" check-type="required">
+                                        <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="linkname" name="linkname" check-type="required">
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                 <div class="col-md-4 form-group">
                                     <label>省份：</label>
                                     <div class="pinput">
-                                        <select placeholder="请选择省" id="province" name="iTypeId" class="form-control ">
+                                        <select placeholder="请选择省" id="province" name="province" class="form-control ">
                                             <option value="-1">请选择</option>
                                         </select>
                                     </div>
@@ -157,7 +157,7 @@
                                 <div class="col-md-4 form-group">
                                     <label>市：</label>
                                     <div class="pinput">
-                                        <select placeholder="请选择市" id="city" name="iTypeId" class="form-control ">
+                                        <select placeholder="请选择市" id="city" name="city" class="form-control ">
                                             <option value="-1">请选择</option>
                                         </select>
                                     </div>
@@ -165,7 +165,7 @@
                                 <div class="col-md-4 form-group">
                                     <label>区：</label>
                                     <div class="pinput">
-                                        <select placeholder="请选择区" id="zone" name="iTypeId" class="form-control ">
+                                        <select placeholder="请选择区" id="zone" name="zone" class="form-control ">
                                             <option value="-1">请选择</option>
                                         </select>
                                     </div>
@@ -208,7 +208,6 @@
                                 <th style="width:10%">操作</th>
                             </tr>
                             </thead>
-                            <input type="hidden" id="pageIndex">
                             <tbody id="style-placeholder">
 
                             </tbody>
@@ -224,6 +223,7 @@
             <!-- /.panel -->
         </div>
     </div>
+    <input type="hidden" id="pageIndex">
 </div>
 
 

@@ -277,6 +277,7 @@ function getTags() {
         };
         $("#tags").multipleSelect({
             multiple: true,
+            placeholder:'请选择标签'
         });
     });
 }
