@@ -27,7 +27,7 @@ $(function(){
 
 })
 function getOrganiztion(){
-    zhget('/rs/organiz').then( function(result) {
+    zhget('/rs/company').then( function(result) {
         buildTableNoPage(result, 'select-template','select');
         initselect("select")
     })

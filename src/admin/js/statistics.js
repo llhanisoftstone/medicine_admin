@@ -38,9 +38,11 @@ function getTicket(){
         if(result.code==200) {
             buildTableNoPage(result, 'brand-template', 'ticket');
             initselect('ticket');
+            $(".bs-searchbox input").attr("maxlength","20");
         }else{
             buildTableNoPage(result, 'brand-template', 'ticket');
             initselect('ticket');
+            $(".bs-searchbox input").attr("maxlength","20");
         }
     });
 }
