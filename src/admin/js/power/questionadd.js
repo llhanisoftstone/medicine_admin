@@ -104,7 +104,6 @@ function onSaveHelpClick(){
         showError("请输入选项")
         return
     }
-    $('#userHelpModal').modal('hide');
     var va = $("#HelpId").val()
     $("#HelpId").val('')
     var addawser=[{answer:va}]
@@ -113,6 +112,7 @@ function onSaveHelpClick(){
     }else{
         addawser[0].right=true
     }
+    $('#userHelpModal').modal('hide');
     buildTableByPage(addawser, 'goodsCategory1-template', 'answer',true);
 }
 function escmodal(){
