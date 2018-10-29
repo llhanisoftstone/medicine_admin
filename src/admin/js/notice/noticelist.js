@@ -91,7 +91,7 @@ function queryList() {
 }
 
 function onAddClick() {
-    location.href="admin.html#pages/notice/addnotice.html"
+    location.href="admin.html?_t="+Math.random()+"#pages/notice/addnotice.html"
 }
 function onSetUpClick(id,ishot) {
     if(ishot == 0){

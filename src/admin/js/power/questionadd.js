@@ -138,26 +138,32 @@ function savedata(_status){
     btnClicked=true;
     var data={}
     if(!$("#name").val().trim()){
+        btnClicked=false;
         showError("题目不能为空")
         return
     }
     if($("#videonames").val()=='-1'){
+        btnClicked=false;
         showError("请选择分类")
         return
     }
     if($("#shopnames").val()=='-1'){
+        btnClicked=false;
         showError("请选择出题者")
         return
     }
     if($("#rank").val()=='-1'){
+        btnClicked=false;
         showError("请选择难度")
         return
     }
     if($("#answer").find("tr").length<2){
+        btnClicked=false;
         showError("选项最少为2个")
         return
     }
     if($("#answer").find("tr").length>4){
+        btnClicked=false;
         showError("选项最多为4个")
         return
     }

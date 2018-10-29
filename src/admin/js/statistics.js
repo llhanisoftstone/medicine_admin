@@ -38,9 +38,11 @@ function getTicket(){
         if(result.code==200) {
             buildTableNoPage(result, 'brand-template', 'ticket');
             initselect('ticket');
+            $(".bs-searchbox input").attr("maxlength","20");
         }else{
             buildTableNoPage(result, 'brand-template', 'ticket');
             initselect('ticket');
+            $(".bs-searchbox input").attr("maxlength","20");
         }
     });
 }
@@ -109,8 +111,8 @@ function queryList(){
         }else{
             $(".sum").html(0)
         }
-        if(result.sum_count1){
-            $(".sum1_count").html(result.sum_count1||0)
+        if(result.sum1_count){
+            $(".sum1_count").html(result.sum1_count||0)
         }else{
             $(".sum1_count").html(0)
         }
@@ -119,8 +121,8 @@ function queryList(){
         }else{
             $(".sum1").html(0)
         }
-        if(result.sum_count2){
-            $(".sum2_count").html(result.sum_count2||0)
+        if(result.sum2_count){
+            $(".sum2_count").html(result.sum2_count||0)
         }else{
             $(".sum2_count").html(0)
         }
@@ -129,8 +131,8 @@ function queryList(){
         }else{
             $(".sum2").html(0)
         }
-        if(result.sum_count3){
-            $(".sum3_count").html(result.sum_count3||0)
+        if(result.sum3_count){
+            $(".sum3_count").html(result.sum3_count||0)
         }else{
             $(".sum3_count").html(0)
         }

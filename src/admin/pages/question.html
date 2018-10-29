@@ -6,19 +6,20 @@
         .questionbtn{
             position:relative;
         }
-        #sendExcel{
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;
-            display: inline-block;
-            cursor: pointer;
-            font-family: FontAwesome;
-            font-style: normal;
-            font-weight: normal;
-            line-height: 1;
-        }
+        /*#sendExcel{*/
+            /*position:absolute;*/
+            /*top:0;*/
+            /*left:0;*/
+            /*right:0;*/
+            /*bottom:0;*/
+            /*display: inline-block;*/
+            /*cursor: pointer;*/
+            /*font-family: FontAwesome;*/
+            /*font-style: normal;*/
+            /*font-weight: normal;*/
+            /*line-height: 1;*/
+            /*-webkit-appearance: button;*/
+        /*}*/
         a:hover{
             background-color:#F5F5F5 ;
         }
@@ -45,13 +46,13 @@
                     <div style="float: right;">
                         <button type="button" id="addNew" onclick="addvideolist()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
                         <button type="button" id="searchBtn" class="fa fa-search   btn btn-default" onclick="showSearchPage()">&nbsp;高级查询</button>
-                        <a href="https://pol.lifeonway.com/upload/excel/questions_template.xlsx" download="question_template">
-                            <button type="button" id="downloadExcel" class="fa fa-search   btn btn-default">下载题目导入模板</button>
+                        <a href="https://pol.lifeonway.com/upload/excel/questions_template.xlsx" >
+                            <button type="button" id="downloadExcel" class="fa fa-download   btn btn-default">下载题目导入模板</button>
                         </a>
-                        <button type="button" class="fa btn btn-default questionbtn">
+                        <div class="fa fa-upload btn btn-default" style=" width: 160px;height: 28px;">
                             导入题目
-                            <input type="file" class="fa btn btn-default" multiple="" id="sendExcel" name="files[]" value="导入题目" style="opacity: 0">
-                        </button>
+                            <input type="file" class="" id="sendExcel" name="files[]"  style="width: 160px;margin-top:-20px;margin-left:-15px;-webkit-opacity: 0;opacity: 0;">
+                        </div>
                     </div>
                 </div>
 
@@ -113,7 +114,7 @@
                                                         <option value="1">待审核</option>
                                                         <option value="2">通过</option>
                                                         <option value="3">拒绝</option>
-                                                        <!--<option value="4">下架</option>-->
+                                                        <option value="4">下架</option>
                                                     </select>
                                                 </div>
                                             </div>

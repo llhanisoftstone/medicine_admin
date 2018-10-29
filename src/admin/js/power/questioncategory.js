@@ -42,7 +42,7 @@ function queryList(){
         }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
-        if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
+        if(checkData(result,'get','queryList','table-questionCategory','paginator')) {
             $("#querylistnull").remove();
             $("#pid").attr("_pid",0);
             $("#pid").attr("_deep",1);
@@ -51,7 +51,7 @@ function queryList(){
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
             }
-            buildTable(result, 'goodsCategory1-template', 'goodsModel-placeholder');
+            buildTable(result, 'questionCategory-template', 'questionModel-placeholder');
         }
     })
 }
@@ -62,7 +62,7 @@ function showSearchPage() {
     $(".reasonSearch", $(".reasonRefund")).animate({
         height : 'toggle',
         opacity : 'toggle'
-    }, "slow");
+    }, "fast");
 }
 function addGoodsModels(dom){
     $('#name').val('')
@@ -71,7 +71,7 @@ function addGoodsModels(dom){
     $(".addModels", $(".reasonRefund")).animate({
         height : 'show',
         opacity : 'show'
-    }, "slow");
+    }, "fast");
     $("#addName").attr("_id","");
 }
 
@@ -85,14 +85,14 @@ function onUpdateClick(id,name) {;
     }, "slow");
 }
 function delClick(id) {
-    zhget("/rs/questions", {category_id:id}).then(function (result) {
+    zhget("/rs/questions", {category_id:id,status:'<,99'}).then(function (result) {
         if (result.code == 200) {
             showError("该分类下挂有题目，不能删除");
         } else {
             if (confirm("确定要删除该分类吗？")) {
                 zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
                     checkData(result, 'delete');
-                    if($("#goodsModel-placeholder").find("tr").length == 1){
+                    if($("#questionModel-placeholder").find("tr").length == 1){
                         currentPageNo = currentPageNo>1?currentPageNo-1:1
                     }
                     queryList()

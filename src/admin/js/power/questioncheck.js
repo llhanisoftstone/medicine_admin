@@ -104,7 +104,7 @@ function queryList(){
                     }
                 }
                 for(var j=0;j<organizArr.length;j++){
-                    if(integrals[i].organiz_id == organizArr[j].id){
+                    if(integrals[i].comp_id == organizArr[j].id){
                         integrals[i].organiz_name = organizArr[j].name
                     }
                 }
