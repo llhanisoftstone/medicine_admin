@@ -76,6 +76,9 @@ function onUpdateClick(id,name) {
 function delClick(id) {
     if (confirm("确定要删除该标签吗？")) {
         zhput(base_url_goodsCategory + "/" + id,{status:99}).then(function (result) {
+            if(result.code==206){
+                return showError('该标签有经办人使用，不能删除')
+            }
             checkData(result, 'delete');
             if($("#goodsModel-placeholder").find("tr").length == 1){
                 currentPageNo = currentPageNo>1?currentPageNo-1:1
