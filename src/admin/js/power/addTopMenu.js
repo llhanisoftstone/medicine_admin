@@ -80,6 +80,7 @@ function getOrganiztion(){
     zhget('/rs/company',{status:1}).then( function(result) {
         buildTableNoPage(result,'selectcompany-template','selectcompany');
         initselect("selectcompany")
+        $(".bs-searchbox input").attr("maxlength","20");
     })
 }
 function initselect(id){
