@@ -70,13 +70,9 @@ function queryList(){
             var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
-        var datas={};
-        datas.rows=rows;
-        datas.count=rows.length;
-        datas.records=datas.count;
         jQuery("#user").html(res.user);
         jQuery("#comp_user").html(res.comp_user);
-        buildTableByke(datas, 'event-template', 'event','paginator',queryList,pageRows);
+        buildTableByke(res.comp_list, 'event-template', 'event','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);
