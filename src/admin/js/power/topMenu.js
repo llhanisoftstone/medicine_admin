@@ -20,7 +20,6 @@ $(function() {
     }else{
         $(".targetselect").show()
     }
-
 });
 // 图片上传
 function onUploadDetailPic(formObject, fileComp, list){
