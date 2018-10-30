@@ -9,7 +9,7 @@ var comp_id;
 $(function(){
     comp_id=getCookie('compid') || sessionStorage.getItem('compid');
     //绑定上传图片详情控件change事件
-    $.initSystemFileUpload($("#user_form"), onUploadDetailPic);
+    $.initSystemFileUploadnotLRZ($("#user_form"), onUploadDetailPic);
     var id=getQueryString("pid");
    target_type=getQueryString("target_type");
     targetid=getQueryString("targetid");
