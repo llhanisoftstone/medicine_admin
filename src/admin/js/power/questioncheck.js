@@ -7,8 +7,10 @@ var issearchValue=false;
 var integrals;
 var categoryArr=[]
 var organizArr=[]
+locationHistory('reasonSearchForm');
 $(function() {
     getorg();
+    backInitHistory();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
@@ -122,7 +124,7 @@ function showSearchPage() {
     }, "slow");
 }
 function viewDetail(id) {
-    window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questiondetail.html?id="+id;
 }
 /*
 function delClick(id) {
