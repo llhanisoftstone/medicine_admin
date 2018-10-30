@@ -237,9 +237,8 @@ function uploadquestion(){
             //     showError("导入文件内无有效数据")
             //     return
             // }
-            else if(result.code==204||result.code==205){
-                showError("文件格式错误")
-                return
+            else if(result.code==206){
+                return showError("文件内有内容未填，请检查")
             }else {
                 showError("文件导入失败")
                 return
