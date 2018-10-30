@@ -86,7 +86,7 @@ function queryList(){
             for (var i = 0; i < integrals.length; i++) {
                 $("#name").val(result.rows[0].name)
                 $("#videonames").val(result.rows[0].category_id)
-                $("#shopnames").val(result.rows[0].organiz_id)
+                $("#shopnames").val(result.rows[0].comp_id)
                 $("#rank").val(result.rows[0].rank)
                 $("#suery_type").val(result.rows[0].type)
                 var indexCode = integrals[i];
