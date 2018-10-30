@@ -62,7 +62,6 @@ function queryList(){
         data.comp_id=comp_id;
         data.search = 1;
     }
-
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(res) {
         var rows= res.comp_list.rows;
