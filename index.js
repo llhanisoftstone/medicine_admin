@@ -45,8 +45,8 @@ app.use(function(err, req, res, next) {
     }});
 });
 
-app.listen(3030, function(){
-    console.log('Express server listening on port 3030')
+app.listen(3005, function(){
+    console.log('Express server listening on port 3005')
 });
 
 function oToStr(object, name){
