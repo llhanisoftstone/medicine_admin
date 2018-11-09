@@ -32,6 +32,7 @@ Handlebars.registerHelper('getindex', function(v1, options) {
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
+    $('#column_id').selectpicker('refresh');
     queryList();
 }
 function searchData(){
@@ -43,11 +44,15 @@ function searchData(){
 }
 function getInfocolumn(){
     zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
-        var html="<option value=''>请选择</option>";
-        for(var i=0;i<result.rows.length;i++){
-            html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
-        }
-        jQuery("#column_id").html(html);
+        buildTableNoPage(result, 'brand-template', 'column_id');
+        initselect('column_id');
+        $(".bs-searchbox input").attr("maxlength","20");
+    });
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
     });
 }
 function queryList() {

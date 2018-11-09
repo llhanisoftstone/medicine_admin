@@ -59,21 +59,22 @@ $(function(){
 });
 function getinfo_column(column_id){
     zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
-        var html="<option value=''>请选择</option>";
-        for(var i=0;i<result.rows.length;i++){
-            if(result.rows[i].id==column_id){
-                html+="<option value='"+result.rows[i].id+"' selected='selected'>"+result.rows[i].name+"</option>";
-            }else{
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+        if(column_id){
+            for(var i=0;i<result.rows.length;i++){
+                if(result.rows[i].id == column_id){
+                    result.rows[i].selected = '1';
+                }
             }
         }
-        jQuery("#info_column").html(html);
-
-        // if(id==''||id==null){
-        //     operation = "add";
-        // }else{
-        //     operation = "modify";
-        // }
+        buildTableNoPage(result, 'brand-template', 'column_id');
+        initselect('column_id');
+        $(".bs-searchbox input").attr("maxlength","20");
+    });
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
     });
 }
 function compare(property){
@@ -159,7 +160,7 @@ function  saveData(_status){
     var remark=$.trim($("#remark").val());
     var unique_code = $("#unique_code").val();
     var copmpany=jQuery("#company").val();
-    var info_column=jQuery("#info_column").val();
+    var info_column=jQuery("#column_id").val();
     if(!pic_abbr || pic_abbr==""){
         return showError("请上传列表图");
     }
