@@ -18,6 +18,7 @@ $(function() {
     }else{
         queryList();
     }
+    getInfocolumn();
 });
 
 Handlebars.registerHelper("superif", function (v1,v2, options) {
@@ -40,7 +41,15 @@ function searchData(){
     $("#paginator").html('');
     queryList();
 }
-
+function getInfocolumn(){
+    zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
+        var html="<option value=''>请选择</option>";
+        for(var i=0;i<result.rows.length;i++){
+            html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+        }
+        jQuery("#column_id").html(html);
+    });
+}
 function queryList() {
     var pageRecord = getlocalStorageCookie("pageRecord");
     if(pageRecord&&pageRecord>0){
@@ -81,6 +90,10 @@ function queryList() {
         var status=$("#status").val();
         if(status && status!="-1"){
             data.status=status;
+        }
+        var column_id=$("#column_id").val();
+        if(column_id && column_id!="-1"){
+            data.column_id=column_id;
         }
     }
     $.showActionLoading();
