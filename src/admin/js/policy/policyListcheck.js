@@ -36,6 +36,7 @@ function initselect(id){
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
+    $('#column_id').selectpicker('refresh');
     queryList();
 }
 function searchData(){

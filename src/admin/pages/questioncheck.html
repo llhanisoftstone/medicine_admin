@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
     <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
     <script src="js/common/formValidator/validator.js"></script>
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
+    <script type="text/javascript"  src="js/common/defaults-zh_CN.js"></script>
 </head>
 
 <body>
@@ -49,7 +52,7 @@
                                             <div class="col-md-4 form-group">
                                                 <label>分类：</label>
                                                 <div class="pinput">
-                                                    <select id="videonames" class="form-control">
+                                                    <select id="videonames" class="form-control " data-live-search ="true" name="videonames" style="cursor:pointer;">
 
                                                     </select>
                                                 </div>
@@ -203,6 +206,12 @@
             {{/equal}}
         </td>
     </tr>
+    {{/datas}}
+</script>
+<script id="brand-template" type="text/x-handlebars-template">
+    <option value="">全部</option>
+    {{#datas}}
+    <option value="{{id}}">{{name}}</option>
     {{/datas}}
 </script>
 <script type="text/javascript" src="js/power/questioncheck.js"></script>
