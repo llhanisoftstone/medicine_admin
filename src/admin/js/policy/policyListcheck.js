@@ -10,6 +10,7 @@ var pageRows = 10;
 var isSearch=false;
 $(function() {
     getorganiz();
+    getInfocolumn();
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
@@ -19,7 +20,15 @@ $(function() {
         queryList();
     }
 });
-
+function getInfocolumn(){
+    zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
+        var html="<option value=''>请选择</option>";
+        for(var i=0;i<result.rows.length;i++){
+            html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>";
+        }
+        jQuery("#column_id").html(html);
+    });
+}
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
@@ -77,6 +86,10 @@ function queryList() {
         if(status && status!="-1"){
             delete data.ins;
             data.status=status;
+        }
+        var column_id=$("#column_id").val();
+        if(column_id && column_id!="-1"){
+            data.column_id=column_id;
         }
     }
     $.showActionLoading();
