@@ -10,6 +10,7 @@ var pageRows = 10;
 var isSearch=false;
 $(function() {
     getorganiz();
+    getInfocolumn();
     var searchForm = getlocalStorageCookie("searchForm");
     if(searchForm&&searchForm != '{}'){
         searchForm = JSON.parse(searchForm);
@@ -19,10 +20,23 @@ $(function() {
         queryList();
     }
 });
-
+function getInfocolumn(){
+    zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
+        buildTableNoPage(result, 'brand-template', 'column_id');
+        initselect('column_id');
+        $(".bs-searchbox input").attr("maxlength","20");
+    });
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
+}
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
+    $('#column_id').selectpicker('refresh');
     queryList();
 }
 function searchData(){
@@ -77,6 +91,10 @@ function queryList() {
         if(status && status!="-1"){
             delete data.ins;
             data.status=status;
+        }
+        var column_id=$("#column_id").val();
+        if(column_id && column_id!="-1"){
+            data.column_id=column_id;
         }
     }
     $.showActionLoading();

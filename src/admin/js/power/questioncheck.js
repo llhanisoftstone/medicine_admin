@@ -14,23 +14,24 @@ $(function() {
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
+        $('#videonames').selectpicker('refresh');
         queryList();
     });
 });
 function getcategory(){
     $("#videonames").html("");
     zhget('/rs/questions_category').then(function(result){
-        var html="";
-        if(result.code==200){
-            categoryArr=result.rows
-            html+="<option value='-1'>全部</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-            $("#videonames").append(html);
-        }
+        buildTableNoPage(result, 'brand-template', 'videonames');
+        initselect('videonames');
+        $(".bs-searchbox input").attr("maxlength","20");
         queryList();
     })
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
 }
 function getorg(){
     $("#shopname").html("");

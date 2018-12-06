@@ -18,6 +18,7 @@ $(function() {
     }else{
         queryList();
     }
+    getInfocolumn();
 });
 
 Handlebars.registerHelper("superif", function (v1,v2, options) {
@@ -31,6 +32,7 @@ Handlebars.registerHelper('getindex', function(v1, options) {
 function resetinput() {
     isSearch=false;
     $("#TalentTryoutSearchForm", $(".reasonRefund"))[0].reset();
+    $('#column_id').selectpicker('refresh');
     queryList();
 }
 function searchData(){
@@ -40,7 +42,19 @@ function searchData(){
     $("#paginator").html('');
     queryList();
 }
-
+function getInfocolumn(){
+    zhget("/rs/info_column",{status:'<>,99'}).then( function(result) {
+        buildTableNoPage(result, 'brand-template', 'column_id');
+        initselect('column_id');
+        $(".bs-searchbox input").attr("maxlength","20");
+    });
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
+}
 function queryList() {
     var pageRecord = getlocalStorageCookie("pageRecord");
     if(pageRecord&&pageRecord>0){
@@ -81,6 +95,10 @@ function queryList() {
         var status=$("#status").val();
         if(status && status!="-1"){
             data.status=status;
+        }
+        var column_id=$("#column_id").val();
+        if(column_id && column_id!="-1"){
+            data.column_id=column_id;
         }
     }
     $.showActionLoading();

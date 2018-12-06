@@ -46,13 +46,13 @@
                                             <div class="col-md-4 form-group">
                                                 <label>开始时间：</label>
                                                 <div class="pinput">
-                                                    <input placeholder="开始时间" id="starttime" ltname="endtime" name="starttime" readonly="readonly" pop="不能大于结束时间" datatype="require timeverify" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                                    <input placeholder="开始时间" id="starttime" ltname="endtime" name="starttime" readonly="readonly"  onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endtime\')}'})" class="form-control pdate-time">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 form-group">
                                                 <label>结束时间：</label>
                                                 <div class="pinput">
-                                                    <input placeholder="结束时间" id="endtime" gtname="starttime" name="endtime" readonly="readonly" pop="不能小于开始时间" datatype="require timeverify" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
+                                                    <input placeholder="结束时间" id="endtime" gtname="starttime" name="endtime" readonly="readonly"  onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'starttime\')}'})" class="form-control pdate-time">
                                                 </div>
                                             </div>
                                         </div>
