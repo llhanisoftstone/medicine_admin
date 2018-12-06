@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .renk p{
+            float: left;
+            margin-top:6px;
+        }
+        .renk input{
+            width:75%;
+            vertical-align: middle;
+        }
+        .renk div{
+            width:75%;
+            vertical-align: middle;
+        }
+        .NotificMsg{
+            width:90%;
+            height:585px;
+            text-align: center;
+            margin:0 auto;
+            background-size: cover;
+        }
+        .NotificMsg button{
+            width:80px;
+            height:40px;
+            background-color:#ffffff;
+            margin-top:15px;
+        }
+        .notificationBian{
+            margin-left:60px;
+        }
+        .emploee-box {
+            border-color: #ddd;
+        }
+        #l-map{
+            height:300px;
+            width:500px;
+        }
+        .form-control[readonly],.form-control[disabled]{
+            background-color: #ffffff;
+        }
+        .toggle_hide{
+            display:none;
+        }
+    </style>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.all.min.js"></script>
+</head>
+
+<body>
+<div class="container-fluid" id="wrapper-body">
+    <div class="col-md-12">
+        <div class="row table-header clearfix">
+            <div class="left-item">
+                <p>活动新增</p>
+            </div>
+            <div class="right-item">
+                <button id="fanBtn" class="btn btn-admin" style="float: right;margin-top:-3px;">返回</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper" class="row report">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="anniverReport">
+                        <form role="form" id="activityForm">
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label for="notititle">活动名称：</label>
+                                    <div class="pinput">
+                                        <input type="hidden" id="notiId">
+                                        <input id="notititle" name="name" placeholder="请输入" class="form-control"  maxlength="30">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="title_pic3">列表图：</label>
+                                    <div class="pinput">
+                                        <div class="input-group">
+                                            <input id="title_pic3" name="pic_path" class="form-control title_pic" value=""  style="cursor: pointer;" readonly="readonly" placeholder="请上传图片（750*375）">
+                                            <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                        <i class="glyphicon glyphicon-search">
+                                            <input id="upimg" type="file" name="picfile[]" value="pic file" uptype="titlePic"  refattr="title_pic3" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;" accept=".jpg,.png,.jpeg,.bmp">
+                                        </i>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label>省：</label>
+                                    <div class="pinput">
+                                        <select  id="province" name="province_id" class="form-control ">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>市：</label>
+                                    <div class="pinput">
+                                        <select  id="cityname"  name="city_id" class="form-control ">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label>区：</label>
+                                    <div class="pinput">
+                                        <select  id="zone" name="zone_id" class="form-control ">
+                                            <option value="-1">请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="address">详细地址：</label>
+                                    <div class="pinput">
+                                        <input id="address" name="address" placeholder="请输入" class="form-control"  maxlength="30">
+                                    </div>
+                                    <div id="searchResultPanel" style="border:1px solid #C0C0C0;height:auto; display:none;"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>经纬度：</label>
+                                    <div class="pinput">
+                                        <input class="form-control lat" placeholder="纬度" type="text" id="latitude" name="latitude" readonly="readonly" />
+                                        <input class="form-control lng" placeholder="经度" type="text" id="longitude" name="longitude" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <button id="searchBtn" class="fa btn btn-default" type="button" >查询输入位置</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1 form-group" style="width:9.3%">
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <div id="l-map"></div>
+                                    <div style="color: red;">点击地图位置，设置经纬度</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>打卡范围：</label>
+                                    <div class="pinput">
+                                        <select  id="category" name="scope" class="form-control " >
+                                            <option value="-1">请选择</option>
+                                            <option value="100">100米</option>
+                                            <option value="200">200米</option>
+                                            <option value="300">300米</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label>上传现场照：</label>
+                                    <div class="pinput">
+                                        <select  id="times" name="pic_count" class="form-control " >
+                                            <option value="-1">请选择</option>
+                                            <option value="2">2次</option>
+                                            <option value="3">3次</option>
+                                            <option value="4">4次</option>
+                                            <option value="5">5次</option>
+                                            <option value="6">6次</option>
+                                            <option value="7">7次</option>
+                                            <option value="8">8次</option>
+                                            <option value="9">9次</option>
+                                            <option value="10">10次</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>开始时间：</label>
+                                    <div class="pinput">
+                                        <input placeholder="请选择"  id="startTime" name="start_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" class="form-control pdate-time"   >
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label>结束时间：</label>
+                                    <div class="pinput"><input placeholder="请选择"  id="endTime" name="end_time" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})" class="form-control pdate-time" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4  form-group">
+                                    <label>参与类型：</label>
+                                    <div class="pinput">
+                                        <select  id="parttype" name="category" onchange="categoryChange(this)" class="form-control " >
+                                            <!--<option value="-1">请选择</option>-->
+                                            <option value="0">全部</option>
+                                            <option value="1">部分部门</option>
+                                            <option value="2">部分人员</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group" id="partPerson" style="display:none;">
+                                    <label style="float: left; width: 102px;"><span class="choseLabel">参与人员</span>：</label>
+                                    <span class="input-group-btn" style="float: left;">
+                                        <span class="btn btn-default" id="showChoseGoodsBtn" onclick="showUserTable();">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </span>
+                                    <span id="checkedgoodsList" class="choseInput">
+
+                                    </span>
+                                </div>
+                                <script id="checked-template" type="text/x-handlebars-template">
+                                    {{#datas}}
+                                        <span id="span{{id}}">{{name}}
+                                            <i data-id="{{id}}" class="fa fa-times-circle remove-element"></i>
+                                        </span>
+                                    {{/datas}}
+                                </script>
+                            </div>
+                            <div class="row" id="emploee-box" style="display:none;">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default emploee-box">
+                                        <!-- /.panel-heading -->
+                                        <div class="panel-heading choseLabel">参与人员</div>
+                                        <div class="panel-body">
+                                            <!--搜索-->
+                                            <div class=" brandSearch" >
+                                                <div class="panel">
+                                                    <!-- /.panel-heading -->
+                                                    <div class="panel-body">
+                                                        <div class="dataTable_wrapper"></div>
+                                                        <!-- /.table-responsive -->
+                                                        <form role="form" id="GiftCardSearchForm">
+                                                            <div class="row">
+                                                                <div class="col-md-4  form-group">
+                                                                    <label><span class="choseLabel">参与人员</span>：</label>
+                                                                    <div class="pinput">
+                                                                        <input placeholder="请输入" id="searchVal" class="form-control " value="" maxlength="20">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--<div class="col-md-4 form-group">-->
+                                                                    <!--<label>所属部门</label>-->
+                                                                    <!--<div class="pinput">-->
+                                                                        <!--<select name="" id="rqanak" class="form-control">-->
+                                                                            <!--<option value="-1">全部</option>-->
+
+                                                                        <!--</select>-->
+                                                                    <!--</div>-->
+                                                                <!--</div>-->
+                                                                <div class="col-md-4 form-group">
+                                                                    <button id="GiftCardSearchCancel" type="button" class="fa fa-reply-all btn btn-default pull-right">重置</button>
+                                                                    <button id="GiftCardSearch" class="fa fa-search   btn btn-default pull-right" type="button">查询</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <!-- /.panel-body -->
+                                                </div>
+                                            </div>
+                                            <div class="table-responsive" id="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>序号</th>
+                                                        <th>部门</th>
+                                                        <th id="staff-name">人员姓名</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="user-placeholder">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.table-responsive -->
+                                            <div class="center-block" style="float: right">
+                                                <ul id="paginator"></ul>
+                                            </div>
+                                        </div>
+                                        <!-- /.panel-body -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="maink"  >
+                                <div class=" col-md-10" style="padding-top: 15px;">
+                                    <div class="col-md-12 form-group"  style="padding-left: 0;display: flex;float:right">
+                                        <label style="width:12%">培训简介：</label>
+                                        <div id="userProtocolAddUE" style="width: 90%;height: 500px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group  text-center">
+                                <button type="button" class="btn fa  btn-default" onclick="saveActivityData(0)">保存草稿</button>
+                                <button type="button" class="btn fa  btn-default" style="margin-left: 30px;" onclick="saveActivityData(2)">发布</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+</div>
+<script id="user-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr style="text-align:center">
+        <td>{{rowNum}}</td>
+        <td>{{dep_name}}</td>
+        <td class="toggle_td {{toggle_hide}}">{{name}}</td>
+        <td class="operate" style="width:10%">
+            <input type="checkbox" class="checkperson"
+                   data-name="{{name}}"
+                   data-id="{{id}}"
+                   id="check{{id}}">
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+
+<script src="js/power/activity_add.js"></script>
+
+</body>
+</html>
+
