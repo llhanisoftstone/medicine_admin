@@ -1,0 +1,343 @@
+@charset "utf-8";
+@import "common";
+body{
+  background-color: @bg_color;
+}
+a:hover{
+  cursor:pointer;
+}
+.panel-default{
+  border-color:transparent;
+}
+#wrapper{
+  padding-top: 0;
+}
+.header-nav{
+  width:100%;
+  height:74px;
+  background-color:@base_color;
+}
+.navbar-brand{
+  display:block;
+  img{
+    float:left;
+    //width:38px;
+    //height:38px;
+  }
+  .name{
+    float:left;
+    color:#fff;
+    padding-left: 10px;
+  }
+  p{
+    font-size: 14px;
+  }
+}
+.nav-quit{
+  line-height: 74px;
+  margin:0 50px;
+  float:right;
+  div{
+    color:#fff;
+    padding-left:23px;
+    background:url("../img/quit.png") no-repeat left center;
+    background-size: 14px 14px;
+    cursor: pointer;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}
+.sidebar.sidebarchange{
+  margin-top: 75px;
+}
+.userinfo-box{
+  height:67px;
+  background:#ffffff;
+  display:flex;
+}
+.title-img{
+  line-height: 67px;
+  margin:0 10px;
+  position:relative;
+  top:-5px;
+  img{
+    width:46px;
+    height:46px;
+    border-radius: 50%;
+    vertical-align:middle;
+    cursor: pointer;
+  }
+}
+.content-title{
+  width:215px;
+  height:100%;
+  border-bottom:1px solid #f3f3f3;
+  display:flex;
+  color:#666;
+  .title-font>div{
+    padding:0;
+    margin:0;
+    font-size:12px;
+    height:19px;
+    line-height:19px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .title-font div:first-child{
+    margin-bottom: 5px;
+  }
+  .title-font{
+    height: 67px;
+    line-height: 67px;
+    overflow: hidden;
+    padding-top:10px;
+  }
+  .approve{
+    text-align: center;
+    height:20px;
+    width:60px;
+    line-height: 20px;
+    border-radius: 10px;
+    background-color: #999999;
+    color:#fff;
+    display:none;
+    &.active{
+      background-color: @base_color;
+    }
+  }
+}
+//改写左侧菜单的样式
+#side-menu{
+  min-height:800px;
+  &>li {
+    a:hover{
+      background-color: #fff ;
+      color: @base_color !important;
+    }
+    .menu_icon{
+      position:relative;
+      top: 4px;
+    }
+  }
+  li{
+    background-color: #fff ;
+    a{
+      color:#666;
+      font-size: 14px;
+      &:hover{
+        color: @base_color;
+      }
+    }
+    &.active{
+      &>a{
+        color: @base_color;
+      }
+    }
+  }
+
+  .nav>li>a:hover {
+    background-color: @menu_hover_bgcolor ;
+  }
+  ul.nav-second-level{
+    a{
+      font-size: 12px;
+      padding-left: 18px;
+    }
+    li{
+      list-style: disc inside ;
+      border-left:4px solid transparent;
+    }
+    .dot{
+      display:inline-block;
+      width:4px;
+      height:4px;
+      border-radius: 50%;
+      border:none;
+      background-color: #666;
+      margin-right: 16px;
+      position:relative;
+      top:-3px;
+    }
+    &:hover{
+      background-color: @menu_hover_bgcolor ;
+      .dot{
+        background-color: @base_color;
+      }
+    }
+    &.active{
+      background-color: @menu_hover_bgcolor !important;
+      li{
+        background-color: @menu_hover_bgcolor ;
+        color: @base_color;
+        border-left:4px solid @base_color;
+        &>a{
+          color: @base_color;
+        }
+      }
+      .dot{
+        background-color: @base_color;
+      }
+    }
+  }
+}
+//面包屑导航
+#breadcrumb {
+  margin-left: 217px;
+  margin-bottom: 0;
+  font-size: 12px;
+  background: #ffffff !important;
+  height: 67px;
+  line-height: 67px;
+  color:#999;
+  border-radius: 0;
+  padding:0 0 0 35px;
+  a{
+    color:#999;
+    font-size: 12px;
+  }
+  li.active{
+    color:#666;
+  }
+  >li+li:before{
+    display:none;
+  }
+}
+//改写主体部分页面样式
+#page-wrapper{
+  background-color: @bg_color;
+  margin: 20px 0 0 235px;
+  border-left: none;
+}
+
+//页面主体
+#wrapper-body{
+  background-color: #fff;
+}
+// 页面主体部分头部
+.table-header{
+  border-bottom:1px solid @line_color;
+  margin-bottom:15px;
+  padding-bottom:10px;
+  padding-top:15px;
+  .left-item{
+    float:left;
+    font-size:16px;
+    color:rgba(102,102,102,1);
+    padding-left:10px;
+    border-left:4px solid @base_color;
+    height:22px;
+    line-height: 22px;
+    margin-left:10px;
+    display: flex;
+    p{
+      margin-right: 8px;
+    }
+  }
+  .right-item{
+    float:right;
+  }
+  .btn-admin{
+    font-size:14px;
+    color:#666;
+    min-width:112px;
+    height:31px;
+    line-height: 31px;
+    padding:0;
+    position: relative;
+    top:-5px;
+    background-color:@button_bg_color;
+    border:none;
+    &:hover{
+      color:@base_color;
+    }
+  }
+  .btn:focus{
+    outline:0;
+  }
+  .btn-add{
+    padding:0 0 0 40px;
+    border-bottom:1px solid #EEEEF0;
+    background:@button_bg_color url("../img/add_icon.png") no-repeat 10px center;
+    background-size: 17px 15px;
+  }
+  .btn-admin:hover{
+    background-color:darken(@button_bg_color,2%);
+  }
+}
+//查询按钮的样式：bootstrap的class “.btn”基础上再添加如下类名
+.button-operate{
+  font-size: 14px;
+  color: #333;
+  background-color: @button_bg_color;
+  margin-right:10px;
+  border-color: #ccc;
+  &:hover{
+    color:#333;
+  }
+}
+//重置、导出 按钮的样式：bootstrap的class “.btn”基础上再添加如下类名
+.button-default{
+  font-size: 14px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  margin-right:10px;
+}
+
+//表单添加区 保存 按钮 bootstrap的class “.btn”基础上再添加如下类名
+.button-save{
+  font-size: 14px;
+  color: #fff;
+  background-color: @base_color;
+  border-radius: 0;
+  min-width:85px;
+  &:hover{
+    color:#fff;
+  }
+  &:focus{
+    outline:0;
+    color:#fff;
+  }
+}
+//表单添加区 重置 按钮 bootstrap的class “.btn”基础上再添加如下类名
+.button-reset{
+  font-size: 14px;
+  color: #333;
+  background-color: #F4F4F4;
+  border-radius: 0;
+  min-width:85px;
+  border-color: #D2D2D2;
+  &:hover{
+    color:#333;
+  }
+  &:focus{
+    outline:0;
+    color:#333;
+  }
+}
+span.fa:hover{
+  cursor:pointer;
+}
+.checking{
+  width:1200px;
+  margin:50px auto;
+  text-align: center;
+  img{
+    width:150px;
+    height:150px;
+    margin-bottom: 30px;
+  }
+  p{
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  .reason{
+    font-size: 14px;
+    text-align: left;
+    line-height: 30px;
+    word-break: break-all;
+  }
+}
+
