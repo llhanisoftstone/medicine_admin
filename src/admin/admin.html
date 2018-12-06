@@ -288,9 +288,6 @@
 <script type="text/javascript" src="js/common/fileuploadUtil.js"></script>
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script id="sideMenu-template" type="side-menu">
-    <li>
-        <a style="color: #006CCE;"><i class="fa fa-dashboard fa-fw"></i> 导航菜单</a>
-    </li>
     {{#each datas}}
         <li>
             <a>
@@ -311,6 +308,7 @@
                 </ul>
             {{/each}}
         </li>
+        {{/each}}
     <!--<li>-->
         <!--<a><i class="fa fa-table fa-fw"></i>{{root_name}}<i class="fa arrow"></i></a>-->
             <!--{{#each subItem}}-->
@@ -321,7 +319,7 @@
                 <!--</ul>-->
             <!--{{/each}}-->
         <!--</li>-->
-    {{/each}}
+
 </script>
 
 <script type="text/javascript"  src="js/common/bootstrap-select.js"></script>
