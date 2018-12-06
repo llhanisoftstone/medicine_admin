@@ -245,7 +245,7 @@ function delCookie(name) {
     if (cval != null)
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
-
+/*
 function showSuccess(message,time) {
     time = time?time:1.5;
     Messenger().post({
@@ -256,7 +256,7 @@ function showSuccess(message,time) {
         id:'errorMsg'
     });
 }
-
+*/
 function showError(message,time) {
     time = time?time:1.5;
     Messenger().post({
@@ -266,6 +266,27 @@ function showError(message,time) {
         showCloseButton: true,
         id:'errorMsg'
     });
+}
+//换为layer.msg
+function showSuccess(message,time) {
+    time = time?time:1500;
+    layer.msg(
+        message,
+        {
+            icon: 1,
+            time: time
+        }
+    );
+}
+function showError(message,time) {
+    time = time?time:1500;
+    layer.msg(
+        message,
+        {
+            icon: 2,
+            time: time
+        }
+    );
 }
 $._messengerDefaults = {
     extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom'

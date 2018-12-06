@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .renk p{
+            float: left;
+            margin-top:6px;
+        }
+        .renk input{
+            width:75%;
+            vertical-align: middle;
+        }
+        #notific-placeholder{
+            text-align: center;
+        }
+        .checking {
+            width: 1200px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .checking img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 30px;
+        }
+        .checking p {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .checking .reason {
+            font-size: 14px;
+            text-align: left;
+            line-height: 30px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid" id="wrapper-body">
+    <div class="col-md-12">
+        <div class="row table-header clearfix">
+            <div class="left-item">
+                <p>活动管理</p>
+            </div>
+            <div class="right-item"  id="right-item-box">
+                <button class="btn btn-admin" id="addNewBtn" onclick="newAddNotification()">新建</button>
+                <button class="btn btn-admin" id="searchBtn" onclick="onSearchClick()">&nbsp;高级查询</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper" class="row reasonRefund">
+        <div class="col-lg-12">
+            <div  id="page-content" class="panel panel-default">
+                <div class="reasonSearch " style="display: none">
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper"></div>
+
+                        <form role="form" id="notificationSearchForm">
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label for="notifiTitle">活动标题：</label>
+                                    <div class="pinput">
+                                        <input id="notifiTitle" name="name" placeholder="请输入" class="form-control"  maxlength="30">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="status">状态：</label>
+                                    <div class="pinput">
+                                        <select id="status" name="status"  class="form-control"  >
+                                            <option value="-1">请选择</option>
+                                            <option value="0">草稿</option>
+                                            <option value="1">待审核</option>
+                                            <option value="2">进行中</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-4  form-group">-->
+                                    <!--<label>发布时间：</label>-->
+                                    <!--<div class="pinput">-->
+                                        <!--<input style="float: left;width:100%;" placeholder="请输入" datatype="require" id="startTime" name="create_time_start_exp" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">-->
+                                        <!--<input style="float: right;width: 100%;" placeholder="请输入" datatype="require" id="endTime" name="create_time_start_exp" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="col-md-4 form-group">
+                                    <button id="searchNotifiData" class=" fa fa-search btn btn-default" datatype="submit" type="button">查询</button>
+                                    <button id="resetNotifiSearchBtn" class=" fa fa-reply-all btn btn-default" type="reset">重置</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="table-responsive" id="table-notification">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th >序号</th>
+                                <th >活动标题</th>
+                                <th >活动时间</th>
+                                <th >活动地点</th>
+                                <th >活动人数</th>
+                                <th >状态</th>
+                                <th >操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="notification-placeholder" style="text-align: center">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                    <div style="float: right;margin-right: 50px;">
+                        <ul id="paginator"></ul>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+            <div class="panel panel-default" id="checking"  style="display: none;">
+                <div class="checking" >
+                    <img src="img/company/checking.png" alt="">
+                    <p>您的企业尚未认证，认证后才能进行活动管理</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="pageIndex">
+<script id="notification-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr>
+        <td>{{rowNum}}</td>
+        <td>{{name}}</td>
+        <td>
+            {{#equal status 3}}
+                <span style="color:red;">{{start_time}} - {{end_time}}</span>
+                {{else}}
+            {{start_time}} - {{end_time}}
+            {{/equal}}
+        </td>
+        <td>{{address}}</td>
+        <td>{{count}}</td>
+        <td>
+            <!--状态：0-草稿；1-待审核，2进行中; 3已经结束，4-审核拒绝 ; 10、未上报，11、待处理、12通过、13拒绝-->
+            {{#equal status 0}}草稿{{/equal}}
+            {{#equal status 1}}待审核{{/equal}}
+            {{#equal status 2}}进行中{{/equal}}
+            {{#equal status 3}}已结束{{/equal}}
+            {{#equal status 4}}审核拒绝{{/equal}}
+            {{#equal status 10}}未上报{{/equal}}
+            {{#equal status 11}}待处理{{/equal}}
+            {{#equal status 12}}通过{{/equal}}
+            {{#equal status 13}}拒绝{{/equal}}
+        </td>
+        <td>
+            {{#equal status 0}}
+                <span class="fa fa-edit" title="修改" onclick="toModifyNotifiData('{{id}}')"></span>
+                &nbsp;&nbsp;<span class="fa fa-upload" onclick="submitCheck('{{id}}')" title="提交审核"></span>
+                &nbsp;&nbsp;<span class="fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
+                {{else}}
+                <span class="fa fa-file-text-o" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+<script src="js/power/activity_management.js"></script>
+
+</body>
+</html>
