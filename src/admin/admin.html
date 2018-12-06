@@ -16,6 +16,7 @@
     <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link href="css/demo.css" rel="stylesheet">
+    <link rel="stylesheet" href="less2css/admin.css">
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/messenger.css" rel="stylesheet">
     <link href="css/messenger-theme-flat.css" rel="stylesheet">
@@ -101,6 +102,23 @@
         th{
             text-align: center;
         }
+        .nav-workbench{
+            float: right;
+            line-height: 74px;
+        }
+        .nav-workbench a{
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .nav-workbench img{
+            width: 14px;
+            height:14px;
+            vertical-align: middle;
+            margin-right: 12px;
+            margin-bottom: 3px;
+        }
     </style>
 </head>
 <body style="display:none;"  >
@@ -129,7 +147,50 @@
 </div>
 <div id="wrapper">
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top farm-navBgColor" role="navigation" style="margin-bottom: 0">
+    <!--<nav class="navbar navbar-default navbar-static-top farm-navBgColor" role="navigation" style="margin-bottom: 0">-->
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
+                <!--<span class="sr-only">Toggle navigation</span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
+            <!--<a class="navbar-brand" href="#">政策大咖后台管理系统</a>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.navbar-header &ndash;&gt;-->
+
+        <!--<ul class="nav navbar-top-links navbar-right">-->
+            <!--&lt;!&ndash;<li id="ywlink" class="dropdown"><a href="index.html"&ndash;&gt;-->
+                                                <!--&lt;!&ndash;target="_blank" class="dropdown-toggle">平台管理系统前台</a></li>&ndash;&gt;-->
+            <!--<li class="dropdown">-->
+                <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+                  <!--<span id="adminUser"></span>-->
+                    <!--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>-->
+                <!--</a>-->
+                <!--<ul class="dropdown-menu dropdown-user">-->
+                    <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<li class="divider"></li>&ndash;&gt;-->
+                    <!--<li><a href="#" onclick="loginout()"><i class="fa fa-sign-out fa-fw"></i>退出系统</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /.dropdown-user &ndash;&gt;-->
+            <!--</li>-->
+            <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+        <!--</ul>-->
+        <!--&lt;!&ndash; /.navbar-top-links &ndash;&gt;-->
+        <!--<div class="navbar-default sidebar" role="navigation" >-->
+            <!--<div class="sidebar-nav navbar-collapse">-->
+                <!--<ul class="nav" id="side-menu">-->
+                <!--</ul>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.sidebar-collapse &ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.navbar-static-side &ndash;&gt;-->
+    <!--</nav>-->
+    <nav class="navbar navbar-default navbar-static-top farm-navBgColor header-nav" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -137,35 +198,58 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">政策大咖后台管理系统</a>
-        </div>
-        <!-- /.navbar-header -->
+            <a class="navbar-brand" href="javascript:;">
+                <img src="img/company_logo.png" alt="培训监管中心管理系统">
+                <div class="name">
 
-        <ul class="nav navbar-top-links navbar-right">
-            <!--<li id="ywlink" class="dropdown"><a href="index.html"-->
-                                                <!--target="_blank" class="dropdown-toggle">平台管理系统前台</a></li>-->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                  <span id="adminUser"></span>
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-user">
-                    <!--<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>-->
-                    <!--</li>-->
-                    <!--<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>-->
-                    <!--</li>-->
-                    <!--<li class="divider"></li>-->
-                    <li><a href="#" onclick="loginout()"><i class="fa fa-sign-out fa-fw"></i>退出系统</a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-user -->
-            </li>
-            <!-- /.dropdown -->
-        </ul>
+                </div>
+            </a>
+        </div>
+        <div class="nav-quit">
+            <div onclick="loginout()">退出</div>
+        </div>
+        <!--<div class="nav-workbench" id="nav-workbench"><a onclick="work()"><img src="img/gzt.png" alt="工作台">工作台</a></div>-->
+        <!-- /.navbar-header -->
+        <!--<ul class="nav navbar-top-links navbar-right">-->
+        <!--<li class="dropdown">-->
+        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
+        <!--<span id="adminUser"></span>-->
+        <!--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>-->
+        <!--</a>-->
+        <!--<ul class="dropdown-menu dropdown-user">-->
+        <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li class="divider"></li>&ndash;&gt;-->
+        <!--<li>-->
+        <!--<a href="#" onclick="loginout()">-->
+        <!--<i class="fa fa-sign-out fa-fw"></i>-->
+        <!--退出系统-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--&lt;!&ndash; /.dropdown-user &ndash;&gt;-->
+        <!--</li>-->
+        <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
+        <!--</ul>-->
+
         <!-- /.navbar-top-links -->
-        <div class="navbar-default sidebar" role="navigation" >
+        <div class="navbar-default sidebar sidebarchange" role="navigation" >
+            <div class="userinfo-box">
+                <div class="content-title" id="content-title">
+                    <div class="title-img">
+                        <img src="./img/loginsign.png" id="userPicture" alt="" >
+                    </div>
+                    <div class="title-font">
+                        <div title="">您好，<span id="admin_username"></span></div>
+                        <div id="approve" class="approve "></div>
+                    </div>
+                </div>
+            </div>
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
+
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
@@ -205,19 +289,38 @@
 <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <script id="sideMenu-template" type="side-menu">
     <li>
-        <a><i class="fa fa-dashboard fa-fw"></i> 导航菜单</a>
+        <a style="color: #006CCE;"><i class="fa fa-dashboard fa-fw"></i> 导航菜单</a>
     </li>
     {{#each datas}}
-    <li>
-        <a><i class="fa fa-table fa-fw"></i>{{root_name}}<i class="fa arrow"></i></a>
+        <li>
+            <a>
+                <i class="fa fa-fw menu_icon">
+                    <img src="img/menu_icon.png" alt="">
+                </i>
+                {{root_name}}
+                <i class="fa arrow"></i>
+            </a>
             {{#each subItem}}
                 <ul class="nav nav-second-level" urlid='{{url}}'>
                     <li>
-                        <a href="javascript:onMenuClick('pages/{{url}}')">{{name}}</a>
+                        <a href="javascript:onMenuClick('pages/{{url}}','{{root_name}}','{{name}}')">
+                        <span class="dot"></span>
+                        {{name}}
+                        </a>
                     </li>
                 </ul>
             {{/each}}
         </li>
+    <!--<li>-->
+        <!--<a><i class="fa fa-table fa-fw"></i>{{root_name}}<i class="fa arrow"></i></a>-->
+            <!--{{#each subItem}}-->
+                <!--<ul class="nav nav-second-level" urlid='{{url}}'>-->
+                    <!--<li>-->
+                        <!--<a href="javascript:onMenuClick('pages/{{url}}')">{{name}}</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--{{/each}}-->
+        <!--</li>-->
     {{/each}}
 </script>
 

@@ -1,0 +1,29 @@
+@charset "utf-8";
+/*清除浮动*/
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: block;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+ul,
+ol,
+dl {
+  list-style: none;
+}
+ul li {
+  list-style: none;
+}
+input,
+button {
+  box-sizing: border-box;
+}
+body {
+  font-family: "MicrosoftYaHei Regular", "Microsoft YaHei";
+}
+/*********************************/

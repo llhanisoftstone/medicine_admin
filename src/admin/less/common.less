@@ -1,0 +1,32 @@
+@charset "utf-8";
+/*清除浮动*/
+.clearfix:before,.clearfix:after { content:""; display:block;}
+.clearfix:after{clear:both;}
+.clearfix{*zoom:1;}
+ul,ol,dl{list-style:none;}
+ul li{list-style:none;}
+input, button {box-sizing: border-box;}
+
+//定义全局字体
+body{
+  font-family:"MicrosoftYaHei Regular","Microsoft YaHei";
+}
+
+/*********************************/
+//定义页面背景颜色
+
+//1.系统主色调,更改后顶部导航，左侧菜单导航，按钮等的颜色会一起改变
+@base_color: #006CCE;
+
+//2.后台页面主体背景颜色
+@bg_color:#f4f4f6;
+
+//3. 鼠标悬停时，左侧菜单导航背景颜色
+@menu_hover_bgcolor:#F6F6F9;
+
+//按钮背景色
+@button_bg_color:#F6F5FA;
+
+//7.页面中线条颜色
+@line_color:#eeeeee;
+

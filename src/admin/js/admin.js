@@ -492,7 +492,8 @@ function initSession() {
             var tmphash  = window.location.hash;
             tmphash = tmphash.replace('#pages/','');
             resizePage();
-            $("#adminUser").html(rs.username)
+            $("#adminUser").html(rs.username);
+            $("#admin_username").html(rs.username);
             $("ul[urlid='"+tmphash+"']").addClass('active');
             $("ul[urlid='"+tmphash+"']").parent('li').children("a").trigger('click');
         }
