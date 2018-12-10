@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                        <li><a href="javascript:">企业信息</a>
+                        <li>企业信息
+                        </li>
+                    </ul>
+                    <div style="float: right;margin-top: -2px">
+                        <!--<button type="button" id="addbtn" onclick="onAddClick()" class="fa fa-plus-circle   btn btn-default" datatype="require"> 新建</button>-->
+                        <!--<button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>-->
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="addModelscompany">
+                        <div class="panel panel-default">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="dataTable_wrapper"></div>
+                                <!-- /.table-responsive -->
+
+                                <form role="form" id="userAddForm">
+                                    <div class="row" >
+                                        <div class="col-md-4 form-group">
+                                            <label>机构名称：</label>
+                                            <div class="pinput">
+                                                <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="name" datatype="require">
+                                                <input type="hidden" id="companyid">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label for="title_pic2">LOGO：</label>
+                                            <div class="pinput">
+                                                <div class="input-group">
+                                                    <input id="title_pic2" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="请上传图片 40*40">
+                                                    <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                        <i class="glyphicon glyphicon-search">
+                                            <input type="file" name="picfile[]" value="pic file" uptype="community" id="signfile" multiple="multiple" refattr="title_pic2" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
+                                        </i>
+                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>标签：</label>
+                                            <div class="pinput">
+                                                <input type="text" maxlength="18" placeholder="请输入" class="form-control" id="tag" datatype="require">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>联系电话：</label>
+                                            <div class="pinput">
+                                                <input type="text" oninput="this.value=this.value.replace(/[^(\d|\-)]$/g,'');"  maxlength="12"  placeholder="请输入" class="form-control" id="phone" datatype="require">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>联系人：</label>
+                                            <div class="pinput">
+                                                <input type="text" maxlength="10" placeholder="请输入" class="form-control" id="contacts" datatype="require">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>省份：</label>
+                                            <div class="pinput">
+                                                <select placeholder="请选择省" id="provinceid" name="provinceid" class="form-control " datatype="require">
+                                                    <option value="-1">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>市：</label>
+                                            <div class="pinput">
+                                                <select placeholder="请选择市" id="cityid" name="cityid" class="form-control" datatype="require">
+                                                    <option value="-1">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>区：</label>
+                                            <div class="pinput">
+                                                <select placeholder="请选择区" id="zoneid" name="zoneid" class="form-control" datatype="require">
+                                                    <option value="-1">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>详细地址：</label>
+                                            <div class="pinput">
+                                                <input type="text" maxlength="20" placeholder="请输入" class="form-control" id="address" datatype="require">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>app_key：</label>
+                                            <div class="pinput">
+                                                <input type="text" name="app_key"  maxlength="50"  placeholder="请输入" class="form-control" id="app_key" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group  pbtn-group ">
+                                        <button id="userAddcategory" onclick="onSaveClick()" datatype="require" class="fa fa-save btn btn-default" type="button">保存</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <input type="hidden" id="pageIndex">
+</div>
+
+<script type="text/javascript" src="js/power/compayn_info.js"></script>
+</body>
+
+</html>
