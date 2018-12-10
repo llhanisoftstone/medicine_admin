@@ -181,20 +181,31 @@ function onSaveClick() {
         showError("请选择区");
         return;
     }
-
+    var app_key=$("#app_key").val().trim();
+    if(app_key !== '') {
+        data.app_key=app_key;
+    }
     if(postoff){
         return;
     }
     postoff=true;
     var id=$("#companyid").val();
-    if (operation == "add") {
-        data.auto_id=1;
-        zhpost(base_url_acceptanceReport, data, saveResult);
-    } else {
-        zhput(base_url_acceptanceReport + "/" + id, data, saveResult);
-    }
+    zhput(base_url_acceptanceReport + "/" + id, data, saveResult);
 }
 
+function saveResult(result) {
+    if (result.err) {
+        showError('保存失败！');
+        setTimeout(function(){
+            postoff=false;
+        },1000);
+    } else {
+        showSuccess('保存成功！');
+        setTimeout(function(){
+            postoff=false;
+        },1000);
+    }
+}
 function backclick(){
     $("#acceptanceReport").removeAttr("datatype")
     $('#user_buttonid').hide();
@@ -205,27 +216,6 @@ function backclick(){
     $("#acceptanceReport").val("");
 }
 
-function saveResult(result) {
-    if (result.err) {
-        showError('保存失败！');
-        setTimeout(function(){
-            postoff=false;
-        },1000);
-    } else {
-        $(".reasonSearch", $("#wrapper")).animate({
-            height : 'toggle',
-            opacity : 'toggle'
-        }, "slow");
-        $(".reasonSearch").css("display","none")
-        $(".addModelscompany").css("display","none")
-        queryList();
-        $('#userAddForm')[0].reset();
-        showSuccess('保存成功！');
-        setTimeout(function(){
-            postoff=false;
-        },1000);
-    }
-}
 
 function fillForm(id) {
     zhget(base_url_acceptanceReport+"/"+id).then( function(result) {
@@ -238,6 +228,7 @@ function fillForm(id) {
             $("#address").val(result.rows[0].address);
             getprovince(result.rows[0].province_id)
             $("#tag").val(result.rows[0].tag);
+            $("#app_key").val(result.rows[0].app_key);
             getcity(result.rows[0].province_id,result.rows[0].city_id,result.rows[0].zone_id)
             return;
         }
