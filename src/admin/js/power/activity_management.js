@@ -24,14 +24,15 @@ function saveFormData(formId){
     setlocalStorageCookie("pageRecord",pageRecord);
 }
 $(document).ready(function(){
-    enter_id=getCookie('enterprise_id') || sessionStorage.getItem("enterprise_id");
+    enter_id=getCookie('compid') || sessionStorage.getItem("compid");
     user_status=getCookie('user_status') || sessionStorage.getItem("user_status");
-    if(user_status!=1){
-        $('#page-content').hide();
-        $('#right-item-box').hide();
-        $('#checking').show();
-        return;
-    }
+    // 待放开
+    // if(user_status!=1){
+    //     $('#page-content').hide();
+    //     $('#right-item-box').hide();
+    //     $('#checking').show();
+    //     return;
+    // }
     getpageRecord();
     searchForm = getlocalStorageCookie(currPageName);
     searchForm = JSON.parse(searchForm);
@@ -167,7 +168,6 @@ function submitCheck(id){
                 layer.msg('提交失败！', {icon: 2});
             }
         })
-
     });
 }
 //删除
