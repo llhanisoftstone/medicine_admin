@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+</head>
+<link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+
+<script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+<script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+<style>
+    .photo{
+        width: 100%;
+        height: auto;
+        padding: 0 15px;
+        padding-bottom: 20px;
+        overflow: auto;
+
+    }
+    .photo li:nth-child(5n-4){
+        margin-left: 0;
+    }
+    .photo li{
+        cursor: pointer;
+        float: left;
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+    .photoImg{
+        width: 95px;
+        height: 85px;
+    }
+    .photoImg img{
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .layui-layer-btn{
+        border-top: 1px solid #e2e2e2;
+    }
+    .labelhide{
+        display: none;
+    }
+</style>
+<body>
+<div class="container-fluid" id="wrapper-body">
+    <div class="col-md-12">
+        <div class="row table-header clearfix">
+            <div class="left-item">
+                <p>上报处理</p>
+                <p>/ 上报详情</p>
+            </div>
+            <div class="right-item">
+                <button type="button" onclick="returnUpDeep()" class="btn btn-admin">返回上层</button>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <label id="MenuCurLocation"></label>
+                        <div class="table-responsive" id="table-menu">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>姓名</th>
+                                    <th>证件号码</th>
+                                    <th>打卡时间</th>
+                                    <th>打卡地点</th>
+                                    <th>打卡备注</th>
+                                    <th>人脸识别</th>
+                                    <th>现场照片</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="details-placeholder">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                        <div style="float: right;margin-right: 50px;">
+                            <ul id="paginator"></ul>
+                        </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+        </div>
+    </div>
+</div>
+<!--相册框-->
+<div id="RefusedTo" style="display: none">
+    <ul class="photo">
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+        <li>
+            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
+        </li>
+    </ul>
+</div>
+<script id="details-template" type="text/x-handlebars-template">
+    {{#datas}}
+    <tr style="text-align:center">
+        <td>{{id}}</td>
+        <td>{{name}}</td>
+        <td>{{name}}</td>
+        <td>{{update_time}}</td>
+        <td>{{address}}</td>
+        <td>{{address}}</td>
+        <td><a href="javascript:;"><span class="glyphicon glyphicon-picture" title="查看人脸识别" onclick="faceRecognition('{{id}}')"  style="cursor: pointer;color:#000"></span></a></td>
+        <td style="cursor: pointer" title="查看现场照片" onclick="onPhoto('{{id}}')">查看</td>
+        <td>{{status}}</td>
+        <td class="operate" style="width:10%">
+            <span class="glyphicon glyphicon-ban-circle {{statenone status}}" style="cursor: pointer;" title="禁用"></span>
+        </td>
+    </tr>
+    {{/datas}}
+</script>
+
+<script type="text/javascript" src="js/activity_details.js"></script>
+
+</body>
+
+</html>

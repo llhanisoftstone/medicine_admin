@@ -12,13 +12,14 @@ var enter_id; //企业id
 var issearch;
 $(function () {
     user_status=getCookie('user_status') || sessionStorage.getItem("user_status");
-    enter_id=getCookie('enterprise_id') || sessionStorage.getItem("enterprise_id");
-    if(user_status!=1){
-        $('#page-content').hide();
-        $('#right-item-box').hide();
-        $('#checking').show();
-        return;
-    }
+    enter_id=getCookie('compid') || sessionStorage.getItem("compid");
+    // 待放开
+    // if(user_status!=1){
+    //     $('#page-content').hide();
+    //     $('#right-item-box').hide();
+    //     $('#checking').show();
+    //     return;
+    // }
     queryList();
     $("#GiftCardSearchCancel").bind("click", function(){
         $("#GiftCardSearchForm")[0].reset();

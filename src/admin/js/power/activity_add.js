@@ -13,7 +13,7 @@ var enter_id; //企业id
 var cateType=0; //参与类型
 var isSearch=false; //是否为查询
 $(document).ready(function(){
-    enter_id=getCookie('enterprise_id') || sessionStorage.getItem("enterprise_id");
+    enter_id=getCookie('compid') || sessionStorage.getItem("compid");
     getprovince(); //获得省份信息
     $.initSystemFileUpload($("#anniverReport"), onUploadDetailPic);
     UE.getEditor('userProtocolAddUE');

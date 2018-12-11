@@ -443,7 +443,12 @@ function loginout() {
     delCookie('compid');
     delCookie('organiz_id');
     delCookie('sid');
+    delCookie('userrank');
+    delCookie('storeid');
     sessionStorage.removeItem('organiz_id');
+    sessionStorage.removeItem('compid');
+    sessionStorage.removeItem('userrank');
+    sessionStorage.removeItem('uid');
     window.location = 'adminLogin.html';
     // zhpost('/op/loginout', {}, function (rs) {
     //     if (rs.err) {

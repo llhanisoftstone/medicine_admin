@@ -5,13 +5,14 @@ var baseurl_menu="/rs/department";
 var enter_id; //企业id
 var user_status; //企业审核状态：0-待审核；1-审核通过;3-审核拒绝 ; 9-草稿
 $(document).ready(function(){
-    enter_id=getCookie('enterprise_id') || sessionStorage.getItem("enterprise_id");
+    enter_id=getCookie('compid') || sessionStorage.getItem("compid");
     user_status=getCookie('user_status') || sessionStorage.getItem("user_status");
-    if(user_status!=1){
-        $('#page-content').hide();
-        $('#checking').show();
-        return;
-    }
+    //待放开
+    // if(user_status!=1){
+    //     $('#page-content').hide();
+    //     $('#checking').show();
+    //     return;
+    // }
     renderleftMenu();
 
 });
