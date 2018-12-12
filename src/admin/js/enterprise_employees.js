@@ -181,6 +181,7 @@ function delClick(el,userid){
         zhdelete(base_url_staff+ "/" + userid).then(function (result) {
             if(result.code == 200){
                 layer.msg('删除成功！', {icon: 1});
+                queryList();
                 if(jQuery(el).parents("tbody").find("tr").length==1){
                     if(currentPageNo>1){
                         currentPageNo--;
