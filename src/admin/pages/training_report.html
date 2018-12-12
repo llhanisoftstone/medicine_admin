@@ -139,6 +139,9 @@
     {{#datas}}
     <tr style="text-align:center">
         <td>
+            {{#equal status 2}}
+            <label class="labelBlock "><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
+            {{/equal}}
             {{#equal status 10}}
             <label class="labelBlock "><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
             {{/equal}}

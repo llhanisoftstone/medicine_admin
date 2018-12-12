@@ -75,7 +75,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows1,
         order:"status, create_time desc",
-        status:'<>,99',
+        status:'<=,4',
         enter_id:enter_id
     }
     if(issearch){
@@ -190,4 +190,23 @@ function delClick(id) {
         })
 
     });
+}
+//查看拒绝原因
+function viewReason(id){
+    $('#user_buttonids').hide();
+    $('#viewthereason').show();
+    var data={
+        id:id
+    }
+    zhget(base_url_notification,data).then(function(result){
+        if(result.code==200){
+            var remarks=result.rows[0].check_refuse_reason;
+            $('#reject_Reasons')
+                .attr('readonly',true)
+                .val(remarks);
+            $('#rejectModal').modal('show');
+        }else{
+
+        }
+    })
 }
