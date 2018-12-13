@@ -181,9 +181,19 @@ function onSaveClick() {
         showError("请选择区");
         return;
     }
+    var app_id=$("#app_id").val().trim();
+    if(app_id !== '') {
+        data.app_id=app_id;
+    }else{
+        showError("请输入app_id");
+        return;
+    }
     var app_key=$("#app_key").val().trim();
     if(app_key !== '') {
         data.app_key=app_key;
+    }else{
+        showError("请输入app_key");
+        return;
     }
     if(postoff){
         return;
