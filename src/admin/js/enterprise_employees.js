@@ -139,7 +139,6 @@ function onUserSaveClick() {
     department_id = $("#guanlian_add").attr('pkuid');
     jobs_id = $('#jobs option:selected').attr('jobstid');
     var data={
-        comp_id:enter_id,
         name:username,
         phone:ipone,
         age:age,
