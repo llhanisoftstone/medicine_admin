@@ -13,7 +13,6 @@
         width: 100%;
         height: auto;
         padding: 0 15px;
-        padding-bottom: 20px;
         overflow: auto;
     }
     .photo li:nth-child(5n-4){
@@ -24,10 +23,12 @@
         float: left;
         margin-left: 20px;
         margin-top: 20px;
+        text-align: center;
     }
     .photoImg{
         width: 95px;
         height: 85px;
+        display: inline-block;
     }
     .photoImg img{
         width: 100%;
@@ -95,39 +96,35 @@
 </div>
 <!--相册框-->
 <div id="RefusedTo" style="display: none">
-    <ul class="photo">
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
-        <li>
-            <div class="photoImg"><img src="img/company/zhizhao_example.jpg"></div>
-        </li>
+    <ul class="photo" id="pic-placeholder">
+
     </ul>
 </div>
+<script id="pic-template" type="text/x-handlebars-template">
+    {{#datas}}
+        <li onclick="picClick('{{scene_pic}}')">
+            <div class="photoImg"><img src="{{getpicurl scene_pic}}"></div>
+            <div class="photoTime">{{create_time}}</div>
+        </li>
+    {{/datas}}
+</script>
 <script id="details-template" type="text/x-handlebars-template">
     {{#datas}}
     <tr style="text-align:center">
-        <td>{{id}}</td>
+        <td>{{rowNum}}</td>
         <td>{{name}}</td>
-        <td>{{name}}</td>
-        <td>{{update_time}}</td>
+        <td>{{card_num}}</td>
+        <td>{{create_time}}</td>
         <td>{{address}}</td>
-        <td>{{address}}</td>
-        <td><a href="javascript:;"><span class="glyphicon glyphicon-picture" title="查看人脸识别" onclick="faceRecognition('{{id}}')"  style="cursor: pointer;color:#000"></span></a></td>
-        <td style="cursor: pointer" title="查看现场照片" onclick="onPhoto('{{id}}')">查看</td>
-        <td>{{status}}</td>
+        <td>{{remark}}</td>
+        <td><a href="javascript:;"><span class="glyphicon glyphicon-picture" title="查看人脸识别" onclick="faceRecognition('{{member_pic}}')"  style="cursor: pointer;color:#000"></span></a></td>
+        <td style="cursor: pointer" title="查看现场照片" onclick="onPhoto('{{id}}','{{u_id}}','{{act_id}}')">查看</td>
+        {{#equal status 1}}
+        <td>有效</td>
+        {{/equal}}
+        {{#equal status 0}}
+        <td>无效</td>
+        {{/equal}}
         <td class="operate" style="width:10%">
             <span class="glyphicon glyphicon-ban-circle {{statenone status}}" style="cursor: pointer;" title="禁用"></span>
         </td>

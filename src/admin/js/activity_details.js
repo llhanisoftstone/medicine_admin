@@ -1,24 +1,30 @@
 /**
  * Created by Administrator on 2018/11/30.
  */
-var base_url_activity = '/rs/v_activity_up';
+var base_url_activity = '/rs/activity_record';
+var base_url_pic = '/rs/activity_scence_pic';
 var currentPageNo = 1;
 var pageRows = 10;
+var phonepic;
 $(function () {
-    queryList()
+    queryList();
 });
 function queryList() {
     var pid = getUrlParamsValue("id");
     zhget(base_url_activity, {
         page: currentPageNo,
         size: pageRows,
-        id:pid
+        act_id:pid
     }).then(function(result) {
-        role = result;
-        buildTable(result, 'details-template', 'details-placeholder');
+        if(result.code == 200){
+            for(var i=0;i<result.rows.length;i++){
+                result.rows[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
+            }
+            buildTable(result, 'details-template', 'details-placeholder');
+        }
     });
 }
-function faceRecognition(id) {
+function faceRecognition(member_pic) {
     layer.photos({
         resize:false,
         move: false,
@@ -27,14 +33,14 @@ function faceRecognition(id) {
             "data": [
                 {
                     "alt": "人脸识别照片",
-                    "src": "img/company/zhizhao_example.jpg", //原图地址
-                    "thumb": "img/company/zhizhao_example.jpg" //缩略图地址
+                    "src": targetUrl+member_pic, //原图地址
+                    "thumb": targetUrl+member_pic //缩略图地址
                 }
             ]
         }
     });
 }
-function onPhoto(id) {
+function onPhoto(id,u_id,act_id) {
     layer.open({
         title:'现场照片',
         resize:false,
@@ -46,38 +52,36 @@ function onPhoto(id) {
         anim: 2,
         shadeClose: false, //开启遮罩关闭
         offset: ['200px', '35%'],
-        area:["605px","330px"],
+        area:["720px","370px"],
         content:$('#RefusedTo')
     });
+    var data={
+        u_id:u_id,
+        act_id:act_id,
+    }
+    zhget(base_url_pic,data).then(function(result) {
+        if(result.code == 200){
+            phonepic = result.rows
+            buildTable(result, 'pic-template', 'pic-placeholder');
+        }
+    })
 }
-$('.photo li').on('click',function(){
+function picClick(scene_pic) {
     layer.photos({
         resize:false,
         move: false,
         anim: 5,
         photos: {
-            "title": "营业执照示例照片", //相册标题
-            "data": [   //相册包含的图片，数组格式
+            "data": [
                 {
-                    "alt": "营业执照示例照片",
-                    "src": "img/company/zhizhao_example.jpg", //原图地址
-                    "thumb": "img/company/zhizhao_example.jpg" //缩略图地址
-                },
-                {
-                    "alt": "营业执照示例照片",
-                    "src": "img/company/zhizhao_example.jpg", //原图地址
-                    "thumb": "img/company/zhizhao_example.jpg" //缩略图地址
-                },
-                {
-                    "alt": "营业执照示例照片",
-                    "src": "img/company/zhizhao_example.jpg", //原图地址
-                    "thumb": "img/company/zhizhao_example.jpg" //缩略图地址
+                    "alt": "现场照片",
+                    "src": targetUrl+scene_pic,
+                    "src": targetUrl+scene_pic,
                 }
             ]
         }
-
     });
-})
+}
 function returnUpDeep() {
     window.history.go(-1);
 };
