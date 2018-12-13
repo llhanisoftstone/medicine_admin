@@ -54,8 +54,9 @@
                 <p>企业员工</p>
             </div>
             <div class="right-item" id="right-item-box">
-                <button type="button" onclick="onExportClick()" class="btn btn-admin" style="background-color: rgba(24, 144, 255, 1);color: #fff">下载导模板</button>
-                <button type="button" onclick="onImportClick()" class="btn btn-admin">导入</button>
+                <button type="button" onclick="onExportClick()" class="btn btn-admin" style="background-color: rgba(24, 144, 255, 1);color: #fff">下载导出模板</button>
+                <button type="button" class="btn btn-admin"><label for="endImport" style="display: block;cursor: pointer">导入</label></button>
+                <input type="file" id="endImport" name="files[]" style="display: none;"/>
                 <button type="button" onclick="onUserAddClick()" class="btn btn-admin">新建</button>
                 <button type="button" id="searchBtn" onclick="onSearchClick()"   class="btn btn-admin">&nbsp;高级查询</button>
             </div>
@@ -240,10 +241,8 @@
         <td>{{card_num}}</td>
         <td>{{getspotDate join_time}}</td>
         <td class="operate" style="width:10%">
-            {{#is_judge rank 91}}{{else}}
             <span class="  fa fa-edit" title="修改" onclick="onUpdateClick('{{id}}')"></span>
             <span class="  fa fa-trash-o" title="删除" onclick="delClick(this,'{{id}}')"></span>
-            {{/is_judge}}
         </td>
     </tr>
     {{/datas}}

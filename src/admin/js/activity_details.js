@@ -24,10 +24,9 @@ function faceRecognition(id) {
         move: false,
         anim: 5,
         photos: {
-            "title": "营业执照示例照片", //相册标题
-            "data": [   //相册包含的图片，数组格式
+            "data": [
                 {
-                    "alt": "营业执照示例照片",
+                    "alt": "人脸识别照片",
                     "src": "img/company/zhizhao_example.jpg", //原图地址
                     "thumb": "img/company/zhizhao_example.jpg" //缩略图地址
                 }
