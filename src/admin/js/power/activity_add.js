@@ -433,6 +433,11 @@ function saveActivityData(status){
                     time: 4000
                 });
                 backNotification()
+            }else if(result.code >= 700){
+                layer.msg(result.message, {
+                    icon:2,
+                    time: 4000
+                });
             }else{
                 setTimeout(function(){
                     postoff=false;
@@ -453,6 +458,11 @@ function saveActivityData(status){
                 },1000);
                 layer.msg('修改成功', {
                     icon:1,
+                    time: 4000
+                });
+            }else if(result.code >= 700){
+                layer.msg(result.message, {
+                    icon:2,
                     time: 4000
                 });
             }else{

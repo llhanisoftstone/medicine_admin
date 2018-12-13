@@ -239,6 +239,7 @@ function fillForm(id) {
             getprovince(result.rows[0].province_id)
             $("#tag").val(result.rows[0].tag);
             $("#app_key").val(result.rows[0].app_key);
+            $("#app_id").val(result.rows[0].app_id);
             getcity(result.rows[0].province_id,result.rows[0].city_id,result.rows[0].zone_id)
             return;
         }
