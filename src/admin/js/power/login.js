@@ -9,37 +9,39 @@ var base_url_login = '/op/login';
 
 var operation = "add";
 var currentPageNo = 1;
+$(function() {
+    $("#username").blur(function(){
+        $(".hidetsusername").hide();
+    })
+    $("#password").blur(function(){
+        $(".hidetsmodefined").hide();
+    })
+});
 
-function init() {
-    getVerifyCode();
-    $("#username").keydown(function (event) {
-        if ( event.keyCode == 13) {
-            if(check()){
-                checkfrm();
-            }else{
-                alert('输入不正确')
-            }
-        };
-    });
-    $("#password").keydown(function (event) {
-        if ( event.keyCode == 13) {
-            if(check()){
-                checkfrm();
-            }else{
-                alert('输入不正确')
-            }
-        };
-    });
-    $("#yanzheng").keydown(function (event) {
-        if ( event.keyCode == 13) {
-            if(check()){
-                checkfrm();
-            }else{
-                alert('输入不正确')
-            }
-        };
-    });
-}
+$("#username").keydown(function (event) {
+    if ( event.keyCode == 13) {
+        if(check()){
+            checkfrm();
+        }else{
+            showError('输入不正确')
+        }
+    };
+});
+$("#username").blur(function(){
+    $(".hidetsusername").hide();
+})
+$("#password").blur(function(){
+    $(".hidetsmodefined").hide();
+})
+$("#password").keydown(function (event) {
+    if ( event.keyCode == 13) {
+        if(check()){
+            checkfrm();
+        }else{
+            showError('输入不正确')
+        }
+    };
+});
 
 function getVerifyCode() {
     zhpost(base_url_verify, {} ).then(function (result) {
@@ -64,9 +66,8 @@ function queryNavList() {
 function check(){
     var name =$("#username").val();
     var password =$("#password").val();
-    var yanzheng =$("#yanzheng").val();
     var boo=false;
-    if(name!=''&&password!=''&&yanzheng!=''&&yanzheng.length>3&&yanzheng.length<5){
+    if(name!=''&&password!=''){
         boo = true;
     }
     return boo
@@ -75,15 +76,18 @@ function check(){
 function checkfrm() {
     var username = $('#username').val();
     var pwd = $('#password').val();
-    var yanzheng = $('#yanzheng').val();
     if (username == "") {
-        alert('请输入用户名！');
-        $('#username').focus();
-    }
-    else if (pwd == "") {
-        alert('请输入密码！');
-        $('#password').focus();
-    }else {
+        $(".hidetsusername").html('用户名不能为空，请输入');
+        $(".hidetsusername").show();
+    }else if (pwd == "") {
+        $(".hidetsmodefined").html('密码不能为空，请输入');
+        $(".hidetsmodefined").show();
+    }else if(pwd.length<6||pwd.length>20){
+        $(".hidetsmodefined").html('请输入6-20位密码');
+        $(".hidetsmodefined").show();
+    }else{
+        $(".hidetsmodefined").html('');
+        $(".hidetsmodefined").hide();
         if ($(".remUser").is(":checked")) {
             setCookie("adUsername", username);
         } else {
@@ -96,31 +100,42 @@ function checkfrm() {
         }
         zhpost(base_url_login, {
             username: username,
-            yanzheng: yanzheng,
             password: pwd,
             power:1
         }).then( function (result) {
             var rs = result;
             if (rs.err) {
-                 if(rs.code==605){
-                     alert("您输入的密码有误")
-                 }else if(rs.code==606){
-                     alert("您输入的用户不存在")
-                 }else if(rs.code==303){
-                     alert("该账号被禁用，请联系管理员");
-                 }else{
-                     alert(rs.err);
-                 }
+                if(rs.code==605){
+                    $(".hidetsmodefined").html('您输入的密码有误，请重新输入');
+                    $(".hidetsmodefined").show();
+                }else if(rs.code==606){
+                    $(".hidetsusername").html('您输入的用户不存在，请重新输入');
+                    $(".hidetsusername").show();
+                }else if(rs.code==303){
+                    $(".hidetsusername").html('该账号被禁用，请联系管理员');
+                    $(".hidetsusername").show();
+                }else if(rs.code==304){
+                    $(".hidetsusername").html('该账号被禁用，请联系管理员');
+                    $(".hidetsusername").show();
+                }else if(rs.code==604){
+                    $(".hidetsusername").html('该账号没有登陆权限');
+                    $(".hidetsusername").show();
+                }else{
+                    showError(rs.err);
+                }
                 $('#username').focus();
             }
             else {
+                showSuccess('登录成功')
                 sessionStorage.setItem('menu',JSON.stringify(rs.menu));
                 setCookie('sid', rs.sid);
                 setCookie('compid', rs.compid);
-                setCookie('organiz_id', rs.organiz_id);
+                setCookie('organiz_id', rs.orgid);
                 setCookie('uid', rs.userid);
                 setCookie('userrank', rs.userrank);
                 setCookie('storeid', rs.store_id);
+                setCookie('username', rs.username);
+                sessionStorage.setItem("username",rs.username);
                 sessionStorage.setItem("compid",rs.compid);
                 sessionStorage.setItem("organiz_id",rs.organiz_id);
                 sessionStorage.setItem("uid",rs.userid);
@@ -130,6 +145,7 @@ function checkfrm() {
         });
     }
 }
+
 $(function () {
     var username = getCookie("adUsername")
     var pwd = getCookie("adPassword");
