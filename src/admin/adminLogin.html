@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>后台管理系统</title>
+    <title>政策大咖后台管理系统</title>
     <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/reg.css"/>
 </head>
@@ -24,41 +24,102 @@
     }
     .icon-ai-password:before { content: "\e63e"; }
     .icon-user:before { content: "\e607"; }
+    .bgimg{
+        width:100%;
+        height:539px;
+        background:url(img/dl.png) no-repeat center center;
+        background-size:100% 100%;
+        position:relative;
+    }
+    .mark{
+        position:absolute;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        background:rgba(102,102,102,0.7)
+    }
+    .con{
+        position:absolute;
+        top:240px;
+        left:0;
+        right:0;
+        margin:0 auto;
+    }
+    .font4{
+        color:#fff;
+        font-size:30px;
+    }
+    body{
+        background:#fff;
+    }
+    .logoimg{
+        width:100%;
+        height:113px;
+        margin-top:39px;
+        background:url(img/dl_4.png) no-repeat center center;
+        background-size:125px 113px;
+    }
+    .hidetsusername,.hidetsmodefined{
+        height:24px;
+        line-height: 25px;
+        margin-left:7px;
+        font-size:12px;
+        color:#ff0000;
+        text-align:left;
+        padding-left:20px;
+        background:url(img/dl_3.png) no-repeat left center;
+        background-size:13px 13px;
+        display:none;
+    }
+    .alertmessage{
+        height:24px;
+    }
+    #login{
+        background:#df5c3e;
+        border-radius:2px;
+        border:none;
+        margin-top: 30px;
+        cursor:pointer;
+        box-shadow:0 5px 5px rgba(101,101,101,0.75);
+        transition:all 0.3s;
+    }
+    #login:hover{
+        background-color:#EE5D2F ;
+    }
 </style>
 <body>
-    <div class="con">
-        <font class="font4">欢迎登录政策大咖后台管理系统</font>
-        <div class="kuang login">
-            <ul class="right">
-                <div method="post" class="loginform">
-                    <p style="text-align: left;font-size:16px;color: #666;">用户名</p>
-                    <ul style=" margin-top:10px; margin-bottom:20px;border: 1px solid #ddd;">
-                        <li><span class="icon iconfont icon-user" style="color: #ddd;"></span><input type="text" id="username" value="" class="defautfont"></li>
-                    </ul>
-                    <p style="text-align: left;font-size:16px;color: #666;">密码</p>
-                    <ul style="margin-bottom:20px;border: 1px solid #ddd;margin-top:10px;">
-                        <li><span class="icon iconfont icon-ai-password" style="color: #ddd;"></span><input type="password" id="password" value="" class="defautfont"></li>
-                    </ul>
-                    <ul class="jizhu">
-                        <li><div class="checkbox "><input type="checkbox" class="remUser"><label style="color: #666;">记住用户名</label></div>
-                            <div class="checkbox ">
-                                <input type="checkbox" class="remPad"><label style="color: #666">记住密码</label>
-                            </div></li>
-                    </ul>
-                    <ul class="denglu">
-                        <li><a href="#" onclick="checkfrm()" id="login" style="border:none;margin-top: 30px;">登录</a></li>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </ul>
-        </div>
-        <p style="color: #aaa">© 2015-2016 DeathGhost 版权所有</p>
-        <p style="color: #aaa">陕B2-20080224-1</p>
+<div class="bgimg"><div class="mark"></div></div>
+<div class="con">
+    <font class="font4">欢迎登录政策大咖后台管理系统</font>
+    <div class="kuang login">
+        <ul class="right">
+            <div class="logoimg"></div>
+            <div method="post" class="loginform">
+                <ul style=" margin-top:10px;text-align:left">
+                    <li class="itemlist" style="border: 1px solid #ddd;"><span class="icon iconfont " style="margin:6px 11px;display:inline-block;width:19px;height:21px;background:url(img/dl_2.png) no-repeat center center;background-size:19px 21px"></span><span style="display:inline-block;border-left:1px solid #ddd;height:22px;"></span><input type="text" maxlength="20" id="username" placeholder="请输入用户名" value="" class="defautfont"></li>
+                    <div class="alertmessage"><div class="hidetsusername"></div></div>
+                </ul>
 
+                <ul>
+                    <li class="itemlist" style="border: 1px solid #ddd;"><span class="icon iconfont" style="margin:6px 11px;display:inline-block;width:19px;height:21px;background:url(img/dl_1.png) no-repeat center center;background-size:100% 100%"></span><span style="display:inline-block;border-left:1px solid #ddd;height:22px;"></span><input type="password" id="password" value="" placeholder="请输入密码" maxlength="20" class="defautfont"></li>
+                    <div class="alertmessage"><div class="hidetsmodefined"></div></div>
+                </ul>
+                <ul class="denglu">
+                    <li><a onclick="checkfrm()" id="login" >登&nbsp;&nbsp;录</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </ul>
     </div>
+    <!--<p style="color: #aaa">© 2018 DeathGhost 版权所有</p>-->
+    <!--<p style="color: #aaa">陕B2-20080224-1</p>-->
+
+</div>
 <script type="text/javascript" src="js/common/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/common/bootstrap-paginator.min.js"></script>
 <script type="text/javascript" src="js/common/handlebars-v3.0.1.js"></script>
+<script src="js/common/layer/layer.js"></script>
 <script type="text/javascript" src="js/admin.js"></script>
 <script charset="utf-8" language="javascript" type="text/javascript" src="js/power/login.js"></script>
 </body>

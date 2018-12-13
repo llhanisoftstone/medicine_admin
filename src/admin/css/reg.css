@@ -27,18 +27,21 @@ body{width: 100%;overflow: hidden}
 .sucess p { font-size:25px;color:#e36127; line-height:50px;}
 .sucess span{ font-size:14px;}
 
-.login{ padding:0px 0px; background-color:#fff; height:353px;width: 450px;
+.login{ padding:0px 0px; background-color:#fff; height:420px;width: 429px;
     margin:40px auto;box-shadow: 0 7px 13px 2px #ccc;border-radius: 5px;border:none;}
 .login .xian{ margin:15px 0px 10px 0px; height:0px;}
-.login .right{ overflow:hidden; width: 310px;margin: 0 auto}
+.login .right{ overflow:hidden; width: 348px;margin: 0 auto}
 .login .font4{ margin:0 auto;}
-.login .loginform{  margin-top:50px;}
+.login .loginform{  margin-top:40px;}
+.login .loginform li.itemlist{
+    display:flex;justify-content: space-around;align-items:center;
+}
 .login .loginform li span{font-size:14px;}
 .login .zcanniu{ margin-left: 100px;}
-.login .denglu{cursor : auto;  margin-top:10px;background:url(../img/anniu.png); width:311px; height:42px; color:#FFF; font-size:16px; font-weight:bold; line-height:42px; text-align:center;}
+.login .denglu{cursor : auto;  margin-top:10px;background:url(../img/anniu.png); width:348px; height:42px; color:#FFF; font-size:16px; font-weight:bold; line-height:42px; text-align:center;}
 .login .denglu a{ display:block; color:#FFF;
     cursor: auto ;}
-.login .loginform input{ border:solid 1px #ccc; height:33px;width:270px;background:url(../img/xb16.jpg) repeat-x; padding-left:8px;border: none;outline: none}
+.login .loginform input{ border:solid 1px #ccc; height:33px;width:300px;background:url(../img/xb16.jpg) repeat-x; padding-left:8px;border: none;outline: none}
 .login .defautfont{ color:#999999;}
 .login .yanzheng{width:70px;}
 .login .jizhu{margin-left:-18px;text-align: left}
