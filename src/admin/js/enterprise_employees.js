@@ -61,7 +61,7 @@ function queryList() {
     var data={
         page: currentPageNo,
         size: pageRows,
-        enterp_id:enter_id
+        comp_id :enter_id
     };
     if(issearch){
         var employeesName=$("#employeesName").val().trim();
@@ -88,7 +88,7 @@ function queryList() {
     });
 }
 // 新建
-function onUserSaveClick(id) {
+function onUserSaveClick() {
     var username = $("#username").val();
     var ipone = $("#ipone").val();
     var age = $("#age").val();
@@ -97,6 +97,7 @@ function onUserSaveClick(id) {
     var jobs = $("#jobs").val();
     var idNumber = $("#idNumber").val();
     var dtBindTimeStart = $("#dtBindTimeStart").val();
+    var pattern1 =/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
     if(username ==''){
         layer.msg('姓名不能为空',{icon: 3});
         return;
@@ -127,6 +128,9 @@ function onUserSaveClick(id) {
     if(idNumber == ''){
         layer.msg('请输入证件号码',{icon: 3});
         return;
+    }else if(!pattern1.test(idNumber)){
+        layer.msg('您的身份证号输入有误，请重新输入',{icon: 3});
+        return false;
     }
     if(dtBindTimeStart == ''){
         layer.msg('请选择入职时间',{icon: 3});
@@ -142,7 +146,8 @@ function onUserSaveClick(id) {
         department_id:department_id,
         post_id:jobs_id,
         card_num:idNumber,
-        join_time:dtBindTimeStart
+        join_time:dtBindTimeStart,
+        comp_id:enter_id
     };
     if(gender == '1'){
         data.gender = 1;
@@ -174,7 +179,8 @@ function onUserSaveClick(id) {
 }
 
 
-function delClick(el,userid){
+function delClick(el,id){
+    userid=id;
     layer.confirm('确认要删除吗？', {
         btn: ['确定','取消'] //按钮
     }, function(index){
@@ -182,13 +188,12 @@ function delClick(el,userid){
         zhdelete(base_url_staff+ "/" + userid).then(function (result) {
             if(result.code == 200){
                 layer.msg('删除成功！', {icon: 1});
-                queryList();
                 if(jQuery(el).parents("tbody").find("tr").length==1){
                     if(currentPageNo>1){
                         currentPageNo--;
                     }
                 }else{
-                    employeesLsit();
+                    queryList();
                 }
             }else {
                 layer.msg('删除失败！', {icon: 2});
@@ -217,6 +222,7 @@ function fillForm(id) {
 /*新建*/
 function onUserAddClick() {
     cleanForm();
+    operation = "add";
     $(".modal-title").html("新增企业员工");
     $('#userModal').modal('show');
 }
@@ -230,12 +236,12 @@ function onUpdateClick(id) {
 }
 // 导出
 function onExportClick() {
-    layer.msg('导出')
+    location.href=targetUrl+'/enter_staff_temp.xls';
 }
 // 导入
-function onImportClick() {
-    layer.msg('导入')
-}
+$("#endImport").on("change", function() {
+    uploadquestion();
+});
 /*高级搜索*/
 function onSearchClick() {
     $(".brandSearch", $("#wrapper")).animate({
@@ -368,3 +374,33 @@ Handlebars.registerHelper('genderdata', function(v1, options) {
         return '未知';
     }
 });
+function uploadquestion(){
+    var content = $("#endImport").val();
+    console.log(content);
+    if(content.length > 0) {
+        var formInfo = document.getElementById("endImport").files[0];
+        var formData = new FormData();
+        formData.append("picfile[]",formInfo)
+        formData.append("upType","excel_staff")
+        console.log(formData);
+        upajax('/op/upload', formData, function (result) {
+            $("#endImport").val("")
+            //清空input,解决input同一文件不能多次选择
+            //result = JSON.parse(result);
+            if(result.code== 200) {
+                queryList();
+                showSuccess("题目导入成功");
+                return;
+            }
+            else if(result.code==206){
+                return showError("文件内有内容未填，请检查")
+            }else {
+                showError("文件导入失败")
+                return
+            }
+        });
+    }else{
+        alert('请您选择需要上传的文件！');
+    }
+
+}
