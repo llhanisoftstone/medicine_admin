@@ -276,13 +276,12 @@ function saveActivityData(status){
         });
         return;
     }
-    //待放开
-    // if($.trim(json.pic_path)==''){
-    //     layer.msg('请上传列表图', {
-    //         icon:2
-    //     });
-    //     return;
-    // }
+    if($.trim(json.pic_path)==''){
+        layer.msg('请上传列表图', {
+            icon:2
+        });
+        return;
+    }
     if(json.province_id==-1){
         layer.msg('请选择省', {
             icon:2
