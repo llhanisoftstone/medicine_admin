@@ -44,6 +44,10 @@
         .toggle_hide{
             display:none;
         }
+        input[type=checkbox] {
+            width: 16px;
+            height: 16px;
+        }
     </style>
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
     <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
@@ -217,7 +221,7 @@
                                 <script id="checked-template" type="text/x-handlebars-template">
                                     {{#datas}}
                                         <span id="span{{id}}">{{name}}
-                                            <i data-id="{{id}}" class="fa fa-times-circle remove-element"></i>
+                                            <i data-id="{{id}}" data-name="{{name}}" class="fa fa-times-circle remove-element"></i>
                                         </span>
                                     {{/datas}}
                                 </script>
@@ -298,7 +302,7 @@
                             </div>
                             <div class="form-group  text-center">
                                 <button type="button" class="btn fa  btn-default" onclick="saveActivityData(0)">保存草稿</button>
-                                <button type="button" class="btn fa  btn-default" style="margin-left: 30px;" onclick="saveActivityData(1)">发布</button>
+                                <button type="button" class="btn fa  btn-default" style="margin-left: 30px;" onclick="saveActivityData(1)">提交审核</button>
                             </div>
                         </form>
                     </div>

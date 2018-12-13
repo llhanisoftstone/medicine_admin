@@ -133,7 +133,7 @@ function queryList() {
             data.name=name;
         }
     }
-    if(cateType==2){
+    if(cateType==2){    //员工
         zhget(base_url_staff, data).then( function(result) {
             if(checkData(result,'get','queryList','table-responsive','paginator')) {
                 integrals = result.rows;
@@ -142,10 +142,10 @@ function queryList() {
                     indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
                 }
                 buildTable(result, 'user-template', 'user-placeholder');
-                setCheckBox()
+                setCheckBox()   //设置选中项
             }
         });
-    }if(cateType==1){
+    }if(cateType==1){  //部门
         data.status=1;
         zhget('/rs/department', data).then( function(result) {
             if(checkData(result,'get','queryList','table-responsive','paginator')) {
@@ -157,12 +157,10 @@ function queryList() {
                     indexCode.toggle_hide='toggle_hide';
                 }
                 buildTable(result, 'user-template', 'user-placeholder');
-                setCheckBox()
+                setCheckBox()   //设置选中项
             }
         });
     }
-
-
 }
 //参与人员选择模块 ***代码开始
 var person={
@@ -194,10 +192,18 @@ $('#user-placeholder').on('change','.checkperson',function(e){
 
 $('#checkedgoodsList').on('click','.remove-element',function(e){
     var $tar=$(e.target);
-    $tar.parent('span').remove()
-    var staffid=$tar.attr('data-id');
-    $("#check"+staffid).attr("checked",false)
-    deleteItem(staffid);
+    var name=$tar.attr('data-name');
+    layer.confirm('确定要删除 <span style="font-weight: bold;">'+name+'</span> 吗？', {
+        title:'删除确认',
+        btn: ['确定','取消'] //按钮
+    }, function(index){
+        layer.close(index);
+        $tar.parent('span').remove()
+        var staffid=$tar.attr('data-id');
+        $("#check"+staffid).attr("checked",false)
+        deleteItem(staffid);
+    });
+
 })
 function renderSelect(){
     if(person ){
@@ -235,6 +241,7 @@ function categoryChange(){
         $('#partPerson').show();
     }
 }
+
 //切换显示
 function showUserTable(){
     $("#emploee-box").animate({
@@ -269,12 +276,13 @@ function saveActivityData(status){
         });
         return;
     }
-    if($.trim(json.pic_path)==''){
-        layer.msg('请上传列表图', {
-            icon:2
-        });
-        return;
-    }
+    //待放开
+    // if($.trim(json.pic_path)==''){
+    //     layer.msg('请上传列表图', {
+    //         icon:2
+    //     });
+    //     return;
+    // }
     if(json.province_id==-1){
         layer.msg('请选择省', {
             icon:2
@@ -371,16 +379,30 @@ function saveActivityData(status){
         });
         return;
     }
-    if(cateType==1 || cateType==2){
+    if(cateType==1 ){
+        //部门时 department_ids  逗号分隔
+        var items=[];
+        var item=person.rows;
+        for(var k=0,len=item.length;k<len;k++){
+            items.push(item[k].id)
+        }
+        items=items.toString();
+        json.department_ids=items;
+    }
+    if(cateType==2){
+        //员工时，staff_ids    数组对象 [{id:222}]
         var items=[];
         var item=person.rows;
         for(var j=0,len=item.length;j<len;j++){
-            items.push({
-                target_id:item[j].id
-            })
+            items.push(
+                {
+                    id:item[j].id
+                }
+            )
         }
-        json.items=items;
+        json.staff_ids=items;
     }
+
     var details = UE.getEditor('userProtocolAddUE').getContent();
     if(details.trim()==""||details==null){
         layer.msg('请输入培训简介', {
@@ -451,7 +473,6 @@ function modifyNotificationData(){
     if(id){
     zhget(base_url_notification + "/" + id).then(function (result) {
         if (result.code == 200) {
-            console.log(result)
             var notifiData = result.rows[0];
             $("#notititle").val(notifiData.name)
             $("#title_pic3").val(notifiData.pic_path)
@@ -460,10 +481,9 @@ function modifyNotificationData(){
                 zone_id:notifiData.zone_id
             };
             getprovince(notifiData.province_id,areaData);  //设置省 市 区
-
             //设置参与人员或部门 --开始
             cateType=notifiData.category;  //参与类型
-            var res_items=result.items;
+            /*var res_items=result.items;
             var res_person={
                 rows:[]
             };
@@ -473,9 +493,10 @@ function modifyNotificationData(){
                     name:res_items[j].name,
                 })
             }
-            person=res_person;
+            person=res_person;*/
+
+            person.rows=result.items;
             renderSelect();
-            //设置参与人员或部门 --结束
             if(cateType==0){//全部
                 $('#partPerson').hide();
                 $('#emploee-box').hide();
@@ -490,6 +511,7 @@ function modifyNotificationData(){
                 $('#staff-name').show();
                 $('#partPerson').show();
             }
+            //设置参与人员或部门 --结束
 
             $("#address").val(notifiData.address)
             $("#latitude").val(notifiData.latitude)
