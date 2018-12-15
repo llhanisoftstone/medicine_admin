@@ -271,7 +271,7 @@ function saveActivityData(status){
     var json=$('#activityForm').form2json();
     delete json['picfile[]'];
     if($.trim(json.name)==''){
-        layer.msg('请输入活动名称', {
+        layer.msg('请输入培训名称', {
             icon:2
         });
         return;
@@ -301,7 +301,7 @@ function saveActivityData(status){
         return;
     }
     if($.trim(json.address)==''){
-        layer.msg('请输入活动详细地址', {
+        layer.msg('请输入培训详细地址', {
             icon:2
         });
         return;

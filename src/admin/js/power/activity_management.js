@@ -155,7 +155,7 @@ function viewDetail(id){
 }
 //提交审核
 function submitCheck(id){
-    layer.confirm('确定要直接提交审核该活动吗？', {
+    layer.confirm('确定要直接提交审核该培训吗？', {
         title:'提交确认',
         btn: ['确定','取消'] //按钮
     }, function(index){
@@ -172,7 +172,7 @@ function submitCheck(id){
 }
 //删除
 function delClick(id) {
-    layer.confirm('确定要删除该活动吗？', {
+    layer.confirm('确定要删除该培训吗？', {
         title:'删除确认',
         btn: ['确定','取消'] //按钮
     }, function(index){
