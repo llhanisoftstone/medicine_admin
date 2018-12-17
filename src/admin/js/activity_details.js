@@ -63,30 +63,25 @@ function onPhoto(id,u_id,act_id) {
         if(result.code == 200){
             phonepic = result.rows
             buildTable(result, 'pic-template', 'pic-placeholder');
+            layer.photos({
+                photos: '#pic-placeholder',
+                resize:false,
+                move: false,
+                anim: 5
+            });
         }
     })
 }
-function picClick(scene_pic) {
-    layer.photos({
-        resize:false,
-        move: false,
-        anim: 5,
-        photos: {
-            "data": [
-                {
-                    "alt": "现场照片",
-                    "src": targetUrl+scene_pic,
-                    "src": targetUrl+scene_pic,
-                }
-            ]
+function invalidButton(id){
+    var data={
+        status:0
+    }
+    zhput(base_url_activity+"/"+id,data).then(function(result) {
+        if(result.code == 200){
+            queryList();
         }
     });
 }
 function returnUpDeep() {
     window.history.go(-1);
 };
-Handlebars.registerHelper('statenone', function(v1, options) {
-    if(v1 == 11){
-        return 'labelhide';
-    }
-});
