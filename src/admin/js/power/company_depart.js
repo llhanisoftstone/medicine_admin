@@ -97,15 +97,17 @@ function beforeEditName(treeId, treeNode) {
         layer.confirm("您确定要修改 " + treeNode.name + " 的名称吗？",
             {
                 title:'修改确认',
-                btn: ['确定','取消']
+                btn: ['确定','取消'],
+                resize:false,
+                move: false
             }, function(index){
-            layer.close(index);
-            zTree.editName(treeNode);
-            return true;
-        },function(index){
-            layer.close(index);
-            return false;
-        });
+                layer.close(index);
+                zTree.editName(treeNode);
+                return true;
+            },function(index){
+                layer.close(index);
+                return false;
+            });
     }, 0);
     return false;
 }
@@ -113,48 +115,40 @@ function beforeRemove(treeId, treeNode) {
     className = (className === "dark" ? "":"dark");
     var zTree = $.fn.zTree.getZTreeObj("menuTree");
     zTree.selectNode(treeNode);
-    // setTimeout(function(){
-    //     layer.confirm("您确定要删除 " + treeNode.name + " 吗？",
-    //         {
-    //             title:'删除确认',
-    //             btn: ['确定','取消']
-    //         }, function(index){
-    //             layer.close(index);
-    //             return true;
-    //         },function(index){
-    //             layer.close(index);
-    //             return false;
-    //         });
-
-    // layer.open({
-    //     content: "您确定要删除 " + treeNode.name + " 吗？",
-    //     title:'删除确认',
-    //     btn: ['确定','取消'],
-    //     yes: function(index){
-    //         //do something
-    //         layer.close(index);
-    //         return true;
-    //     },
-    //     cancel:function(index){
-    //         layer.close(index);
-    //         return false;
-    //     }
-    // });
-
-
-    // },0)
-    // return false;
-    return confirm("您确定要删除 -- " + treeNode.name + " 吗？");
+    layer.confirm("您确定要删除 " + treeNode.name + " 吗？",
+        {
+            title:'删除确认',
+            btn: ['确定','取消'],
+            resize:false,
+            move: false
+        }, function(index){
+            layer.close(index);
+            if(treeNode.isParent){
+                showError('该部门下有子部门，不能删除');
+            }else{
+                zhget('/rs/enter_staff',{department_id:treeNode.id}).then(function(result){
+                    if(result.records>0){
+                        showError('该部门下有员工，不能删除');
+                    }else{
+                        zTree.removeNode(treeNode,false);
+                        zhput(baseurl_menu+"/"+treeNode.id,{status:9}).then(function(res){
+                            if(res.code==200){
+                                showSuccess("删除成功！");
+                            }else{
+                                showError(res.err);
+                            }
+                        });
+                    }
+                })
+            }
+        },function(index){
+            layer.close(index);
+        });
+    return false;    //设置了 beforeRemove 回调函数，并返回 false，将无法触发 onRemove 事件回调函数
 }
 function onRemove(e, treeId, treeNode) {
-    // console.log(treeNode.id)
-    zhput(baseurl_menu+"/"+treeNode.id,{status:9}).then(function(result){
-        if(result.code==200){
-            showSuccess("删除成功！");
-        }else{
-            //processError(result);
-        }
-    });
+
+
 }
 function beforeRename(treeId, treeNode, newName, isCancel) {
     className = (className === "dark" ? "":"dark");
@@ -180,7 +174,7 @@ function onRename(e, treeId, treeNode, isCancel) {
     // console.log(addNodename);
     zhput(baseurl_menu+"/"+treeNode.id,{enterp_id:enter_id,name:treeNode.name}).then(function(result){
         if(result.code==200){
-            showSuccess("操作成功！");
+            showSuccess("修改成功！");
         }else{
             //processError(result);
         }
@@ -206,6 +200,7 @@ function addHoverDom(treeId, treeNode) {
         + "' title='添加部门' onfocus='this.blur();'></span>";
     sObj.after(addStr);
     var addbtn = $("#addBtn_"+treeNode.tId);
+    var removebtn = $("#"+treeNode.tId+"_remove");
     // var editbtn=$("#"+treeNode.tId+"_edit");
     if (addbtn) addbtn.on("click", function(){
         //添加节点判断改为真
@@ -229,8 +224,13 @@ function addHoverDom(treeId, treeNode) {
         currentId+=1;
         return false;
     });
-    // if(editbtn) editbtn.bind("click",showRemoveModal);
-    //  console.log(editbtn);
+    // if(removebtn) {
+    //     removebtn.on("click",function(){
+    //         var zTree = $.fn.zTree.getZTreeObj("menuTree");
+    //         zTree.removeNode(treeNode,false);
+    //     })
+    // };
+
 };
 // // 添加节点的请求
 // function requestAddNode(addNodename,jsondata){
