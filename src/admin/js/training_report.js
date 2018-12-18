@@ -110,10 +110,10 @@ function onUserAddClick() {
     selected();
     var m = $("input[name='checkbox']:checked").length;
     if($('#checkboxAll').is(':checked') == true && m<1){
-        layer.msg('没有可上报活动~', {icon:3});
+        layer.msg('没有可上报培训~', {icon:3});
         return;
     }else if(m<1){
-        layer.msg('请选择上报活动~', {icon:3});
+        layer.msg('请选择上报培训~', {icon:3});
         return;
     }
     layer.confirm('确认上报吗？', {

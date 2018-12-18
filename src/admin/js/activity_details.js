@@ -78,10 +78,19 @@ function invalidButton(id){
     var data={
         status:0
     }
-    zhput(base_url_activity+"/"+id,data).then(function(result) {
-        if(result.code == 200){
-            queryList();
-        }
+    layer.confirm('确定要将该条记录设置为无效吗？', {
+        title:'操作确认',
+        btn: ['确定','取消'] //按钮
+    }, function(index){
+        layer.close(index);
+        zhput(base_url_activity+"/"+id,data).then(function(result) {
+            if(result.code == 200){
+                queryList();
+                showSuccess('设置成功')
+            }else{
+                showError(result.message)
+            }
+        });
     });
 }
 function returnUpDeep() {
