@@ -21,6 +21,8 @@ function queryList() {
                 result.rows[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
             }
             buildTable(result, 'details-template', 'details-placeholder');
+        }else {
+            $("#details-placeholder").html("<tr><td colspan='10' style='text-align: center'>暂无数据</td></tr>");
         }
     });
 }
