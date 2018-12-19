@@ -75,7 +75,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows1,
         order:"status, create_time desc",
-        //status:'<=,4',
+        status:'<>,99',
         enter_id:enter_id
     }
     if(issearch){
