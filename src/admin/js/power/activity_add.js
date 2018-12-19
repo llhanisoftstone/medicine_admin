@@ -413,7 +413,9 @@ function saveActivityData(status){
     json.details=details;
     json.status=status;
     json.enter_id=enter_id;
-
+    var location=bMapTransQQMap(json.longitude,json.latitude);  //百度地图转换为腾讯经纬度存入数据库
+    json.latitude=location.lat;
+    json.longitude=location.lng;
     var id=getIdByUrl();
     if(postoff){
         return;
@@ -524,8 +526,9 @@ function modifyNotificationData(){
             //设置参与人员或部门 --结束
 
             $("#address").val(notifiData.address)
-            $("#latitude").val(notifiData.latitude)
-            $("#longitude").val(notifiData.longitude)
+            var latlng=qqMapTransBMap(notifiData.longitude,notifiData.latitude);
+            $("#latitude").val(latlng.lat)
+            $("#longitude").val(latlng.lng)
 
             $("#category").val(notifiData.scope)
             $("#times").val(notifiData.pic_count)
@@ -549,3 +552,58 @@ $('#GiftCardSearch').on('click',function(){
     isSearch=true;
     queryList();
 });
+
+// 腾讯地图转百度地图
+function qqMapTransBMap(lng,lat){
+
+    var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+
+    var x = lng;
+
+    var y = lat;
+
+    var z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+
+    var theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+
+    var lngs = z * Math.cos(theta) + 0.0065;
+
+    var lats = z * Math.sin(theta) + 0.006;
+
+    return {
+
+        lng: lngs,
+
+        lat: lats
+
+    }
+
+}
+
+
+// 百度地图转腾讯地图
+function  bMapTransQQMap(lng,lat){
+
+    var x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+
+    var x = lng - 0.0065;
+
+    var y = lat - 0.006;
+
+    var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+
+    var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+
+    var lngs = z * Math.cos(theta);
+
+    var lats = z * Math.sin(theta);
+
+    return {
+
+        lng: lngs,
+
+        lat: lats
+
+    }
+
+}
