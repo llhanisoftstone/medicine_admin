@@ -31,6 +31,10 @@
             width: 100%;
             height: 100%;
         }
+        .layui-layer-btn .layui-layer-btn0 {
+            border-color: #DF5C3E;
+            background-color: #DF5C3E;
+        }
     </style>
 </head>
 <body>
@@ -159,7 +163,7 @@
         <td>{{stateDate status}} </td>
         <td class="operate" style="width:10%">
             {{#equal status 13}}
-            <span class="glyphicon glyphicon-remove" style="cursor: pointer;" title="拒绝原因" onclick="refusedTo('{{id}}','{{username}}')"></span>
+            <span class="fa fa-eye" style="cursor: pointer;" title="查看拒绝原因" onclick="refusedTo('{{id}}','{{username}}')"></span>
             {{/equal}}
         </td>
     </tr>
