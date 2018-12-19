@@ -137,7 +137,7 @@ a:hover {
   min-height: 800px;
 }
 #side-menu > li a:hover {
-  background-color: #fff ;
+  background-color: #fff;
   color: #df5c3e !important;
 }
 #side-menu > li .menu_icon {
@@ -145,7 +145,7 @@ a:hover {
   top: 4px;
 }
 #side-menu li {
-  background-color: #fff ;
+  background-color: #fff;
 }
 #side-menu li a {
   color: #666;

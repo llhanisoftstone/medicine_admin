@@ -66,13 +66,18 @@ function queryList() {
         layer.close(loadIndex);
         if(result.code == 200){
             var reportdata = result.rows;
-            for(var i=0;i<result.rows.length;i++){
-                result.rows[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
-            }
             for(var i=0;i<reportdata.length;i++){
+                reportdata[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
                 if(reportdata[i].status != "12" && reportdata[i].status != "11"){
                     resultdata.push(reportdata[i].status);
                 }
+                if(parseInt(reportdata[i].real_count)<0){
+                    reportdata[i].real_count = 0;
+                }
+                if(parseInt(reportdata[i].invalid_count)<0){
+                    reportdata[i].invalid_count = 0;
+                }
+                reportdata[i].valid_count = parseInt(reportdata[i].real_count) - parseInt(reportdata[i].invalid_count);
             }
             var  resultdatalength = resultdata.length;
             buildTable(result, 'training-template', 'training-placeholder');
