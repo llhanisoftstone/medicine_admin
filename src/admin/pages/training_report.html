@@ -41,7 +41,7 @@
                 <p>培训上报</p>
             </div>
             <div class="right-item" id="right-item-box">
-                <button type="button" onclick="onUserAddClick()" class="btn btn-admin">批量处理</button>
+                <button type="button" onclick="onUserAddClick()" class="btn btn-admin">批量上报</button>
                 <button type="button" id="searchBtn" onclick="onSearchClick()"  class="btn btn-admin">&nbsp;高级查询</button>
             </div>
         </div>
@@ -145,9 +145,9 @@
             {{#equal status 10}}
             <label class="labelBlock "><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
             {{/equal}}
-            {{#equal status 13}}
-            <label class="labelBlock"><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
-            {{/equal}}
+            <!--{{#equal status 13}}-->
+            <!--<label class="labelBlock"><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>-->
+            <!--{{/equal}}-->
         </td>
         <td>{{rowNum}}</td>
         <td>{{name}}</td>
