@@ -194,13 +194,13 @@ Handlebars.registerHelper('stateDate', function(v1, options) {
             return "未上报"
             break;
         case 11:
-            return "待处理"
+            return "上报待处理"
             break;
         case 12:
-            return "已通过"
+            return "上报通过"
             break;
         case 13:
-            return "已拒绝"
+            return "上报拒绝"
             break;
     }
 });

@@ -38,6 +38,17 @@
     .layui-layer-btn{
         border-top: 1px solid #e2e2e2;
     }
+    .layui-layer-btn .layui-layer-btn0 {
+        border-color: #DF5C3E;
+        background-color: #DF5C3E;
+    }
+    .refuse-reason{
+        border: 0;
+        outline: none;
+        padding: 5px 17px;
+        font-size: 14px;
+        resize:none
+    }
 </style>
 <body>
 <div class="container-fluid" id="wrapper-body">
@@ -97,6 +108,10 @@
 
     </ul>
 </div>
+<!--被设置为原因弹框-->
+<div id="rejectModal" style="display: none">
+    <div id="reject_Reason" class="refuse-reason"></div>
+</div>
 <script id="pic-template" type="text/x-handlebars-template">
     {{#datas}}
         <li>
@@ -126,6 +141,9 @@
             {{#equal status 1}}
                 <span class="glyphicon glyphicon-ban-circle" style="cursor: pointer;" title="设置为无效" onclick="invalidButton('{{id}}')"></span>
             {{/equal}}
+            {{#ifnotnull invalid}}
+            &nbsp;&nbsp;<span class="fa fa-eye" style="cursor: pointer;" title="查看无效原因" onclick="viewReason('{{invalid}}')"></span>
+            {{/ifnotnull}}
         </td>
     </tr>
     {{/datas}}

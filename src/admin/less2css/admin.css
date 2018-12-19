@@ -137,7 +137,7 @@ a:hover {
   min-height: 800px;
 }
 #side-menu > li a:hover {
-  background-color: #fff;
+  background-color: #fff ;
   color: #df5c3e !important;
 }
 #side-menu > li .menu_icon {
@@ -145,7 +145,7 @@ a:hover {
   top: 4px;
 }
 #side-menu li {
-  background-color: #fff;
+  background-color: #fff ;
 }
 #side-menu li a {
   color: #666;
@@ -346,4 +346,8 @@ span.fa:hover {
   text-align: left;
   line-height: 30px;
   word-break: break-all;
+}
+.layui-layer-btn .layui-layer-btn0 {
+  border-color: #DF5C3E;
+  background-color: #DF5C3E;
 }

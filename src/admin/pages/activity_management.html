@@ -34,6 +34,20 @@
             line-height: 30px;
             word-break: break-all;
         }
+        .modal-dialog{
+            margin-top: 250px;
+        }
+        .layui-layer-btn .layui-layer-btn0 {
+            border-color: #DF5C3E;
+            background-color: #DF5C3E;
+        }
+        .refuse-reason{
+            border: 0;
+            outline: none;
+            padding: 5px 17px;
+            font-size: 14px;
+            resize:none
+        }
     </style>
 </head>
 
@@ -124,30 +138,14 @@
         </div>
     </div>
 </div>
-<div id="rejectModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title">拒绝原因</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal" id="user_forms">
-                    <input type="hidden" id="rejectId">
-                    <textarea placeholder="请输入拒绝原因，最多150个字" name="reject_reasons" id="reject_Reasons" cols="30" rows="10" style="resize:none;width:100%;height:100%" maxlength="150"></textarea>
 
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button"  class=" btn btn-default" id="viewthereason" data-dismiss="modal" style="display: none;">确认</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
+<!--培训审核拒绝原因弹框-->
+<div id="rejectModal" style="display: none">
+    <div id="reject_Reason" class="refuse-reason"></div>
+</div>
+<!--上报拒绝弹框-->
+<div id="RefusedTo" style="display: none">
+    <div id="why_text" class="refuse-reason"></div>
 </div>
 <input type="hidden" id="pageIndex">
 <script id="notification-template" type="text/x-handlebars-template">
@@ -172,9 +170,9 @@
             {{#equal status 3}}已结束{{/equal}}
             {{#equal status 4}}审核拒绝{{/equal}}
             {{#equal status 10}}未上报{{/equal}}
-            {{#equal status 11}}待处理{{/equal}}
-            {{#equal status 12}}通过{{/equal}}
-            {{#equal status 13}}拒绝{{/equal}}
+            {{#equal status 11}}上报待处理{{/equal}}
+            {{#equal status 12}}上报通过{{/equal}}
+            {{#equal status 13}}上报拒绝{{/equal}}
         </td>
         <td>
             {{#equal status 0}}
@@ -193,9 +191,19 @@
             {{/equal}}
             {{#equal status 4}}
             <span class="fa fa-eye" title="查看拒绝原因" onclick="viewReason('{{id}}')"></span>
-            <span class="fa fa-edit" title="修改" onclick="toModifyNotifiData('{{id}}')"></span>
-            &nbsp;&nbsp;<span class="fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
+            &nbsp;&nbsp;<span class="fa fa-edit" title="修改" onclick="toModifyNotifiData('{{id}}')"></span>
             {{/equal}}
+            {{#equal status 11}}
+            <span class="fa fa-file-text-o" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 12}}
+            <span class="fa fa-file-text-o" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+            {{#equal status 13}}
+            <span class="fa fa-eye" style="cursor: pointer;" title="查看拒绝原因" onclick="refusedTo('{{id}}')"></span>
+            &nbsp;&nbsp;<span class="fa fa-file-text-o" title="查看详情" onclick="viewDetail('{{id}}')"></span>
+            {{/equal}}
+
         </td>
     </tr>
     {{/datas}}

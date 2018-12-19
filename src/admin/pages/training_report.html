@@ -31,6 +31,10 @@
             width: 100%;
             height: 100%;
         }
+        .layui-layer-btn .layui-layer-btn0 {
+            border-color: #DF5C3E;
+            background-color: #DF5C3E;
+        }
     </style>
 </head>
 <body>
@@ -41,7 +45,7 @@
                 <p>培训上报</p>
             </div>
             <div class="right-item" id="right-item-box">
-                <button type="button" onclick="onUserAddClick()" class="btn btn-admin">批量处理</button>
+                <button type="button" onclick="onUserAddClick()" class="btn btn-admin">批量上报</button>
                 <button type="button" id="searchBtn" onclick="onSearchClick()"  class="btn btn-admin">&nbsp;高级查询</button>
             </div>
         </div>
@@ -145,9 +149,9 @@
             {{#equal status 10}}
             <label class="labelBlock "><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
             {{/equal}}
-            {{#equal status 13}}
-            <label class="labelBlock"><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>
-            {{/equal}}
+            <!--{{#equal status 13}}-->
+            <!--<label class="labelBlock"><input type="checkbox" name="checkbox" class="pack" id="{{id}}" value="{{status}}"></label>-->
+            <!--{{/equal}}-->
         </td>
         <td>{{rowNum}}</td>
         <td>{{name}}</td>
@@ -159,7 +163,7 @@
         <td>{{stateDate status}} </td>
         <td class="operate" style="width:10%">
             {{#equal status 13}}
-            <span class="glyphicon glyphicon-remove" style="cursor: pointer;" title="拒绝原因" onclick="refusedTo('{{id}}','{{username}}')"></span>
+            <span class="fa fa-eye" style="cursor: pointer;" title="查看拒绝原因" onclick="refusedTo('{{id}}','{{username}}')"></span>
             {{/equal}}
         </td>
     </tr>

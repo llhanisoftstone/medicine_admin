@@ -96,3 +96,31 @@ function invalidButton(id){
 function returnUpDeep() {
     window.history.go(-1);
 };
+
+// 查看被设置为无效原因
+function viewReason(reason) {
+    layer.open({
+        title:'设置为无效原因',
+        type: 1,
+        resize:false,
+        move: false,
+        btn:['关闭'],
+        skin: 'layui-layer-demo', //样式类名
+        closeBtn: 1, //关闭按钮
+        anim: 2,
+        shadeClose: true, //开启遮罩关闭
+        offset: ['200px', '35%'],
+        area:["550px","230px"],
+        content:$('#rejectModal')
+    });
+
+    $("#reject_Reason").html(reason);
+}
+//判断是否为空
+Handlebars.registerHelper('ifnotnull', function(v1, options) {
+    if(v1!=null&&v1!=''&&v1!=0) {
+        return options.fn(this);
+    }else{
+        return options.inverse(this);
+    }
+});

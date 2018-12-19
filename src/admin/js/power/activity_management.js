@@ -75,7 +75,7 @@ function queryList(){
         page: currentPageNo,
         size: pageRows1,
         order:"status, create_time desc",
-        status:'<=,4',
+        //status:'<=,4',
         enter_id:enter_id
     }
     if(issearch){
@@ -191,22 +191,78 @@ function delClick(id) {
 
     });
 }
-//查看拒绝原因
-function viewReason(id){
-    $('#user_buttonids').hide();
-    $('#viewthereason').show();
-    var data={
-        id:id
-    }
-    zhget(base_url_notification,data).then(function(result){
-        if(result.code==200){
+// //查看拒绝原因
+// function viewReason(id){
+//     $('#user_buttonids').hide();
+//     $('#viewthereason').show();
+//     var data={
+//         id:id
+//     }
+//     zhget(base_url_notification,data).then(function(result){
+//         if(result.code==200){
+//             var remarks=result.rows[0].check_refuse_reason;
+//             $('#reject_Reasons')
+//                 .attr('readonly',true)
+//                 .val(remarks);
+//             $('#rejectModal').modal('show');
+//         }else{
+//
+//         }
+//     })
+// }
+// 查看培训审核拒绝原因
+function viewReason(id) {
+    layer.open({
+        title:'审核拒绝原因',
+        type: 1,
+        resize:false,
+        move: false,
+        btn:['关闭'],
+        skin: 'layui-layer-demo', //样式类名
+        closeBtn: 1, //关闭按钮
+        anim: 2,
+        shadeClose: true, //开启遮罩关闭
+        offset: ['200px', '35%'],
+        area:["550px","230px"],
+        content:$('#rejectModal')
+    });
+    zhget(base_url_notification+'/'+id).then(function(result) {
+        if(result.code == 200){
             var remarks=result.rows[0].check_refuse_reason;
-            $('#reject_Reasons')
-                .attr('readonly',true)
-                .val(remarks);
-            $('#rejectModal').modal('show');
+            if(remarks==""||remarks==undefined||remarks==null){
+                remarks="暂无内容";
+            }
+            $("#reject_Reason").html(remarks);
         }else{
+            $("#reject_Reason").html('暂无内容');
+        }
+    })
+}
 
+
+// 查看上报拒绝原因
+function refusedTo(id) {
+    layer.open({
+        title:'上报拒绝原因',
+        type: 1,
+        resize:false,
+        move: false,
+        btn:['关闭'],
+        skin: 'layui-layer-demo', //样式类名
+        closeBtn: 1, //关闭按钮
+        anim: 2,
+        shadeClose: true, //开启遮罩关闭
+        offset: ['200px', '35%'],
+        area:["550px","230px"],
+        content:$('#RefusedTo')
+    });
+    zhget(base_url_notification+'/'+id).then(function(result) {
+        if(result.code == 200){
+            if(result.rows[0].refuse_reason==""||result.rows[0].refuse_reason==undefined||result.rows[0].refuse_reason==null){
+                result.rows[0].refuse_reason="无";
+            }else {
+                $("#why_text").html(result.rows[0].refuse_reason);
+            }
         }
     })
 }
