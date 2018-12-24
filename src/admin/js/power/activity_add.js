@@ -319,6 +319,7 @@ function saveActivityData(status){
         });
         return;
     }
+    /*
     if(json.scope==-1){
         layer.msg('请选择打卡范围', {
             icon:2
@@ -330,7 +331,7 @@ function saveActivityData(status){
             icon:2
         });
         return;
-    }
+    }*/
     var startTime=json.start_time;
     var endTime=json.end_time;
 
