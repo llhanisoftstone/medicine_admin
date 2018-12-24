@@ -151,6 +151,23 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>培训类型：</label>
+                                    <div class="pinput">
+                                        <select  id="act_type" name="act_type" class="form-control " onchange="typeChange(this)">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">线下培训</option>
+                                            <option value="2">线上培训</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group" id="parts-box" style="display: none;">
+                                    <label>视频级数：</label>
+                                    <div class="pinput">
+                                        <input id="parts" name="parts" placeholder="请输入"  oninput="num_limit(this,{max:11,dec:false})" class="form-control"  type="text">
+                                    </div>
+                                </div>
+
                                 <!--<div class="col-md-4 form-group">-->
                                     <!--<label>打卡范围：</label>-->
                                     <!--<div class="pinput">-->
