@@ -332,12 +332,26 @@ function saveActivityData(status){
         });
         return;
     }*/
+
     if(json.act_type==-1){
         layer.msg('请选择培训类型', {
             icon:2
         });
         return;
     }
+    if(json.act_type==2 && json.parts==''){
+        layer.msg('请输入视频级数', {
+            icon:2
+        });
+        return;
+    }
+    if(json.act_type==2 && json.parts_times==''){
+        layer.msg('请输入视频时长', {
+            icon:2
+        });
+        return;
+    }
+
     var startTime=json.start_time;
     var endTime=json.end_time;
 
@@ -368,19 +382,12 @@ function saveActivityData(status){
         });
         return ;
     }
-    if(json.act_type==-1){
+    if(json.category==-1){
         layer.msg('请选择参与类型', {
             icon:2
         });
         return;
     }
-    if(json.act_type==2 && json.parts==''){
-        layer.msg('请输入视频级数', {
-            icon:2
-        });
-        return;
-    }
-
     if(cateType==1 && person.rows.length==0 ){//部分部门
         layer.msg('请选择参与部门', {
             icon:2
@@ -499,10 +506,10 @@ function typeChange(e) {
     var that=$(e);
     var type_=that.val();
     if(type_==1){
-        $('#parts-box').hide();
+        $('.parts-box').hide();
     }
     if(type_==2){
-        $('#parts-box').show();
+        $('.parts-box').show();
     }
 }
 function modifyNotificationData(){
@@ -558,7 +565,8 @@ function modifyNotificationData(){
             $("#act_type").val(notifiData.act_type)
             if(notifiData.act_type==2){
                 $("#parts").val(notifiData.parts)
-                $('#parts-box').show();
+                $("#parts_times").val(notifiData.parts_times)
+                $('.parts-box').show();
             }
             // $("#category").val(notifiData.scope)
             // $("#times").val(notifiData.pic_count)

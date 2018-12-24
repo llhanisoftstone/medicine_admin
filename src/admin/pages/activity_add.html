@@ -161,10 +161,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group" id="parts-box" style="display: none;">
+                                <div class="col-md-4 form-group parts-box" style="display: none;">
                                     <label>视频级数：</label>
                                     <div class="pinput">
                                         <input id="parts" name="parts" placeholder="请输入"  oninput="num_limit(this,{max:11,dec:false})" class="form-control"  type="text">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group parts-box" style="display: none;">
+                                    <label>视频时长：</label>
+                                    <div class="pinput">
+                                        <input id="parts_times" name="parts_times" placeholder="视频时长，单位s"  oninput="num_limit(this,{max:11,dec:false})" class="form-control"  type="text">
                                     </div>
                                 </div>
 
