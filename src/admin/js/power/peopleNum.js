@@ -27,6 +27,7 @@ function getOrganiztion(){
     zhget('/rs/company').then( function(result) {
         buildTableNoPage(result,'select-template','select');
         initselect("select")
+        $(".bs-searchbox input").attr("maxlength","20");
     })
 }
 function showSearchPage() {
@@ -61,21 +62,16 @@ function queryList(){
         data.comp_id=comp_id;
         data.search = 1;
     }
-
     $("#event-placeholder").html("");
     zhget(base_url,data).then( function(res) {
-        var rows= res.comp_list;
+        var rows= res.comp_list.rows;
         for (var i = 0; i < rows.length; i++) {
             var indexCode = rows[i];
             indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
         }
-        var datas={};
-        datas.rows=rows;
-        datas.count=rows.length;
-        datas.records=datas.count;
         jQuery("#user").html(res.user);
         jQuery("#comp_user").html(res.comp_user);
-        buildTableByke(datas, 'event-template', 'event','paginator',queryList,pageRows);
+        buildTableByke(res.comp_list, 'event-template', 'event','paginator',queryList,pageRows);
         if(onequerylist){
             onequerylist = false;
             jQuery("#goToPagePaginator").val(currentPageNo);

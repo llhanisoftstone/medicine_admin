@@ -7,33 +7,36 @@ var issearchValue=false;
 var integrals;
 var categoryArr=[]
 var organizArr=[]
+locationHistory('reasonSearchForm');
 $(function() {
     getorg();
+    backInitHistory();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
     $("#resetSearchBtn", $(".reasonRefund")).bind("click", function(){
         $("#reasonSearchForm", $(".reasonRefund"))[0].reset();
+        $('#videonames').selectpicker('refresh');
         queryList();
     });
 });
 function getcategory(){
     $("#videonames").html("");
     zhget('/rs/questions_category').then(function(result){
-        var html="";
-        if(result.code==200){
-            categoryArr=result.rows
-            html+="<option value='-1'>全部</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-            $("#videonames").append(html);
-        }
+        buildTableNoPage(result, 'brand-template', 'videonames');
+        initselect('videonames');
+        $(".bs-searchbox input").attr("maxlength","20");
         queryList();
     })
+}
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%'
+    });
 }
 function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
-    zhget('/rs/organiz').then(function(result){
+    zhget('/rs/company',{status:1}).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
@@ -86,6 +89,10 @@ function queryList(){
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
         }
+        var type=$("#suery_type").val()
+        if(type>=0){
+            data.type=type;
+        }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
@@ -100,7 +107,7 @@ function queryList(){
                     }
                 }
                 for(var j=0;j<organizArr.length;j++){
-                    if(integrals[i].organiz_id == organizArr[j].id){
+                    if(integrals[i].comp_id == organizArr[j].id){
                         integrals[i].organiz_name = organizArr[j].name
                     }
                 }
@@ -118,7 +125,7 @@ function showSearchPage() {
     }, "slow");
 }
 function viewDetail(id) {
-    window.location.href="/admin/admin.html#pages/questiondetail.html?id="+id;
+    window.location.href="/admin/admin.html?_t="+Math.random()+"#pages/questiondetail.html?id="+id;
 }
 /*
 function delClick(id) {
@@ -134,9 +141,9 @@ function delClick(id) {
 }*/
 //状态：0-草稿；1-待审核；2-通过；3-拒绝；4-下架；99-删除；
 //下架
-function questiondown(id){
+function questiondown(id,type,category_id){
     if(confirm("确定要下架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 4}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 4,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("下架成功");
@@ -147,9 +154,9 @@ function questiondown(id){
     }
 }
 //上架
-function questionup(id){
+function questionup(id,type,category_id){
     if(confirm("确定要上架该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("上架成功");
@@ -160,9 +167,9 @@ function questionup(id){
     }
 }
 //拒绝
-function rejectClick(id){
+function rejectClick(id,type,category_id){
     if(confirm("确定要拒绝该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 3}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 3,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("拒绝成功");
@@ -173,9 +180,9 @@ function rejectClick(id){
     }
 }
 //通过审核
-function agreeClick(id){
+function agreeClick(id,type,category_id){
     if(confirm("确定要通过该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 2}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 2,type:type,category_id:category_id}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("通过成功");

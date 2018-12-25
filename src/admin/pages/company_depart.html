@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <style>
+        div.menu .has-feedback span:hover{
+            cursor:pointer;
+            color:#66AFE9;
+        }
+        div.menu{
+            padding-top:15px;
+            border-right:1px solid #eee;
+            overflow:hidden;
+        }
+        div.menu input{
+            font-size: 12px;
+        }
+        /*更改树形列表样式*/
+        #menuTree.ztree{
+            border:none;
+            min-width:250px;
+            width:100%;
+            min-height:600px;
+            height:auto;
+            overflow-y:auto;
+            overflow-x:scroll;
+            z-index: 100;
+        }
+        .ztree li a{
+        /*//解决名字较长时按钮被隐藏问题*/
+        padding-right:60px !important;
+        }
+        /*zTree中添加按钮的样式丢失，补上*/
+        .ztree li span.button.add {
+            margin-left: 2px;
+            margin-right: -1px;
+            background-position: -144px 0;
+            vertical-align: top;
+        }
+        .ztree li a input.rename {
+            height:16px;
+            width:150px;
+            padding:0;
+            margin:0;
+            font-size:14px;
+            border:1px #7EC4CC solid;
+            *border:0px
+        }
+    </style>
+</head>
+
+<body >
+<div class="container-fluid" id="wrapper-body">
+    <div class="col-md-12">
+        <div class="row table-header clearfix">
+            <div class="left-item">
+                <p>企业部门</p>
+            </div>
+            <div class="right-item">
+
+            </div>
+        </div>
+    </div>
+    <div id="wrapper" class="row reasonRefund">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default" id="page-content">
+
+                    <div class="panel-body">
+                        <div class="menu col-md-5">
+                            <!--搜索-->
+                            <div class="form-group has-feedback">
+                                <input type="text" class="form-control empty" placeholder="请输入" id="key">
+                                <span class="glyphicon glyphicon-search form-control-feedback" id="menuSearch"></span>
+                            </div>
+                            <!--树形文件列表-->
+                            <!--<div class="content_wrap">-->
+                            <ul id="menuTree" class="ztree">
+
+                            </ul>
+                            <!--</div>-->
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.panel -->
+                <div class="panel panel-default" id="checking" style="display: none;">
+                    <div class="checking"  >
+                        <img src="img/company/checking.png" alt="">
+                        <p>您的企业尚未认证，认证后才能进行部门管理</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input id="pageIndex" type="hidden" value="">
+<script type="text/javascript" src="js/common/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="js/power/company_depart.js"></script>
+</body>
+
+</html>

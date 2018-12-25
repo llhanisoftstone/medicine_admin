@@ -130,7 +130,7 @@ function queryList() {
 }
 
 function onAddClick() {
-    location.href="admin.html#pages/policy/addpolicy.html"
+    location.href="admin.html#pages/policy/addnotice.html"
 }
 function onSetUpClick(id,ishot) {
     if(ishot == 0){
@@ -165,9 +165,9 @@ function onUpdateClick(id,copy) {
     var pageRecord = $("#paginator li.active a").text();
     setlocalStorageCookie("pageRecord",pageRecord);
     if(copy=='copy'){
-        location.href="admin.html#pages/policy/addpolicy.html?id="+id+'&copy=copy';
+        location.href="admin.html#pages/policy/addnotice.html?id="+id+'&copy=copy';
     }else{
-        location.href="admin.html#pages/policy/addpolicy.html?id="+id;
+        location.href="admin.html#pages/policy/addnotice.html?id="+id;
     }
 }
 function onSearchClick() {

@@ -1,4 +1,4 @@
-var localURL = 'https://'+location.hostname + (location.port ? ":" + location.port : "");
+var localURL = 'http://'+location.hostname + (location.port ? ":" + location.port : "");
 include("/configs.js");
 
 function include(jssrc){
@@ -245,7 +245,7 @@ function delCookie(name) {
     if (cval != null)
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
-
+/*
 function showSuccess(message,time) {
     time = time?time:1.5;
     Messenger().post({
@@ -256,7 +256,7 @@ function showSuccess(message,time) {
         id:'errorMsg'
     });
 }
-
+*/
 function showError(message,time) {
     time = time?time:1.5;
     Messenger().post({
@@ -266,6 +266,27 @@ function showError(message,time) {
         showCloseButton: true,
         id:'errorMsg'
     });
+}
+//换为layer.msg
+function showSuccess(message,time) {
+    time = time?time:1500;
+    layer.msg(
+        message,
+        {
+            icon: 1,
+            time: time
+        }
+    );
+}
+function showError(message,time) {
+    time = time?time:1500;
+    layer.msg(
+        message,
+        {
+            icon: 2,
+            time: time
+        }
+    );
 }
 $._messengerDefaults = {
     extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom'
@@ -388,6 +409,10 @@ function buildPaginatorByke(paginator,total,fu,callBack,records,sizePage,tableid
             showError('请输入正确的页码');
             return;
         }
+        if(thispage>$("#goToPagePaginator").attr("max")){
+            showError('页数不存在');
+            return;
+        }
         $("#" + paginator).bootstrapPaginator("show",thispage);
         currentPageNo = thispage;
         $("#"+tableid).attr("_pageNo",thispage);
@@ -418,7 +443,12 @@ function loginout() {
     delCookie('compid');
     delCookie('organiz_id');
     delCookie('sid');
+    delCookie('userrank');
+    delCookie('storeid');
     sessionStorage.removeItem('organiz_id');
+    sessionStorage.removeItem('compid');
+    sessionStorage.removeItem('userrank');
+    sessionStorage.removeItem('uid');
     window.location = 'adminLogin.html';
     // zhpost('/op/loginout', {}, function (rs) {
     //     if (rs.err) {
@@ -488,7 +518,8 @@ function initSession() {
             var tmphash  = window.location.hash;
             tmphash = tmphash.replace('#pages/','');
             resizePage();
-            $("#adminUser").html(rs.username)
+            $("#adminUser").html(rs.username);
+            $("#admin_username").html(rs.username);
             $("ul[urlid='"+tmphash+"']").addClass('active');
             $("ul[urlid='"+tmphash+"']").parent('li').children("a").trigger('click');
         }
@@ -850,6 +881,13 @@ Handlebars.registerHelper('jiacount', function(v1,v2, options) {
 });
 //等于
 Handlebars.registerHelper('equal', function(v1,v2, options) {
+    if(v1 == v2) {
+        return options.fn(this);
+    }else{
+        return options.inverse(this);
+    }
+});
+Handlebars.registerHelper('litingisuse', function(v1,v2, options) {
     if(v1 == v2) {
         return options.fn(this);
     }else{
@@ -1441,6 +1479,7 @@ function closemessage(){
  * **/
 var isSearch=false; //是否查询
 var searchForm; //查询条件JSON
+var pageRecord;
 //获取当前页面url
 var currPageName  = (window.location.hash).replace('#','');
 /**

@@ -2,6 +2,28 @@
 <html lang="en">
 
 <head>
+    <style>
+        .questionbtn{
+            position:relative;
+        }
+        /*#sendExcel{*/
+            /*position:absolute;*/
+            /*top:0;*/
+            /*left:0;*/
+            /*right:0;*/
+            /*bottom:0;*/
+            /*display: inline-block;*/
+            /*cursor: pointer;*/
+            /*font-family: FontAwesome;*/
+            /*font-style: normal;*/
+            /*font-weight: normal;*/
+            /*line-height: 1;*/
+            /*-webkit-appearance: button;*/
+        /*}*/
+        a:hover{
+            background-color:#F5F5F5 ;
+        }
+    </style>
     <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
     <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
     <script src="js/common/formValidator/validator.js"></script>
@@ -24,6 +46,13 @@
                     <div style="float: right;">
                         <button type="button" id="addNew" onclick="addvideolist()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
                         <button type="button" id="searchBtn" class="fa fa-search   btn btn-default" onclick="showSearchPage()">&nbsp;高级查询</button>
+                        <a href="https://pol.lifeonway.com/upload/excel/questions_template.xlsx" >
+                            <button type="button" id="downloadExcel" class="fa fa-download   btn btn-default">下载题目导入模板</button>
+                        </a>
+                        <div class="fa fa-upload btn btn-default" style=" width: 160px;height: 28px;">
+                            导入题目
+                            <input type="file" class="" id="sendExcel" name="files[]"  style="width: 160px;margin-top:-20px;margin-left:-15px;-webkit-opacity: 0;opacity: 0;">
+                        </div>
                     </div>
                 </div>
 
@@ -89,6 +118,16 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 form-group">
+                                                <label>类别：</label>
+                                                <div class="pinput">
+                                                    <select id="suery_type"  class="form-control">
+                                                        <option value="-1">全部</option>
+                                                        <option value="0">单选</option>
+                                                        <option value="1">问卷调查</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group  pbtn-group ">
                                             <button id="searchDataBtn" class="fa fa-search   btn btn-default" type="button">查询
@@ -113,6 +152,7 @@
                                 <th style="width: 10%;" >出题者</th>
                                 <th style="width: 10%;" >难度等级</th>
                                 <th style="width: 10%;" >答案</th>
+                                <th style="width: 10%;" >类型</th>
                                 <th style="width:5%;">状态</th>
                                 <th style="width: 15%;">操作</th>
                             </tr>
@@ -145,6 +185,10 @@
         <td style="text-align:center;">{{rank}}</td>
         <td style="text-align:center;">{{answers}}</td>
         <td style="text-align:center;">
+            {{#equal type 0}}单选{{/equal}}
+            {{#equal type 1}}调查问卷{{/equal}}
+        </td>
+        <td style="text-align:center;">
             {{#equal status 0}}草稿{{/equal}}
             {{#equal status 1}}待审核{{/equal}}
             {{#equal status 2}}通过{{/equal}}
@@ -153,7 +197,7 @@
         </td>
         <td style="text-align: center;">
             {{#equal status 0}}
-            &nbsp;<span class="fa fa-check-square-o" onclick="submitcheck('{{id}}',)" title="提交审核"> </span>
+            &nbsp;<span class="fa fa-check-square-o" onclick="submitcheck('{{id}}','{{type}}')" title="提交审核"> </span>
             &nbsp;<span class="fa fa-pencil-square-o" aria-hidden="true" title="编辑" onclick="onUpdateClick('{{id}}')"></span>
             &nbsp;<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')"></span>
             {{/equal}}

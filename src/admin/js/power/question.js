@@ -19,6 +19,8 @@ var integrals;
 var categoryArr=[]
 var organizArr=[]
 var organizid=sessionStorage.getItem('organiz_id') ? sessionStorage.getItem('organiz_id') : getCookie('organiz_id');
+var compid=sessionStorage.getItem('compid') || getCookie('compid');
+var urank=sessionStorage.getItem('userrank');
 locationHistory('reasonSearchForm');
 $(function() {
     getorg();
@@ -30,10 +32,14 @@ $(function() {
         queryList();
     });
     setTimeout(queryList,500)
+    $("#sendExcel").unbind("change");
+    $("#sendExcel").bind("change", function() {
+        uploadquestion();
+    });
 });
 function getcategory(){
     $("#videonames").html("");
-    zhget('/rs/questions_category').then(function(result){
+    zhget('/rs/questions_category',{comp_id:compid}).then(function(result){
         var html="";
         if(result.code==200){
             categoryArr=result.rows
@@ -49,9 +55,9 @@ function getorg(){
     $("#shopname").html("");
     $("#shopnames").html("");
     var data={
-        id:organizid,
+        id:compid,
     }
-    zhget('/rs/organiz',data).then(function(result){
+    zhget('/rs/company',data).then(function(result){
         var html="";
         if(result.code==200){
             organizArr=result.rows
@@ -74,14 +80,19 @@ function rightKey(arr){
 function queryList(){
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
-    var comp_id=getCookie('compid');
     var data={
         page: currentPageNo,
         size: pageRows,
         order:'status asc,create_time desc',
         status:'<,99',
-        organiz_id:organizid,
     }
+    if(urank==80){ //80:企业管理员
+        data.comp_id=compid;
+    }
+    if(urank==90){//90:-机关账号;
+        data.organiz_id=organizid;
+    }
+
     if(issearchModel){
         data.search=1;
         var name=$.trim($("#name").val());
@@ -90,11 +101,11 @@ function queryList(){
         }
         var comp_id=$("#shopnames").val();
         if(comp_id&&comp_id!="-1"){
-            data.organiz_id=comp_id;
+            data.comp_id=comp_id;
         }
         var category_id=$("#videonames").val();
         if(category_id&&category_id!="-1"){
-            data.category_id=category_id;
+            data.category_id='=,'+category_id;
         }
         var status=$("#status").val();
         if(status && status!="-1"){
@@ -104,8 +115,12 @@ function queryList(){
         if(rank_id&&rank_id!="-1"){
             data.rank=rank_id;
         }
+        var type=$("#suery_type").val()
+        if(type>=0){
+            data.type=type;
+        }
     }
-    zhget(base_url_goodsCategory,data).then(function (result) {
+    zhget('/rs/v_questions',data).then(function (result) {
         if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
             $("#querylistnull").remove();
             integrals = result.rows;
@@ -118,7 +133,7 @@ function queryList(){
                     }
                 }
                 for(var j=0;j<organizArr.length;j++){
-                    if(integrals[i].organiz_id == organizArr[j].id){
+                    if(integrals[i].comp_id == organizArr[j].id){
                         integrals[i].organiz_name = organizArr[j].name
                     }
                 }
@@ -151,9 +166,9 @@ function delClick(id) {
     }
 }
 //提交审核
-function submitcheck(id){
+function submitcheck(id,type){
     if(confirm("确定要直接提交审核该题目吗？")) {
-        zhput(base_url_goodsCategory + "/" + id, {status: 1}).then(function (result) {
+        zhput(base_url_goodsCategory + "/" + id, {status: 1,type:type}).then(function (result) {
             if (result.code == 200) {
                 queryList();
                 showSuccess("提交成功");
@@ -188,3 +203,48 @@ Handlebars.registerHelper('ifequal', function(v1,v2,v3, options) {
         return options.inverse(this);
     }
 });
+
+function uploadquestion(){
+    var content = $("#sendExcel").val();
+    if(content.length > 0) {
+        var formInfo = document.getElementById("sendExcel").files[0];
+        var formData = new FormData();
+        formData.append("picfile[]",formInfo)
+        formData.append("upType","excel")
+        formData.append("organiz_id",0)//服务端要求先写死为0
+        upajax('/op/upload', formData, function (result) {
+            $("#sendExcel").val("")
+            //清空input,解决input同一文件不能多次选择
+            //result = JSON.parse(result);
+            if(result.code== 200){
+                queryList();
+                showSuccess("题目导入成功");
+                return;
+            }
+            // else if(result.code==201) {
+            //     showError("题目导入部分失败，请在导入按钮处查看结果");
+            //     $("#errorCode").parent().parent().show();
+            //     $("#errorCode").html("导入失败，子订单ID为："+result.errIds.join() + "的数据请核对！")
+            //     return;
+            // }
+            // else if(result.code==202){
+            //     showError("题目导入失败，请在导入按钮处查看结果");
+            //     $("#errorCode").parent().parent().show();
+            //     $("#errorCode").html("导入失败，子订单ID为："+result.orderItemId+ "的数据请核对！")
+            //     return;
+            // }
+            // else if(result.code==203){
+            //     showError("导入文件内无有效数据")
+            //     return
+            // }
+            else if(result.code==206){
+                return showError("文件内有内容未填，请检查")
+            }else {
+                showError("文件导入失败")
+                return
+            }
+        });
+    }
+    else
+        alert('请您选择需要上传的文件！');
+}

@@ -10,6 +10,7 @@ var pageRows = 10;
 var issearchModel=false;
 var issearchValue=false;
 var integrals;
+var compid=sessionStorage.getItem('compid') || getCookie('compid');
 $(function() {
     queryList();
     $("#searchDataBtn", $(".reasonRefund")).bind("click", searchbtn);
@@ -24,10 +25,14 @@ $(function() {
 function queryList(){
     $("#ModelValueList").remove();
     $("#addNew").removeAttr("_modelId");
+    if(!compid){
+        compid=sessionStorage.getItem('compid') || getCookie('compid');
+    }
     var data={
         page: currentPageNo,
         size: pageRows,
         order:'create_time desc',
+        comp_id:compid
     }
     if(issearchModel){
         data.search=1;
@@ -37,7 +42,7 @@ function queryList(){
         }
     }
     zhget(base_url_goodsCategory,data).then(function (result) {
-        if(checkData(result,'get','queryList','table-goodsCategory','paginator')) {
+        if(checkData(result,'get','queryList','table-questionCategory','paginator')) {
             $("#querylistnull").remove();
             $("#pid").attr("_pid",0);
             $("#pid").attr("_deep",1);
@@ -46,24 +51,27 @@ function queryList(){
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
             }
-            buildTable(result, 'goodsCategory1-template', 'goodsModel-placeholder');
+            buildTable(result, 'questionCategory-template', 'questionModel-placeholder');
         }
     })
 }
 function showSearchPage() {
+    $('#addName').focus().blur();
     $(".addModels", $(".reasonRefund")).css("display", "none");
+    $('#name').val('')
     $(".reasonSearch", $(".reasonRefund")).animate({
         height : 'toggle',
         opacity : 'toggle'
-    }, "slow");
+    }, "fast");
 }
 function addGoodsModels(dom){
+    $('#name').val('')
     $(".reasonSearch", $(".reasonRefund")).css("display", "none");
     $("#userAddForm", $(".reasonRefund"))[0].reset();
     $(".addModels", $(".reasonRefund")).animate({
         height : 'show',
         opacity : 'show'
-    }, "slow");
+    }, "fast");
     $("#addName").attr("_id","");
 }
 
@@ -77,14 +85,14 @@ function onUpdateClick(id,name) {;
     }, "slow");
 }
 function delClick(id) {
-    zhget("/rs/questions", {category_id:id}).then(function (result) {
+    zhget("/rs/questions", {category_id:id,status:'<,99'}).then(function (result) {
         if (result.code == 200) {
             showError("该分类下挂有题目，不能删除");
         } else {
             if (confirm("确定要删除该分类吗？")) {
                 zhdelete(base_url_goodsCategory + "/" + id).then(function (result) {
                     checkData(result, 'delete');
-                    if($("#goodsModel-placeholder").find("tr").length == 1){
+                    if($("#questionModel-placeholder").find("tr").length == 1){
                         currentPageNo = currentPageNo>1?currentPageNo-1:1
                     }
                     queryList()
@@ -94,21 +102,38 @@ function delClick(id) {
         }
     })
 }
-
+var btnClicked=false;
 function onSavecategoryData(){
+    if(btnClicked){return;}
+    btnClicked=true;
     var name=$("#addName").val().trim();
     var modelid=$("#addName").attr("_id");
     if(modelid==""||modelid==null||modelid==undefined){
-        zhpost(base_url_goodsCategory,{name:name,auto_id:1}).then(function(result){
+        var sdata={
+            name:name,
+            auto_id:1
+        }
+        if(compid){
+            sdata.comp_id=compid;
+        }
+        zhpost(base_url_goodsCategory,sdata).then(function(result){
             if(checkData(result,'post')){
+                btnClicked=false;
                 resetinput();
                 $(".addModels").hide();
                 queryList()
             }
         })
     }else{
-        zhput(base_url_goodsCategory+"/"+modelid,{name:name}).then(function(result){
+        var putdata={
+            name:name,
+        }
+        if(compid){
+            putdata.comp_id=compid;
+        }
+        zhput(base_url_goodsCategory+"/"+modelid,putdata).then(function(result){
             if(checkData(result,'put')){
+                btnClicked=false;
                 $(".addModels").hide();
                 $("#addName").removeAttr("_id");
                 resetinput();

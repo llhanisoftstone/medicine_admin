@@ -1,0 +1,353 @@
+@charset "utf-8";
+/*清除浮动*/
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: block;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+ul,
+ol,
+dl {
+  list-style: none;
+}
+ul li {
+  list-style: none;
+}
+input,
+button {
+  box-sizing: border-box;
+}
+body {
+  font-family: "MicrosoftYaHei Regular", "Microsoft YaHei";
+}
+/*********************************/
+body {
+  background-color: #f4f4f6;
+}
+a:hover {
+  cursor: pointer;
+}
+.panel-default {
+  border-color: transparent;
+}
+#wrapper {
+  padding-top: 0;
+}
+.header-nav {
+  width: 100%;
+  height: 74px;
+  background-color: #df5c3e;
+}
+.navbar-brand {
+  display: block;
+}
+.navbar-brand img {
+  float: left;
+}
+.navbar-brand .name {
+  float: left;
+  color: #fff;
+  padding-left: 10px;
+}
+.navbar-brand p {
+  font-size: 14px;
+}
+.nav-quit {
+  line-height: 74px;
+  margin: 0 50px;
+  float: right;
+}
+.nav-quit div {
+  color: #fff;
+  padding-left: 23px;
+  background: url("../img/quit.png") no-repeat left center;
+  background-size: 14px 14px;
+  cursor: pointer;
+}
+.nav-quit div:hover {
+  text-decoration: none;
+}
+.sidebar.sidebarchange {
+  margin-top: 75px;
+}
+.userinfo-box {
+  height: 67px;
+  background: #ffffff;
+  display: flex;
+}
+.title-img {
+  line-height: 67px;
+  margin: 0 10px;
+  position: relative;
+  top: -5px;
+}
+.title-img img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.content-title {
+  width: 215px;
+  height: 100%;
+  border-bottom: 1px solid #f3f3f3;
+  display: flex;
+  color: #666;
+}
+.content-title .title-font > div {
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  height: 19px;
+  line-height: 19px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.content-title .title-font div:first-child {
+  margin-bottom: 5px;
+}
+.content-title .title-font {
+  height: 67px;
+  line-height: 67px;
+  overflow: hidden;
+  padding-top: 10px;
+}
+.content-title .approve {
+  text-align: center;
+  height: 20px;
+  width: 60px;
+  line-height: 20px;
+  border-radius: 10px;
+  background-color: #999999;
+  color: #fff;
+  display: none;
+}
+.content-title .approve.active {
+  background-color: #df5c3e;
+}
+#side-menu {
+  min-height: 800px;
+}
+#side-menu > li a:hover {
+  background-color: #fff;
+  color: #df5c3e !important;
+}
+#side-menu > li .menu_icon {
+  position: relative;
+  top: 4px;
+}
+#side-menu li {
+  background-color: #fff;
+}
+#side-menu li a {
+  color: #666;
+  font-size: 14px;
+}
+#side-menu li a:hover {
+  color: #df5c3e;
+}
+#side-menu li.active > a {
+  color: #df5c3e;
+}
+#side-menu .nav > li > a:hover {
+  background-color: #F6F6F9;
+}
+#side-menu ul.nav-second-level a {
+  font-size: 12px;
+  padding-left: 18px;
+}
+#side-menu ul.nav-second-level li {
+  list-style: disc inside ;
+  border-left: 4px solid transparent;
+}
+#side-menu ul.nav-second-level .dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  border: none;
+  background-color: #666;
+  margin-right: 16px;
+  position: relative;
+  top: -3px;
+}
+#side-menu ul.nav-second-level:hover {
+  background-color: #F6F6F9;
+}
+#side-menu ul.nav-second-level:hover .dot {
+  background-color: #df5c3e;
+}
+#side-menu ul.nav-second-level.active {
+  background-color: #F6F6F9 !important;
+}
+#side-menu ul.nav-second-level.active li {
+  background-color: #F6F6F9;
+  color: #df5c3e;
+  border-left: 4px solid #df5c3e;
+}
+#side-menu ul.nav-second-level.active li > a {
+  color: #df5c3e;
+}
+#side-menu ul.nav-second-level.active .dot {
+  background-color: #df5c3e;
+}
+#breadcrumb {
+  margin-left: 217px;
+  margin-bottom: 0;
+  font-size: 12px;
+  background: #ffffff !important;
+  height: 67px;
+  line-height: 67px;
+  color: #999;
+  border-radius: 0;
+  padding: 0 0 0 35px;
+}
+#breadcrumb a {
+  color: #999;
+  font-size: 12px;
+}
+#breadcrumb li.active {
+  color: #666;
+}
+#breadcrumb > li + li:before {
+  display: none;
+}
+#page-wrapper {
+  background-color: #f4f4f6;
+  margin: 20px 0 0 235px;
+  border-left: none;
+}
+#wrapper-body {
+  background-color: #fff;
+}
+.table-header {
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  padding-top: 15px;
+}
+.table-header .left-item {
+  float: left;
+  font-size: 16px;
+  color: #666666;
+  padding-left: 10px;
+  border-left: 4px solid #df5c3e;
+  height: 22px;
+  line-height: 22px;
+  margin-left: 10px;
+  display: flex;
+}
+.table-header .left-item p {
+  margin-right: 8px;
+}
+.table-header .right-item {
+  float: right;
+}
+.table-header .btn-admin {
+  font-size: 14px;
+  color: #666;
+  min-width: 112px;
+  height: 31px;
+  line-height: 31px;
+  padding: 0;
+  position: relative;
+  top: -5px;
+  background-color: #F6F5FA;
+  border: none;
+}
+.table-header .btn-admin:hover {
+  color: #df5c3e;
+}
+.table-header .btn:focus {
+  outline: 0;
+}
+.table-header .btn-add {
+  padding: 0 0 0 40px;
+  border-bottom: 1px solid #EEEEF0;
+  background: #F6F5FA url("../img/add_icon.png") no-repeat 10px center;
+  background-size: 17px 15px;
+}
+.table-header .btn-admin:hover {
+  background-color: #f0eef7;
+}
+.button-operate {
+  font-size: 14px;
+  color: #333;
+  background-color: #F6F5FA;
+  margin-right: 10px;
+  border-color: #ccc;
+}
+.button-operate:hover {
+  color: #333;
+}
+.button-default {
+  font-size: 14px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  margin-right: 10px;
+}
+.button-save {
+  font-size: 14px;
+  color: #fff;
+  background-color: #df5c3e;
+  border-radius: 0;
+  min-width: 85px;
+}
+.button-save:hover {
+  color: #fff;
+}
+.button-save:focus {
+  outline: 0;
+  color: #fff;
+}
+.button-reset {
+  font-size: 14px;
+  color: #333;
+  background-color: #F4F4F4;
+  border-radius: 0;
+  min-width: 85px;
+  border-color: #D2D2D2;
+}
+.button-reset:hover {
+  color: #333;
+}
+.button-reset:focus {
+  outline: 0;
+  color: #333;
+}
+span.fa:hover {
+  cursor: pointer;
+}
+.checking {
+  width: 1200px;
+  margin: 50px auto;
+  text-align: center;
+}
+.checking img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 30px;
+}
+.checking p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+.checking .reason {
+  font-size: 14px;
+  text-align: left;
+  line-height: 30px;
+  word-break: break-all;
+}
+.layui-layer-btn .layui-layer-btn0 {
+  border-color: #DF5C3E;
+  background-color: #DF5C3E;
+}

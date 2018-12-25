@@ -62,7 +62,7 @@
                                             <select name="" id="rqanak" class="form-control">
                                                 <option value="-1">全部</option>
                                                 <option value="31">店铺</option>
-                                                <option value="90">机关</option>
+                                                <option value="80">机关</option>
                                             </select>
                                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                                         </div>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="form-group  pbtn-group ">
                                     <button id="GiftCardSearchCancel" type="button" class="fa fa-reply-all btn btn-default pull-right">重置</button>
-                                    <button id="GiftCardSearch" class="fa fa-search   btn btn-default pull-right" type="button">搜索</button>
+                                    <button id="GiftCardSearch" class="fa fa-search   btn btn-default pull-right" type="button">查询</button>
                                 </div>
                             </form>
 
@@ -133,7 +133,7 @@
                             <select name="" id="rqanakmember" class="form-control" onchange="showSelect()">
                                 <option value="-1">请选择</option>
                                 <option value="31">店铺</option>
-                                <option value="90">机关</option>
+                                <option value="80">机关</option>
                             </select>
                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                         </div>
@@ -200,6 +200,8 @@
         <td>
             {{#is_judge rank 91}}超级管理员{{/is_judge}}
             {{#is_judge rank 90}}{{organiz_name}}{{/is_judge}}
+            {{#is_judge rank 80}}{{comp_name}}{{/is_judge}}
+            {{#is_judge rank 31}}{{store_name}}{{/is_judge}}
         </td>
         <td>{{create_time}}</td>
         <td class="operate" style="width:10%">

@@ -1,5 +1,5 @@
 var base_url_user = '/rs/member';
-var base_url_organiz = '/rs/organiz';
+var base_url_organiz = '/rs/company';
 var base_url_role = '/rs/role';
 var reset_psd = "/rs/super_reset_password";
 var users = [];
@@ -10,12 +10,12 @@ var searchData={};
 var isselect=false;
 
 $(function () {
+    getcompany();
     queryList();
     $.initSystemFileUpload($("#user_form"));
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
     getOrganiz();
-    getcompany();
 });
 
 function getOrganiz() {
@@ -38,6 +38,7 @@ function initselect(id){
         width:'100%'
     });
 }
+var storeArr=[];
 function getcompany(){
     var data={
         status:1    //0-禁；1-有效；9删除
@@ -47,6 +48,7 @@ function getcompany(){
         if(result.code==200) {
             var html="";
             if (result.code == 200) {
+                storeArr=result.rows;
                 html += "<option value='-1'>请选择</option>";
                 for (var i = 0; i < result.rows.length; i++) {
                     html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
@@ -68,7 +70,7 @@ function showSelect(){
     if(rank&&rank==31){
         $(".organizmember").hide();
         $(".membershop").show();
-    }else if(rank&&rank==90){
+    }else if(rank&&rank==80){
         $(".organizmember").show();
         $(".membershop").hide();
     }
@@ -105,6 +107,11 @@ function queryList() {
                         }else{
                             result.rows[i].power_id+=','+result.rows[i].power_json[j]
                         }
+                    }
+                }
+                for(var j=0;j<storeArr.length;j++){
+                    if(users[i].store_id == storeArr[j].id){
+                        users[i].store_name = storeArr[j].name
                     }
                 }
             }
@@ -172,13 +179,12 @@ function fillForm(id) {
             $("#userid").val(id);
             $("#username").val(res.rows[0].username);
             $("#nickname").val(res.rows[0].nickname);
-
             $("#rqanakmember").val(res.rows[0].rank)
             if(res.rows[0].rank==31){
                 $(".organizmember").hide();
                 $(".membershop").show();
                 $('#shopcompany').selectpicker('val', res.rows[0].store_id);
-            }else if(res.rows[0].rank==90){
+            }else if(res.rows[0].rank==80){
                 $(".organizmember").show();
                 $(".membershop").hide();
                 $('#organiz').selectpicker('val', res.rows[0].organiz_id);
@@ -249,9 +255,11 @@ function onUserSaveClick() {
             return;
         }
     }
-    if(rank==90){
+    if(rank==80){
         if(organiz&&organiz!='-1'){
             data.organiz_id=organiz;
+            data.comp_id=organiz;
+            data.rank=80;//80:企业管理员;
         }else{
             showError("请选择机关");
             return;

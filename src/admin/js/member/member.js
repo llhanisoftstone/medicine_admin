@@ -16,12 +16,14 @@ $(function() {
     }
     $("#resetSearchBtn", $(".report")).bind("click", function(){
         $("#reasonSearchForm", $(".report"))[0].reset();
+        $("#company").selectpicker("val",'');
         currentPageNo = 1;
         pageRows = 10;
         queryList();
     });
     $("#searchBtn", $(".report")).unbind("click");
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
+    getTags();
     queryList();
     getCompany()
 });
@@ -37,11 +39,15 @@ function showSearchPage() {
     }
 }
 function getCompany(){
-    zhget('/rs/company').then(function(res){
+    zhget('/rs/company',{status:1}).then(function(res){
         if(res.code == 200){
             for(var i=0;i<res.rows.length;i++){
                 $("#company").append('<option value="'+res.rows[i].id+'">'+res.rows[i].name+'</option>')
             }
+            $("#company").selectpicker({
+                size: 10,
+                width:'100%'
+            });
         }
     })
 }
@@ -69,9 +75,10 @@ function queryList(){
         var status = $("#status").val();
         var nickname = $("#nickname").val();
         var comp_id = $("#company").val();
+        var usertype = $("#usertype").val();
         if(startTime!=''||endTime!==''){
             if(startTime!=''&&endTime!==''){
-                if(parseFloat(new Date(startTime))<parseFloat(new Date(endTime))){
+                if(startTime<endTime){
                     data.create_time='>=,'+startTime+',<=,'+endTime
                 }else{
                     alert("结束时间不能小于开始时间")
@@ -97,6 +104,9 @@ function queryList(){
         }
         if(comp_id!=-1){
             data.comp_id=comp_id
+        }
+        if(usertype!=-1){
+            data.is_hr=usertype
         }
         data.search = 1;
     }
@@ -177,3 +187,97 @@ Handlebars.registerHelper('equal_nv', function(v1, options) {
         return "";
     }
 });
+//判断是否为空
+Handlebars.registerHelper('ifnull', function(v1, options) {
+    if(v1!=null&&v1!=''&&v1!=0) {
+        return options.inverse(this);
+    }else{
+        return options.fn(this);
+    }
+});
+function onSetPerson(id) {
+    if(confirm('您确定要将该用户设为经办人吗？')){
+        $('#tags').val('').attr('data-uid',id);
+        $('#tags').multipleSelect('uncheckAll');
+        $('#userModal').modal('show');
+    }
+
+}
+function onSaveTagClick(){
+    var id=$('#tags').attr('data-uid');
+    var data={
+        is_hr:1
+    };
+    var tags=$('#tags').multipleSelect('getSelects');
+    tags=tags.toString();
+    var hr_code=$('#hr_code').val();
+    if(tags==''){
+        $('#tags').focus();
+        return showError('请选择经办人标签')
+    }else{
+        data.hr_tag=tags;
+    }
+    if(hr_code==''){
+        $('#hr_code').focus();
+        return showError('请输入顺序')
+    }else{
+        data.hr_code=hr_code;
+    }
+    zhput("/rs/member/"+id,data).then(function (result) {
+        if(result.code==200){
+            showSuccess("设置成功")
+            $('#tags').val('');
+            $('#userModal').modal('hide');
+            queryList();
+        }else {
+            showError("操作失败")
+        }
+    })
+}
+function onUpdate(id,hr_code){
+    $('#tags').attr('data-uid',id);
+    $('#hr_code').val(hr_code);
+    zhget("/rs/member_lable/"+id).then(function (result) {
+        if(result.code==200){
+            $('#tags').multipleSelect('setSelects', result.hr_list);
+            // getTags(result.hr_list)
+        }else{
+            //getTags();
+        }
+    })
+
+    $('#userModal').modal('show');
+
+}
+function cancelSetPerson(id){  //跟需求确认过，取消经办人不删除以前的咨询数
+    if(confirm('您确定要取消该经办人权限吗？')){
+        var data={
+            is_hr:0,
+            hr_tag:','
+        };
+        zhput("/rs/member/"+id,data).then(function (result) {
+            if(result.code==200){
+                showSuccess("取消成功")
+                queryList();
+            }else {
+                showError("操作失败")
+            }
+        })
+    }
+}
+function getTags() {
+    var data={
+        status:1
+    };
+    zhget('/rs/label_info', data,function (result) {
+        var level = result.rows;
+        //$("#tags").empty();
+        for (var i = 0; i < level.length; i++) {
+            $("#tags").append("<option  value='" + level[i].id + "'>&nbsp;" + level[i].name + "</option>");
+        };
+        $("#tags").multipleSelect({
+            multiple: true,
+            placeholder:'请选择标签'
+        });
+    });
+}
