@@ -68,6 +68,8 @@ function queryList() {
             var reportdata = result.rows;
             for(var i=0;i<reportdata.length;i++){
                 reportdata[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                reportdata[i].start_time = reportdata[i].start_time.slice(0,16);
+                reportdata[i].end_time = reportdata[i].end_time.slice(0,16);
                 if(reportdata[i].status != "12" && reportdata[i].status != "11"){
                     resultdata.push(reportdata[i].status);
                 }

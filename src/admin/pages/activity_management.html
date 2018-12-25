@@ -169,10 +169,11 @@
         <td>
             <!--状态：0-草稿；1-待审核，2进行中; 3已经结束，4-审核拒绝 ; 10、未上报，11、待处理、12通过、13拒绝-->
             {{#equal status 0}}草稿{{/equal}}
-            {{#equal status 1}}待审核{{/equal}}
-            {{#equal status 2}}进行中{{/equal}}
-            {{#equal status 3}}已结束{{/equal}}
-            {{#equal status 4}}审核拒绝{{/equal}}
+            {{#equal status 1}}<span style="color:red;">待审核</span>{{/equal}}
+
+            {{#equal status 2}}<span style="color:#006CCE;">进行中</span>{{/equal}}
+            {{#equal status 3}}<span style="color:#006CCE;">已结束</span>{{/equal}}
+            {{#equal status 4}}<span style="color:red;">审核拒绝</span>{{/equal}}
             {{#equal status 10}}未上报{{/equal}}
             {{#equal status 11}}上报待处理{{/equal}}
             {{#equal status 12}}上报通过{{/equal}}

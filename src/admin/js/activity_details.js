@@ -19,6 +19,7 @@ function queryList() {
         if(result.code == 200){
             for(var i=0;i<result.rows.length;i++){
                 result.rows[i].rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                result.rows[i].create_time = result.rows[i].create_time.slice(0,16);
             }
             buildTable(result, 'details-template', 'details-placeholder');
         }else {

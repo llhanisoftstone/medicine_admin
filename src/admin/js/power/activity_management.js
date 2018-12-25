@@ -117,6 +117,8 @@ function queryList(){
             departmentContact=result;
             for(var i=0;i<result.rows.length;i++){
                 result.rows[i].rowNum = (currentPageNo - 1) * pageRows1 + i + 1;
+                result.rows[i].start_time = result.rows[i].start_time.slice(0,16);
+                result.rows[i].end_time = result.rows[i].end_time.slice(0,16);
             }
             buildTableByke(result, 'notification-template', 'notification-placeholder', "paginator", queryList, 10);
         }
