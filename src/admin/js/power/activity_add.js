@@ -319,6 +319,7 @@ function saveActivityData(status){
         });
         return;
     }
+    /*
     if(json.scope==-1){
         layer.msg('请选择打卡范围', {
             icon:2
@@ -330,7 +331,27 @@ function saveActivityData(status){
             icon:2
         });
         return;
+    }*/
+
+    if(json.act_type==-1){
+        layer.msg('请选择培训类型', {
+            icon:2
+        });
+        return;
     }
+    if(json.act_type==2 && json.parts==''){
+        layer.msg('请输入视频级数', {
+            icon:2
+        });
+        return;
+    }
+    if(json.act_type==2 && json.parts_times==''){
+        layer.msg('请输入视频时长', {
+            icon:2
+        });
+        return;
+    }
+
     var startTime=json.start_time;
     var endTime=json.end_time;
 
@@ -416,6 +437,8 @@ function saveActivityData(status){
     var location=bMapTransQQMap(json.longitude,json.latitude);  //百度地图转换为腾讯经纬度存入数据库
     json.latitude=location.lat;
     json.longitude=location.lng;
+    json.scope=500  //先写死500米
+    json.pic_count=3  //上传次数写死3次
     var id=getIdByUrl();
     if(postoff){
         return;
@@ -479,7 +502,16 @@ function saveActivityData(status){
         })
     }
 }
-
+function typeChange(e) {
+    var that=$(e);
+    var type_=that.val();
+    if(type_==1){
+        $('.parts-box').hide();
+    }
+    if(type_==2){
+        $('.parts-box').show();
+    }
+}
 function modifyNotificationData(){
     var id=getIdByUrl();
     if(id){
@@ -530,8 +562,14 @@ function modifyNotificationData(){
             $("#latitude").val(latlng.lat)
             $("#longitude").val(latlng.lng)
 
-            $("#category").val(notifiData.scope)
-            $("#times").val(notifiData.pic_count)
+            $("#act_type").val(notifiData.act_type)
+            if(notifiData.act_type==2){
+                $("#parts").val(notifiData.parts)
+                $("#parts_times").val(notifiData.parts_times)
+                $('.parts-box').show();
+            }
+            // $("#category").val(notifiData.scope)
+            // $("#times").val(notifiData.pic_count)
             $("#startTime").val(notifiData.start_time);
             $("#endTime").val(notifiData.end_time);
             $("#parttype").val(notifiData.category);
