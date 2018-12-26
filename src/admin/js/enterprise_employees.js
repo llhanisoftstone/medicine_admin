@@ -14,6 +14,7 @@ var userid;
 var user_status; //企业审核状态：0-待审核；1-审核通过;3-审核拒绝 ; 9-草稿
 var enter_id; //企业id
 var issearch;
+var pattern1 =/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
 $(function () {
     user_status=getCookie('user_status') || sessionStorage.getItem("user_status");
     enter_id=getCookie('compid') || sessionStorage.getItem("compid");
@@ -36,6 +37,8 @@ $(function () {
 $("#jobs").click(function () {
     if($("#jobs").val()=="-1"){
         layer.msg('请先选择企业部门',{icon: 3});
+    }else if($("#jobs").val()=="-2"){
+        layer.msg('请增加企业岗位',{icon: 3});
     }
 })
 // 岗位
@@ -46,6 +49,8 @@ function jobslist(department_id) {
     zhget(base_url_jobs,data).then(function(result){
         if(result.code == 200){
             buildTable(result, 'jobs-template', 'jobs');
+        }else if(result.code == 602){
+            $("#jobs").html('<option value="-2">此部门没有该岗位</option>')
         }
     });
 }
@@ -61,7 +66,9 @@ function queryList() {
     var data={
         page: currentPageNo,
         size: pageRows,
-        comp_id :enter_id
+        comp_id :enter_id,
+        order:"create_time desc",
+        status:"<>,9"
     };
     if(issearch){
         var employeesName=$("#employeesName").val().trim();
@@ -97,7 +104,6 @@ function onUserSaveClick() {
     var jobs = $("#jobs").val();
     var idNumber = $("#idNumber").val();
     var dtBindTimeStart = $("#dtBindTimeStart").val();
-    var pattern1 =/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
     if(username ==''){
         layer.msg('姓名不能为空',{icon: 3});
         return;
@@ -106,7 +112,7 @@ function onUserSaveClick() {
         layer.msg('手机号不能为空',{icon: 3});
         return;
     }else  if(!isPhone(ipone)){
-        layer.msg('手机号码不正确',{icon: 3});
+        layer.msg('您的手机号码输入有误，请重新输入',{icon: 3});
         return;
     }
     if(age ==''){
@@ -122,7 +128,7 @@ function onUserSaveClick() {
         return;
     }
     if(jobs == '-1'){
-        layer.msg('请先选择部门',{icon: 3});
+        layer.msg('请选择岗位',{icon: 3});
         return;
     }
     if(idNumber == ''){
@@ -130,7 +136,7 @@ function onUserSaveClick() {
         return;
     }else if(!pattern1.test(idNumber)){
         layer.msg('您的身份证号输入有误，请重新输入',{icon: 3});
-        return false;
+        return;
     }
     if(dtBindTimeStart == ''){
         layer.msg('请选择入职时间',{icon: 3});
@@ -154,7 +160,9 @@ function onUserSaveClick() {
         data.gender = 2;
     }
     if(operation == 'add'){
+        var loadIndex = layer.load(2, {time: 10*1000}); //最长等待10秒
         zhpost(base_url_staff,data).then(function(result){
+            layer.close(loadIndex);
             if(result.code == 200){
                 layer.msg('添加成功',{icon: 1});
                 queryList();
@@ -164,7 +172,9 @@ function onUserSaveClick() {
             }
         });
     }else {
+        var loadIndex = layer.load(2, {time: 10*1000}); //最长等待10秒
         zhput(base_url_staff+"/"+userid,data).then(function(result){
+            layer.close(loadIndex);
             if(result.code == 200){
                 layer.msg('修改成功',{icon: 1});
                 queryList();
@@ -184,7 +194,7 @@ function delClick(el,id){
         btn: ['确定','取消'] //按钮
     }, function(index){
         layer.close(index);
-        zhdelete(base_url_staff+ "/" + userid).then(function (result) {
+        zhput(base_url_staff+ "/" + userid,{status:9}).then(function (result) {
             if(result.code == 200){
                 layer.msg('删除成功！', {icon: 1});
                 if(jQuery(el).parents("tbody").find("tr").length==1){
@@ -340,7 +350,8 @@ function querySaveDepart(){
         $("body").unbind("mousedown", onBodyDown);
     }
     function onBodyDown(event) {
-        if (!(event.target.id == "guanlian" || event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+        var targetClass=event.target.className;
+        if (!((targetClass.indexOf('button') != -1) || event.target.id == "guanlian" || event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
             hideMenu();
         }
     }
@@ -393,6 +404,13 @@ function uploadquestion(){
             }
             else if(result.code==206){
                 return showError("文件内有内容未填，请检查")
+            }else if(result.code==304){
+                var messaes="";
+                for(var data of result.info){
+                    messaes+=data.info+"</br>";
+                }
+                return showError(messaes,6000)
+
             }else {
                 showError("文件导入失败")
                 return
@@ -403,3 +421,14 @@ function uploadquestion(){
     }
 
 }
+var format = function(date) {
+    date=new Date(date)
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = (date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes();
+    var second = (date.getSeconds() < 10) ? '0' + date.getSeconds() : date.getSeconds();
+
+    return year + '-' + month + '-' + day + '  '+hour+':'+minute+':'+second;
+};
