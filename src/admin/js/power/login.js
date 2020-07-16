@@ -1,10 +1,3 @@
-/**
- * Created by zhoutk on 16-7-26.
- */
-
-var base_url_navs = '/rs/navs';
-var base_url_links = '/rs/links';
-var base_url_verify = '/op/verify';
 var base_url_login = '/op/login';
 
 var operation = "add";
@@ -42,26 +35,6 @@ $("#password").keydown(function (event) {
         }
     };
 });
-
-function getVerifyCode() {
-    zhpost(base_url_verify, {} ).then(function (result) {
-        $("#imgVerify").attr("src",JSON.parse(result).imgSrc);
-    });
-}
-
-function queryLinksList() {
-    zhget(base_url_links, {
-        sort: 'orderid'
-    }, function (result) {
-        buildFirstPage(result, 'links-template', 'links-placeholder');
-    });
-}
-
-function queryNavList() {
-    zhget(base_url_navs, {}).then(function (result) {
-        buildTable(result, 'navlinks-template', 'navlinks-placeholder');
-    });
-}
 
 function check(){
     var name =$("#username").val();

@@ -1,14 +1,12 @@
 /**
  * Created by Administrator on 2018/4/26.
  */
-var base_url_member='/rs/store';
+var base_url_company='/rs/company';
 
 var list = [];
-var server_list=[];
 var menu = [];
 var currentPageNo = 1;
 var pageRows = 10;
-var univ_id=sessionStorage.getItem('university_id');
 $(function() {
     $.initSystemFileUpload($("#uploadImg"), onUploadDetailPic);
     var page=getUrlParamsValue("page");
@@ -64,34 +62,14 @@ function queryList(){
     if(isSearch){
         var realname=$("#nickname").val();
         if(realname!=''){
-            data.name=realname;
+            data.title=realname;
+            data.search=1;
         }
-        var startTime=$("#startTime").val();
-        var endTime=$("#endTime").val();
-        if(startTime!=''||endTime!==''){
-            if(startTime!=''&&endTime!==''){
-                if(startTime<endTime){
-                    data.create_time='>,'+startTime+',<,'+endTime
-                }else{
-                    alert("结束时间大于开始时间")
-                    return
-                }
-            }else{
-                if(startTime){
-                    data.create_time='>,'+startTime
-                }
-                if(endTime){
-                    data.create_time='<,'+endTime
-                }
-            }
-        }
-        data.search=1;
     }
-
     $("#event-placeholder").html('');
-    zhget(base_url_member, data).then( function(result) {
+    zhget(base_url_company, data).then( function(result) {
         if(checkData(result,'get','queryList','table-member')) {
-            integrals = result.rows;
+            var integrals = result.rows;
             for (var i = 0; i < integrals.length; i++) {
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
@@ -112,8 +90,8 @@ function cleardiv(){
     })
 }
 function delClick(id){
-    if(confirm("确认要删除该店铺吗？")){
-        zhput('/rs/store/'+id,{status:9}).then(function(res){
+    if(confirm("确认要删除该企业吗？")){
+        zhput('/rs/company/'+id,{status:9}).then(function(res){
             var page=jQuery("#paginator li.active a").html();
             if(res.code==200){
                 var lists=jQuery("#event-placeholder tr");
@@ -132,19 +110,15 @@ function delClick(id){
     }
 }
 //新建 修改
-var index1;
 function addcompany(id){
     if(id){
-        zhget(base_url_member,{id:id}).then(function(res){
+        zhget(base_url_company,{id:id}).then(function(res){
             if(res.code == 200){
                 $("#addModal").modal("show")
                 $("#cid").val(id)
                 $("#comp_name").val(res.rows[0].name)
-
-
             }
         })
-
     }else{
         $("#addModal").modal("show")
         $("#cid").val('')
@@ -168,14 +142,14 @@ function addcompanyuser(){
     var id=$("#cid").val()
     var name = $("#comp_name").val().trim();
     if(!name){
-        return showError("请输入店铺名称")
+        return showError("请输入企业名称")
     }
     $("#submitstore").attr("disabled","disabled");
     var data={
-        name:name,
+        title:name,
     }
     if(id){
-        zhput('/rs/store/'+id,data).then(function(res){
+        zhput('/rs/company/'+id,data).then(function(res){
             if(res.code==200){
                 showSuccess("修改成功");
                 $("#addModal").modal("hide")
@@ -189,7 +163,7 @@ function addcompanyuser(){
             }
         })
     }else{
-            zhpost('/rs/store',data).then(function(res){
+            zhpost('/rs/company',data).then(function(res){
                 if(res.code==200){
                     showSuccess("新增成功");
                     $("#addModal").modal("hide")

@@ -47,7 +47,7 @@ function queryList() {
             menu = result;
             console.log(result);
             //debugger
-            integrals = result.rows;
+            var integrals = result.rows;
             for (var i = 0; i < integrals.length; i++) {
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
@@ -112,6 +112,7 @@ function onSaveClick() {
     };
     if($("#name").val().trim()){
         if (operation == "add") {
+            data.auto_id = 1;
             zhpost(base_url_menu, data, saveResult);
         } else {
             zhput(base_url_menu + "/" + id, data, saveResult);

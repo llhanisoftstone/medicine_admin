@@ -109,11 +109,12 @@
             <div class="panel-heading">
                 <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
                     <li>
-                        <a>权限管理</a>
+                        <a>企业管理</a>
                     </li>
-                    <li>店铺管理</li>
+                    <li>企业管理</li>
                 </ul>
                 <div style="float:right; margin-top: -2px;">
+                    <button type="button" onclick="addcompany()" class="fa fa-plus-circle btn btn-default"> 新建</button>
                     <button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
                 </div>
             </div>
@@ -125,15 +126,9 @@
                                 <div class="body">
                                     <div class="row" >
                                         <div class="col-md-4 form-group">
-                                            <label>店铺名称：</label>
+                                            <label>企业名称：</label>
                                             <div class="pinput">
                                                 <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="nickname" check-type="required">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 form-group">
-                                            <label>创建时间：</label>
-                                            <div class="pinput"><input style="float: left;width:45%;" placeholder="请输入" datatype="require" id="startTime" name="create_time_start_exp" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
-                                                <label style="float: left; width:10%;text-align: center;">—</label><input style="float: right;width: 45%;" placeholder="请输入" datatype="require" id="endTime" name="create_time_start_exp" readonly="readonly" onclick="WdatePicker({lang:'zh-cn',dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control pdate-time">
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
@@ -142,7 +137,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </div>
@@ -156,9 +150,11 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <td>店铺名称</td>
+                            <td>企业名称</td>
+                            <td>联系方式</td>
+                            <td>企业地址</td>
                             <th>创建时间</th>
-                            <!--<th>操作</th>-->
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <input id="pageIndex" type="hidden"/>
@@ -191,9 +187,9 @@
                 <input type="hidden" id="cid">
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">店铺名称</label>
+                        <label  class="col-sm-2 control-label">企业名称</label>
                         <div class="col-sm-9">
-                            <input placeholder="店铺名称" type="text" maxlength="15"  pop="" value="" id="comp_name" class="form-control" datatype="require" style="width: 100%; float: left;">
+                            <input placeholder="企业名称" type="text" maxlength="15"  pop="" value="" id="comp_name" class="form-control" datatype="require" style="width: 100%; float: left;">
                         </div>
                     </div>
                 </div>
@@ -211,17 +207,17 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{name}}</td>
-        <td>{{create_time}}</td>
-        <!--<td>-->
-            <!--<span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>-->
-            <!--<span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>-->
-        <!--</td>-->
+        <td>{{title}}</td>
+        <td>{{phone}}</td>
+        <td>{{address}}</td>
+        <td>
+            <span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>
+            <span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>
+        </td>
     </tr>
     {{/datas}}
 </script>
 
-<!--<script src="js/refundReason/signEdit.js"></script>-->
 <script src="js/power/company.js"></script>
 <script src="js/common/upload.js"></script>
 <script src="js/common/webuploader.min.js"></script>

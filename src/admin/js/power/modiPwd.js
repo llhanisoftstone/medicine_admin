@@ -1,6 +1,3 @@
-/**
- * Created by kechen on 2015-6-25.
- */
 var base_url_login = '/op/modiPwd';
 
 function modifrm() {

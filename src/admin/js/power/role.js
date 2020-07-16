@@ -62,10 +62,11 @@ function onSaveClick() {
         return;
     }
     var data = {
-        name:name ,
+        name: name ,
         remark: $("#remark").val().trim(),
     };
     if (operation == "add") {
+        data.auto_id=1;
         data.power_json='{}';
         zhpost(base_url_role, data, saveResult);
     } else {

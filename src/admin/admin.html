@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>政策大咖后台管理系统</title>
+    <title>医药后台管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -98,7 +98,7 @@
             padding-left: 45px;
             padding-top:10px;
             padding-bottom:1px;
-            background:#FFFFFF url(/css/img/blue-loading.gif) no-repeat 5px center;
+            background:#FFFFFF url(/css/img/loading.gif) no-repeat 5px center;
             border: 1px rgba(44,85,152,0.5) solid;
         }
         th{
@@ -129,69 +129,7 @@
         <div id="ld_loadingMsg">正在加载中...</div>
     </div>
 </div>
-<div id="message">
-    <div class="msg-channel">
-        <div class="hd">
-            <!--<p class="user-info">您有（<span id="admin_order_count">0</span>）个新的订单</p>-->
-            <p class="user-info" id="admin_order_count"></p>
-        </div>
-        <div class="bd" id="message_order_list">
-            <a href="admin.html#pages/order/order_list.html">点击查看商城订单</a>
-        </div>
-        <div class="bd" id="message_bookingManagement">
-            <a href="admin.html#pages/bookingManagement.html">点击查看预约订单</a>
-        </div>
-        <div class="bd" id="message_auth">
-            <a href="admin.html#pages/authentic/authList.html">点击查看实名认证</a>
-        </div>
-        <a class="close" data-hook="closeTips" onclick="closemessage()" href="javascript:void(0)" title="关闭">×</a>
-    </div>
-</div>
 <div id="wrapper">
-    <!-- Navigation -->
-    <!--<nav class="navbar navbar-default navbar-static-top farm-navBgColor" role="navigation" style="margin-bottom: 0">-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">-->
-                <!--<span class="sr-only">Toggle navigation</span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
-            <!--<a class="navbar-brand" href="#">政策大咖后台管理系统</a>-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.navbar-header &ndash;&gt;-->
-
-        <!--<ul class="nav navbar-top-links navbar-right">-->
-            <!--&lt;!&ndash;<li id="ywlink" class="dropdown"><a href="index.html"&ndash;&gt;-->
-                                                <!--&lt;!&ndash;target="_blank" class="dropdown-toggle">平台管理系统前台</a></li>&ndash;&gt;-->
-            <!--<li class="dropdown">-->
-                <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
-                  <!--<span id="adminUser"></span>-->
-                    <!--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>-->
-                <!--</a>-->
-                <!--<ul class="dropdown-menu dropdown-user">-->
-                    <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<li class="divider"></li>&ndash;&gt;-->
-                    <!--<li><a href="#" onclick="loginout()"><i class="fa fa-sign-out fa-fw"></i>退出系统</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-                <!--&lt;!&ndash; /.dropdown-user &ndash;&gt;-->
-            <!--</li>-->
-            <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
-        <!--</ul>-->
-        <!--&lt;!&ndash; /.navbar-top-links &ndash;&gt;-->
-        <!--<div class="navbar-default sidebar" role="navigation" >-->
-            <!--<div class="sidebar-nav navbar-collapse">-->
-                <!--<ul class="nav" id="side-menu">-->
-                <!--</ul>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; /.sidebar-collapse &ndash;&gt;-->
-        <!--</div>-->
-        <!--&lt;!&ndash; /.navbar-static-side &ndash;&gt;-->
-    <!--</nav>-->
     <nav class="navbar navbar-default navbar-static-top farm-navBgColor header-nav" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -201,41 +139,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="javascript:;">
-                <img src="img/company_logo.png" alt="培训监管中心管理系统">
                 <div class="name">
-
+                    美恒医药管理系统
                 </div>
             </a>
         </div>
         <div class="nav-quit">
             <div onclick="loginout()">退出</div>
         </div>
-        <!--<div class="nav-workbench" id="nav-workbench"><a onclick="work()"><img src="img/gzt.png" alt="工作台">工作台</a></div>-->
-        <!-- /.navbar-header -->
-        <!--<ul class="nav navbar-top-links navbar-right">-->
-        <!--<li class="dropdown">-->
-        <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">-->
-        <!--<span id="adminUser"></span>-->
-        <!--<i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>-->
-        <!--</a>-->
-        <!--<ul class="dropdown-menu dropdown-user">-->
-        <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>&ndash;&gt;-->
-        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>&ndash;&gt;-->
-        <!--&lt;!&ndash;</li>&ndash;&gt;-->
-        <!--&lt;!&ndash;<li class="divider"></li>&ndash;&gt;-->
-        <!--<li>-->
-        <!--<a href="#" onclick="loginout()">-->
-        <!--<i class="fa fa-sign-out fa-fw"></i>-->
-        <!--退出系统-->
-        <!--</a>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--&lt;!&ndash; /.dropdown-user &ndash;&gt;-->
-        <!--</li>-->
-        <!--&lt;!&ndash; /.dropdown &ndash;&gt;-->
-        <!--</ul>-->
-
         <!-- /.navbar-top-links -->
         <div class="navbar-default sidebar sidebarchange" role="navigation" >
             <div class="userinfo-box">
@@ -288,6 +199,8 @@
 <script type="text/javascript" src="js/common/jquery.iframe-transport.js"></script>
 <script type="text/javascript" src="js/common/jquery.fileupload.js"></script>
 <script type="text/javascript" src="js/common/fileuploadUtil.js"></script>
+<script src="https://www.jq22.com/jquery/three.min.js"></script>
+<script src="https://cdn.bootcss.com/three.js/r63/three.min.js"></script>
 <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=y8NU7LWG04U6YMjqeT5rHKtg"></script>
 <script type="text/javascript" src="js/common/baiduMap.js"></script>
 <script src="js/common/layer/layer.js"></script>

@@ -1,5 +1,5 @@
 var base_url_user = '/rs/member';
-var base_url_organiz = '/rs/company';
+var base_url_company = '/rs/company';
 var base_url_role = '/rs/role';
 var reset_psd = "/rs/super_reset_password";
 var users = [];
@@ -15,23 +15,8 @@ $(function () {
     $.initSystemFileUpload($("#user_form"));
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
-    getOrganiz();
 });
 
-function getOrganiz() {
-    $("#organiz").html("");
-    zhget(base_url_organiz).then(function(result){
-        var html="";
-        if(result.code==200){
-            html+="<option value='-1'>请选择</option>";
-            for(var i=0;i<result.rows.length;i++){
-                html+="<option value='"+result.rows[i].id+"'>"+result.rows[i].name+"</option>"
-            }
-            $("#organiz").append(html);
-            initselect('organiz');
-        }
-    })
-}
 function initselect(id){
     $('#'+id).selectpicker({
         size: 10,
@@ -44,7 +29,7 @@ function getcompany(){
         status:1    //0-禁；1-有效；9删除
     }
     $("#shopcompany").append("");
-    zhget('/rs/store',data).then(function(result) {
+    zhget(base_url_company,data).then(function(result) {
         if(result.code==200) {
             var html="";
             if (result.code == 200) {
@@ -267,7 +252,6 @@ function onUserSaveClick() {
     }
 
     if (operation == "add") {
-        data.auto_id=1;
         zhget(base_url_user, {username:username}).then( function (result) {
             if(result.code==200){
                 showError("用户已存在")
