@@ -8,7 +8,7 @@ var menu = [];
 var currentPageNo = 1;
 var pageRows = 10;
 $(function() {
-    $.initSystemFileUpload($("#uploadImg"), onUploadDetailPic);
+    $.initSystemFileUpload($("#form_modal"), onUploadHeaderPic);
     var page=getUrlParamsValue("page");
     if(page&&page!="undefined"){
         currentPageNo=page;
@@ -23,6 +23,16 @@ $(function() {
     $("#searchBtn", $(".report")).bind("click", showSearchPage);
     queryList();
 });
+// 图片上传
+function onUploadHeaderPic(formObject, fileComp, list)
+{
+    var attrs = fileComp.attr("refattr");
+    jQuery("#upimg").val("");
+    if(list.length > 0 && list[0].code == 200){
+        var sAttachUrl = list[0].url;
+        $("#"+attrs, formObject).val(sAttachUrl);
+    }
+}
 // 图片上传
 function onUploadDetailPic(formObject, fileComp, list)
 {
@@ -116,7 +126,9 @@ function addcompany(id){
             if(res.code == 200){
                 $("#addModal").modal("show")
                 $("#cid").val(id)
-                $("#comp_name").val(res.rows[0].name)
+                $("#comp_name").val(res.rows[0].title)
+                $("#comp_tel").val(res.rows[0].phone)
+                $("#comp_addr").val(res.rows[0].address)
             }
         })
     }else{
@@ -141,12 +153,25 @@ function clearinput(){
 function addcompanyuser(){
     var id=$("#cid").val()
     var name = $("#comp_name").val().trim();
+    var tel = $("#comp_tel").val().trim();
+    var addr = $("#comp_addr").val().trim();
+    var RegExp=/^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/;
     if(!name){
         return showError("请输入企业名称")
+    }
+    if(!tel){
+        return showError("请输入联系方式")
+    }else if(!RegExp.test(tel)){
+        return showError("电话号码输入错误")
+    }
+    if(!addr){
+        return showError("请输入企业地址")
     }
     $("#submitstore").attr("disabled","disabled");
     var data={
         title:name,
+        phone: tel,
+        address: addr
     }
     if(id){
         zhput('/rs/company/'+id,data).then(function(res){

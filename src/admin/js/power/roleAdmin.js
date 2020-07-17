@@ -10,54 +10,32 @@ var searchData={};
 var isselect=false;
 
 $(function () {
-    getcompany();
+    company();
     queryList();
     $.initSystemFileUpload($("#user_form"));
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
 });
 
-function initselect(id){
-    $('#'+id).selectpicker({
-        size: 10,
-        width:'100%'
-    });
-}
-var storeArr=[];
-function getcompany(){
-    var data={
-        status:1    //0-禁；1-有效；9删除
-    }
-    $("#shopcompany").append("");
-    zhget(base_url_company,data).then(function(result) {
-        if(result.code==200) {
-            var html="";
-            if (result.code == 200) {
-                storeArr=result.rows;
-                html += "<option value='-1'>请选择</option>";
-                for (var i = 0; i < result.rows.length; i++) {
-                    html += "<option value='" + result.rows[i].id + "'>" + result.rows[i].name + "</option>"
-                }
-                $("#shopcompany").html(html);
-                initselect('shopcompany');
+function company(){
+    zhget('/rs/company').then( function(result) {
+        var data = result.rows;
+        var html = '';
+        if(result.code == 200){
+            for(var i=0;i<data.length;i++){
+                html+="<option value="+data[i].id+">"+data[i].title+"</option>"
             }
         }
+        $("#comp_id").html(html);
     });
 }
-function initselect(id){
-    $('#'+id).selectpicker({
-        size: 10,
-        width:'100%'
-    });
-}
+
 function showSelect(){
     var rank=$("#rqanakmember").val();
     if(rank&&rank==31){
         $(".organizmember").hide();
-        $(".membershop").show();
     }else if(rank&&rank==80){
         $(".organizmember").show();
-        $(".membershop").hide();
     }
 }
 function queryList() {
@@ -92,11 +70,6 @@ function queryList() {
                         }else{
                             result.rows[i].power_id+=','+result.rows[i].power_json[j]
                         }
-                    }
-                }
-                for(var j=0;j<storeArr.length;j++){
-                    if(users[i].store_id == storeArr[j].id){
-                        users[i].store_name = storeArr[j].name
                     }
                 }
             }
@@ -136,11 +109,7 @@ function cleanForm() {
     $("#picfile").val("");
     $("#picShow").attr("src","");
     $("#picPath").val("");
-    $("#organiz").val("-1");
-    $("#rqanakmember").val("-1")
-    $("#shopcompany").val("-1")
     $(".organizmember").hide();
-    $(".membershop").hide();
 }
 function onSearchClick() {
     cleanForm();
@@ -165,14 +134,9 @@ function fillForm(id) {
             $("#username").val(res.rows[0].username);
             $("#nickname").val(res.rows[0].nickname);
             $("#rqanakmember").val(res.rows[0].rank)
-            if(res.rows[0].rank==31){
-                $(".organizmember").hide();
-                $(".membershop").show();
-                $('#shopcompany').selectpicker('val', res.rows[0].store_id);
-            }else if(res.rows[0].rank==80){
+            if(res.rows[0].rank==80){
                 $(".organizmember").show();
-                $(".membershop").hide();
-                $('#organiz').selectpicker('val', res.rows[0].organiz_id);
+                $('#comp_id').val(res.rows[0].comp_id);
             }
         }else {
             if(res.code==601){
@@ -210,7 +174,7 @@ function onUserSaveClick() {
     var userid = $("#userid").val();
     var username = $("#username").val().trim();
     if(rank==""||rank=="-1"){
-        showError("请选择所属类别")
+        showError("请选择所属角色")
         return;
     }
     if(username==null||username==""){
@@ -223,7 +187,7 @@ function onUserSaveClick() {
         return;
     }
     var password = $("#userpwd").val();
-    var organiz= $("#organiz").val();
+    var comp_id= $("#comp_id").val();
     var data = {
         username: username,
         phone: username,
@@ -231,22 +195,12 @@ function onUserSaveClick() {
         rank:rank,
         status:1
     };
-    if(rank==31){
-        var comp=$("#shopcompany").val();
-        if(comp&&comp!='-1'){
-            data.store_id=comp;
-        }else{
-            showError("请选择所属店铺");
-            return;
-        }
-    }
     if(rank==80){
-        if(organiz&&organiz!='-1'){
-            data.organiz_id=organiz;
-            data.comp_id=organiz;
-            data.rank=80;//80:企业管理员;
+        if(comp_id&&comp_id!='-1'){
+            data.comp_id=comp_id;
+            data.rank=80;
         }else{
-            showError("请选择机关");
+            showError("请选择企业");
             return;
         }
     }
@@ -334,7 +288,7 @@ function memberSearchCancel() {
     $("input[name='nickname']").val("");
      $("#dtBindTimeStart").val("");
     $("#dtBindTimeEnd").val("");
-    $('#organiz').val('');
+    $('#comp_id').val('');
     $('#rqanak').val('-1');
     memberSearch();
 }

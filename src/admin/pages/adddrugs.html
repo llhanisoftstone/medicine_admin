@@ -15,13 +15,26 @@
 <div id="wrapper">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span>新增药品</span>
+            <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                <li>
+                    <a>药品管理</a>
+                </li>
+                <li>新增药品</li>
+            </ul>
             <button type="button" onclick="back()" class="fa  fa-share-square btn btn-default pull-right" style="margin-top: -6px">返回</button>
         </div>
         <form id="addBannerForm">
             <div class="panel-body">
                 <div class="form-horizontal" id="user_form">
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>商品名称：</label>
+                                <div class="pinput" style="float: left; margin-left: 50px">
+                                    <input placeholder="请输入药品名称" id="title" name="title" class="form-control " maxlength="50">
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>药品名称：</label>
@@ -38,17 +51,16 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-4 form-group">
-                            <label>所属厂家：</label>
+                            <label>生产厂家：</label>
                             <div class="pinput">
                                 <select id="comp_id" class="form-control " >
 
                                 </select>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>生产地址：</label>
@@ -57,18 +69,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 form-group" id="upImg2">
-                            <label for="picpath">药品图片：</label>
-                            <div class="pinput">
-                                <div class="input-group">
-                                    <input id="picpath" datatype="require" class="form-control title_pic" value="" style="cursor: pointer;" readonly="readonly" placeholder="请上传列表图(750*420px)">
-                                    <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
-                                        <i class="glyphicon glyphicon-search">
-                                            <input type="file" name="picfile2[]" value="pic file" uptype="community" multiple="multiple" refattr="picpath" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
-                                        </i>
-                                        </span>
-                                </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            药品图片（最多可上传3张）
+                            <div class="btn btn-default" style="display: inline-block;background-size:80px; width: 80px;height: 35px;">
+                                新增图片
+                                <!--<form onsubmit="return false;" id="picBannerform">-->
+                                <input type="file" name="picfile[]" value="pic file" id="picfile"  multiple="multiple" upType="advPic" accept=".jpg,.png,.jpeg,.bmp"
+                                       style="width: 80px;height: 35px;margin-top:-27px;margin-left:-15px;-webkit-opacity: 0;opacity: 0;">
+                                <input type="text" id="picfilelist" name="upType" value="advPic" style="display:none;">
+                                <!--</form>-->
                             </div>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr style="text-align: center">
+                                    <th class="col-sm-3">药品图片</th>
+                                    <th class="col-sm-4">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="banner" style="text-align: center">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="row">
@@ -90,7 +115,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript" src="js/drugs/adddrugs.js"></script>
+<script src="js/drugs/adddrugs.js"></script>
 </body>
 
 </html>

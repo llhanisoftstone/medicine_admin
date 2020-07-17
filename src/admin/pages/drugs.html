@@ -57,7 +57,7 @@
                     <tr>
                         <th style="width: 5%">序号</th>
                         <th style="width: 15%">药品名称</th>
-                        <th style="width: 30%">生产企业</th>
+                        <th style="width: 15%">生产企业</th>
                         <th style="width: 10%">批准文号</th>
                         <th style="width: 15%">生产地址</th>
                         <th style="width: 5%">操作</th>
@@ -83,11 +83,10 @@
     {{#datas}}
     <tr>
         <td>{{rowNum}}</td>
-        <td>{{name}}</td>
-        <td>{{comon_name}}</td>
+        <td>{{common_name}}</td>
+        <td>{{comp_name}}</td>
         <td>{{approval_number}}</td>
         <td>{{address}}</td>
-        <td>{{create_time}}</td>
         <td>
             <span class="fa fa-edit editOrder" style="cursor: pointer;" onclick="onUpdateClick('{{id}}')" title="编辑"></span>
             <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this,'{{id}}','{{status}}')"></span>

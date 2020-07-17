@@ -174,33 +174,72 @@
     </div>
 </div>
 <div id="addModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
-                </button>
-                <h4 class="modal-title">
-                </h4>
-            </div>
-            <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
-                <input type="hidden" id="cid">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label  class="col-sm-2 control-label">企业名称</label>
-                        <div class="col-sm-9">
-                            <input placeholder="企业名称" type="text" maxlength="15"  pop="" value="" id="comp_name" class="form-control" datatype="require" style="width: 100%; float: left;">
+    <form action="" id="form_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">
+                    </h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
+
+                        <input type="hidden" id="cid">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">企业名称</label>
+                                <div class="col-sm-9">
+                                    <input placeholder="企业名称" type="text" maxlength="15"  pop="" value="" id="comp_name" class="form-control" datatype="require" style="width: 100%; float: left;">
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">联系方式</label>
+                                <div class="col-sm-9">
+                                    <input placeholder="联系方式" id="comp_tel" maxlength="11" class="form-control" datatype="tel" style="width: 100%; float: left;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">企业地址</label>
+                                <div class="col-sm-9">
+                                    <input placeholder="企业地址" type="text"   pop="" value="" id="comp_addr" class="form-control" datatype="require" style="width: 100%; float: left;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-horizontal">
+                            <div class="form-group" id="upImg">
+                                <label class="col-sm-2 control-label">企业logo</label>
+                                <div class="col-sm-9">
+                                    <div class="pinput" style="width:100%;">
+                                        <div class="input-group">
+                                            <span id="picpath_input"></span>
+                                            <input id="picpath" datatype="require" class="form-control title" value="" placeholder="请上传列表图(750*420px)">
+                                            <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                                <i class="glyphicon glyphicon-search">
+                                                    <input type="file" name="picfile2[]"  uptype="community" value="pic file"  refattr="picpath" class="form-control title_pic" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="clearinput()" data-dismiss="modal">取消</button>
+                    <button onclick="addcompanyuser()" id="submitstore" datatype="require" type="button" class=" btn btn-default" id="">确认</button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" onclick="clearinput()" data-dismiss="modal">取消</button>
-                <button onclick="addcompanyuser()" id="submitstore" datatype="require" type="button" class=" btn btn-default" id="">确认</button>
-            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
-    </div>
+    </form>
     <!-- /.modal-dialog -->
 </div>
 <script id="event-template" type="text/x-handlebars-template">
@@ -210,6 +249,7 @@
         <td>{{title}}</td>
         <td>{{phone}}</td>
         <td>{{address}}</td>
+        <td>{{create_time}}</td>
         <td>
             <span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>
             <span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>
@@ -217,10 +257,7 @@
     </tr>
     {{/datas}}
 </script>
-
 <script src="js/power/company.js"></script>
-<script src="js/common/upload.js"></script>
-<script src="js/common/webuploader.min.js"></script>
 
 </body>
 </html>
