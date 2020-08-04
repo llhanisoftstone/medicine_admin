@@ -15,112 +15,101 @@
         url('//at.alicdn.com/t/font_567351_wg7nswfpfo426gvi.ttf') format('truetype'),
         url('//at.alicdn.com/t/font_567351_wg7nswfpfo426gvi.svg#iconfont') format('svg');
     }
-    .iconfont {
-        font-family:"iconfont" !important;
-        font-size:16px;
-        font-style:normal;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    .icon-ai-password:before { content: "\e63e"; }
-    .icon-user:before { content: "\e607"; }
-    .bgimg{
-        width:100%;
-        height:400px;
-        background:url(img/op.png) no-repeat center center;
-        background-size:100% 100%;
-        position:relative;
-    }
-    .mark{
-        position:absolute;
-        top:0;
-        right:0;
-        bottom:0;
-        left:0;
-        background:rgba(102,102,102,0.7)
-    }
-    .con{
-        position:absolute;
-        top:160px;
-        left:0;
-        right:0;
-        margin:0 auto;
-    }
-    .font4{
-        color:#fff;
-        font-size:30px;
-    }
     body{
         background:#fff;
     }
-    .logoimg{
-        width:100%;
-        height:120px;
-        margin-top:39px;
-        background:url(img/logo.png) no-repeat center center;
-        background-size:120px 120px;
+    .main {
+        position: fixed;
+        text-align: center;
+        top: 182px;
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
     }
-    .hidetsusername,.hidetsmodefined{
-        height:24px;
-        line-height: 25px;
-        margin-left:7px;
-        font-size:12px;
-        color:#ff0000;
-        text-align:left;
-        padding-left:20px;
-        background:url(img/dl_3.png) no-repeat left center;
-        background-size:13px 13px;
-        display:none;
+     .addNewDiv{
+         margin: 0;
+         overflow: hidden;
+         background: linear-gradient(to right, #5edc9a, #1bc2b1);
+         background-size:1400% 300%;
+         animation: dynamics 6s ease infinite;
+         -webkit-animation: dynamics 6s ease infinite;
+         -moz-animation: dynamics 6s ease infinite;
+         font-size: 14px;
+         color: #ffffff;
+         min-height: 700px;
+     }
+     .logo{
+         position: absolute;
+         top: 50px;
+         left: 200px;
+     }
+    .log-con span{
+        font-family: STZhongsong;
+        font-size: 28px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 22px;
+        letter-spacing: 0px;
+        color: #ffffff;
     }
-    .alertmessage{
-        height:24px;
+    .log-con input{
+        width: 290px;
+        height: 40px;
+        border: none;
+        color: #ffffff;
+        text-align: center;
+        background-color: #35bea3;
+        border-radius: 20px;
+        margin-bottom: 30px;
     }
-    #login{
-        background:#df5c3e;
-        border-radius:2px;
-        border:none;
-        margin-top: 30px;
-        cursor:pointer;
-        box-shadow:0 5px 5px rgba(101,101,101,0.75);
-        transition:all 0.3s;
+    .log-con .name{
+        margin-top: 43px;
     }
-    #login:hover{
-        background-color:#EE5D2F ;
+    .log-con button{
+        width: 290px;
+        height: 40px;
+        border: none;
+        color: #535353;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 20px;
+    }
+    a,button,input{
+        outline: none;
+        box-shadow: none;
+    }
+    .log-con input::-webkit-input-placeholder{
+        color: #ffffff;
+    }
+    .log-con input:-ms-input-placeholder{
+        color: #ffffff;
+    }
+    .log-con input::-moz-placeholder{
+        color: #ffffff;
     }
 </style>
 <body>
-<div class="bgimg"><div class="mark"></div></div>
-<div class="con">
-    <font class="font4"></font>
-    <div class="kuang login">
-        <ul class="right">
-            <div class="logoimg"></div>
-            <div method="post" class="loginform">
-                <ul style=" margin-top:10px;text-align:left">
-                    <li class="itemlist" style="border: 1px solid #ddd;"><span class="icon iconfont " style="margin:6px 11px;display:inline-block;width:18px;height:19px;background:url(img/dl_2.png) no-repeat center center;background-size:17px 19px"></span><span style="display:inline-block;border-left:1px solid #ddd;height:22px;"></span><input type="text" maxlength="20" id="username" placeholder="请输入用户名" value="" class="defautfont"></li>
-                    <div class="alertmessage"><div class="hidetsusername"></div></div>
-                </ul>
+<div class="addNewDiv" id="NewDiv">
 
-                <ul>
-                    <li class="itemlist" style="border: 1px solid #ddd;"><span class="icon iconfont" style="margin:6px 11px;display:inline-block;width:19px;height:21px;background:url(img/dl_1.png) no-repeat center center;background-size:100% 100%"></span><span style="display:inline-block;border-left:1px solid #ddd;height:22px;"></span><input type="password" id="password" value="" placeholder="请输入密码" maxlength="20" class="defautfont"></li>
-                    <div class="alertmessage"><div class="hidetsmodefined"></div></div>
-                </ul>
-                <ul class="denglu">
-                    <li><a onclick="checkfrm()" id="login" >登&nbsp;&nbsp;录</a></li>
-                </ul>
-            </div>
-            <div class="clear"></div>
-        </ul>
+</div>
+<div class="logo"><img src="./img/logo.png"></div>
+<div class="main">
+    <div class="login">
+        <div class="log-con">
+            <span>药品不良反应监测平台</span>
+            <input type="text" class="name" id="username" placeholder="用户名">
+            <input type="password" class="password" id="password" placeholder="密码">
+            <button onclick="checkfrm()">登录</button>
+        </div>
     </div>
-    <!--<p style="color: #aaa">© 2018 DeathGhost 版权所有</p>-->
-    <!--<p style="color: #aaa">陕B2-20080224-1</p>-->
-
 </div>
 <script type="text/javascript" src="js/common/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/common/bootstrap-paginator.min.js"></script>
 <script type="text/javascript" src="js/common/handlebars-v3.0.1.js"></script>
 <script src="js/common/layer/layer.js"></script>
 <script type="text/javascript" src="js/admin.js"></script>
+<script type="text/javascript" src="js/common/three.min.js"></script>
 <script charset="utf-8" language="javascript" type="text/javascript" src="js/power/login.js"></script>
 </body>
 </html>

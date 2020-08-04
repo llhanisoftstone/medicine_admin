@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <link rel="stylesheet" href="js/common/ueditor/xiumi-ue-v5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/xiumi-ue-dialog-v5.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                <li>
+                    <a>不良反应报告管理</a>
+                </li>
+                <li>不良反应报告详情</li>
+            </ul>
+            <button type="button" onclick="back()" class="fa  fa-share-square btn btn-default pull-right" style="margin-top: -6px">返回</button>
+        </div>
+        <form id="addBannerForm">
+            <div class="form-horizontal" id="user_form">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        患者基本信息
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>患者姓名：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="张三" name="title" class="form-control " maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>性别：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="男" name="common_name" class="form-control " maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>民族：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="汉" name="approval_number" class="form-control " maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>出生年月：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="1991-05-05" name="title" class="form-control " maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>年龄：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="28" id="common_name" name="common_name" class="form-control " maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>体重：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <input value="56公斤" id="approval_number" name="approval_number" class="form-control " maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label>联系方式：</label>
+                                <div class="pinput" style="float: left; margin-left: 50px">
+                                    <input value="15800000000" name="title" class="form-control " maxlength="50">
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label>原患疾病：</label>
+                                <div class="pinput" style="float: left; margin-left: 20px">
+                                    <input value="冠心病" name="common_name" class="form-control " maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        疑似用药
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr style="text-align: center">
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 10%">批准文号</th>
+                                <th style="width: 7%">商品名称</th>
+                                <th style="width: 8%">通用名称</th>
+                                <th style="width: 10%">生产厂家</th>
+                                <th style="width: 10%">生产批号</th>
+                                <th style="width: 15%">用法用量</th>
+                                <th style="width: 15%">用药时间</th>
+                            </tr>
+                            </thead>
+                            <tbody style="text-align: center">
+                                <tr>
+                                    <td>1</td>
+                                    <td>国药准字H20043178</td>
+                                    <td></td>
+                                    <td>黄升丹</td>
+                                    <td>西安顺康制药有限公司</td>
+                                    <td>5129221032</td>
+                                    <td>外用，研成细粉撒于患处，再用药膏贴敷，或与其他药物制成撒布剂、油剂或软膏使用。</td>
+                                    <td>2020-06-25到2020-06-28</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        并用用药
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr style="text-align: center">
+                                <th style="width: 5%">序号</th>
+                                <th style="width: 10%">批准文号</th>
+                                <th style="width: 7%">商品名称</th>
+                                <th style="width: 8%">通用名称</th>
+                                <th style="width: 10%">生产厂家</th>
+                                <th style="width: 10%">生产批号</th>
+                                <th style="width: 15%">用法用量</th>
+                                <th style="width: 15%">用药时间</th>
+                            </tr>
+                            </thead>
+                            <tbody style="text-align: center">
+                            <tr>
+                                <td>1</td>
+                                <td>国药准字H20043178</td>
+                                <td></td>
+                                <td>板蓝根颗粒</td>
+                                <td>西安北方药业有限公司</td>
+                                <td>45213332210</td>
+                                <td>开水冲服。-次5～ 10克，一日3～ 4次。</td>
+                                <td>2020-06-25到2020-06-28</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        不良反应/事件详细信息
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>不良反应/事件名称：</label>
+                                    <div class="pinput" style="float: left; margin-left: 20px">
+                                        <input value="麻木" name="title" class="form-control " maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>不良反应/事件发生时间：</label>
+                                    <div class="pinput" style="float: left; margin-left: 20px">
+                                        <input value="汉" name="approval_number" class="form-control " maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label>不良反应/事件结果：</label>
+                                <div class="pinput" style="float: left; margin-left: 20px">
+                                    <input placeholder="" value="痊愈" name="title" class="form-control " maxlength="50">
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>对原患疾病的影响：</label>
+                                <div class="pinput" style="float: left; margin-left: 55px">
+                                    <input value="不明显" name="approval_number" class="form-control " maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label>不良反应/事件过程描述：</label>
+                                <div class="pinput" style="float: right">
+                                    <input value="患者因带状疱疹在门诊治疗，静滴更昔洛韦10min后，患者感觉输液的左上肢麻木且逐渐加深，停用后，更换输液器症状消失，患者无明显不适。" name="approval_number" class="form-control " maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label>停药或减量后反应/事件是否消失或减轻：</label>
+                                <div class="pinput" style="float: right">
+                                    <input value="是" name="approval_number" class="form-control " maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label>再次使用可疑药品后是否再次出现同样反应/事件：</label>
+                                <div class="pinput" style="float: right">
+                                    <input value="未再使用" name="approval_number" class="form-control " maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        不良反应/事件类型
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-4 form-group">
+                            <label for="result">报告类型</label>
+                            <div class="pinput">
+                                <select name="result" id="result" class="form-control">
+                                    <option value="">请选择报告类型</option>
+                                    <option value="1">初次</option>
+                                    <option value="2">一般</option>
+                                    <option value="3">严重</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <button datatype="require" type="button" class="fa fa-save btn btn-default" id="saveCarouselData" onclick="onSaveClick()">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input id="id" style="display: none;"/>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

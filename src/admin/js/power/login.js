@@ -3,6 +3,9 @@ var base_url_login = '/op/login';
 var operation = "add";
 var currentPageNo = 1;
 $(function() {
+    $(".addNewDiv").load('dome1.html',function(){
+
+    });
     $("#username").blur(function(){
         $(".hidetsusername").hide();
     })

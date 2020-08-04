@@ -27,8 +27,7 @@ body{width: 100%;overflow: hidden}
 .sucess p { font-size:25px;color:#e36127; line-height:50px;}
 .sucess span{ font-size:14px;}
 
-.login{ padding:0px 0px; background-color:#fff; height:420px;width: 429px;
-    margin:40px auto;box-shadow: 0 7px 13px 2px #ccc;border-radius: 5px;border:none;}
+.login{ padding:0px 0px; height:250px;width: 290px;border:none;}
 .login .xian{ margin:15px 0px 10px 0px; height:0px;}
 .login .right{ overflow:hidden; width: 348px;margin: 0 auto}
 .login .font4{ margin:0 auto;}
