@@ -9,6 +9,7 @@ var currentPageNo = 1;
 var pageRows = 10;
 $(function() {
     $.initSystemFileUpload($("#form_modal"), onUploadHeaderPic);
+    getUserlist();
     var page=getUrlParamsValue("page");
     if(page&&page!="undefined"){
         currentPageNo=page;
@@ -62,6 +63,19 @@ function searchData(){
 
 }
 
+function getUserlist(){
+    zhget('/rs/member', {rank: 81}).then( function(result) {
+        var data = result.rows;
+        var html = '<option value="-1">请选择</option>';
+        if(result.code == 200){
+            for(var i=0;i<data.length;i++){
+                html+="<option value="+data[i].id+">"+data[i].nickname+"</option>"
+            }
+        }
+        $("#userid").html(html);
+    });
+}
+
 function queryList(){
     var data = {
         page: currentPageNo,
@@ -95,6 +109,7 @@ function cleardiv(){
     $("#password").val('');
     $("#order").val('');
     $("#bank").val('');
+    $("#userid").val('-1');
     $("#uploader .filelist").each(function(){
         $(this).find(".cancel").click();
     })
@@ -129,6 +144,7 @@ function addcompany(id){
                 $("#comp_name").val(res.rows[0].title)
                 $("#comp_tel").val(res.rows[0].phone)
                 $("#comp_addr").val(res.rows[0].address)
+                $("#userid").val(res.rows[0].u_id);
             }
         })
     }else{
@@ -139,6 +155,7 @@ function addcompany(id){
         $("#password").val('');
         $("#order").val('');
         $("#bank").val('');
+        $("#userid").val('-1');
         $("#dndArea").removeClass("element-invisible");
         $(".filelist").html('');
         $("#addusername").removeAttr("disabled")
@@ -155,6 +172,7 @@ function addcompanyuser(){
     var name = $("#comp_name").val().trim();
     var tel = $("#comp_tel").val().trim();
     var addr = $("#comp_addr").val().trim();
+    var u_id = $("#userid").val();
     var RegExp=/^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/;
     if(!name){
         return showError("请输入企业名称")
@@ -167,11 +185,15 @@ function addcompanyuser(){
     if(!addr){
         return showError("请输入企业地址")
     }
+    if(u_id == '-1'){
+        return showError("请选择所属填报员")
+    }
     $("#submitstore").attr("disabled","disabled");
     var data={
         title:name,
         phone: tel,
-        address: addr
+        address: addr,
+        u_id: u_id
     }
     if(id){
         zhput('/rs/company/'+id,data).then(function(res){
@@ -188,22 +210,45 @@ function addcompanyuser(){
             }
         })
     }else{
-            zhpost('/rs/company',data).then(function(res){
-                if(res.code==200){
-                    showSuccess("新增成功");
-                    $("#addModal").modal("hide")
-                    $("#addModal input").val("")
-                    $("#submitstore").attr("disabled",false);
-                    cleardiv()
-                    queryList()
-                }else{
-                    showError("新增失败")
-                    $("#submitstore").attr("disabled",false);
-                }
-            })
+        zhpost('/rs/company',data).then(function(res){
+            if(res.code==200){
+                showSuccess("新增成功");
+                $("#addModal").modal("hide")
+                $("#addModal input").val("")
+                $("#submitstore").attr("disabled",false);
+                cleardiv()
+                queryList()
+            }else{
+                showError("新增失败")
+                $("#submitstore").attr("disabled",false);
+            }
+        })
     }
 }
 
+function onsour(id){
+    $("#qrcode").empty();
+    $("#qrcodeImg").attr("src","");
+    var url = targetUrl + '/admin/admin.html';
+    $('#qrcode').html('');
+    $('#qrcode').qrcode({
+        render: "canvas",
+        width: 200,
+        height: 200,
+        text: url,
+        src: './img/menu_icon.png' //logo
+    });
+    //
+    // var canvas=$("#qrcode").find('canvas').get(0);
+    // var data = canvas.toDataURL('image/jpg');
+    // $('#qrcodeImg').attr('src',data) ;
+    // var alink = document.createElement("a");
+    // document.body.appendChild(alink);
+    // alink.style.display='none';
+    // alink.href = data;
+    // alink.download = new Date().getTime();
+    // alink.click();
+}
 
 Handlebars.registerHelper('equal', function(v1,v2, options) {
     if(v1 ==v2) {

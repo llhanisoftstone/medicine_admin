@@ -185,7 +185,6 @@
                     </h4>
                 </div>
                 <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
-
                         <input type="hidden" id="cid">
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -230,6 +229,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-horizontal">
+                            <label for="userid" class="col-sm-2 control-label">所属填报员</label>
+                            <div class="col-sm-9">
+                                <select id="userid" class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
 
                 </div>
                 <div class="modal-footer">
@@ -242,6 +249,8 @@
     </form>
     <!-- /.modal-dialog -->
 </div>
+<div id="qrcode"></div>
+<img id="qrcodeImg" src="./img/menu_icon.png" style="width: 200px; height: 200px;"/>
 <script id="event-template" type="text/x-handlebars-template">
     {{#datas}}
     <tr>
@@ -251,6 +260,7 @@
         <td>{{address}}</td>
         <td>{{create_time}}</td>
         <td>
+            <span class="fa fa-qrcode" title="下载二维码" onclick="onsour('{{id}}')"></span>
             <span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>
             <span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>
         </td>
@@ -258,6 +268,7 @@
     {{/datas}}
 </script>
 <script src="js/power/company.js"></script>
-
+<script type="text/javascript" src="js/common/utf.js"></script>
+<script type="text/javascript" src="js/common/jquery.qrcode.js"></script>
 </body>
 </html>
