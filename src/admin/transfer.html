@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="css/reg.css"/>
+</head>
+<body>
+<wx-open-launch-weapp
+        id="launch-btn"
+        username="gh_c572a885b36c"
+path="/pages/transfer/transfer.html?scene=111">
+<div>
+    <button class="btn">打开小程序</button>
+</div>
+</wx-open-launch-weapp>
+<script>
+    wx.miniProgram.navigateTo({
+        url: "/pages/transfer/main?scene=1122"
+    });
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script type="text/javascript" src="js/common/jquery-1.11.2.min.js"></script>
+<script charset="utf-8" language="javascript" type="text/javascript" src="js/transfer.js"></script>
+</body>
+</html>

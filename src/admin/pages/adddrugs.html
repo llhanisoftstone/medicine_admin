@@ -21,7 +21,7 @@
                 </li>
                 <li>新增药品</li>
             </ul>
-            <button type="button" onclick="back()" class="fa  fa-share-square btn btn-default pull-right" style="margin-top: -6px">返回</button>
+            <button type="button" onclick="back()" class="fa  fa-share-square btn againBtn pull-right" style="margin-top: -6px">返回</button>
         </div>
         <form id="addBannerForm">
             <div class="panel-body">
@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>商品名称：</label>
-                                <div class="pinput" style="float: left; margin-left: 50px">
+                                <div class="pinput" style="float: left;">
                                     <input placeholder="请输入商品名称" id="title" name="title" class="form-control " maxlength="50">
                                 </div>
                             </div>
@@ -38,21 +38,29 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>通用名称：</label>
-                                <div class="pinput" style="float: left; margin-left: 50px">
+                                <div class="pinput" style="float: left;">
                                     <input placeholder="请输入通用名称" id="common_name" name="common_name" class="form-control " maxlength="50">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>批准文号：</label>
-                                <div class="pinput" style="float: left; margin-left: 50px">
-                                    <input placeholder="请输入批准文号" id="approval_number" name="approval_number" class="form-control " maxlength="20">
+                                <label>用法用量：</label>
+                                <div class="pinput" style="float: left;">
+                                    <input placeholder="请输入用法用量" id="usage_dosage" name="usage_dosage" class="form-control " maxlength="80">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>批准文号：</label>
+                                <div class="pinput" style="float: left;">
+                                    <input placeholder="请输入批准文号" id="approval_number" name="approval_number" class="form-control " maxlength="20">
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4 form-group">
                             <label>生产厂家：</label>
                             <div class="pinput">
@@ -64,7 +72,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>生产地址：</label>
-                                <div class="pinput" style="float: left; margin-left: 50px">
+                                <div class="pinput" style="float: left;">
                                     <input placeholder="请输入药品生产地址" id="address" name="address" class="form-control " maxlength="40">
                                 </div>
                             </div>
@@ -74,7 +82,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             药品图片（最多可上传3张）
-                            <div class="btn btn-default" style="display: inline-block;background-size:80px; width: 80px;height: 35px;">
+                            <div class="btn  addBtn" style="display: inline-block;background-size:80px; width: 80px;height: 35px;">
                                 新增图片
                                 <!--<form onsubmit="return false;" id="picBannerform">-->
                                 <input type="file" name="picfile[]" value="pic file" id="picfile"  multiple="multiple" upType="advPic" accept=".jpg,.png,.jpeg,.bmp"
@@ -107,7 +115,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="text-center">
-                        <button datatype="require" type="button" class="fa fa-save btn btn-default" id="saveCarouselData" onclick="onSaveClick()">保存</button>
+                        <button datatype="require" type="button" class="fa fa-save btn  saveBtn" id="saveCarouselData" onclick="onSaveClick()">保存</button>
                     </div>
                 </div>
                 <input id="id" style="display: none;"/>

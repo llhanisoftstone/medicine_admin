@@ -82,7 +82,7 @@ function onUserDeleteClick(userid) {
 //         password: $("#userpwd").val(),
 //         // mobile: $("#mobile").val(),
 //         // email: $("#useremail").val(),
-//         rank: $("#category").val(),
+//         level: $("#category").val(),
 //         status: $("#userstate").val()
 //     };
 //     if (operation == "add") {
@@ -109,7 +109,7 @@ function onUserDeleteClick(userid) {
 //         if (item.id == userid) {
 //             $("#userid").val(item.id);
 //             $("#username").val(item.username);
-//             $("#category").val(item.rank);
+//             $("#category").val(item.level);
 //             $("#userstate").val(item.status);
 //             return;
 //         }

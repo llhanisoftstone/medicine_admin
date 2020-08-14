@@ -19,9 +19,9 @@
                 </li>
                 <li>药品列表</li>
             </ul>
-            <div style="float: right;">
-                <button type="button" onclick="onAddClick()" class="fa fa-plus-circle btn btn-default "> 新建</button>
-                <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search btn btn-default ">&nbsp;高级查询</button>
+            <div style="float: right;margin-top:-7px">
+                <button type="button" onclick="onAddClick()" class="fa fa-plus-circle btn addBtn"> 新建</button>
+                <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search btn  saveBtn">&nbsp;高级查询</button>
             </div>
 
         </div>
@@ -38,8 +38,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="button" class="fa fa-search btn btn-default li_height" onclick="searchData()" id="searchDataBtn">查询</button>
-                                    <button type="button" class="fa fa-reply-all btn btn-default li_height" id="resetSearchBtn">重置</button>
+                                    <button type="button" class="fa fa-search btn  li_height saveBtn" onclick="searchData()" id="searchDataBtn">查询</button>
+                                    <button type="button" class="fa fa-reply-all btn  li_height againBtn" id="resetSearchBtn">重置</button>
                                 </div>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                         <th style="width: 15%">药品名称</th>
                         <th style="width: 15%">生产企业</th>
                         <th style="width: 10%">批准文号</th>
-                        <th style="width: 15%">生产地址</th>
-                        <th style="width: 5%">操作</th>
+                        <th style="width: 25%">生产地址</th>
+                        <th style="width: 15%">操作</th>
                     </tr>
                     </thead>
                     <tbody id="drugs-placeholder">
@@ -88,8 +88,8 @@
         <td>{{approval_number}}</td>
         <td>{{address}}</td>
         <td>
-            <span class="fa fa-edit editOrder" style="cursor: pointer;" onclick="onUpdateClick('{{id}}')" title="编辑"></span>
-            <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this,'{{id}}','{{status}}')"></span>
+            <span class="updateBtn editOrder" style="cursor: pointer;" onclick="onUpdateClick('{{id}}')" title="编辑">编辑</span>
+            <span class="delBtn" title="删除" onclick="onDeleteClick(this,'{{id}}','{{status}}')">删除</span>
         </td>
     </tr>
     {{/datas}}

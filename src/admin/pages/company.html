@@ -17,7 +17,7 @@
         }
         .pinput {
             width: 70%;
-            float: right;
+            float: left;
             display: inline-block;
             position: relative;
         }
@@ -113,9 +113,9 @@
                     </li>
                     <li>企业管理</li>
                 </ul>
-                <div style="float:right; margin-top: -2px;">
-                    <button type="button" onclick="addcompany()" class="fa fa-plus-circle btn btn-default"> 新建</button>
-                    <button type="button" id="searchBtn"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                <div style="float:right; margin-top: -7px;">
+                    <button type="button" onclick="addcompany()" class="fa fa-plus-circle btn addBtn"> 新建</button>
+                    <button type="button" id="searchBtn"  class="fa fa-search   btn  saveBtn">&nbsp;高级查询</button>
                 </div>
             </div>
             <div>
@@ -132,8 +132,8 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 form-group">
-                                            <button type="button" class="fa fa-search btn btn-default" onclick="searchData()" id="searchDataBtn" >查询</button>
-                                            <button type="button" class="fa fa-reply-all btn btn-default" id="resetSearchBtn" >重置</button>
+                                            <button type="button" class="fa fa-search btn  saveBtn" onclick="searchData()" id="searchDataBtn" >查询</button>
+                                            <button type="button" class="fa fa-reply-all btn  againBtn" id="resetSearchBtn" >重置</button>
                                         </div>
                                     </div>
                                 </div>
@@ -151,10 +151,10 @@
                         <tr>
                             <th>序号</th>
                             <td>企业名称</td>
-                            <td>联系方式</td>
+                            <td width="10%">联系方式</td>
                             <td>企业地址</td>
                             <th>创建时间</th>
-                            <th>操作</th>
+                            <th  width="15%">操作</th>
                         </tr>
                         </thead>
                         <input id="pageIndex" type="hidden"/>
@@ -185,6 +185,7 @@
                     </h4>
                 </div>
                 <div class="modal-body" style="overflow: hidden;padding-top: 25px;">
+
                         <input type="hidden" id="cid">
                         <div class="form-horizontal">
                             <div class="form-group">
@@ -240,8 +241,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="clearinput()" data-dismiss="modal">取消</button>
-                    <button onclick="addcompanyuser()" id="submitstore" datatype="require" type="button" class=" btn btn-default" id="">确认</button>
+                    <button type="button" class="btn  againBtn" onclick="clearinput()" data-dismiss="modal">取消</button>
+                    <button onclick="addcompanyuser()" id="submitstore" datatype="require" type="button" class=" btn  saveBtn" id="">确认</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -249,8 +250,8 @@
     </form>
     <!-- /.modal-dialog -->
 </div>
-<div id="qrcode"></div>
-<img id="qrcodeImg" src="./img/menu_icon.png" style="width: 200px; height: 200px;"/>
+<div id="qrcode" style="display: none;"></div>
+<img id="qrcodeImg" style="display: none; width: 200px; height: 200px;"/>
 <script id="event-template" type="text/x-handlebars-template">
     {{#datas}}
     <tr>
@@ -260,14 +261,14 @@
         <td>{{address}}</td>
         <td>{{create_time}}</td>
         <td>
-            <span class="fa fa-qrcode" title="下载二维码" onclick="onsour('{{id}}')"></span>
-            <span class="  fa fa-edit" title="修改" onclick="addcompany('{{id}}')"></span>
-            <span class="  fa fa-trash-o" title="删除" onclick="delClick('{{id}}')" title="删除"></span>
+            <span class="updateBtn" title="下载二维码" onclick="onsour('{{id}}')">下载二维码</span>
+            <span class="updateBtn" title="修改" onclick="addcompany('{{id}}')">修改</span>
+            <span class="delBtn" title="删除" onclick="delClick('{{id}}')" title="删除">删除</span>
         </td>
     </tr>
     {{/datas}}
 </script>
-<script src="js/power/company.js"></script>
+<script src="js/company.js"></script>
 <script type="text/javascript" src="js/common/utf.js"></script>
 <script type="text/javascript" src="js/common/jquery.qrcode.js"></script>
 </body>

@@ -52,7 +52,7 @@ function resizePage(){
 }
 
 function hashchangehandler() {
-    var hash = window.location.hash || '#pages/home.html';
+    var hash = window.location.hash || '#pages/index.html';
     hash = hash.replace("#", "");
     var tarpage = getlocalStorageCookie("thispage");
     var thisUrl = window.location.hash;
@@ -427,16 +427,20 @@ function buildTableByPage(datas, template, placeholder,isAppend){
         $("#"+placeholder).append(temp({datas: datas}));
     }
 }
+
+function toindex(){
+    window.location = 'index.html';
+}
+
 function loginout() {
     delCookie('signature')
     delCookie('compid');
-    delCookie('organiz_id');
+    delCookie('nickname');
     delCookie('sid');
-    delCookie('userrank');
+    delCookie('userlevel');
     delCookie('storeid');
-    sessionStorage.removeItem('organiz_id');
     sessionStorage.removeItem('compid');
-    sessionStorage.removeItem('userrank');
+    sessionStorage.removeItem('userlevel');
     sessionStorage.removeItem('uid');
     window.location = 'adminLogin.html';
 }
@@ -447,19 +451,20 @@ $(document).ready(function(){
     $("#side-menu").bind("click",function(){
         resizePage();
     })
-    //查询订单
-    // getNewOrder();
-    // setInterval(getNewOrder,60000);
+    //查询告警
+    getNewAlarm();
+    setInterval(getNewAlarm,60000);
 })
 var AUTHS = ['admin'];
 function initSession() {
     ajaxInitSession("/op/authorization", function (rs) {
         var menuCookie = sessionStorage.getItem('menu');
-        if (rs.code == 200 && rs.username && rs.username.length > 2 && rs.userrank > 2 && menuCookie) {
+        if (rs.code == 200 && rs.username && rs.username.length > 2 && rs.userlevel > 2 && menuCookie) {
             setCookie('username', rs.username, 1);
             setCookie('userid', rs.userid, 1);
-            if(rs.userrank>8||rs.compid==2){
-                //如果是rank>8为超管时，或者compid=2为达人网管理的时候。显示所有列表内容，否则为供应商
+            $("#login_nickname").html(getCookie('nickname'))
+            if(rs.userlevel>8||rs.compid==2){
+                //如果是level>8为超管时，或者compid=2为达人网管理的时候。显示所有列表内容，否则为供应商
                 delCookie("compid");
             }else {
                 setCookie('compid',rs.compid||2,1);
@@ -473,7 +478,7 @@ function initSession() {
                 // console.log(rows)
                 var res=JSON.parse(menuCookie)
                 for(var i=0;i<res.length;i++){
-                    for(j=0;j<res[i].subItem.length;j++){
+                    for(var j=0;j<res[i].subItem.length;j++){
                         var urlarr=res[i].subItem[j].url.split("?")
                         if(urlarr.length>1){
                             urlarr[0]=urlarr[0]+".html?"
@@ -771,12 +776,7 @@ function checkData(result,type,fu,thisTable,paginator) {
     }
     return boo;
 }
-Handlebars.registerHelper('geturl', function(v1, options) {
-    if(v1.indexOf("?")>-1){
-        return v1.replace("?",".html?");
-    }
-    return v1+".html";
-});
+
 function formReset(){
     var form = $(this);
     form.find("input").val("");
@@ -837,82 +837,6 @@ function isPhone(phone) {
     return isMob.test(phone);
 }
 
-Handlebars.registerHelper('getpicurl', function(v1, options) {
-
-    if(v1 && v1.substr(0,7).toLowerCase()=="http://"){
-        return v1;
-    }else{
-        return targetUrl+v1;
-    }
-});
-
-Handlebars.registerHelper('getprice', function(v1, options) {
-    if(!v1){
-        return 0;
-    }
-    return formatPriceFixed2(v1)
-});
-//加法
-Handlebars.registerHelper('jiacount', function(v1,v2, options) {
-    return parseFloat(v1)+parseFloat(v2);
-});
-//等于
-Handlebars.registerHelper('equal', function(v1,v2, options) {
-    if(v1 == v2) {
-        return options.fn(this);
-    }else{
-        return options.inverse(this);
-    }
-});
-Handlebars.registerHelper('litingisuse', function(v1,v2, options) {
-    if(v1 == v2) {
-        return options.fn(this);
-    }else{
-        return options.inverse(this);
-    }
-});
-//不等于
-Handlebars.registerHelper('budeng', function(v1,v2, options) {
-    if(v1 != v2) {
-        return options.fn(this);
-    }else{
-        return options.inverse(this);
-    }
-});
-//大于等于
-Handlebars.registerHelper('GreaterthanorEqualto', function(v1,v2, options) {
-    if(v1  >= v2) {
-        return options.fn(this);
-    }
-    else {
-        return options.inverse(this);
-    }
-});
-//小于
-Handlebars.registerHelper('Lessthan', function(v1,v2, options) {
-    if(v1  < v2) {
-        return options.fn(this);
-    }
-    else {
-        return options.inverse(this);
-    }
-});
-
-Handlebars.registerHelper('getstatusname', function(value, options) {
-    var statusname=["草稿","待审核","拒绝","上架","下架",'pc产品无状态']
-    return statusname[value]
-});
-//判断是否在数组
-Handlebars.registerHelper('isArr', function(v1,v2,options) {
-    if(v2){
-        v2=v2.split(",")
-        for(var i=0;i<v2.length;i++){
-            if(v1==v2[i]){
-                return options.fn(this);
-            }
-        }
-    }
-});
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
@@ -957,48 +881,7 @@ String.prototype.startWith=function(s){
 String.prototype.trim=function() {
     return this.replace(/(^\s*)|(\s*$)/g,'');
 }
-Handlebars.registerHelper("addOne",function(index,options){
-    return parseInt(index)+1;
-});
 
-Handlebars.registerHelper('isThisNum', function(v1,v2,options) {
-    if(v1 != 0&&v1!=null&&v2 ==1&&v2!=null) {
-        return options.fn(this);
-    }else{
-        return options.inverse(this);
-    }
-});
-Handlebars.registerHelper('isReject', function(v1,options) {
-    if(v1 ==2) {
-        return options.fn(this);
-    }
-});
-Handlebars.registerHelper('isoldaddress', function(v1,options) {
-    if(v1 == 1) {
-        return options.fn(this);
-    }
-});
-//价格转换
-Handlebars.registerHelper('formatPrice', function(price, options) {
-    if(price>=10000){
-        return parseInt(price/100);
-    }else{
-        return parseFloat(price/100).toFixed(2);
-    }
-});
-//价格转换
-Handlebars.registerHelper('setPrice', function(price, options) {
-    return parseFloat(price/100).toFixed(2);
-});
-
-//判断是否为空
-Handlebars.registerHelper('ifnotnull', function(v1, options) {
-    if(v1!=null&&v1!=''&&v1!=0) {
-        return options.fn(this);
-    }else{
-        return options.inverse(this);
-    }
-});
 /**
  * 判断对象是否为{}
  * @param obj
@@ -1011,42 +894,46 @@ function isEmptyObject( obj ) {
     }
     return true;
 }
-function getNewOrder(){
-    "use strict";
-    zhpost('/rs/sh_unread_order').then(function (result) {
+
+Handlebars.registerHelper('http_pre', function(v1,v2, options) {
+    if(v1 == null||v1 == ''||v1 == 'null'){
+        return './img/'+v2;
+    }
+    if(v1.substr(0,7).toLowerCase()=="http://"||v1.substr(0,8).toLowerCase()=="https://"){
+        return v1;
+    }else{
+        return targetUrl+v1;
+    }
+});
+
+function getNewAlarm(){
+    var compid = sessionStorage.getItem('compid');
+    var level = sessionStorage.getItem('userlevel');
+    var url = '/rs/bad_record';
+    var data = {
+        type: 0,
+        alarm: 2
+    };
+    if(level == 81){
+        url = '/rs/v_bad_record_comp';
+        data.comp_id = compid;
+    }
+    zhget(url, data).then(function (result) {
         if(result.code==200){
-            var s_count=result.s_count;
-            var y_count=result.y_count;
-            var m_count=result.m_count;
-            if((s_count&&s_count>0)||(y_count&&y_count>0)||(m_count&&m_count>0)){
-                $("#admin_order_count").text("您有（"+(parseFloat(s_count)+parseFloat(y_count))+"）个新的订单,（"+parseFloat(m_count)+"）个新的认证");
-                //需要根据类型判断显示哪个
-                if(s_count&&s_count>0){
-                    $("#message_order_list").show();
-                }else{
-                    $("#message_order_list").hide();
-                }
-                if(y_count&&y_count>0){
-                    $("#message_bookingManagement").show();
-                }else{
-                    $("#message_bookingManagement").hide();
-                }
-                if(m_count&&m_count>0){
-                    $("#message_auth").show();
-                }else{
-                    $("#message_auth").hide();
-                }
-                $("#message").animate({//显示有新用户下单
-                    bottom : '5px',
-                }, "slow");
+            $("#admin_order_count").text("您有"+result.rows.length+"条风险提醒消息，请及时查看处理");
+            for(var i=0; i<result.rows.length; i++){
+                zhput('/rs/bad_record/'+result.rows[i].id,{alarm: 3});
             }
+            $("#message").animate({
+                bottom : '5px',
+            }, "slow");
         }
     })
 }
 function closemessage(){
     "use strict";
     $("#message").animate({
-        bottom : '-180',
+        bottom : '-260',
     }, "slow");
 }
 /**********************获取历史定位start****/

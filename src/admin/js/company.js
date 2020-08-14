@@ -64,7 +64,7 @@ function searchData(){
 }
 
 function getUserlist(){
-    zhget('/rs/member', {rank: 81}).then( function(result) {
+    zhget('/rs/member', {level: 81}).then( function(result) {
         var data = result.rows;
         var html = '<option value="-1">请选择</option>';
         if(result.code == 200){
@@ -141,6 +141,7 @@ function addcompany(id){
             if(res.code == 200){
                 $("#addModal").modal("show")
                 $("#cid").val(id)
+                $("#picpath").val(res.rows[0].picpath);
                 $("#comp_name").val(res.rows[0].title)
                 $("#comp_tel").val(res.rows[0].phone)
                 $("#comp_addr").val(res.rows[0].address)
@@ -154,6 +155,7 @@ function addcompany(id){
         $("#comp_name").val('');
         $("#password").val('');
         $("#order").val('');
+        $("#picpath").val('');
         $("#bank").val('');
         $("#userid").val('-1');
         $("#dndArea").removeClass("element-invisible");
@@ -172,6 +174,7 @@ function addcompanyuser(){
     var name = $("#comp_name").val().trim();
     var tel = $("#comp_tel").val().trim();
     var addr = $("#comp_addr").val().trim();
+    var picpath = $("#picpath").val();
     var u_id = $("#userid").val();
     var RegExp=/^1(?:3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\d|9\d)\d{8}$/;
     if(!name){
@@ -192,6 +195,7 @@ function addcompanyuser(){
     var data={
         title:name,
         phone: tel,
+        picpath: picpath,
         address: addr,
         u_id: u_id
     }
@@ -229,23 +233,23 @@ function addcompanyuser(){
 function onsour(id){
     $("#qrcode").empty();
     $("#qrcodeImg").attr("src","");
-    var url = targetUrl + '/admin/admin.html';
+    var url = targetUrl + '/admin/transfer.html?pid='+id;
     $('#qrcode').html('');
     $('#qrcode').qrcode({
         render: "canvas",
         width: 200,
         height: 200,
         text: url,
-        src: './img/menu_icon.png' //logo
+        src: 'http://www.meihengcdr.com/admin/img/menu_icon.png'
     });
-    //
-    // var canvas=$("#qrcode").find('canvas').get(0);
-    // var data = canvas.toDataURL('image/jpg');
-    // $('#qrcodeImg').attr('src',data) ;
-    // var alink = document.createElement("a");
-    // document.body.appendChild(alink);
-    // alink.style.display='none';
-    // alink.href = data;
+
+    var canvas=$("#qrcode").find('canvas').get(0);
+    var data = canvas.toDataURL('image/jpg');
+    $('#qrcodeImg').attr('src',data) ;
+    var alink = document.createElement("a");
+    document.body.appendChild(alink);
+    alink.style.display='none';
+    alink.href = data;
     // alink.download = new Date().getTime();
     // alink.click();
 }

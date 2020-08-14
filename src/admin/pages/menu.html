@@ -15,7 +15,7 @@
              <label for="tisname">图片标题</label>
              <input type="text" class="form-control" id="tisname">
          </div>
-         <button id="btnUserQuery" type="button" class="btn btn-default">查询</button>
+         <button id="btnUserQuery" type="button" class="btn ">查询</button>
      </div>-->
 
     <div class="row">
@@ -28,10 +28,10 @@
                         <li>菜单管理
                         </li>
                     </ul>
-                    <div style="float: right;margin-top: -2px">
-                        <button type="button" onclick="onAddClick()" class="fa fa-plus-circle   btn btn-default"> 新建</button>
-                        <button type="button" onclick="javascript:onMenu_ManageClick(0,0)" class="fa fa-share-square btn btn-default">回根目录</button>
-                        <button type="button" onclick="returnUpDeep()" class="fa fa-share-square btn btn-default">返回上层</button>
+                    <div style="float: right;margin-top: -7px">
+                        <button type="button" onclick="onAddClick()" class="fa fa-plus-circle   btn addBtn"> 新建</button>
+                        <button type="button" onclick="javascript:onMenu_ManageClick(0,0)" class="fa fa-share-square btn backBtn">回根目录</button>
+                        <button type="button" onclick="returnUpDeep()" class="fa fa-share-square btn lastBtn">返回上层</button>
                     </div>
                 </div>
                 <!-- /.panel-heading -->
@@ -45,7 +45,7 @@
                                 <th>ID</th>
                                 <th>菜单名称</th>
                                 <th>菜单路径</th>
-                                <th>父ID</th>
+                                <th>Icon图</th>
                                 <th>深度</th>
                                 <th>显示顺序</th>
                                 <th>操作</th>
@@ -73,11 +73,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                    <span aria-hidden="true">&times;</span><span class="sr-only ">关闭</span>
                 </button>
                 <h4 class="modal-title">菜单新建/编辑</h4>
             </div>
-            <form role="form">
+            <form role="form" id="form_modal">
                 <div class="modal-body">
                     <div class="form-horizontal" id="user_form">
                         <div class="form-group">
@@ -92,6 +92,25 @@
                                 <input type="text" class="form-control" id="url" datatype="require" maxlength="50">
                             </div>
                         </div>
+                        <div class="form-horizontal">
+                            <div class="form-group" id="upImg">
+                                <label class="col-sm-2 control-label">菜单Icon</label>
+                                <div class="col-sm-9">
+                                    <div class="pinput" style="width:100%;">
+                                        <div class="input-group">
+                                            <span id="picpath_input"></span>
+                                            <input id="picpath" datatype="require" class="form-control title" value="" placeholder="请上传列表图(40*40px)">
+                                            <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                                <i class="glyphicon glyphicon-search">
+                                                    <input type="file" name="picfile2[]"  uptype="community" value="pic file"  refattr="picpath" class="form-control title_pic" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;">
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">顺序：</label>
                             <div class="col-sm-9">
@@ -102,8 +121,8 @@
                 </div>
                 <div class="modal-footer">
                     <input type="text" id="id" style="display:none;"/>
-                    <button type="button" class="fa btn btn-default" data-dismiss="modal">关闭</button>
-                    <button onclick="onSaveClick()" type="button" class="fa fa-save btn btn-default" id="user_buttonid">保存</button>
+                    <button type="button" class="fa btn  closeBtn" data-dismiss="modal">关闭</button>
+                    <button onclick="onSaveClick()" type="button" class="fa fa-save btn  saveBtn" id="user_buttonid">保存</button>
                 </div>
             </form>
         </div>
@@ -119,14 +138,12 @@
         <td>{{id}}</td>
         <td><a _target="_self" href="javascript:onMenu_ManageClick('{{id}}','{{deep}}')">{{name}}</a></td>
         <td><a _target="_self" href="javascript:onMenu_ManageClick('{{id}}','{{deep}}')">{{url}}</a></td>
-        <td>{{pid}}</td>
+        <td><img style="width: 40px; heigth: 40px; border-radius: 50%" src="{{picpath}}"></td>
         <td>{{deep}}</td>
         <td>{{order_code}}</td>
         <td>
-            <span class="fa fa-pencil-square-o" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')"></span>
-            <span class="fa fa-trash-o" title="删除" onclick="onDeleteClick(this,'{{id}}')"></span>
-            <!--<button class="btn-link" onclick="onUpdateClick('{{id}}')">修改</button>-->
-            <!--<button class="btn-link" onclick="onDeleteClick('{{id}}')">删除</button>-->
+            <span class="updateBtn" aria-hidden="true" title="修改" onclick="onUpdateClick('{{id}}')">修改</span>
+            <span class="delBtn" title="删除" onclick="onDeleteClick(this,'{{id}}')">删除</span>
         </td>
     </tr>
     {{/datas}}

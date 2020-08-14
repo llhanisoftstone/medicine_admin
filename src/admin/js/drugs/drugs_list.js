@@ -2,6 +2,9 @@ var base_url_drugs='/rs/drugs';
 var currentPageNo = 1;
 var pageRows = 10;
 var isSearch=false;
+var u_id;
+var level;
+var compid;
 
 //返回定位必须-start
 var searchForm; //查询条件JSON
@@ -20,6 +23,9 @@ function saveFormData(formId){
 //返回定位必须-end
 
 $(function() {
+    compid = sessionStorage.getItem('compid');
+    u_id = sessionStorage.getItem('uid');
+    level = sessionStorage.getItem('userlevel');
     getpageRecord();
     setTimeout(function(){
         searchForm = getlocalStorageCookie(currPageName);
@@ -81,7 +87,8 @@ function queryList() {
     var data = {
         order:'create_time desc',
         page: currentPageNo,
-        size: pageRows
+        size: pageRows,
+        status: 1
     }
     if(isSearch){
         var common_name=$("#common_name").val();
@@ -91,6 +98,12 @@ function queryList() {
         }
     }
     $("#banner-placeholder").html('');
+    if(level == 81){
+        data.u_id = u_id;
+    }
+    if(level == 80){
+        data.comp_id = compid;
+    }
     zhget(base_url_drugs,data).then(function (result){
         if(checkData(result,'get','queryList','table-member')) {
             var integrals = result.rows;

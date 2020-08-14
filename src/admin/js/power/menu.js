@@ -6,32 +6,20 @@ var currentPageNo = 1;
 var pageRows = 10;
 var curId = curMenuId;
 $(function() {
-
+    $.initSystemFileUpload($("#form_modal"), onUploadHeaderPic);
     queryList();
     updateMenuLocationInfo();
-
 });
 
-function sendpic() {
-    var content = $("#picfile").val();
-    console.log($("#picfile"));
-    if(content.length > 0) {
-        var form = document.getElementById("picform");
-        var formData = new FormData(form);
-        upajax('op/upload', formData).then( function (result) {
-            result = JSON.parse(result);
-            console.log(result);
-            if(result.success != null){
-                $("#picShow").attr("src", result.success);
-                $("#picPath").val(result.success);
-                $("picfile").val('');
-            }
-            else if (result.error != null)
-                alert(result.error);
-        });
+// 图片上传
+function onUploadHeaderPic(formObject, fileComp, list)
+{
+    var attrs = fileComp.attr("refattr");
+    jQuery("#upimg").val("");
+    if(list.length > 0 && list[0].code == 200){
+        var sAttachUrl = list[0].url;
+        $("#"+attrs, formObject).val(sAttachUrl);
     }
-    else
-        alert('请您选择需要上传的视频！');
 }
 
 function queryList() {
@@ -51,6 +39,9 @@ function queryList() {
             for (var i = 0; i < integrals.length; i++) {
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                if(indexCode.pic_icon){
+                    indexCode.picpath = targetUrl + indexCode.pic_icon;
+                }
             }
             buildTable(result, 'menu-template', 'menu-placeholder');
         }
@@ -77,7 +68,6 @@ function onDeleteClick(el,id) {
                 return
             }else if (rs.code == 602){
                 zhdelete(base_url_menu + "/" + id).then(function (result) {
-                    console.log(result);
                     if (result.code==200) {
                         showSuccess('删除成功！');
                         if(jQuery(el).parents("tbody").find("tr").length==1){
@@ -107,6 +97,7 @@ function onSaveClick() {
         pid:MenuDeeps[MenuDeep],
         deep:Number(MenuDeep)+1,
         title: $("#title").val(),
+        pic_icon: $("#picpath").val(),
         url:$("#url").val(),
         order_code:$('#order_code').val()
     };
@@ -144,6 +135,7 @@ function fillForm(id) {
             $("#name").val(item.name);
             $("#url").val(item.url);
             $("#pid").val(item.pid);
+            $("#picpath").val(item.pic_icon);
             $("#deep").val(item.deep);
             $("#order_code").val(item.order_code);
             return;
@@ -156,6 +148,7 @@ function cleanForm() {
     $("#name").val("");
     $("#pid").val("");
     $("#url").val("");
+    $("#picpath").val("");
     $("#deep").val("");
     $('#order_code').val('')
 }

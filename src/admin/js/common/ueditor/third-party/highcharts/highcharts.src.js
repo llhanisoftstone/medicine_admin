@@ -710,7 +710,7 @@ function normalizeTimeTickInterval(tickInterval, unitsOption) {
 function getTimeTicks(normalizedInterval, min, max, startOfWeek) {
 	var tickPositions = [],
 		i,
-		higherRanks = {},
+		higherlevels = {},
 		useUTC = defaultOptions.global.useUTC,
 		minYear, // used in months and years as a basis for Date.UTC()
 		minDate = new Date(min),
@@ -802,14 +802,14 @@ function getTimeTicks(normalizedInterval, min, max, startOfWeek) {
 		each(grep(tickPositions, function (time) {
 			return interval <= timeUnits[HOUR] && time % timeUnits[DAY] === timezoneOffset;
 		}), function (time) {
-			higherRanks[time] = DAY;
+			higherlevels[time] = DAY;
 		});
 	}
 
 
 	// record information on the chosen unit - for dynamic label formatter
 	tickPositions.info = extend(normalizedInterval, {
-		higherRanks: higherRanks,
+		higherlevels: higherlevels,
 		totalRange: interval * count
 	});
 
@@ -5803,10 +5803,10 @@ Tick.prototype = {
 			tickPositionInfo = tickPositions.info,
 			dateTimeLabelFormat;
 
-		// Set the datetime label format. If a higher rank is set for this position, use that. If not,
+		// Set the datetime label format. If a higher level is set for this position, use that. If not,
 		// use the general format.
 		if (axis.isDatetimeAxis && tickPositionInfo) {
-			dateTimeLabelFormat = options.dateTimeLabelFormats[tickPositionInfo.higherRanks[pos] || tickPositionInfo.unitName];
+			dateTimeLabelFormat = options.dateTimeLabelFormats[tickPositionInfo.higherlevels[pos] || tickPositionInfo.unitName];
 		}
 
 		// set properties for access in render method
@@ -16554,7 +16554,7 @@ var PieSeries = {
 			x,
 			y,
 			visibility,
-			rankArr,
+			levelArr,
 			i,
 			j,
 			overflow = [0, 0, 0, 0], // top, right, bottom, left
@@ -16630,16 +16630,16 @@ var PieSeries = {
 	
 				// if there are more values than available slots, remove lowest values
 				if (length > slotsLength) {
-					// create an array for sorting and ranking the points within each quarter
-					rankArr = [].concat(points);
-					rankArr.sort(sort);
+					// create an array for sorting and leveling the points within each quarter
+					levelArr = [].concat(points);
+					levelArr.sort(sort);
 					j = length;
 					while (j--) {
-						rankArr[j].rank = j;
+						levelArr[j].level = j;
 					}
 					j = length;
 					while (j--) {
-						if (points[j].rank >= slotsLength) {
+						if (points[j].level >= slotsLength) {
 							points.splice(j, 1);
 						}
 					}

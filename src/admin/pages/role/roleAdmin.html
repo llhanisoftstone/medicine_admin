@@ -36,9 +36,9 @@
                         <li>账号管理
                         </li>
                     </ul>
-                    <div style="float:right; margin-top: -2px;">
-                        <button type="button" onclick="onUserAddClick()" class="fa fa-plus-circle btn btn-default">新建</button>
-                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn btn-default">&nbsp;高级查询</button>
+                    <div style="float:right; margin-top: -7px;">
+                        <button type="button" onclick="onUserAddClick()" class="fa fa-plus-circle btn addBtn">新建</button>
+                        <button type="button" id="searchBtn" onclick="onSearchClick()"  class="fa fa-search   btn againBtn">&nbsp;高级查询</button>
                     </div>
                 </div>
                 <!-- /.panel-heading -->
@@ -51,13 +51,13 @@
                             <form role="form" id="GiftCardSearchForm">
                                 <div class="row">
                                     <div class="col-md-4  form-group">
-                                        <label>登录账号：</label> <div class="pinput"><input placeholder="登录账号" name="username" class="form-control " value="" maxlength="20"></div>
+                                        <label>登录账号：</label> <div class="pinput"><input placeholder="登录账号" name="username" class="form-control" value="" maxlength="20"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label>用户昵称：</label> <div class="pinput"><input placeholder="用户姓名" name="nickname" class="form-control " value="" maxlength="20"></div>
+                                        <label>用户昵称：</label> <div class="pinput"><input placeholder="用户姓名" name="nickname" class="form-control" value="" maxlength="20"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
-                                        <label for="organiz">所属类别</label>
+                                        <label for="rqanak">所属类别:</label>
                                         <div class="pinput">
                                             <select name="" id="rqanak" class="form-control">
                                                 <option value="-1">全部</option>
@@ -76,8 +76,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group  pbtn-group ">
-                                    <button id="GiftCardSearchCancel" type="button" class="fa fa-reply-all btn btn-default pull-right">重置</button>
-                                    <button id="GiftCardSearch" class="fa fa-search   btn btn-default pull-right" type="button">查询</button>
+                                    <button id="GiftCardSearchCancel" type="button" class="fa fa-reply-all btn  pull-right againBtn">重置</button>
+                                    <button id="GiftCardSearch" class="fa fa-search   btn  pull-right saveBtn" type="button">查询</button>
                                 </div>
                             </form>
 
@@ -90,14 +90,14 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th style="width: 10%">用户ID</th>
-                                <th style="width: 15%">登录账号</th>
-                                <th style="width: 15%">用户昵称</th>
-                                <th style="width: 15%">角色名称</th>
-                                <th style="width: 15%">角色备注</th>
-                                <th style="width: 15%">所属企业</th>
-                                <th style="width: 10%">创建时间</th>
-                                <th style="width: 5%">操作</th>
+                                <th width="6%" >用户ID</th>
+                                <th width="6%" >登录账号</th>
+                                <th width="6%" >用户昵称</th>
+                                <th width="6%" >角色名称</th>
+                                <th width="8%" >角色备注</th>
+                                <th width="10%">所属企业</th>
+                                <th width="10%">创建时间</th>
+                                <th width="10%">操作</th>
                             </tr>
                             </thead>
                             <tbody id="user-placeholder">
@@ -135,17 +135,26 @@
                             <select name="" id="rqanakmember" class="form-control" onchange="showSelect()">
                                 <option value="-1">请选择</option>
                                 <option value="90">美恒管理员</option>
-                                <option value="81">信息录入管理员</option>
+                                <option value="81">填报管理员</option>
                                 <option value="80">企业管理员</option>
                             </select>
                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
+                        </div>
+                    </div>
+                    <div class="addusernameselec" style="display:none">
+                        <div class="form-group" >
+                            <label for="usernameselect" class="col-sm-2 control-label">关联账号</label>
+                            <div class="col-sm-9">
+                                <select id="usernameselect" name="usernameselect" class="form-control" onchange="tabcompusername(this)" data-live-search ="true" class="selectpicker">
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">登录账号</label>
                         <div class="col-sm-9">
                             <input type="text" style="display: none" class="form-control" id="userid" >
-                            <input type="text" style="display: none" class="form-control" id="userrank" >
+                            <input type="text" style="display: none" class="form-control" id="userlevel" >
                             <input type="text" placeholder="请输入登录账号" class="form-control" id="username" minlength="3"  maxlength="11" datatype="require">
                         </div>
                     </div>
@@ -172,8 +181,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="fa btn btn-default" data-dismiss="modal">关闭</button>
-                <button onclick="onUserSaveClick()" type="button" class="fa fa-save btn btn-default" id="user_buttonid">保存</button>
+                <button type="button" class="fa btn  closeBtn" data-dismiss="modal">关闭</button>
+                <button onclick="onUserSaveClick()" type="button" class="fa fa-save btn  saveBtn" id="user_buttonid">保存</button>
             </div>
             </form>
         </div>
@@ -181,6 +190,13 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<script id="nicknameadd-template" type="text/x-handlebars-template">
+    <option value="">请选择</option>
+    {{#datas}}
+    <option value="{{id}}" _nickname="{{nickname}}">{{nickname}}</option>
+    {{/datas}}
+</script>
 
 <script id="user-template" type="text/x-handlebars-template">
     {{#datas}}
@@ -192,18 +208,18 @@
             {{powername}}
         </td>
         <td>
-            {{#is_judge rank 91}}超级管理员{{/is_judge}}
-            {{#is_judge rank 90}}美恒管理员{{/is_judge}}
-            {{#is_judge rank 81}}信息录入管理员{{/is_judge}}
-            {{#is_judge rank 80}}企业管理员{{/is_judge}}
+            {{#is_judge level 91}}超级管理员{{/is_judge}}
+            {{#is_judge level 90}}美恒管理员{{/is_judge}}
+            {{#is_judge level 81}}信息录入管理员{{/is_judge}}
+            {{#is_judge level 80}}企业管理员{{/is_judge}}
         </td>
         <td>{{company_name}}</td>
         <td>{{create_time}}</td>
         <td class="operate" style="width:10%">
-            <a class="role fa fa-user"  title="角色权限" id="role{{id}}" style="color:black" href="javascript:onMenuClick('pages/role/role_manger.html?id={{id}}&power={{power_id}}')"></a>
-            {{#is_judge rank 91}}{{else}}
-            <span class="  fa fa-edit" title="修改" onclick="onUpdateClick('{{id}}')"></span>
-            <span class="  fa fa-trash-o" title="删除" onclick="delClick(this,'{{id}}','{{username}}')"></span>
+            <a class="role rolelimit"  title="角色权限" id="role{{id}}" href="javascript:onMenuClick('pages/role/role_manger.html?id={{id}}&power={{power_id}}')">角色权限</a>
+            {{#is_judge level 91}}{{else}}
+            <span class="updateBtn" title="修改" onclick="onUpdateClick('{{id}}')">修改</span>
+            <span class="delBtn" title="删除" onclick="delClick(this,'{{id}}','{{username}}')">删除</span>
             {{/is_judge}}
 
         </td>

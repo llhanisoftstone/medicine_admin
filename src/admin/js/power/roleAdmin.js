@@ -1,7 +1,7 @@
 var base_url_user = '/rs/member';
 var base_url_company = '/rs/company';
 var base_url_role = '/rs/role';
-var reset_psd = "/rs/super_reset_password";
+var reset_psd = "/op/super_reset_password";
 var users = [];
 var operation = "add";
 var currentPageNo = 1;
@@ -12,6 +12,7 @@ var isselect=false;
 $(function () {
     company();
     queryList();
+    getmember();
     $.initSystemFileUpload($("#user_form"));
     $("#GiftCardSearch").bind("click",memberSearch);
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
@@ -31,11 +32,14 @@ function company(){
 }
 
 function showSelect(){
-    var rank=$("#rqanakmember").val();
-    if(rank&&rank==31){
-        $(".organizmember").hide();
-    }else if(rank&&rank==80){
+    var level=$("#rqanakmember").val();
+    if(level&&level==81){
+        $(".addusernameselec").show();
+    }else if(level==80){
         $(".organizmember").show();
+        $(".addusernameselec").hide();
+    }else{
+        $(".addusernameselec").hide();
     }
 }
 function queryList() {
@@ -44,14 +48,14 @@ function queryList() {
         page: currentPageNo,
         size: pageRows,
     }
-    data.rank = '>,30';
+    data.level = '>,30';
     if(isselect){
         data = searchData;
-        var rank=$("#rqanak").val();
-        if(rank&&rank!="-1"){
-            data.rank =rank;
+        var level=$("#rqanak").val();
+        if(level&&level!="-1"){
+            data.level =level;
         }else{
-            data.rank = '>,30';
+            data.level = '>,30';
         }
         data.search =1;
     }
@@ -102,7 +106,7 @@ function onUserAddClick() {
 }
 function cleanForm() {
     $("#userid").val("");
-    $("#userrank").val("");
+    $("#userlevel").val("");
     $("#username").val("");
     $("#nickname").val("");
     $("#userpwd").val("");
@@ -133,8 +137,8 @@ function fillForm(id) {
             $("#userid").val(id);
             $("#username").val(res.rows[0].username);
             $("#nickname").val(res.rows[0].nickname);
-            $("#rqanakmember").val(res.rows[0].rank)
-            if(res.rows[0].rank==80){
+            $("#rqanakmember").val(res.rows[0].level)
+            if(res.rows[0].level==80){
                 $(".organizmember").show();
                 $('#comp_id').val(res.rows[0].comp_id);
             }
@@ -148,11 +152,11 @@ function fillForm(id) {
         }
     })
 }
-function delClick(el,userid,username){
+function delClick(el,userid){
     if(!confirm("确认要删除此账号吗？")){
         return;
     }
-    zhput(base_url_user + "/" + userid, {status:99,username:username+"_"+userid}).then(function (res) {
+    zhput(base_url_user + "/" + userid, {status:99,username:username+userid}).then(function (res) {
         if(res.code==200){
             showSuccess("删除成功!")
             if(jQuery(el).parents("tbody").find("tr").length==1){
@@ -169,14 +173,42 @@ function delClick(el,userid,username){
         }
     })
 }
+
+function getmember(){
+    zhget('/rs/member',{level:'<,80',status:1}).then(function(result){
+        if(result.code==200) {
+            buildTableNoPage(result, 'nicknameadd-template', 'usernameselect');
+            initselect('usernameselect');
+            $.hideActionLoading();
+        }else{
+            buildTableNoPage(result, 'nicknameadd-template', 'usernameselect');
+            initselect('usernameselect');
+            $.hideActionLoading();
+        }
+    })
+}
+
+function initselect(id){
+    $('#'+id).selectpicker({
+        size: 10,
+        width:'100%',
+        noneSelectedText:'请选择'
+    });
+}
+
+function tabcompusername(obj){
+    var id=obj.value
+    $("#userid").val(id);
+}
+
 function onUserSaveClick() {
-    var rank=$("#rqanakmember").val();
+    var level=$("#rqanakmember").val();
     var userid = $("#userid").val();
-    var username = $("#username").val().trim();
-    if(rank==""||rank=="-1"){
+    if(level==""||level=="-1"){
         showError("请选择所属角色")
         return;
     }
+    var username = $("#username").val().trim();
     if(username==null||username==""){
         showError("账号不能为空！")
         return;
@@ -190,21 +222,21 @@ function onUserSaveClick() {
     var comp_id= $("#comp_id").val();
     var data = {
         username: username,
-        phone: username,
         nickname: nickname,
-        rank:rank,
+        level:level,
         status:1
     };
-    if(rank==80){
+    if(level==80){
         if(comp_id&&comp_id!='-1'){
             data.comp_id=comp_id;
-            data.rank=80;
+            data.level=80;
         }else{
             showError("请选择企业");
             return;
         }
+    }else if(level==81){
+        data.pid = userid;
     }
-
     if (operation == "add") {
         zhget(base_url_user, {username:username}).then( function (result) {
             if(result.code==200){
@@ -227,7 +259,7 @@ function onUserSaveClick() {
                     if(result.info){
                         if(password!==""){
                             if(password.length>=6){
-                                zhput(reset_psd + "/" + userid,{password:password}).then(saveResult);
+                                zhpost(reset_psd,{userid: userid,password:password}).then(saveResult);
                             }else{
                                 showError("请输入6-20位密码")
                             }

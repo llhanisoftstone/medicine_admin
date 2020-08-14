@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <link rel="stylesheet" href="js/common/ueditor/xiumi-ue-v5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/xiumi-ue-dialog-v5.js"></script>
+</head>
+
+<body>
+<div id="wrapper" class="reasonRefund">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                        <li>
+                            <a>美文管理</a>
+                        </li>
+                        <li>新增美文</li>
+                    </ul>
+                    <button type="button" onclick="back()" class="fa  fa-share-square btn againBtn pull-right" style="margin-top: -6px">返回</button>
+                </div>
+                <form id="addBannerForm">
+                    <div class="panel-body">
+                        <div class="form-horizontal" id="user_form">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>标题：</label>
+                                        <div class="pinput" style="float: left; margin-left: 50px">
+                                            <input placeholder="请输入标题" id="title" name="title" class="form-control " maxlength="50">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label>作者：</label>
+                                        <div class="pinput" style="float: left; margin-left: 50px">
+                                            <input placeholder="请输入作者" id="author" name="author" class="form-control " maxlength="18">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" col-md-10" style="padding-top: 15px;">
+                                    <span style="margin-left: 100px; color: red">文章编辑完成后请跳转到微信公众平台发布：<a style="color: #0d70b7" href="https://mp.weixin.qq.com/" target="_blank">https://mp.weixin.qq.com/</a></span>
+                                </div>
+                                <div class=" col-md-10" style="padding-top: 15px;">
+                                    <div class="col-md-12 form-group"  style="padding-left: 0;display: flex;float:right">
+                                        <label style="width:12%">内容：</label>
+                                        <div id="userProtocolAddUE1" style="width: 90%;height: 500px;overflow:auto"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <button datatype="require" type="button" class="fa fa-save btn  saveBtn" id="saveCarouselData" onclick="onSaveClick()">保存</button>
+                            </div>
+                        </div>
+                        <input id="id" style="display: none;"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/addinformation.js"></script>
+</body>
+
+</html>

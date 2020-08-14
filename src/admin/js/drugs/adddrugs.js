@@ -1,6 +1,10 @@
 var base_url_drugs='/rs/drugs';
 var operation = "add";
 var id=0;
+var u_id;
+var level;
+var compid;
+
 jQuery(function(){
     UE.getEditor('userProtocolAddUE1',{
         initialFrameWidth :'100%',//设置编辑器宽度
@@ -9,6 +13,9 @@ jQuery(function(){
     });
 })
 $(function(){
+    compid = sessionStorage.getItem('compid');
+    u_id = sessionStorage.getItem('uid');
+    level = sessionStorage.getItem('userlevel');
     company();
     $.initSystemFileUpload($("#addBannerForm"), onUploadDetailPic);
     id=getIdByUrl();
@@ -21,6 +28,7 @@ $(function(){
                 $("#common_name").val(data.common_name);
                 $("#approval_number").val(data.approval_number)
                 $("#comp_id").val(data.comp_id);
+                $("#usage_dosage").val(data.usage_dosage);
                 $("#address").val(data.address);
                 createBanner(result);
                 setTimeout(function(){
@@ -49,7 +57,14 @@ function createBanner(result){
 }
 
 function company(){
-    zhget('/rs/company').then( function(result) {
+    var data ={};
+    if(level == 80){
+        data.id = compid
+    }
+    if(level == 81){
+        data.u_id = u_id
+    }
+    zhget('/rs/company',data).then( function(result) {
         var data = result.rows;
         var html = '';
         if(result.code == 200){
@@ -101,6 +116,7 @@ function onSaveClick() {
     var common_name=$("#common_name").val();
     var approval_number=$("#approval_number").val();
     var address=$("#address").val();
+    var usage_dosage=$("#usage_dosage").val();
     var comp_id=$("#comp_id").val();
 
     if(!common_name){
@@ -110,6 +126,11 @@ function onSaveClick() {
 
     if(!approval_number){
         showError('请输入批准文号');
+        return;
+    }
+
+    if(!usage_dosage){
+        showError('请输入用法用量');
         return;
     }
 
@@ -126,6 +147,7 @@ function onSaveClick() {
     var data={
         title:title,
         common_name:common_name,
+        usage_dosage:usage_dosage,
         approval_number: approval_number,
         address:address,
         comp_id:comp_id,

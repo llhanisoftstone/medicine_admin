@@ -106,17 +106,16 @@ function checkfrm() {
                 sessionStorage.setItem('menu',JSON.stringify(rs.menu));
                 setCookie('sid', rs.sid);
                 setCookie('compid', rs.compid);
-                setCookie('organiz_id', rs.orgid);
+                setCookie('nickname', rs.nickname);
                 setCookie('uid', rs.userid);
-                setCookie('userrank', rs.userrank);
+                setCookie('userlevel', rs.userlevel);
                 setCookie('storeid', rs.store_id);
                 setCookie('username', rs.username);
                 sessionStorage.setItem("username",rs.username);
                 sessionStorage.setItem("compid",rs.compid);
-                sessionStorage.setItem("organiz_id",rs.organiz_id);
                 sessionStorage.setItem("uid",rs.userid);
-                sessionStorage.setItem("userrank",rs.userrank);
-                window.location = 'admin.html';
+                sessionStorage.setItem("userlevel",rs.userlevel);
+                window.location = 'index.html';
             }
         });
     }
