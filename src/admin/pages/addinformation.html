@@ -49,6 +49,29 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>分类：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <select id="infotype" name="infotype" class="form-control" data-live-search ="true" class="selectpicker">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label for="picpath">列表图：</label>
+                                    <div class="pinput" style="float: left; margin-left: 50px">
+                                        <div class="input-group">
+                                            <input id="picpath" class="form-control picpath" value="" style="cursor: pointer;" readonly="readonly" placeholder="请上传图片(335*335)">
+                                            <span class="input-group-addon" style="cursor: pointer;overflow: hidden;">
+                                        <i class="glyphicon glyphicon-search">
+                                            <input type="file" name="picfile[]" value="pic file" uptype="community" id="signfile" multiple="multiple" refattr="picpath" style="margin-top:-20px;margin-left:-20px;-webkit-opacity: 0;opacity: 0;width: 30px;height: 20px;" accept=".jpg,.png,.jpeg,.bmp">
+                                        </i>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class=" col-md-10" style="padding-top: 15px;">
                                     <span style="margin-left: 100px; color: red">文章编辑完成后请跳转到微信公众平台发布：<a style="color: #0d70b7" href="https://mp.weixin.qq.com/" target="_blank">https://mp.weixin.qq.com/</a></span>
                                 </div>

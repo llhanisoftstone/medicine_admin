@@ -133,10 +133,7 @@
                         <label for="rqanakmember" class="col-sm-2 control-label">所属角色</label>
                         <div class="col-sm-9">
                             <select name="" id="rqanakmember" class="form-control" onchange="showSelect()">
-                                <option value="-1">请选择</option>
-                                <option value="90">美恒管理员</option>
-                                <option value="81">填报管理员</option>
-                                <option value="80">企业管理员</option>
+
                             </select>
                             <!--<div style="color:red;">如果用户需要商城模块请添加所属门店</div>-->
                         </div>
@@ -145,6 +142,7 @@
                         <div class="form-group" >
                             <label for="usernameselect" class="col-sm-2 control-label">关联账号</label>
                             <div class="col-sm-9">
+                                <input type="text" style="display: none" class="form-control" id="pid" >
                                 <select id="usernameselect" name="usernameselect" class="form-control" onchange="tabcompusername(this)" data-live-search ="true" class="selectpicker">
                                 </select>
                             </div>
@@ -210,6 +208,7 @@
         <td>
             {{#is_judge level 91}}超级管理员{{/is_judge}}
             {{#is_judge level 90}}美恒管理员{{/is_judge}}
+            {{#is_judge level 82}}运营管理员{{/is_judge}}
             {{#is_judge level 81}}信息录入管理员{{/is_judge}}
             {{#is_judge level 80}}企业管理员{{/is_judge}}
         </td>

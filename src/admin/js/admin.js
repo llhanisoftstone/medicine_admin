@@ -237,7 +237,6 @@ function setCookie(c_name, value, expiredays) {
     document.cookie = c_name + "=" + escape(value) +
         ((expiredays == null) ? "" : "; expires=" + exdate.toGMTString())
 }
-
 function delCookie(name) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
@@ -432,6 +431,10 @@ function toindex(){
     window.location = 'index.html';
 }
 
+function toUpdatePassword(){
+    location.href="admin.html#pages/ModifyPassword.html"
+}
+
 function loginout() {
     delCookie('signature')
     delCookie('compid');
@@ -452,8 +455,11 @@ $(document).ready(function(){
         resizePage();
     })
     //查询告警
-    getNewAlarm();
-    setInterval(getNewAlarm,60000);
+    var userlevel = sessionStorage.getItem('userlevel');
+    if(userlevel > 80){
+        getNewAlarm();
+        setInterval(getNewAlarm,60000);
+    }
 })
 var AUTHS = ['admin'];
 function initSession() {
@@ -907,7 +913,7 @@ Handlebars.registerHelper('http_pre', function(v1,v2, options) {
 });
 
 function getNewAlarm(){
-    var compid = sessionStorage.getItem('compid');
+    var uid = sessionStorage.getItem('uid');
     var level = sessionStorage.getItem('userlevel');
     var url = '/rs/bad_record';
     var data = {
@@ -915,21 +921,30 @@ function getNewAlarm(){
         alarm: 2
     };
     if(level == 81){
-        url = '/rs/v_bad_record_comp';
-        data.comp_id = compid;
+        url = '/rs/v_bad_record_user';
+        data.userid = uid;
     }
     zhget(url, data).then(function (result) {
         if(result.code==200){
-            $("#admin_order_count").text("您有"+result.rows.length+"条风险提醒消息，请及时查看处理");
-            for(var i=0; i<result.rows.length; i++){
-                zhput('/rs/bad_record/'+result.rows[i].id,{alarm: 3});
-            }
+            $("#admin_order_count").html("您有"+result.rows.length+"条风险提醒消息，请及时"+"<a onclick='seebads()'>查看处理</a>");
             $("#message").animate({
                 bottom : '5px',
             }, "slow");
         }
     })
 }
+
+function seebads(){
+    var url = "bads_record/risk_warning.html";
+    setCookie("url", url);
+    $("ul.nav.collapse").removeClass('active');
+    $("ul[urlid='"+url+"']").addClass('active');
+    if(!$("ul[urlid='"+url+"']").parent('li').hasClass('active')){
+        $("ul[urlid='"+url+"']").parent('li').children("a").trigger('click');
+    }
+    location.href="admin.html#pages/bads_record/risk_warning.html"
+}
+
 function closemessage(){
     "use strict";
     $("#message").animate({

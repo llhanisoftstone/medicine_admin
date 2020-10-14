@@ -250,7 +250,7 @@
     </form>
     <!-- /.modal-dialog -->
 </div>
-<div id="qrcode" style="display: none;"></div>
+<div id="qrcode" style="display: none;"><canvas></canvas></div>
 <img id="qrcodeImg" style="display: none; width: 200px; height: 200px;"/>
 <script id="event-template" type="text/x-handlebars-template">
     {{#datas}}
@@ -261,6 +261,7 @@
         <td>{{address}}</td>
         <td>{{create_time}}</td>
         <td>
+            <img id="logopic{{id}}" style="width:60px;height:60px;border-radius: 50%; display: none" src="{{logopic}}">
             <span class="updateBtn" title="下载二维码" onclick="onsour('{{id}}')">下载二维码</span>
             <span class="updateBtn" title="修改" onclick="addcompany('{{id}}')">修改</span>
             <span class="delBtn" title="删除" onclick="delClick('{{id}}')" title="删除">删除</span>

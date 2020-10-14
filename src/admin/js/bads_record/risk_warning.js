@@ -52,7 +52,9 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         progress: 3,
-        order:'filling_time desc'
+        order:'filling_time desc',
+        alarm: 2,
+        type: 0
     }
     if(isSearch){
         var realname=$("#realname").val();
@@ -85,10 +87,6 @@ function queryList(){
             }
         }
     }
-    if(getUrlParamsValue("type") == 1){
-        data.alarm = 2;
-        data.type = 0;
-    }
     if(userlevel == 80){
         data.comp_id = compid;
         base_url_table = '/rs/v_bad_record_comp'
@@ -115,6 +113,7 @@ function queryList(){
 function downloadData(){
     var data = {
         progress: 3,
+        type: 0,
         order:'filling_time desc'
     }
     if(isSearch){

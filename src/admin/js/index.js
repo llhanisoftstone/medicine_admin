@@ -44,6 +44,11 @@ function getStatisticalData(){
 }
 
 function baogao(){
+    var url = "bads_record/bads_record.html";
+    setCookie("url", url);
+    $("ul.nav.collapse").removeClass('active');
+    $("ul[urlid='"+url+"']").addClass('active');
+    $("ul[urlid='"+url+"']").parent('li').children("a").trigger('click');
     location.href="admin.html#pages/bads_record/bads_record.html"
 }
 
@@ -65,7 +70,12 @@ function fengxian(){
         showError('无访问权限')
         return
     }else{
-        location.href="admin.html#pages/bads_record/bads_record.html?type=1"
+        var url = "bads_record/risk_warning.html";
+        setCookie("url", url);
+        $("ul.nav.collapse").removeClass('active');
+        $("ul[urlid='"+url+"']").addClass('active');
+        $("ul[urlid='"+url+"']").parent('li').children("a").trigger('click');
+        location.href="admin.html#pages/bads_record/risk_warning.html"
     }
 }
 
@@ -97,7 +107,7 @@ function meiwen(){
 }
 
 function dates(){
-    var timer=setInterval(()=>{
+    var timer=setInterval(function(){
         let nows=new Date();
         let hour=toDub(nows.getHours());
         let min=toDub(nows.getMinutes());

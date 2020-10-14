@@ -8,8 +8,8 @@ var power = undefined;
 var id = undefined;
 
 $(function () {
-    id = getQueryByName("id");
-    power = getQueryByName("power")
+    id = getUrlParamsValue("id");
+    power = getUrlParamsValue("power")
     queryList();
     $("#btnUserQuery").click(function() {
         currentPageNo = 1;

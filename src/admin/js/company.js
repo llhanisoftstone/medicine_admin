@@ -80,7 +80,7 @@ function queryList(){
     var data = {
         page: currentPageNo,
         size: pageRows,
-        status:1,
+        status: 1,
         order:'create_time desc'
     }
     if(isSearch){
@@ -97,6 +97,7 @@ function queryList(){
             for (var i = 0; i < integrals.length; i++) {
                 var indexCode = integrals[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                indexCode.logopic = targetUrl + indexCode.picpath;
             }
             buildTableByke(result,'event-template','event-placeholder','paginator',queryList,pageRows);
         }
@@ -231,27 +232,68 @@ function addcompanyuser(){
 }
 
 function onsour(id){
-    $("#qrcode").empty();
-    $("#qrcodeImg").attr("src","");
-    var url = targetUrl + '/admin/transfer.html?pid='+id;
-    $('#qrcode').html('');
-    $('#qrcode').qrcode({
-        render: "canvas",
-        width: 200,
-        height: 200,
-        text: url,
-        src: 'http://www.meihengcdr.com/admin/img/menu_icon.png'
-    });
-
-    var canvas=$("#qrcode").find('canvas').get(0);
-    var data = canvas.toDataURL('image/jpg');
-    $('#qrcodeImg').attr('src',data) ;
-    var alink = document.createElement("a");
-    document.body.appendChild(alink);
-    alink.style.display='none';
-    alink.href = data;
+    zhpost('/weapp/generQr', {path:'pages/transfer/main',scene:id}).then(function(res){
+        if(res.code == 200){
+            var canvas = $("#qrcode").find('canvas').get(0);
+            canvas.width = 200;
+            canvas.height = 200;
+            var context = canvas.getContext("2d");
+            context.rect(0 , 0 , canvas.width , canvas.height);
+            context.fillStyle = "#fff";
+            context.fill();
+            var myImage = new Image();
+            myImage.src = res.url;
+            // myImage.src = targetUrl + "/upload/community/2020-08-25_07e110485cca1a5a7587fd70d4412540.jpg";  //背景图片 你自己本地的图片或者在线图片
+            myImage.crossOrigin = 'Anonymous';
+            myImage.onload = function(){
+                context.drawImage(myImage , 0 , 0 , 200 , 200);
+                var myImage2 = new Image();
+                var img = $("#logopic"+id).attr('src');
+                myImage2.src = img
+                myImage2.crossOrigin = 'Anonymous';
+                myImage2.style.borderRadius =
+                    myImage2.onload = function(){
+                        context.save();
+                        context.beginPath();
+                        context.arc(100, 100, 50, 0, Math.PI * 2, false);
+                        context.clip();
+                        context.drawImage(myImage2 , 50 , 50 , 100 , 100);
+                        context.restore();
+                        var base64 = canvas.toDataURL("image/png");
+                        var img = document.getElementById('qrcodeImg');
+                        img.setAttribute('src' , base64);
+                        var alink = document.createElement("a");
+                        document.body.appendChild(alink);
+                        alink.style.display='none';
+                        alink.href = base64;
+                        alink.download = new Date().getTime();
+                        alink.click();
+                    }
+            }
+        }
+    })
+    // $("#qrcode").empty();
+    // $("#qrcodeImg").attr("src","");
+    // var url = targetUrl + '/admin/transfer.html?pid='+id;
+    // $('#qrcode').html('');
+    // $('#qrcode').qrcode({
+    //     render: "canvas",
+    //     width: 200,
+    //     height: 200,
+    //     text: url,
+    //     src: 'http://www.meihengcdr.com/admin/img/menu_icon.png'
+    // });
+    //
+    // var canvas=$("#qrcode").find('canvas').get(0);
+    // var data = canvas.toDataURL('image/jpg');
+    // $('#qrcodeImg').attr('src',data) ;
+    // var alink = document.createElement("a");
+    // document.body.appendChild(alink);
+    // alink.style.display='none';
+    // alink.href = data;
     // alink.download = new Date().getTime();
     // alink.click();
+    // var canvas = document.createElement("canvas");
 }
 
 Handlebars.registerHelper('equal', function(v1,v2, options) {

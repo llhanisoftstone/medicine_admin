@@ -11,6 +11,7 @@ var isselect=false;
 
 $(function () {
     company();
+    getroleList();
     queryList();
     getmember();
     $.initSystemFileUpload($("#user_form"));
@@ -18,8 +19,22 @@ $(function () {
     $("#GiftCardSearchCancel").bind("click",memberSearchCancel);
 });
 
+function getroleList(){
+    $("#rqanakmember").val()
+    zhget(base_url_role,{status: 1}).then( function(result) {
+        var data = result.rows;
+        var html = '<option value="-1">请选择</option>';
+        if(result.code == 200){
+            for(var i=0;i<data.length;i++){
+                html+="<option id="+data[i].id+" value="+data[i].type+">"+data[i].name+"</option>"
+            }
+        }
+        $("#rqanakmember").html(html);
+    });
+}
+
 function company(){
-    zhget('/rs/company').then( function(result) {
+    zhget('/rs/company',{status: 1}).then( function(result) {
         var data = result.rows;
         var html = '';
         if(result.code == 200){
@@ -38,6 +53,9 @@ function showSelect(){
     }else if(level==80){
         $(".organizmember").show();
         $(".addusernameselec").hide();
+    }else if(level==82){
+        $(".addusernameselec").hide();
+        $(".organizmember").hide();
     }else{
         $(".addusernameselec").hide();
     }
@@ -105,6 +123,7 @@ function onUserAddClick() {
 
 }
 function cleanForm() {
+    $("#rqanakmember").val('-1')
     $("#userid").val("");
     $("#userlevel").val("");
     $("#username").val("");
@@ -139,8 +158,13 @@ function fillForm(id) {
             $("#nickname").val(res.rows[0].nickname);
             $("#rqanakmember").val(res.rows[0].level)
             if(res.rows[0].level==80){
+                $(".addusernameselec").hide();
                 $(".organizmember").show();
                 $('#comp_id').val(res.rows[0].comp_id);
+            }else if(res.rows[0].level==81){
+                $(".organizmember").hide();
+                $(".addusernameselec").show();
+                $('#usernameselect').selectpicker('val',res.rows[0].pid);
             }
         }else {
             if(res.code==601){
@@ -198,7 +222,7 @@ function initselect(id){
 
 function tabcompusername(obj){
     var id=obj.value
-    $("#userid").val(id);
+    $("#pid").val(id);
 }
 
 function onUserSaveClick() {
@@ -235,7 +259,7 @@ function onUserSaveClick() {
             return;
         }
     }else if(level==81){
-        data.pid = userid;
+        data.pid = $("#pid").val();
     }
     if (operation == "add") {
         zhget(base_url_user, {username:username}).then( function (result) {

@@ -26,6 +26,9 @@ $(function() {
     compid = sessionStorage.getItem('compid');
     u_id = sessionStorage.getItem('uid');
     level = sessionStorage.getItem('userlevel');
+    if(level == 80){
+        $(".is_show").hide();
+    }
     getpageRecord();
     setTimeout(function(){
         searchForm = getlocalStorageCookie(currPageName);
@@ -49,9 +52,30 @@ $(function() {
     });
     $("#searchBtn", $(".bannerreport")).unbind("click");
     $("#searchBtn", $(".bannerreport")).bind("click", showSearchPage);
-
+    company();
     queryList();
 });
+
+function company(){
+    var data ={status: 1};
+    if(level == 80){
+        data.id = compid
+    }
+    if(level == 81){
+        data.u_id = u_id
+    }
+    zhget('/rs/company',data).then( function(result) {
+        var data = result.rows;
+        var html = '<option value="-1">请选择</option>';
+        if(result.code == 200){
+            for(var i=0;i<data.length;i++){
+                html+="<option value="+data[i].id+">"+data[i].title+"</option>"
+            }
+        }
+        $("#comp_id").html(html);
+    });
+}
+
 function showSearchPage() {
     $(".reasonSearch", $(".report")).animate({
         height : 'toggle',
@@ -68,6 +92,9 @@ function onAddClick() {
 }
 function onUpdateClick(id) {
     location.href="admin.html?_t="+Math.random()+"#pages/adddrugs.html?id="+id;
+}
+function onSeeClick(id){
+    location.href="admin.html?_t="+Math.random()+"#pages/adddrugs.html?read=1&id="+id;
 }
 function onSearchClick() {
     $(".reasonSearch", $("#wrapper")).animate({
@@ -96,6 +123,10 @@ function queryList() {
             data.common_name=common_name;
             data.search=1;
         }
+        var comp_id=$("#comp_id").val();
+        if(level != 80 && comp_id != '-1'){
+            data.comp_id = comp_id
+        }
     }
     $("#banner-placeholder").html('');
     if(level == 81){
@@ -110,6 +141,8 @@ function queryList() {
             for(var i=0;i<result.rows.length;i++){
                 var indexCode = result.rows[i];
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
+                indexCode.level = level;
+                indexCode.typeText = getType(indexCode.type);
                 if(result.rows[i].picpath==null){
                     result.rows[i].picpath = ''
                 }else{
@@ -119,6 +152,15 @@ function queryList() {
             buildTableByke(result, 'drugs-template', 'drugs-placeholder','paginator',queryList,pageRows);
         }
     })
+}
+
+function getType(type){
+    switch (type) {
+        case 1:
+            return '管理员录入'
+        case 2:
+            return '患者录入'
+    }
 }
 
 // 删除按钮功能------写app=2
@@ -142,3 +184,14 @@ function onDeleteClick(el,id){
         })
     }
 }
+Handlebars.registerHelper('equal_level', function(v1,v2, options) {
+    if(v1 ==v2) {
+        return options.fn(this);
+    }
+});
+
+Handlebars.registerHelper('equal_cont', function(v1,v2, options) {
+    if(v1 > v2) {
+        return options.fn(this);
+    }
+});

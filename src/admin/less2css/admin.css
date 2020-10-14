@@ -164,8 +164,8 @@ a:hover {
 
 }
 #side-menu li a img{
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 #side-menu li a:hover {
   color: #2dc9aa;
@@ -503,6 +503,7 @@ span.fa:hover {
   margin-left:37px;
 }
 #navRight>ul>li{
+  cursor: pointer;
   margin-left:25px;
 }
 #container{

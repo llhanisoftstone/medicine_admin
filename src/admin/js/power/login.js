@@ -81,21 +81,18 @@ function checkfrm() {
         }).then( function (result) {
             var rs = result;
             if (rs.err) {
-                if(rs.code==605){
-                    $(".hidetsmodefined").html('您输入的密码有误，请重新输入');
-                    $(".hidetsmodefined").show();
+                if(rs.code==502){
+                    showError('密码错误超过五次，请10分钟后重试');
+                    return
+                }else if(rs.code==605){
+                    showError('您输入的账号/密码有误，请重新输入');
+                    return
                 }else if(rs.code==606){
-                    $(".hidetsusername").html('您输入的用户不存在，请重新输入');
-                    $(".hidetsusername").show();
-                }else if(rs.code==303){
-                    $(".hidetsusername").html('该账号被禁用，请联系管理员');
-                    $(".hidetsusername").show();
-                }else if(rs.code==304){
-                    $(".hidetsusername").html('该账号被禁用，请联系管理员');
-                    $(".hidetsusername").show();
+                    showError('您输入的账号/密码有误，请重新输入');
+                    return
                 }else if(rs.code==604){
-                    $(".hidetsusername").html('该账号没有登陆权限');
-                    $(".hidetsusername").show();
+                    showError('该账号没有登陆权限');
+                    return
                 }else{
                     showError(rs.err);
                 }

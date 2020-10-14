@@ -1,11 +1,15 @@
 var base_url_drugs='/rs/bad_record_details';
 var id=0;
 var resultText = ['','痊愈','好转','未好转']
-var affectText = ['','不明显','病情延长','病情减轻']
+var affectText = ['','不明显','病情延长','病情加重']
 var reuseText = ['','是','否','不明','未再使用']
-var subseqText = ['','是','否','不明']
+var subseqText = ['','是','否','不明','未停药或未减轻']
 $(function(){
     id=getIdByUrl();
+    var level = sessionStorage.getItem('userlevel');
+    if(level == 80){
+        $("#bads_type").hide();
+    }
     if(id){
         zhget(base_url_drugs,{b_id: id}).then(function (result){
             if(result.user){
@@ -21,7 +25,11 @@ $(function(){
                 var current_year = new Date().getFullYear();
                 var actual_year = new Date(birth_time).getFullYear();
                 $("#age").val(current_year-actual_year);
-                $("#weight").val(result.user.weight+'kg');
+                if(result.user.weight){
+                    $("#weight").val(result.user.weight+"kg");
+                }else{
+                    $("#weight").val(0);
+                }
                 $("#phone").val(result.user.phone);
                 $("#diseases").val(result.user.diseases);
             }
@@ -44,6 +52,7 @@ $(function(){
                 $("#details").val(result.bads.details);
                 $("#subseq").val(subseqText[result.bads.subseq]);
                 $("#reuse").val(reuseText[result.bads.reuse]);
+                $("#type").val(result.bads.type);
             }
         })
     }
@@ -60,7 +69,7 @@ function createsuspected(suspected){
         bannerhtml+='<td>'+suspected[i].company_name+'</td>';
         bannerhtml+='<td>'+suspected[i].batch_number+'</td>';
         bannerhtml+='<td>'+suspected[i].usage_dosage+'</td>';
-        bannerhtml+='<td>'+suspected[i].start_time+'~'+suspected[i].end_time+'</td>';
+        bannerhtml+='<td>'+suspected[i].start_time.substring(0,10)+'~'+suspected[i].end_time.substring(0,10)+'</td>';
         bannerhtml+="</tr>";
         $("#suspected").append(bannerhtml);
     }
@@ -77,7 +86,7 @@ function createblending(blending){
         bannerhtml+='<td>'+blending[i].company_name+'</td>';
         bannerhtml+='<td>'+blending[i].batch_number+'</td>';
         bannerhtml+='<td>'+blending[i].usage_dosage+'</td>';
-        bannerhtml+='<td>'+blending[i].start_time+'~'+blending[i].end_time+'</td>';
+        bannerhtml+='<td>'+blending[i].start_time.substring(0,10)+'~'+blending[i].end_time.substring(0,10)+'</td>';
         bannerhtml+="</tr>";
         $("#blending").append(bannerhtml);
     }

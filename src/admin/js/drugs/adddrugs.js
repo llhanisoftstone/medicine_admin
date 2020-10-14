@@ -18,7 +18,7 @@ $(function(){
     level = sessionStorage.getItem('userlevel');
     company();
     $.initSystemFileUpload($("#addBannerForm"), onUploadDetailPic);
-    id=getIdByUrl();
+    id=getQueryString('id');
     if(id){
         operation="modify";
         zhget(base_url_drugs+"/"+id).then(function (result){
@@ -36,6 +36,11 @@ $(function(){
                 },500)
             }
         })
+    }
+    var read = getQueryString('read');
+    if(read){
+        $("#addBannerForm input").attr("readonly",true);
+        $(".addBtn").hide();
     }
 })
 
@@ -57,7 +62,7 @@ function createBanner(result){
 }
 
 function company(){
-    var data ={};
+    var data ={status: 1};
     if(level == 80){
         data.id = compid
     }
