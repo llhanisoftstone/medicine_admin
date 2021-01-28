@@ -19,7 +19,7 @@ function initWebuploade(input) {
 
         $progress = $statusBar.find('.progress').hide(),
 
-    // 添加的文件数量
+    // 的文件数量
         fileCount = 0,
 
     // 添加的文件总大小

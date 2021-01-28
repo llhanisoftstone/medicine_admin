@@ -114,7 +114,7 @@
                     <li>不良反应报告管理</li>
                 </ul>
                 <div style="float:right; margin-top: -7px;">
-                    <button type="button" id="searchBtn"  class="fa fa-search   btn  saveBtn">&nbsp;高级查询</button>
+                    <button type="button" id="searchBtn"  class="fa fa-search   btn  searchBtn"> 高级查询</button>
                     <button type="button" class="fa fa-download btn  addBtn" onclick="downloadData()">导&emsp;出</button>
                 </div>
             </div>
@@ -189,18 +189,22 @@
 </div>
 <script id="event-template" type="text/x-handlebars-template">
     {{#datas}}
-    <tr>
-        <td>{{rowNum}}</td>
-        <td>{{realname}}</td>
-        <td>{{typetext}}</td>
-        <td>{{common_name}}</td>
-        <td>{{event_text}}</td>
-        <td>{{resulttext}}</td>
-        <td>{{filling_time}}</td>
-        <td>
-            <span class="updateBtn" title="查看" onclick="lookdata('{{id}}')">查看</span>
-        </td>
-    </tr>
+        <tr>
+            <td>{{rowNum}}</td>
+            <td>{{realname}}</td>
+            <td>{{typetext}}</td>
+            <td>{{common_name}}</td>
+            <td>{{event_text}}</td>
+            <td>{{resulttext}}</td>
+            <td>{{filling_time}}</td>
+            <td>
+                {{#ifcategory category}}
+                    <span class="updateBtn" title="查看" onclick="lookdata('{{id}}')">查看</span>
+                {{else}}
+                    <span class="updateBtn" title="数据清洗" onclick="filldata('{{id}}')">数据清洗</span>
+                {{/ifcategory}}
+            </td>
+        </tr>
     {{/datas}}
 </script>
 <script src="js/bads_record/bads_record.js"></script>

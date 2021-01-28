@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/bootstrap-select.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <link rel="stylesheet" href="js/common/ueditor/xiumi-ue-v5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script type="text/javascript"  src="js/common/formValidator/validator.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="js/common/ueditor/xiumi-ue-dialog-v5.js"></script>
+    <style>
+        .content {
+            margin: 20px 0 0;
+            overflow: hidden;
+        }
+        #user_form .panel-heading {
+            padding-top: 0;
+            font-weight: bold;
+        }
+        .patient_info label {
+            width: 86px;
+        }
+        .bad_info .pinput {
+            width: 56%;
+        }
+        #useTime {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .connect {
+            background-color: #eeeeee;
+        }
+        .datestart, .dateend {
+            text-align: center;
+            border: none;
+        }
+        .datepicker.dropdown-menu th, .datepicker.datepicker-inline th, .datepicker.dropdown-menu td, .datepicker.datepicker-inline td {
+            padding: 4px;
+        }
+        .radio-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .radio-container li {
+            font-size: 14px;
+        }
+
+        input[type="radio"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+        #imglist {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        #imglist img {
+            width: 100%;
+        }
+        .table > tbody > tr > td {
+            line-height: 2;
+            vertical-align: middle;
+        }
+        .single:before {
+            content: '*';
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+<div id="wrapper">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                <li>
+                    <a>不良反应报告管理</a>
+                </li>
+                <li>不良反应报告详情</li>
+            </ul>
+            <button type="button" onclick="back()" class="fa  fa-share-square btn btn-default pull-right" style="margin-top: -6px">返回</button>
+        </div>
+        <div class="row content">
+            <div class="col-md-5 col-lg-5" style="height: calc(100% - 10px);">
+                <div id="imglist"></div>
+            </div>
+            <div class="col-md-7 col-lg-7" style="height: calc(100% - 10px);overflow-y: auto;">
+                <form id="addBannerForm" autocomplete="off">
+                    <div class="form-horizontal" id="user_form">
+                        <div class="panel panel-default patient_info">
+                            <div class="panel-heading">
+                                患者基本信息
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="single">患者姓名：</label>
+                                            <div class="pinput" style="float: left;">
+                                                <input value="" name="realname" id="realname" class="form-control " maxlength="50" placeholder="请输入患者姓名">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>性别：</label>
+                                            <div class="pinput" style="float: left;">
+                                                <label>
+                                                    <input type="radio" name="gender" value="1" class="gender" checked> 男
+                                                </label>
+                                                <label>
+                                                    <input type="radio" name="gender" value="2" class="gender"> 女
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>民族：</label>
+                                            <div class="pinput" style="float: left;">
+                                                <input value="" name="nation" id="nation" class="form-control " maxlength="20" placeholder="请输入民族">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>出生年月：</label>
+                                            <div class="input-group pinput" style="float: left;">
+                                                <input value="" name="birth_time" id="birth_time" class="form-control" placeholder="请选择出生年月" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>体重：</label>
+                                            <div class="pinput" style="float: left;">
+                                                <input value="" id="weight" name="weight" class="form-control " maxlength="20" placeholder="请输入体重">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>联系方式：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <input value="" name="phone" id="phone" class="form-control " maxlength="11" placeholder="请输入联系方式">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label>原患疾病：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <input value="" name="diseases" id="diseases" class="form-control " maxlength="50" placeholder="请输入原患疾病">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default" id="issuspected">
+                            <div class="panel-heading">
+                                疑似用药
+                                <button type="button" class="fa fa-plus-circle btn addBtn" style="float: right;" onclick="addMedicine()"> 添加</button>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr style="text-align: center">
+                                        <th style="width: 4%">序号</th>
+                                        <th style="width: 10%">批准文号</th>
+                                        <th style="width: 10%">商品名称</th>
+                                        <th style="width: 12%">通用名称</th>
+                                        <th style="width: 12%">生产厂家</th>
+                                        <th style="width: 10%">生产批号</th>
+                                        <th style="width: 20%">用法用量</th>
+                                        <th style="width: 22%">用药时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="suspected" style="text-align: center">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel panel-default" id="isblending">
+                            <div class="panel-heading">
+                                并用用药
+                            </div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr style="text-align: center">
+                                        <th style="width: 4%">序号</th>
+                                        <th style="width: 10%">批准文号</th>
+                                        <th style="width: 10%">商品名称</th>
+                                        <th style="width: 12%">通用名称</th>
+                                        <th style="width: 12%">生产厂家</th>
+                                        <th style="width: 10%">生产批号</th>
+                                        <th style="width: 20%">用法用量</th>
+                                        <th style="width: 22%">用药时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="blending" style="text-align: center">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="panel panel-default bad_info">
+                            <div class="panel-heading">
+                                不良反应/事件详细信息
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="single">不良反应/事件名称：</label>
+                                            <div class="pinput" style="float: left; margin-left: 20px">
+                                                <select name="event_text" id="event_text" class="selectpicker form-control show-tick" multiple>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="single">不良反应/事件发生时间：</label>
+                                            <div class="input-group pinput" style="float: left;">
+                                                <input name="occurrence_time" id="occurrence_time" class="form-control" placeholder="请选择不良反应/事件发生时间" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label class="single">不良反应/事件过程描述：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <input value="" name="details" id="details" class="form-control " placeholder="请输入不良反应/事件过程描述">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>不良反应/事件结果：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <ul class="radio-container">
+                                                <li><label><input type="radio" name="resultText" class="resultText" value="1" checked> 痊愈</label></li>
+                                                <li><label><input type="radio" name="resultText" class="resultText" value="2"> 好转</label></li>
+                                                <li><label><input type="radio" name="resultText" class="resultText" value="3"> 未好转</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>对原患疾病的影响：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <ul class="radio-container">
+                                                <li><label><input type="radio" name="affectText" class="affectText" value="1" checked> 不明显</label></li>
+                                                <li><label><input type="radio" name="affectText" class="affectText" value="2"> 病情延长</label></li>
+                                                <li><label><input type="radio" name="affectText" class="affectText" value="3"> 病情加重</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>停药或减量后反应/事件是否消失或减轻：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <ul class="radio-container">
+                                                <li><label><input type="radio" name="subseq" class="subseq" value="1" checked> 有</label></li>
+                                                <li><label><input type="radio" name="subseq" class="subseq" value="2"> 无</label></li>
+                                                <li><label><input type="radio" name="subseq" class="subseq" value="3"> 不明</label></li>
+                                                <li><label><input type="radio" name="subseq" class="subseq" value="4"> 未停药</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <label>再次使用可疑药品后是否再次出现同样反应/事件：</label>
+                                        <div class="pinput" style="float: left;">
+                                            <ul class="radio-container">
+                                                <li><label><input type="radio" name="reuse" class="reuse" value="1" checked> 有</label></li>
+                                                <li><label><input type="radio" name="reuse" class="reuse" value="2"> 无</label></li>
+                                                <li><label><input type="radio" name="reuse" class="reuse" value="3"> 不明</label></li>
+                                                <li><label><input type="radio" name="reuse" class="reuse" value="4"> 未再使用</label></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default" id="bads_type">
+                            <div class="panel-heading">
+                                不良反应/事件类型
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-4 form-group">
+                                    <label for="type">报告类型 </label>
+                                    <div class="pinput" style="margin-left: 10px">
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="0">请选择报告类型</option>
+                                            <option value="1">新的</option>
+                                            <option value="2">一般</option>
+                                            <option value="3">严重</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <button datatype="require" type="button" class="fa fa-save btn btn-default" id="saveCarouselData" onclick="onSaveClick()">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="id" style="display: none;"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addMedicine">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">添加药品</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="medicineInfo" autocomplete="off">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label single">商品名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" style="display: none" class="form-control" id="pid" >
+                                <select name="name" id="name" class="selectpicker form-control show-tick" data-live-search="true">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="commonName" class="col-sm-2 control-label">通用名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="commonName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="allow" class="col-sm-2 control-label">批准文号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="allow">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="product" class="col-sm-2 control-label">生产厂家</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productId" class="col-sm-2 control-label">生产批号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="productId">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="how" class="col-sm-2 control-label">用法用量</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="how">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label single">用药时间</label>
+                            <div class="input-daterange input-group pinput" style="display: flex;margin-left: 16px;" id="useTime">
+                                <input type="text" placeholder="请选择开始时间" class="form-control datestart" id="datestart" style="width: 50%;" readonly>
+                                <span class="connect">—</span>
+                                <input type="text" placeholder="请选择结束时间" class="form-control dateend" id="dateend" style="width: 50%;" readonly>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="col-sm-2 control-label">药品类型</label>
+                            <div class="col-sm-9" style="height: 34px;line-height: 34px;">
+                                <label>
+                                    <input class="iptradio" type="radio" name="m" value="1" checked> 疑似用药
+                                </label>
+                                <label>
+                                    <input class="iptradio" type="radio" name="m" value="2"> 并用用药
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="text-align: right;">
+                    <button type="button" class="fa btn closeBtn" data-dismiss="modal">关闭</button>
+                    <button type="button" class="fa fa-save btn saveBtn" onclick="confirmAdd()"> 确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/common/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/common/bootstrap-select.js"></script>
+<script src="js/bads_record/bads_record_picDetails.js"></script>
+</body>
+
+</html>

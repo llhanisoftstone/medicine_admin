@@ -11,6 +11,19 @@ function initEvent() {
     })
 }
 
+// loading
+function showLoading (loadText) {
+    if(loadText){
+        $("#loadText").html(loadText)
+    }
+    $('#loadingModal').modal('show');
+}
+function hideLoading () {
+    $('#modal-body').hide();
+
+    $('#loadingModal').modal('hide');
+}
+
 function setlocalStorageCookie(name, value){
     localStorage.setItem(name, value);
 }
@@ -47,7 +60,7 @@ function resizePage(){
                 }
             })
         }
-        $("#page-wrapper").css("min-height", (height+addheight) + "px");
+        // $("#page-wrapper").css("min-height", (height+addheight) + "px");
     }
 }
 
@@ -80,7 +93,7 @@ function hashchangehandler() {
 
 function onMenuClick(url,dom) {
     ajaxInitSession("/op/authorization", function (rs) {
-        if (rs.username.length > 2) {
+        if (rs.username) {
             if(location.hash.indexOf(url) >= 0){
                 hashchangehandler();
             }
@@ -137,6 +150,7 @@ function zhput(url, data, callback) {
 }
 
 function zhdelete(url, data, callback) {
+    // showLoading('请稍后...');
     return zhajax(url, data, 'DELETE', callback);
 }
 
@@ -279,6 +293,31 @@ function showError(message,time) {
 $._messengerDefaults = {
     extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom'
 }
+
+function downloadFile(data,name,url) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('POST', `${targetUrl}${url}`, true);
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+    xhr.setRequestHeader("Authorization","jwt " + getCookie('sid'));
+    xhr.onload = function() {
+        if(this.status === 200) {
+            var blob = this.response;
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onload = function(e) {
+                var a = document.createElement('a');
+                a.href = e.target.result;
+                a.download = name;
+                document.body.append(a);
+                a.click();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
+
 function buildTableNoPage(datas, template, placeholder) {
 
     var temp = Handlebars.compile($("#" + template).html());
@@ -288,23 +327,31 @@ function buildTableNoPage(datas, template, placeholder) {
 }
 
 
-function buildTable(datas, template, placeholder, callBack) {
-    var temp = Handlebars.compile($("#" + template).html());
-    $("#" + placeholder).html(temp({
-        datas: datas.rows
-    }));
-    if (datas.count > 0) {
-        buildPaginator('paginator', datas.count,callBack,datas.records);
+function buildTable(datas, template, placeholder, isContent, callBack) {
+    if(datas.rows.length > 0){
+        var temp = Handlebars.compile($("#" + template).html());
+        $("#" + placeholder).html(temp({
+            datas: datas.rows
+        }));
+        if(datas.count > 0 && isContent){
+            buildPaginator('paginator', datas.count,callBack,datas.records,20);
+        }else if (datas.count > 0 && !isContent){
+            buildPaginator('paginator', datas.count,callBack,datas.records,10);
+        }
+    }else {
+        $('#paginatorOuter').hide();
+        $('#doc-menu').append('<li style="font-size: medium;text-align: center;">暂无内容</li>');
     }
+
 }
 
-function buildPaginator(paginator, total,callBack,records) {
+function buildPaginator(paginator, total,callBack,records,size) {
     var pageIndex = $("#pageIndex").val();
     if(pageIndex){
         $("#pageIndex").val("");
         currPage = pageIndex;
     }else{
-        var currPage = $('.pagination .active').find('a').text();
+        currPage = $('.pagination .active').find('a').text();
     }
     if(!currPage||currentPageNo==1){
         currPage = 1;
@@ -324,8 +371,8 @@ function buildPaginator(paginator, total,callBack,records) {
     };
     $('#' + paginator).bootstrapPaginator(options);
     $($('#' + paginator).siblings()).remove();
-    var endPage = currPage*10;
-    var startPage = endPage-9;
+    var endPage = currPage*size;
+    var startPage = endPage-(size - 1);
     var html = "<span id='pagSpan' style='display: block;float:left; margin: 20px 0; line-height: 30px; padding-right:15px;'>显示  "+startPage +"- "+endPage+" 条 共计 "+records+" 条</span><input onkeyup=\"this.value=this.value.replace(/\\D/g,'')\" placeholder='' max='"+total+"' type='number'id='goToPagePaginator' style='width: 60px;float:left; margin: 20px 0;' name='name' class='form-control ' maxlength='50'><div onclick='goToPagePaginator(\""+paginator+"\","+total+")' style='float: left;cursor:pointer;margin: 20px 10px;padding: 6px 12px;line-height: 1.42857143;color: #337ab7;text-decoration: none;background-color: #fff;border: 1px solid #ddd;'>GO</div>";
     $(html).insertBefore($('#' + paginator))
 }
@@ -347,13 +394,12 @@ function goToPagePaginator(paginator,endPage){
 function buildTableByke(datas, template, placeholder,paginator,fu,sizePage,tableid,is_pageNo,callBack) {
     var temp = Handlebars.compile($("#" + template).html());
     $("#" + placeholder).html(temp({
-        datas: datas.rows
+        datas: datas.rows || datas.data
     }));
     if (datas.count > 0) {
         buildPaginatorByke(paginator,datas.count,fu,callBack,datas.records,sizePage,tableid,is_pageNo);
     }
 }
-
 
 function buildPaginatorByke(paginator,total,fu,callBack,records,sizePage,tableid,is_pageNo) {
     var pageIndex = $("#pageIndex").val();
@@ -436,12 +482,15 @@ function toUpdatePassword(){
 }
 
 function loginout() {
-    delCookie('signature')
+    delCookie('signature');
     delCookie('compid');
     delCookie('nickname');
     delCookie('sid');
     delCookie('userlevel');
     delCookie('storeid');
+    delCookie('comp_logo');
+    delCookie('comp_name');
+    delCookie('username');
     sessionStorage.removeItem('compid');
     sessionStorage.removeItem('userlevel');
     sessionStorage.removeItem('uid');
@@ -468,7 +517,11 @@ function initSession() {
         if (rs.code == 200 && rs.username && rs.username.length > 2 && rs.userlevel > 2 && menuCookie) {
             setCookie('username', rs.username, 1);
             setCookie('userid', rs.userid, 1);
-            $("#login_nickname").html(getCookie('nickname'))
+            $("#login_nickname").html(getCookie('nickname'));
+            $('#company_name').html(getCookie('comp_name'));
+            if(getCookie('comp_logo')){
+                $('#navlogo').attr('src',targetUrl+getCookie('comp_logo'))
+            }
             if(rs.userlevel>8||rs.compid==2){
                 //如果是level>8为超管时，或者compid=2为达人网管理的时候。显示所有列表内容，否则为供应商
                 delCookie("compid");
@@ -648,7 +701,6 @@ function updateMenuLocationInfo() {
 function getIdByUrl() {
     var num=window.location.href.indexOf("#");
     var str=window.location.href.substr(num+1,window.location.href.length);
-    console.log(str)
     var r=str.indexOf("=");
     if(r<0){
         return '';
@@ -657,6 +709,7 @@ function getIdByUrl() {
     r=str.substring(r+1,leng);
     return r;
 }
+
 //获取页面的参数 paramName为参数名
 function getUrlParamsValue(paramName) {
     var num=window.location.href.indexOf("#");
@@ -759,9 +812,10 @@ function checkData(result,type,fu,thisTable,paginator) {
                 $(".paginator").show();
                 if(result.records=="0"){
                     $("#"+thisTable).children().children("tbody").html('');
+                    $("#"+thisTable).children("ul").html('');
                     $("#" + paginator).hide();
                     var html = "<div id='querylistnull'  style='text-align: center;line-height: 45px;' class=\"noresult  col-sm-12\">暂无内容</div>";
-                    $("#"+thisTable).append(html)
+                    $("#"+thisTable).append(html);
                 }
             }else{
                 showError('暂无内容');

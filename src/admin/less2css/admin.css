@@ -35,16 +35,17 @@ button{
   outline: none;
 }
 /*********************************/
+html,body {
+  height: 100%;
+}
 body {
   background-color: #f4f4f6;
 }
 a:hover {
   cursor: pointer;
 }
-.panel-default {
-  border-color: transparent;
-}
 #wrapper {
+  height: 100%;
   padding-top: 0;
 }
 .header-nav {
@@ -81,10 +82,10 @@ a:hover {
 .nav-quit div:hover {
   text-decoration: none;
 }
-.sidebar.sidebarchange {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
+/*.sidebar.sidebarchange {*/
+/*  border-top-right-radius: 10px;*/
+/*  border-bottom-right-radius: 10px;*/
+/*}*/
 .userinfo-box {
   height: 67px;
   background: #ffffff;
@@ -142,8 +143,20 @@ a:hover {
 .content-title .approve.active {
   background-color: #2dc9aa;
 }
-#side-menu {
-  min-height: 800px;
+.panel {
+  height: 100%;
+  margin-bottom: 0;
+  border: 1px solid #ffffff;
+  box-shadow: none;
+}
+.panel .content {
+  height: calc(100% - 62px);
+  overflow-y: auto;
+}
+#side-menu,.navbar-default {
+  height: calc(100% - 78px);
+  overflow-y: auto;
+  background-color: #ffffff;
 }
 #side-menu > li a:hover {
   background-color: #fff;
@@ -156,7 +169,7 @@ a:hover {
   padding-left: 50px;
 }
 #side-menu li {
-  background-color: #fff;
+  border-bottom: 0;
 }
 #side-menu li a {
   color: #666;
@@ -178,14 +191,14 @@ a:hover {
 }
 #side-menu ul.nav-second-level a {
   font-size: 14px;
-  padding-left: 50px;
+  padding-left: 40px;
 }
 #side-menu ul.nav-second-level li {
   /*list-style: disc inside ;*/
   border-left: 4px solid transparent;
 }
 #side-menu ul.nav-second-level .dot {
-  margin-left: 30px;
+  margin-left: 20px;
 }
 #side-menu ul.nav-second-level:hover .dot {
   background-color: #2dc9aa;
@@ -218,6 +231,15 @@ a:hover {
   margin-left:40px;
   transform: rotateY(180deg)
 }
+.panel-default>.panel-heading {
+  padding: 30px 15px 0;
+  border-color: #ffffff;
+  background-color: #ffffff;
+}
+.breadcrumb {
+  padding: 8px 0;
+  background-color: #ffffff;
+}
 #breadcrumb {
   margin-left: 217px;
   margin-bottom: 0;
@@ -240,6 +262,8 @@ a:hover {
   display: none;
 }
 #page-wrapper {
+  height: calc(100% - 78px);
+  min-height: 0 !important;
   margin: 0 0 0 235px;
   border-left: none;
 }
@@ -378,7 +402,7 @@ span.fa:hover {
   border-top:none;
 }
 .btn-link{
-  color:rgba(250,134,88,1);
+  color:rgba(255,160,51,1);
 }
 .btn-link:hover, .btn-link:focus{
   color:#e2794f;
@@ -390,7 +414,11 @@ span.fa:hover {
   border-color: #2dc9aa;
   background-color: #2dc9aa;
 }
-
+.searchBtn{
+  background:#3090f0;
+  border:1px solid #3090f0;
+  color:#fff;
+}
 .saveBtn{
   background:rgba(19,206,102,1);
   border:1px solid rgba(19,206,102,1);
@@ -412,8 +440,8 @@ span.fa:hover {
   color:#fff;
 }
 .addBtn{
-  background:rgba(250,134,88,1);
-  border:1px solid rgba(250,134,88,1);
+  background:rgba(255,160,51,1);
+  border:1px solid rgba(255,160,51,1);
   color:#fff;
 }
 .addBtn:hover{
@@ -443,8 +471,8 @@ span.fa:hover {
   color:#fff;
 }
 .closeBtn{
-  background:rgba(250,134,88,1);
-  border:1px solid rgba(250,134,88,1);
+  background:rgba(255,160,51,1);
+  border:1px solid rgba(255,160,51,1);
   color:#fff;
 }
 .closeBtn:hover{
@@ -503,8 +531,12 @@ span.fa:hover {
   margin-left:37px;
 }
 #navRight>ul>li{
+  display: inline-block;
   cursor: pointer;
   margin-left:25px;
+}
+#navRight>ul>li>img {
+  vertical-align: middle;
 }
 #container{
   padding:30px 40px;

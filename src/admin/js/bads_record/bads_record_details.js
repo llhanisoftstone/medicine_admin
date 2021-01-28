@@ -54,6 +54,9 @@ $(function(){
                 $("#reuse").val(reuseText[result.bads.reuse]);
                 $("#type").val(result.bads.type);
             }
+            if (result.bads.category == 3) {
+                $('#saveCarouselData').hide()
+            }
         })
     }
 })

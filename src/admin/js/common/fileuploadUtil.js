@@ -53,7 +53,7 @@ $.extend({
                         $.hideActionLoading();
                         var result = data.result;
                         var status = result[0].code;
-                        fileComp.val("") //防止选择同一个文件不触发change事件
+                        fileComp.val(""); //防止选择同一个文件不触发change事件
                         switch (status) {
                             case 200: {
                                 callBack(formObject, fileComp, result);

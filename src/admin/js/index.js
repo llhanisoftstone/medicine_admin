@@ -65,6 +65,23 @@ function yaopin(){
     location.href="admin.html#pages/drugs.html"
 }
 
+function wenxian() {
+    location.href="admin.html#pages/doc_search.html"
+}
+
+function wenjian() {
+    location.href="admin.html#pages/file/file_list.html"
+}
+
+function meiwen(){
+    if(level < 90){
+        showError('无访问权限')
+        return
+    }else{
+        location.href="admin.html#pages/informationList.html"
+    }
+}
+
 function fengxian(){
     if(level < 81){
         showError('无访问权限')
@@ -97,13 +114,8 @@ function quanxian(){
     }
 }
 
-function meiwen(){
-    if(level < 90){
-        showError('无访问权限')
-        return
-    }else{
-        location.href="admin.html#pages/informationList.html"
-    }
+function peixun() {
+    location.href="admin.html#pages/plan_manage.html"
 }
 
 function dates(){

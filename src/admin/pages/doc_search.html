@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="css/datepicker.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <style>
+        a:hover, a:focus {
+            text-decoration: none;
+        }
+        #years {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .datestart, .dateend {
+            text-align: center;
+            border: none;
+        }
+        .search {
+            margin: 0;
+            text-align: right;
+        }
+        .search li {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .input-group-addon {
+            padding: 9px 14px;
+            vertical-align: middle;
+            background-color: transparent;
+        }
+        .docSearch, .row, .col-lg-12, .panel {
+            height: 100%;
+        }
+        .title a {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        .source, .keywords, .nr {
+            font-size: 14px;
+            color: #333333;
+        }
+        .keywords {
+            font-weight: bold;
+        }
+        .nr {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .info {
+            color: #808080;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .info-left a {
+            display: inline-block;
+            color: #367edf;
+            padding: 1px 8px;
+            border: 1px solid #367edf;
+            cursor: pointer;
+        }
+        .info-left a img {
+            width: 14px;
+            margin-right: 4px;
+            vertical-align: text-top;
+        }
+    </style>
+</head>
+<body>
+<div class="docSearch">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home">
+                        <li><a>文献检索</a></li>
+                        <li>网络检索</li>
+                    </ul>
+                    <ul class="row pull-right search">
+                        <form id="formReset" autocomplete="off">
+                            <li>
+                                <select class="form-control" id="resource">
+                                    <option value="-1">请选择</option>
+                                    <option value="1">中国知网</option>
+                                    <option value="2">万方网</option>
+                                    <option value="3">维普网</option>
+                                </select>
+                            </li>
+                            <li>
+                                <div class="input-group" style="display: flex;">
+                                    <span class="input-group-addon fa fa-search"></span>
+                                    <input placeholder="关键词" id="keywords" name="keywords" class="form-control " maxlength="50" style="border-left: none;padding-left: 4px;">
+                                </div>
+                            </li>
+                            <li style="width: 30%;">
+                                <div class="input-daterange input-group year">
+                                    <input type="text" placeholder="请选择年份" class="form-control" name="start" id="year" style="border-radius: 4px;">
+                                </div>
+                                <div class="input-daterange input-group years" style="display: none;" id="years">
+                                    <input type="text" placeholder="起始年" class="form-control datestart" name="start" id="start">
+                                    <span class="connect">至</span>
+                                    <input type="text" placeholder="结束年" class="form-control dateend" name="end" id="end">
+                                </div>
+                            </li>
+                            <li>
+                                <button type="button" class="btn btn-default searchBtn" onclick="queryList()">检索</button>
+                            </li>
+                        </form>
+                    </ul>
+                </div>
+                <div class="panel-body content" style="width: 100%;">
+                    <div id="doc-member">
+                        <ul class="list-group" id="doc-menu"></ul>
+                    </div>
+
+                    <div style="float: right;margin-right: 50px;" id="paginatorOuter">
+                        <ul id="paginator"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="doc-template" type="text/x-handlebars-template">
+    {{#datas}}
+        <li class="list-group-item">
+            <p class="text-left title"><a href="{{href}}" target="_blank" title="{{title}}">{{title}}</a></p>
+            <p class="source">
+                <span>{{type}}</span>
+                <span title="{{author}}">{{author}}</span>
+                <span>-</span>
+                <span title="{{source}}">{{source}}</span>
+
+                <span style="margin-left: 20px;">{{time}}</span>
+            </p>
+            <p class="nr">{{cont}}</p>
+            <p class="keywords">
+                <span>关键字：{{keyword}}</span>
+            </p>
+            <div class="info">
+                <p class="info-left">
+                    <a href="{{href}}" target="_blank"><img src="img/read.png" alt="">在线阅读</a>
+                    <a style="margin-left: 8px;" onclick="subscribe('{{sort_id}}')"><img src="img/download.png" alt="">订阅</a>
+                </p>
+                <p class="info-right">
+                    <span>{{citaNumber}}</span>
+                    <span style="margin-left: 10px;">{{downNumber}}</span>
+                </p>
+            </div>
+        </li>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/common/bootstrap-datepicker.js"></script>
+<script src="js/docSearch.js"></script>
+</body>
+</html>

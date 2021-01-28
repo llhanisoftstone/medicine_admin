@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/webuploader.css" rel="stylesheet">
+    <link href="css/webuploader_style.css" rel="stylesheet">
+    <style>
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+        }
+
+        .datepicker.dropdown-menu th, .datepicker.datepicker-inline th, .datepicker.dropdown-menu td, .datepicker.datepicker-inline td {
+            padding: 4px;
+        }
+        a:hover{
+            background:#fff;
+        }
+    </style>
+    <link rel="stylesheet" href="js/common/formValidator/css/index_1.0.5.css">
+    <script type="text/javascript"  src="js/common/formValidator/webluker_1.0.8.js"></script>
+    <script src="js/common/formValidator/validator.js"></script>
+</head>
+
+<body>
+<div id="wrapper" class="row report">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="breadcrumb fa fa-home" style="width: 50%;display: inline;">
+                    <li>
+                        <a>报告管理</a>
+                    </li>
+                    <li>个例报告</li>
+                </ul>
+                <div style="float:right; margin-top: -7px;">
+                    <button type="button" class="fa fa-search   btn  searchBtn" onclick="searchBtn()">&nbsp;高级查询</button>
+                    <button type="button" class="fa fa-download btn addBtn" onclick="exportData()"> 导出</button>
+                    <button type="button" class="fa fa-plus btn  saveBtn" onclick="addData()"> 新增</button>
+                </div>
+            </div>
+            <div class="reasonSearch" style="display: none">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" id="reasonSearchForm" autocomplete="off">
+                            <div class="body">
+                                <div class="row" >
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">不良反应名称：</label>
+                                        <div class="col-md-8">
+                                            <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="badName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">不良反应结果：</label>
+                                        <div class="col-md-8">
+                                            <select id="badResult" class="form-control">
+                                                <option value="-1">请选择</option>
+                                                <option value="0">痊愈</option>
+                                                <option value="1">好转</option>
+                                                <option value="2">未好转</option>
+                                                <option value="3">不详</option>
+                                                <option value="4">有后遗症</option>
+                                                <option value="5">死亡</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">药品通用名称：</label>
+                                        <div class="col-md-8">
+                                            <input type="text"  placeholder="请输入" class="form-control" id="commonName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">不良反应发生时间：</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="badHappen" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">报告类型：</label>
+                                        <div class="col-md-8">
+                                            <select id="reportType" class="form-control">
+                                                <option value="-1">请选择</option>
+                                                <option value="0">快速报告</option>
+                                                <option value="1">境外报告</option>
+                                                <option value="2">严重报告</option>
+                                                <option value="3">首次报告</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="col-md-4 control-label">评价状态：</label>
+                                        <div class="col-md-8">
+                                            <select id="evaluate" class="form-control">
+                                                <option value="-1">请选择</option>
+                                                <option value="0">肯定</option>
+                                                <option value="1">很可能</option>
+                                                <option value="2">可能</option>
+                                                <option value="3">可能无关</option>
+                                                <option value="4">无法评价</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="float:right;margin-right: 60px">
+                                        <button type="button" class="fa fa-search btn  saveBtn" onclick="searchData()">查询</button>
+                                        <button type="button" class="fa fa-reply-all btn  againBtn" onclick="resetFn()">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive" id="table-member">
+                    <table class="table table-striped table-bordered table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <td>患者姓名</td>
+                            <td>报告类型</td>
+                            <td>医疗机构名称</td>
+                            <th>病历号/门诊号</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <input id="pageIndex" type="hidden"/>
+                        <tbody id="case-placeholder">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+                <div style="float: right;margin-right: 50px;">
+                    <ul id="paginator"></ul>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+<script id="case-template" type="text/x-handlebars-template">
+    {{#datas}}
+        <tr>
+            <td>{{rowNum}}</td>
+            <td>{{base.patient_name}}</td>
+            <td>{{base.report_type}}</td>
+            <td>{{base.ins_name}}</td>
+            <td>{{base.case_num}}</td>
+            <td>
+                <span class="rolelimit" title="查看" onclick="check('{{base.id}}')">查看</span>
+                <span class="updateBtn" title="修改" onclick="updateData('{{base.id}}')">修改</span>
+                <span class="delBtn" title="删除" onclick="delData('{{base.id}}')">删除</span>
+                <span class="downloadBtn" title="下载" onclick="exportReport('{{base.id}}','{{base.patient_name}}')">下载</span>
+            </td>
+        </tr>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/common/bootstrap-datepicker.js"></script>
+<script src="js/bads_record/case_record.js"></script>
+</body>
+</html>

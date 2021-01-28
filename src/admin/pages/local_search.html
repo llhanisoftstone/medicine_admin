@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="css/datepicker.css" rel="stylesheet">
+    <style>
+        .localSearch, .row, .col-lg-12, .panel {
+            height: 100%;
+        }
+        .title a {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        .source, .keywords, .nr {
+            font-size: 14px;
+            color: #333333;
+        }
+        .keywords {
+            font-weight: bold;
+        }
+        .nr {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .info {
+            color: #808080;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .info-left a {
+            display: inline-block;
+            color: #367edf;
+            padding: 4px 6px;
+            border: 1px solid #367edf;
+            cursor: pointer;
+        }
+        #years {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .datestart, .dateend {
+            text-align: center;
+            border: none;
+        }
+        a:hover, a:focus {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="localSearch">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="breadcrumb fa fa-home">
+                        <li><a>文献检索</a></li>
+                        <li>本地检索</li>
+                    </ul>
+                    <button type="button" class="btn btn-default searchBtn pull-right" onclick="searchBtn()">高级查询</button>
+                </div>
+                <div class="docSearch" style="display: none;">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form id="reasonSearchForm">
+                                <div class="body">
+                                    <div class="row" >
+                                        <div class="col-md-4 form-group">
+                                            <select class="form-control" id="resource" style="width: 30%;">
+                                                <option value="-1">请选择</option>
+                                                <option value="zw">中国知网</option>
+                                                <option value="wf">万方网</option>
+                                                <option value="wp">维普网</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>关键词：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="keywords" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>检索范围：</label>
+                                            <div class="input-daterange input-group years" id="years" style="width: 70%;">
+                                                <input type="text" placeholder="起始年" class="form-control datestart" name="start" id="start" autocomplete="off">
+                                                <span class="connect">至</span>
+                                                <input type="text" placeholder="结束年" class="form-control dateend" name="end" id="end" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>作者名字：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="author_name" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <label>期刊名字：</label>
+                                            <div class="pinput">
+                                                <input type="text"  placeholder="请输入" maxlength="20" class="form-control" id="journal_name" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 pull-right">
+                                            <button type="button" class="fa fa-search btn  saveBtn" onclick="queryList()">查询</button>
+                                            <button type="reset" class="fa fa-reply-all btn  againBtn">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body content">
+                    <div id="local-member">
+                        <ul class="list-group" id="doc-menu"></ul>
+                    </div>
+                    <div style="float: right;margin-right: 50px;" id="paginatorOuter">
+                        <ul id="paginator"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="local-template" type="text/x-handlebars-template">
+    {{#datas}}
+        <li class="list-group-item">
+            <p class="text-left title"><a href="{{href}}" target="_blank" title="{{title}}">{{title}}</a></p>
+            <p class="source">
+                <span>{{type}}</span>
+                <span title="{{author}}">{{author}}</span>
+                <span>-</span>
+                <span title="{{source}}">{{source}}</span>
+
+                <span style="margin-left: 20px;">{{time}}</span>
+            </p>
+            <p class="nr">{{cont}}</p>
+            <p class="keywords">
+                <span>关键字：{{keyword}}</span>
+            </p>
+            <div class="info">
+                <p class="info-left">
+                    <a href="{{href}}" class="fa fa-folder-open" target="_blank"> 在线阅读</a>
+                    {{#if fid}}
+                        <a style="margin-left: 8px;" class="fa fa-download" onclick="down('{{fid}}','{{file_dir}}','{{filename}}')">下载</a>
+                    {{else}}
+                        <a style="margin-left: 8px;" class="fa fa-upload" onclick="uploadFiles('{{id}}')"> 上传</a>
+                        <input type="file" name="picfile[]" value="pic file" id="picfile" upType="essay_files" accept=".doc,.docx,.pdf" style="display: none;">
+                    {{/if}}
+                </p>
+                <p class="info-right">
+                    <span>{{citaNumber}}</span>
+                    <span style="margin-left: 10px;">{{downNumber}}</span>
+                </p>
+            </div>
+        </li>
+    {{/datas}}
+</script>
+<script type="text/javascript" src="js/common/bootstrap-datepicker.js"></script>
+<script src="js/localSearch.js"></script>
+</body>
+</html>

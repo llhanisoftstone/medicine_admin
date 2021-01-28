@@ -5,9 +5,17 @@ function G(id) {
 }
 
 function createMap(cityName){
-    console.log(cityName)
     var map = new BMap.Map("l-map");
-    map.centerAndZoom(cityName,12);                   // 初始化地图,设置城市和地图级别。
+    if(cityName.lng){
+        var point = new BMap.Point(cityName.lng,cityName.lat)
+        map.centerAndZoom(point,18);                   // 初始化地图,设置城市和地图级别。
+        map.addOverlay(new BMap.Marker(point));    //添加标注
+        setTimeout(function(){
+            map.panTo(point,18);
+        }, 1400);
+    }else{
+        map.centerAndZoom(cityName,12);                   // 初始化地图,设置城市和地图级别。
+    }
     map.enableScrollWheelZoom();
     var cityval=$("#address").val();
     var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
@@ -42,10 +50,19 @@ function createMap(cityName){
         setPlace();
     });
     function showInfo(e){
-        $(".lat").val(e.point.lat);
-        $(".lng").val(e.point.lng);
-        showSuccess("定位成功！");
+        map.clearOverlays();
+        var geocoder= new BMap.Geocoder();
+        geocoder.getLocation(e.point,function(rs){
+            var as = regularAddress(rs);
+            $("#addressInfo").val(as);
+        })
+        $("#latitude").val(e.point.lat);
+        $("#longitude").val(e.point.lng);
+        var point = new BMap.Point(e.point.lng, e.point.lat);
+        var marker = new BMap.Marker(point)
+        map.addOverlay(marker);
     }
+
     map.addEventListener("click", showInfo);
 
     var local = new BMap.LocalSearch(map, {
@@ -54,31 +71,80 @@ function createMap(cityName){
 
     var PanoramaLabel = new BMap.PanoramaLabel();
     $("#searchBtn").bind("click",function(){
-        local.search($("#city_name").find("option:selected").text()+$("#city_name_2").find("option:selected").text()+$("#address").val());
+        local.search($("#addressInfo").val());
         setTimeout(function(){
-            $(".lng").val(map.getCenter().lng);
-            $(".lat").val(map.getCenter().lat);
-        },300);
+            $("#longitude").val(map.getCenter().lng);
+            $("#latitude").val(map.getCenter().lat);
+        },500);
     });
-    $("#address").on("change",function(){
-        $("#address").on("blur",function(){
-            local.search($("#city_name").find("option:selected").text()+$("#city_name_2").find("option:selected").text()+$("#address").val());
+    $("#addressInfo").on("change",function(){
+        $("#addressInfo").on("blur",function(){
+            local.search($("#addressInfo").val());
             setTimeout(function(){
-                $(".lng").val(map.getCenter().lng);
-                $(".lat").val(map.getCenter().lat);
-                $("#address").off("blur");
-            },300);
+                $("#longitude").val(map.getCenter().lng);
+                $("#latitude").val(map.getCenter().lat);
+                $("#addressInfo").off("blur");
+            },500);
         });
     });
+
+    function regularAddress(address){
+        var ads = '',adrs = '';
+        $("#zone").val(address.addressComponents.district);
+        if(address.surroundingPois.length > 0){
+            var res = address.surroundingPois[0].address;
+            adrs = address.surroundingPois[0].address;
+            if(res.indexOf(address.addressComponents.province) == -1){
+                ads += address.addressComponents.province;
+            }else{
+                adrs = adrs.replace(address.addressComponents.province,'');
+            }
+            if(res.indexOf(address.addressComponents.city) == -1){
+                ads += address.addressComponents.city;
+            }else{
+                adrs = adrs.replace(address.addressComponents.city,'');
+            }
+            if(res.indexOf(address.addressComponents.district) == -1){
+                ads += address.addressComponents.district;
+            }else{
+                adrs = adrs.replace(address.addressComponents.district,'');
+            }
+            ads = ads + res + address.surroundingPois[0].title;
+            adrs = adrs + address.surroundingPois[0].title;
+            $("#address").val(adrs);
+        }else{
+            var res = address.address;
+            adrs = address.address;
+            if(res.indexOf(address.addressComponents.province) == -1){
+                ads += address.addressComponents.province
+            }else{
+                adrs = adrs.replace(address.addressComponents.province,'');
+            }
+            if(res.indexOf(address.addressComponents.city) == -1){
+                ads += address.addressComponents.city;
+            }else{
+                adrs = adrs.replace(address.addressComponents.city,'');
+            }
+            if(res.indexOf(address.addressComponents.district) == -1){
+                ads += address.addressComponents.district;
+            }else{
+                adrs = adrs.replace(address.addressComponents.district,'');
+            }
+            ads = ads + res;
+            $("#address").val(adrs);
+        }
+        return ads;
+    }
 
     function setPlace(){
         map.clearOverlays();    //清除地图上所有覆盖物
         function myFun(){
             var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-            $(".lat").val(pp.lat);
-            $(".lng").val(pp.lng)
+            $("#latitude").val(pp.lat);
+            $("#longitude").val(pp.lng)
             map.centerAndZoom(pp, 18);
             map.addOverlay(new BMap.Marker(pp));    //添加标注
+
         }
         var local = new BMap.LocalSearch(map, { //智能搜索
             onSearchComplete: myFun
@@ -88,17 +154,9 @@ function createMap(cityName){
         }
     }
     var addressId = $(".addressId").val();
-    if(addressId != "" && addressId != undefined){
-        myValue = $("#city_name").find("option:selected").text()+$("#city_name_2").find("option:selected").text()+$("#address").val();
-        setPlace();
-        $("#searchBtn").trigger("click");
-    }
+    // if(addressId != "" && addressId != undefined){
+    //     myValue = $("#addressInfo").val();
+    //     // setPlace();
+    //     // $("#searchBtn").trigger("click");
+    // }
 }
-
-//点击地图，获取经纬度坐标
-//    map.addEventListener("click",function(e){
-//        document.getElementById("aa").innerHTML = "经度坐标："+e.point.lng+" &nbsp;纬度坐标："+e.point.lat;
-//    });
-
-
-//});

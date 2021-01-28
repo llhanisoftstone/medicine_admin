@@ -140,6 +140,11 @@
             margin-right: 12px;
             margin-bottom: 3px;
         }
+        #navlogo {
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <div id="message">
@@ -164,7 +169,8 @@
         </div>
         <div id="navRight">
             <div onclick="toUpdatePassword()">
-                <img src="img/index/admin.png" alt="">
+                <img src="img/index/admin.png" alt="" id="navlogo">
+                <span id="company_name"></span>
                 <span id="login_nickname"></span>
             </div>
             <ul>
@@ -188,6 +194,14 @@
 
 </div>
 <!-- /#wrapper -->
+
+<!-- loading -->
+<div class="modal fade" id="loadingModal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    　　<div style="width: 200px;height:20px; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px" id="modal-body">
+    　　　　<div class="sp sp-circle"></div>
+    　　　　<h5 id="loadText">loading...</h5>
+    　　</div>
+</div>
 
 <!-- jQuery Version 1.11.0 -->
 <script type="text/javascript" src="js/common/jquery-1.11.2.min.js"></script>

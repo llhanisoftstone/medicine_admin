@@ -52,7 +52,8 @@ function queryList(){
         page: currentPageNo,
         size: pageRows,
         progress: 3,
-        order:'filling_time desc'
+        order:'filling_time desc',
+        status: '1'
     }
     if(isSearch){
         var realname=$("#realname").val();
@@ -103,8 +104,8 @@ function queryList(){
             var integrals = result.rows;
             for (var i = 0; i < integrals.length; i++) {
                 var indexCode = integrals[i];
-                indexCode.typetext = switchType(indexCode.type)
-                indexCode.resulttext = switchResult(indexCode.result)
+                indexCode.typetext = switchType(indexCode.type);
+                indexCode.resulttext = switchResult(indexCode.result);
                 indexCode.rowNum = (currentPageNo - 1) * pageRows + i + 1;
             }
             buildTableByke(result,'event-template','event-placeholder','paginator',queryList,pageRows);
@@ -162,9 +163,9 @@ function downloadData(){
 function switchResult(result){
     switch (result) {
         case 1:
-            return '痊愈'
+            return '痊愈';
         case 2:
-            return '好转'
+            return '好转';
         case 3:
             return '未好转'
     }
@@ -173,11 +174,11 @@ function switchResult(result){
 function switchType(type){
     switch (type) {
         case 0:
-            return '未处理'
+            return '未处理';
         case 1:
-            return '初次'
+            return '初次';
         case 2:
-            return '一般'
+            return '一般';
         case 3:
             return '严重'
     }
@@ -186,3 +187,14 @@ function switchType(type){
 function lookdata(id){
     location.href="admin.html#pages/bads_record/bads_record_details.html?id="+id
 }
+function filldata(id){
+    location.href="admin.html#pages/bads_record/bads_record_picDetails.html?id="+id
+}
+
+Handlebars.registerHelper('ifcategory', function (value,options) {
+    if(value === 1 || value === 3){
+        return options.fn(this);
+    }else {
+        return options.inverse(this);
+    }
+});

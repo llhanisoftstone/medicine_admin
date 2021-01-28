@@ -69,6 +69,14 @@
             cursor: pointer;
             margin-left:25px;
         }
+        #navRight>ul>li>img {
+            vertical-align: middle;
+        }
+        #navlogo {
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+        }
         #container{
             padding:30px 40px;
             box-sizing: border-box;
@@ -108,122 +116,79 @@
         #container_Right{
             width:79%;
             display:flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: space-between;
         }
         .container_item{
+            height:49%;
             margin:0 10px;
             box-sizing: border-box;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
         }
-        .container_item:nth-child(1),.container_item:nth-child(2){
-            width:40%;
-        }
-        .container_item:nth-child(3){
-            width:20%;
-        }
-        .container_item .first_item{
-            height:49%;
-
-        }
-        .container_item .first_item span{
-            margin-top:30px;
+        .container_item span{
+            margin-top:20px;
             color:#fff;
         }
-        .container_item:nth-child(1) .first_item,
-        .container_item:nth-child(2) .first_item{
+        .container_item .common_item {
+            width: 29%;
+        }
+        .container_item .first_item {
+            width: 39%;
+            height: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
         }
-        .container_item:nth-child(1) .first_item,
-        .container_item:nth-child(2) .first_item{
+        .container_item .first_item .flex_container {
+            height: 100%;
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
-            align-items: center;
         }
-        .container_item:nth-child(1) .first_item .common_item,
-        .container_item:nth-child(2) .first_item .common_item{
-            width:49%;
-            height:100%;
+        .common_item, .own_item {
+            height: 100%;
+            border-radius: 8px;
+            cursor: pointer;
             display: flex;
-            cursor: pointer;
             flex-direction: column;
             justify-content: center;
             align-items: center;
         }
-        .container_item:nth-child(1) .first_item .own_item,
-        .container_item:nth-child(2) .first_item .own_item{
-            width:100%;
-            height:100%;
-            display: flex;
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
+        .container_item .first_item .own_item, .container_item .first_item .flex_container {
+            height: 49%;
         }
-        .container_item:nth-child(1) .first_item .common_item:nth-child(1){
-            background: -webkit-linear-gradient(to right,#f96b69,#ffaaa9); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#f96b69,#ffaaa9); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#f96b69,#ffaaa9); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#f96b69,#ffaaa9); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(1) .first_item .common_item:nth-child(2){
-            background: -webkit-linear-gradient(to right,#6396ff,#8bb1ff); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#6396ff,#8bb1ff); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#6396ff,#8bb1ff); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#6396ff,#8bb1ff); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(2) .first_item .common_item:nth-child(1){
-            background: -webkit-linear-gradient(to right,#00ae9e,#36fdea); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#00ae9e,#36fdea); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#00ae9e,#36fdea); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#00ae9e,#36fdea); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(2) .first_item .common_item:nth-child(2){
-            background: -webkit-linear-gradient(to right,#ff34f3,#ff8ff8); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#ff34f3,#ff8ff8); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#ff34f3,#ff8ff8); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#ff34f3,#ff8ff8); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(1) .first_item .own_item{
-            background: -webkit-linear-gradient(to right,#fcb134,#ffc96f); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#fcb134,#ffc96f); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#fcb134,#ffc96f); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#fcb134,#ffc96f); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(2) .first_item .own_item{
-            background: -webkit-linear-gradient(to right,#6648ff,#9b87ff); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#6648ff,#9b87ff); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#6648ff,#9b87ff); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#6648ff,#9b87ff); /* 标准语法 */
-            border-radius: 8px;
-        }
-        .container_item:nth-child(3) .first_item,.container_item:nth-child(3) .first_item .own_item{
-            height:100%;
-            width:100%;
-            display:flex;
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: -webkit-linear-gradient(to right,#9dd63b,#b9f64e); /* Safari 5.1-6.0 */
-            background: -o-linear-gradient(to right,#9dd63b,#b9f64e); /* Opera 11.1-12.0 */
-            background: -moz-linear-gradient(to right,#9dd63b,#b9f64e); /* Firefox 3.6-15 */
-            background: linear-gradient(to right,#9dd63b,#b9f64e); /* 标准语法 */
-            border-radius: 8px;
+        .container_item .first_item .flex_container .own_item {
+            width: 49%;
+            height: 100%;
         }
 
+        .container_item:nth-child(1) .common_item:first-child {
+            background-color: #5b9dff;
+        }
+        .container_item:nth-child(1) .common_item:nth-child(2) {
+            background-color: #23bd85;
+        }
+        .container_item:nth-child(1) .first_item .own_item {
+            background-color: #8654ec;
+        }
+        .container_item:nth-child(1) .first_item .flex_container .own_item:nth-child(1) {
+            background-color: #ff5eb1;
+        }
+        .container_item:nth-child(1) .first_item .flex_container .own_item:nth-child(2) {
+            background-color: #f1891a;
+        }
+        .container_item:nth-child(2) .common_item:first-child {
+            background-color: #746dff;
+        }
+        .container_item:nth-child(2) .common_item:last-child {
+            background-color: #74afff;
+        }
+        .container_item:last-child .first_item .own_item:nth-child(1) {
+            background-color: #bfc100;
+        }
+        .container_item:last-child .first_item .own_item:nth-child(2) {
+            background-color: #ff4f6c;
+        }
     </style>
 </head>
 <body>
@@ -233,7 +198,8 @@
     </div>
     <div id="navRight">
         <div>
-            <img src="img/index/admin.png" alt="">
+            <img src="img/index/admin.png" alt="" id="navlogo">
+            <span id="company_name"></span>
             <span id="login_nickname"></span>
         </div>
         <ul>
@@ -251,47 +217,49 @@
     </div>
     <div id="container_Right">
         <div class="container_item">
+            <div class="common_item" onclick="yonghu()">
+                <img src="img/index/admins.png" alt="">
+                <span>用户管理<span id="bus_count"></span></span>
+            </div>
+            <div class="common_item" onclick="qiye()">
+                <img src="img/index/business.png" alt="">
+                <span>企业管理<span id="cp_count"></span></span>
+            </div>
             <div class="first_item">
-                <div class="common_item" onclick="baogao()">
-                    <img src="img/index/bg.png" alt="">
-                    <span>报告管理<span id="bg_count"></span></span>
-                </div>
-                <div class="common_item" onclick="yonghu()">
-                    <img src="img/index/admins.png" alt="">
-                    <span>用户管理<span id="bus_count"></span></span>
-                </div>
-            </div>
-            <div  class="first_item">
-                <div class="own_item" onclick="fengxian()">
-                    <img src="img/index/alarm.png" alt="">
-                    <span>风险提醒<span id="gj_count"></span></span>
-                </div>
-            </div>
-        </div>
-        <div class="container_item">
-            <div  class="first_item">
                 <div class="own_item" onclick="yaopin()">
                     <img src="img/index/drug.png" alt="">
-                    <span>药品库管理<span id="dr_count"></span></span>
+                    <span>药品管理<span id="dr_count"></span></span>
                 </div>
-            </div>
-            <div class="first_item">
-                <div class="common_item" onclick="qiye()">
-                    <img src="img/index/business.png" alt="">
-                    <span>企业管理<span id="cp_count"></span></span>
-                </div>
-                <div class="common_item" onclick="quanxian()">
-                    <img src="img/index/limit.png" alt="">
-                    <span>权限管理</span>
+                <div class="flex_container">
+                    <div class="own_item" onclick="baogao()">
+                        <img src="img/index/bg.png" alt="">
+                        <span>报告管理<span id="bg_count"></span></span>
+                    </div>
+                    <div class="own_item" onclick="fengxian()">
+                        <img src="img/index/alarm.png" alt="" style="width: 66px;">
+                        <span>风险提醒<span id="gj_count"></span></span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="container_item">
-            <div  class="first_item">
-                <div class="own_item" onclick="meiwen()">
-                    <img src="img/index/article.png" alt="">
-                    <span>美文管理</span>
+            <div class="common_item" onclick="wenxian()">
+                <img src="img/index/wx.png" alt="">
+                <span>文献检索</span>
+            </div>
+            <div class="first_item">
+                <div class="own_item" onclick="wenjian()">
+                    <img src="img/index/document.png" alt="">
+                    <span>文件管理</span>
                 </div>
+                <div class="own_item" onclick="peixun()">
+                    <img src="img/index/train.png" alt="">
+                    <span>培训管理</span>
+                </div>
+            </div>
+            <div class="common_item" onclick="meiwen()">
+                <img src="img/index/article.png" alt="">
+                <span>美文管理</span>
             </div>
         </div>
     </div>

@@ -1,4 +1,6 @@
 var base_url_login = '/op/login';
+var second = 3;
+var timer = null;
 
 var operation = "add";
 var currentPageNo = 1;
@@ -99,11 +101,13 @@ function checkfrm() {
                 $('#username').focus();
             }
             else {
-                showSuccess('登录成功')
+                // showSuccess('登录成功')
                 sessionStorage.setItem('menu',JSON.stringify(rs.menu));
                 setCookie('sid', rs.sid);
                 setCookie('compid', rs.compid);
                 setCookie('nickname', rs.nickname);
+                setCookie('comp_name', rs.comp_name);
+                setCookie('comp_logo', rs.comp_logo);
                 setCookie('uid', rs.userid);
                 setCookie('userlevel', rs.userlevel);
                 setCookie('storeid', rs.store_id);
@@ -112,10 +116,35 @@ function checkfrm() {
                 sessionStorage.setItem("compid",rs.compid);
                 sessionStorage.setItem("uid",rs.userid);
                 sessionStorage.setItem("userlevel",rs.userlevel);
-                window.location = 'index.html';
+                if(rs.userlevel == 80){
+                    $('#second').html(second);
+                    timer = setInterval(()=>{
+                        second--;
+                        $('#second').html(second);
+                        if (second == 0){
+                            window.location = 'index.html';
+                            clearInterval(timer);
+                        }
+                    },1000);
+                    $('.login').hide();
+                    $('#login_nickname').html(rs.comp_name);
+                    if(rs.comp_logo){
+                        $('#logo').attr('src',targetUrl+rs.comp_logo);
+                    }
+                    $('.userinfo').show();
+                    $('.welcome').show();
+                }else {
+                    window.location = 'index.html';
+                }
+
             }
         });
     }
+}
+
+function toIndex(){
+    window.location = 'index.html';
+    clearInterval(timer);
 }
 
 $(function () {

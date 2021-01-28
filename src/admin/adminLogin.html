@@ -18,6 +18,23 @@
     body{
         background:#fff;
     }
+    .nav {
+        width: 100%;
+        position: fixed;
+        top: 50px;
+        padding: 0 200px;
+        box-sizing: border-box;
+    }
+    .nav .userinfo {
+        float: right;
+        display: none;
+    }
+    .nav .userinfo li {
+        font-size: 16px;
+        color: #ffffff;
+        display: inline-block;
+        vertical-align: middle;
+    }
     .main {
         position: fixed;
         text-align: center;
@@ -38,11 +55,6 @@
          font-size: 14px;
          color: #ffffff;
          min-height: 700px;
-     }
-     .logo{
-         position: absolute;
-         top: 50px;
-         left: 200px;
      }
     .log-con span{
         font-family: STZhongsong;
@@ -75,6 +87,11 @@
         background-color: #ffffff;
         border-radius: 20px;
     }
+    #logo {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+    }
     a,button,input{
         outline: none;
         box-shadow: none;
@@ -88,12 +105,47 @@
     .log-con input::-moz-placeholder{
         color: #ffffff;
     }
+    .log-con a {
+        font-size: 16px;
+        text-decoration: none;
+        color: #ffffff;
+        position: fixed;
+        bottom: 40px;
+        left: calc(50% - 80px);
+    }
+    .welcome {
+        padding-top: 2%;
+        color: #ffffff;
+        display: none;
+    }
+    .welcome h1 {
+        font-size: 80px;
+        font-weight: 500;
+        letter-spacing: 10px;
+    }
+    .welcome h3 {
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: 4px;
+        margin: 40px auto;
+    }
+    .welcome .toindex {
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        padding-bottom: 2px;
+        border-bottom: 1px solid #ffffff;
+    }
 </style>
 <body>
-<div class="addNewDiv" id="NewDiv">
-
+<div class="addNewDiv" id="NewDiv"></div>
+<div class="nav">
+    <img src="./img/logo.png">
+    <ul class="userinfo">
+        <li><img src="img/index/admin.png" alt="" id="logo"></li>
+        <li id="login_nickname"></li>
+    </ul>
 </div>
-<div class="logo"><img src="./img/logo.png"></div>
 <div class="main">
     <div class="login">
         <div class="log-con">
@@ -101,7 +153,13 @@
             <input type="text" class="name" id="username" placeholder="用户名">
             <input type="password" class="password" id="password" placeholder="密码">
             <button onclick="checkfrm()">登录</button>
+            <a href="https://beian.miit.gov.cn" target="_blank">陕ICP备18008530号-1</a>
         </div>
+    </div>
+    <div class="welcome">
+        <h1>欢迎访问</h1>
+        <h3>美恒药物警戒管理平台</h3>
+        <span class="toindex" onclick="toIndex()"><span id="second"></span>s后跳转到首页</span>
     </div>
 </div>
 <script type="text/javascript" src="js/common/jquery-1.11.2.min.js"></script>
